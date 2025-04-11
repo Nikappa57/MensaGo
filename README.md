@@ -1,1 +1,1 @@
-# SmartCanteen
+# Mensa Go!
