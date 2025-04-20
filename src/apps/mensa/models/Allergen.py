@@ -1,13 +1,12 @@
 from django.db import models
 
 
-class City(models.Model):
+class Allergen(models.Model):
     """"
-    City(Name, Landscape)
+    Allergen(Name)
     """
 
     name = models.CharField(max_length=100, unique=True,primary_key=True)
-    landscape = models.ImageField(upload_to='landscapes/', blank=True, null=True)
 
     def __str__(self):
         return self.name
