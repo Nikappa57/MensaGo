@@ -38,5 +38,9 @@ class CustomUser(AbstractUser):
                                         default=EconomicalLevel.LOW.name)
     university = models.ForeignKey('University', on_delete=models.PROTECT)
 
+    suffers_from = models.ManyToManyField('mensa.Allergen',blank=True,related_name='suffers_from')
+
+    likes = models.ManyToManyField('mensa.Dish', blank=True, related_name='likes')
+    
     def __str__(self):
         return self.email

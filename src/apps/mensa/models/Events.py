@@ -3,16 +3,23 @@ from django.db import models
 
 class Event(models.Model):
     """"
-    Event(Name, Date, Img) primary key = name,date
+    Event(Name, Date, Img)
+    p.k. Event[name, date]
     """
 
     name = models.CharField(max_length=100)
     date = models.DateField()
-    unique_together = ('name', 'date') # Todo: check if it works(Django does not support composite primary keys)
-    img = models.ImageField(upload_to='events/,blank=True, null=True')
-    
+    img = models.ImageField(upload_to='events/')
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["name", "date"],
+                                    name="unique_name_date")
+        ]
+        ordering = ['date']
 
     def __str__(self):
-        return self.name
-    
+        return f"Event(name={self.name}, date={self.date}, img={self.img})"
+
+    def __repr__(self) -> str:
+        return self.__str__()

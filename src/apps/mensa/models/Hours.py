@@ -1,0 +1,47 @@
+from django.db import models
+
+
+class Hours(models.Model):
+    """"
+    Hours(WeekDay,DayPart,OpenTime,CloseTime,Mensa)
+        f.k. Hours[Mensa] (= Mensa[UUID]
+    """
+
+    WEEKDAY = {
+        (0, "Lunedi"),
+        (1, "Martedi"),
+        (2, "Mercoledi"),
+        (3, "Giovedi"),
+        (4, "Venerdi"),
+        (5, "Sabato"),
+        (6, "Domenica"),
+    }
+    DAYPART = {
+        (0, "Pranzo"),
+        (1, "Cena"),
+    }
+
+    mensa = models.ForeignKey(
+        "mensa.Mensa",
+        on_delete=models.CASCADE,
+        related_name="hours",
+    )
+    weekday = models.IntegerField(choices=WEEKDAY)
+    daypart = models.IntegerField(choices=DAYPART)
+    open_time = models.TimeField()
+    close_time = models.TimeField()
+
+    def __str__(self):
+        return f'Hours(mensa={self.mensa}, weekday={self.weekday}, daypart={self.daypart}, open_time={self.open_time}, close_time={self.close_time})'
+    def __repr__(self)-> str:
+        return self.__str__()
+
+    class Meta:
+        constrints = [
+            models.UniqueConstraint(
+                fields=["mensa", "weekday", "daypart"],
+                name="unique_mensa_weekday_daypart",
+            )
+        ]
+
+    
