@@ -1,16 +1,28 @@
 from decimal import Decimal
-from enum import Enum
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
+from ..manager import CustomUserManager
 
 
-class EconomicalLevel(Enum):
-    LOW = "Low"
-    MEDIUM = "Medium"
-    HIGH = "High"
+class EconomicalLevel(models.Model):
+    """
+    EconomicalLevel(Name,cost)
+    p.k EconomicalLevel[Name]
+    """
+
+    name = models.CharField(max_length=100, primary_key=True)
+    cost = models.DecimalField(max_digits=5,
+                               decimal_places=2,
+                               default=Decimal('0.00'))
+
+    def __str__(self) -> str:
+        return f"EconomicalLevel(name={self.name}, cost={self.cost})"
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class CustomUser(AbstractUser):
@@ -22,25 +34,34 @@ class CustomUser(AbstractUser):
         propic, 
         credit, 
         university,
-        economical level*)
-    f.k User[University] (= University[Name]
+        economical level)
+    f.k User[University] ⊆ University[Name]
     """
 
+    username = None
+    email = models.EmailField(_("email address"), unique=True)
     propic = models.ImageField(upload_to='profile_pics/',
-                               blank=True,
-                               null=True)
+                               default='imgs/profile_pics/default.jpg')
     credit = models.DecimalField(max_digits=10,
                                  decimal_places=2,
                                  default=Decimal('0.00'))
-    economical_level = models.CharField(max_length=10,
-                                        choices=[(tag.name, tag.value)
-                                                 for tag in EconomicalLevel],
-                                        default=EconomicalLevel.LOW.name)
+    economical_level = models.ForeignKey('EconomicalLevel',
+                                         on_delete=models.PROTECT)
     university = models.ForeignKey('University', on_delete=models.PROTECT)
+    suffers_from = models.ManyToManyField('mensa.Allergen')
+    likes = models.ManyToManyField('mensa.Dish')
 
-    suffers_from = models.ManyToManyField('mensa.Allergen',blank=True,related_name='suffers_from')
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
 
-    likes = models.ManyToManyField('mensa.Dish', blank=True, related_name='likes')
-    
+    objects: CustomUserManager = CustomUserManager()
+
     def __str__(self):
-        return self.email
+        return (
+            f"User(email={self.email}, first_name={self.first_name}, "
+            f"last_name={self.last_name}, propic={self.propic}, credit={self.credit}, "
+            f"economical_level={self.economical_level}, university={self.university})"
+        )
+
+    def __repr__(self) -> str:
+        return self.__str__()

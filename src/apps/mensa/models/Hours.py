@@ -4,7 +4,7 @@ from django.db import models
 class Hours(models.Model):
     """"
     Hours(WeekDay,DayPart,OpenTime,CloseTime,Mensa)
-        f.k. Hours[Mensa] (= Mensa[UUID]
+        f.k. Hours[Mensa] ⊆ Mensa[Name]
     """
 
     WEEKDAY = {
@@ -21,11 +21,7 @@ class Hours(models.Model):
         (1, "Cena"),
     }
 
-    mensa = models.ForeignKey(
-        "mensa.Mensa",
-        on_delete=models.CASCADE,
-        related_name="hours",
-    )
+    mensa = models.ForeignKey("mensa.Mensa", on_delete=models.CASCADE)
     weekday = models.IntegerField(choices=WEEKDAY)
     daypart = models.IntegerField(choices=DAYPART)
     open_time = models.TimeField()
@@ -33,15 +29,14 @@ class Hours(models.Model):
 
     def __str__(self):
         return f'Hours(mensa={self.mensa}, weekday={self.weekday}, daypart={self.daypart}, open_time={self.open_time}, close_time={self.close_time})'
-    def __repr__(self)-> str:
+
+    def __repr__(self) -> str:
         return self.__str__()
 
     class Meta:
-        constrints = [
+        constraints = [
             models.UniqueConstraint(
                 fields=["mensa", "weekday", "daypart"],
-                name="unique_mensa_weekday_daypart",
+                name="hours_unique_mensa_weekday_daypart",
             )
         ]
-
-    
