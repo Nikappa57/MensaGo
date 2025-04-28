@@ -46,15 +46,24 @@ class CustomUser(AbstractUser):
                                  decimal_places=2,
                                  default=Decimal('0.00'))
     economical_level = models.ForeignKey('EconomicalLevel',
-                                         on_delete=models.PROTECT)
-    university = models.ForeignKey('University', on_delete=models.PROTECT)
+                                         on_delete=models.PROTECT,
+                                         null=True,
+                                         blank=True)
+    university = models.ForeignKey('University',
+                                   on_delete=models.PROTECT,
+                                   null=True,
+                                   blank=True)
     suffers_from = models.ManyToManyField('mensa.Allergen')
     likes = models.ManyToManyField('mensa.Dish')
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
     objects: CustomUserManager = CustomUserManager()
+
+    @property
+    def need_setup(self):
+        return self.university is None or self.economical_level is None
 
     def __str__(self):
         return (

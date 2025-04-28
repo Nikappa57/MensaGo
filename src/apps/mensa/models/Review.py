@@ -4,8 +4,8 @@ from django.db import models
 class Review(models.Model):
     """"
     Review(Mensa, User, Stars, text*)
-     f.k Review[User] ⊆ User[Email]
-     f.k. Review[Mensa] ⊆ Mensa[Name]
+     f.k Review[User] ⊆ User[Email]
+     f.k. Review[Mensa] ⊆ Mensa[Name]
     Stars: 1-5
     p.k Review[mensa, user]
     """

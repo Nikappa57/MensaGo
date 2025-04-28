@@ -4,7 +4,6 @@ from django.db import models
 class Dish(models.Model):
     """"
     Dish(Name, Desc, Img)
-     incl. Dish[Name] ⊆ Contains[Dish]
      p.k. Dish[Name]
     """
 
@@ -13,16 +12,6 @@ class Dish(models.Model):
     img = models.ImageField(upload_to='dish-photos/')
     ingredients = models.ManyToManyField('mensa.Ingredient')
     allergens = models.ManyToManyField('mensa.Allergen')
-
-    def save(self, *args, **kwargs) -> None:
-        """
-        Save the dish instance to the database.
-        """
-
-        if len(self.ingredients.all(
-        )) == 0:  # TODO: controlla se si può fare con if not self.ingredients
-            raise ValueError("Dish must contain at least one ingredient.")
-        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f"Dish(name={self.name}, description={self.description}, img={self.img})"

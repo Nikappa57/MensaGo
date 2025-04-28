@@ -1,13 +1,39 @@
+from decimal import Decimal
+from typing import Any
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+
+from .models import EconomicalLevel, University
 
 
 class UsersManagersTests(TestCase):
 
     def test_create_user(self):
-        User = get_user_model()
+        uni = University(name="UMG")
+        uni.save()
+
+        eco_lev = EconomicalLevel(name="PoraccioDeiFrancescani",
+                                  cost=Decimal('1.47'))
+        eco_lev.save()
+
+        User: Any = get_user_model()
         user = User.objects.create_user(email="normal@user.com",
-                                        password="foo")
+                                        password="foo",
+                                        first_name="John",
+                                        last_name="Doe",
+                                        university=uni,
+                                        economical_level=eco_lev)
+
+        self.assertEqual(user.first_name, "John")
+        self.assertEqual(user.last_name, "Doe")
+        self.assertEqual(user.university, uni)
+        self.assertEqual(user.economical_level, eco_lev)
+        self.assertEqual(user.credit, Decimal('0.00'))
+        self.assertEqual(user.propic, second="imgs/profile_pics/default.jpg")
+        self.assertEqual(len(user.suffers_from.all()), 0)
+        self.assertEqual(len(user.likes.all()), 0)
+
         self.assertEqual(user.email, "normal@user.com")
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
@@ -26,7 +52,7 @@ class UsersManagersTests(TestCase):
             User.objects.create_user(email="", password="foo")
 
     def test_create_superuser(self):
-        User = get_user_model()
+        User: Any = get_user_model()
         admin_user = User.objects.create_superuser(email="super@user.com",
                                                    password="foo")
         self.assertEqual(admin_user.email, "super@user.com")
