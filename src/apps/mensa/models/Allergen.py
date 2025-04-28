@@ -8,6 +8,7 @@ class Allergen(models.Model):
     """
 
     name = models.CharField(max_length=100, unique=True, primary_key=True)
+    icon = models.ImageField(upload_to='allergen-icons/')
 
     def __str__(self):
         return f"Allergen(name={self.name})"
