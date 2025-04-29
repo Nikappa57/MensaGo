@@ -10,7 +10,7 @@ def register(request,*args, **kwargs):
 		return HttpResponse(f"You are already registered as {user.email}")
 	context = {}
 
-	if request.post:
+	if request.POST:
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
 			form.save()
@@ -30,14 +30,14 @@ def register(request,*args, **kwargs):
 
 	return render(request, 'profile/register.html', context)
 
-def logout(request):
+def logout_view(request):
 	if request.method == 'POST':
 		logout(request)
 		return redirect('home')
 	else:
 		return HttpResponse("You are not logged in")
 
-def login(request,*args, **kwargs):
+def login_view(request,*args, **kwargs):
 	context = {}
 
 	user = request.user
@@ -54,6 +54,9 @@ def login(request,*args, **kwargs):
 			user = authenticate(email=email, password=psw)
 			if user is not None:
 				login(request, user)
+
+				destination = get_redirect_if_exists(request)
+
 				if destination:
 					return redirect(destination)
 				else:

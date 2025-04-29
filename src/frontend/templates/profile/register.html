@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - MensaGO{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Sign Up</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        {% if register_form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>Error:</strong> Please correct the errors below.
+                        </div>
+                        {% endif %}
+                        
+                        <div class="form-group mb-3">
+                            <label for="id_email">Email address</label>
+                            <input type="email" name="email" class="form-control {% if register_form.email.errors %}is-invalid{% endif %}" 
+                                id="id_email" required placeholder="Enter email" value="{{ register_form.email.value|default:'' }}">
+                            {% if register_form.email.errors %}
+                            <div class="invalid-feedback">
+                                {{ register_form.email.errors.0 }}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ register_form.email.help_text }}</small>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="id_first_name">First Name</label>
+                                    <input type="text" name="first_name" class="form-control {% if register_form.first_name.errors %}is-invalid{% endif %}" 
+                                        id="id_first_name" required placeholder="First name" value="{{ register_form.first_name.value|default:'' }}">
+                                    {% if register_form.first_name.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ register_form.first_name.errors.0 }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="id_last_name">Last Name</label>
+                                    <input type="text" name="last_name" class="form-control {% if register_form.last_name.errors %}is-invalid{% endif %}" 
+                                        id="id_last_name" required placeholder="Last name" value="{{ register_form.last_name.value|default:'' }}">
+                                    {% if register_form.last_name.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ register_form.last_name.errors.0 }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="id_university">University</label>
+                            <select name="university" class="form-control {% if register_form.university.errors %}is-invalid{% endif %}" 
+                                id="id_university">
+                                <option value="">Select your university</option>
+                                {% for uni in register_form.fields.university.queryset %}
+                                <option value="{{ uni.name }}" {% if register_form.university.value == uni.name %}selected{% endif %}>
+                                    {{ uni.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            {% if register_form.university.errors %}
+                            <div class="invalid-feedback">
+                                {{ register_form.university.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="id_password1">Password</label>
+                            <input type="password" name="password1" class="form-control {% if register_form.password1.errors %}is-invalid{% endif %}" 
+                                id="id_password1" required placeholder="Password">
+                            {% if register_form.password1.errors %}
+                            <div class="invalid-feedback">
+                                {{ register_form.password1.errors.0 }}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ register_form.password1.help_text }}</small>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="id_password2">Confirm Password</label>
+                            <input type="password" name="password2" class="form-control {% if register_form.password2.errors %}is-invalid{% endif %}" 
+                                id="id_password2" required placeholder="Confirm password">
+                            {% if register_form.password2.errors %}
+                            <div class="invalid-feedback">
+                                {{ register_form.password2.errors.0 }}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ register_form.password2.help_text }}</small>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    Already have an account? <a href="{% url 'login' %}">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
