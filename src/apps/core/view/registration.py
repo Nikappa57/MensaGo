@@ -8,8 +8,7 @@ def register(request,*args, **kwargs):
 	user = request.user
 	if user.is_authenticated:
 		return HttpResponse(f"You are already registered as {user.email}")
-	context = {}
-
+	
 	if request.POST:
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
@@ -24,9 +23,12 @@ def register(request,*args, **kwargs):
 				return redirect(destination)
 			else:
 				return redirect('home')
-		else:
-
-			context['register_form'] = form
+	else:
+		form = RegistrationForm()
+	
+	context = {
+		'register_form': form
+	}
 
 	return render(request, 'profile/register.html', context)
 

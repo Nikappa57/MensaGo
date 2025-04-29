@@ -3,15 +3,18 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
-from .models import CustomUser
+from .models import CustomUser,University
 
 
 class RegistrationForm(UserCreationForm):
 	email = forms.EmailField(max_length=255,required=True,help_text='Required. Inform a valid email address.')
+	#queryset for university and economical level
+	university = forms.ModelChoiceField(queryset=University.objects.all(), required=True, help_text='Required. Select your university.')
 
 	class Meta:
 		model = CustomUser
 		fields = ('email','first_name','last_name','university', 'password1', 'password2')
+
 
 	def save(self, commit=True):
 		user = super().save(commit=False)
