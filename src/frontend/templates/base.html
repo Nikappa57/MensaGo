@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,28 +36,60 @@
             padding: 1rem 0;
             background-color: #f1f1f1;
         }
+        
+        .login-btn {
+            border: 2px solid #3b82f6; /* bootstrap blue-600 */
+            color: #3b82f6;
+            border-radius: 0.75rem;
+            transition: background-color 0.3s;
+        }
+        .login-btn:hover {
+            background-color: #e0edff;
+        }
+        
+        .profile-btn {
+            border: 2px solid #3b82f6; /* bootstrap blue-600 */
+            color: #3b82f6;
+            border-radius: 0.75rem;
+            transition: background-color 0.3s;
+        }
+        .profile-btn:hover {
+            background-color: #e0edff;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">MensaGO</a>
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+        <div class="container-fluid px-4">
+            <!-- Logo + Scritta Mensa GO -->
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+                <img src="{% static 'imgs/logo.png' %}" alt="Logo" width="24" height="24" class="me-2" />
+                <span class="fw-semibold fs-5">MensaGO</span>
+            </a>
+
+            <!-- Roba per mobile (Non so se ha senso TODO:Verificare) -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
+
+            <!-- link alle pagine -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link text-dark" href="{% url 'home' %}">Home</a>
                     </li>
-                    <!-- Add more navbar items as needed -->
-                </ul>
-                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#">About Us</a>
+                    </li>
+                    
                     {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    <li class="nav-item dropdown ms-3">
+                        <a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             {{ user.first_name }} {{ user.last_name }}
                         </a>
@@ -76,11 +109,8 @@
                         </ul>
                     </li>
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    <li class="nav-item ms-3">
+                        <a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -96,7 +126,7 @@
     <!-- Footer -->
     <footer class="text-center text-muted">
         <div class="container">
-            <p>© {% now "Y" %} MensaGO - SmartCanteen</p>
+            <p>© {% now "Y" %} MensaGO</p>
         </div>
     </footer>
 
