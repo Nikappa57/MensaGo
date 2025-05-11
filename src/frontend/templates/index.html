@@ -1,25 +1,228 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 
-{% block title %}Home - MensaGO{% endblock %}
+{% block title %}MensaGO{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-body text-center">
-                    <h1 class="card-title">Welcome to MensaGO</h1>
-                    <p class="card-text">Your smart canteen management system</p>
-                    
-                    {% if not user.is_authenticated %}
-                    <div class="mt-4">
-                        <a href="{% url 'login' %}" class="btn btn-primary me-2">Login</a>
-                        <a href="{% url 'register' %}" class="btn btn-outline-primary">Register</a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+  <!-- Hero -->
+  <section class="position-relative">
+    <img src="{% static 'imgs/hero.png' %}" class="w-100" style="object-fit: cover;" alt="Mensa">
+    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center text-white" style="background: rgba(0,0,0,0.35)">
+      <h1 class="display-3 fw-bold">MensaGO</h1>
+      <p class="lead">Il tuo nuovo modo di mangiare</p>
+      {% if cities %}
+      <a href="#cities" class="btn btn-dark btn-lg">Scopri le mense</a>
+      {% else %}
+      <button class="btn btn-dark btn-lg" disabled>Scopri le mense</button>
+      {% endif %}
     </div>
-</div>
+  </section>
+
+<!-- About -->
+<section id="about" class="container py-5">
+  <!-- Prima sezione -->
+  <div class="row align-items-center mb-5">
+    <div class="col-md-4 d-flex">
+      <div class="d-flex align-items-start mt-3 me-3">
+        <div class="d-flex flex-column">
+          <div class="border-top border-3 border-primary ps-2 mt-3" style="width: 40px;"></div>
+          <div class="ps-2" style="line-height: 1.2; width: 200px;">
+            <p class="small text-muted mb-0">Scopri il piacere di una pausa rilassante nelle nostre accoglienti mense universitarie. Qualità e comfort ti aspettano.</p>
+          </div>
+        </div>
+      </div>
+      <img src="{% static 'imgs/about/coffee.jpg' %}" class="img-fluid rounded" alt="Coffee Break" style="max-height: 220px; object-fit: cover;">
+    </div>
+    <div class="col-md-8 ps-md-5">
+      <h5><em>Always</em> amazing experience</h5>
+      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis nisi, consequatur, laborum libero a neque ducimus.</p>
+      <p class="text-muted">Porro rem illum, quo nostrum quisquam asperiores. Possimus facilis velit, voluptatibus!</p>
+    </div>
+  </div>
+
+  <!-- Seconda sezione -->
+  <div class="row align-items-center mb-5">
+    <div class="col-md-4 d-flex order-md-2">
+      <div class="d-flex align-items-start mt-3">
+        <div class="d-flex flex-column">
+          <div class="border-top border-3 border-primary ps-2 mt-3" style="width: 40px;"></div>
+          <div class="ps-2" style="line-height: 1.2; width: 200px;">
+            <p class="small text-muted mb-0">Goditi i nostri spazi all'aperto, perfetti per studiare o socializzare in un ambiente naturale e rigenerante durante la tua giornata universitaria.</p>
+          </div>
+        </div>
+      </div>
+      <img src="{% static 'imgs/about/outdoor.jpg' %}" class="img-fluid rounded ms-3" alt="Coffee Break" style="max-height: 220px; object-fit: cover;">
+    </div>
+    <div class="col-md-8 order-md-1">
+      <h5><em>Beautiful</em> outdoor seating</h5>
+      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis nisi, consequatur, laborum libero a neque ducimus.</p>
+      <p class="text-muted">Porro rem illum, quo nostrum quisquam asperiores. Possimus facilis velit, voluptatibus!</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Banner con testo -->
+<section class="container-fluid px-0">
+	<div class="position-relative">
+	  <img src="{% static 'imgs/about/food.jpg' %}" class="img-fluid w-100" alt="Coffee Row" style="object-fit: cover;">
+	  <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-start justify-content-center p-4" style="background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);">
+		<div class="d-flex flex-column">
+		  <div class="border-top border-3 border-primary ps-2 mt-3" style="width: 40px;"></div>
+		  <div class="ps-2" style="line-height: 1.2;">
+		    <p class="small text-dark mt-2">Enjoy our specialty coffees and award winning doughnuts in a friendly atmosphere.</p>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</section>
+		
+  <!-- Citta -->
+  <section id="cities" class="container py-5">
+    <small class="text-primary text-uppercase">Le città più popolari</small>
+    <h2 class="fw-bold mt-2">Scopri le mense</h2>
+    <div class="row gy-4 mt-4">
+      {% if cities %}
+        {% for city in cities %}
+        <div class="col-sm-6 col-lg-4">
+          <a href="{% url 'mensa_city' city_name=city.name %}" class="text-decoration-none">
+            <div class="card text-white border-0 h-100">
+              <img src="{{ city.landscape.url }}" class="card-img" alt="{{ city.name }}" style="height: 200px; object-fit: cover;">
+              <div class="card-img-overlay d-flex justify-content-center align-items-center" style="background: rgba(0,0,0,0.3)">
+                <h5 class="card-title">{{ city.name }}</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12 text-center">
+          <p>Nessuna città disponibile al momento.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Upcoming Events -->
+  <section class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold mb-0">Prossimi Eventi</h2>
+        <a href="#" class="btn btn-dark btn-sm mt-2">Vedi tutti</a>
+      </div>
+    </div>
+    
+    {% if events %}
+      <div id="eventsCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for event in events %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <div class="card bg-dark text-white">
+                <img src="{{ event.img.url }}" class="card-img" alt="{{ event.name }}" style="height: 400px; object-fit: cover;">
+                <div class="card-img-overlay d-flex flex-column justify-content-end p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent)">
+                  <h4 class="card-title">{{ event.name }}</h4>
+                  <p class="card-text">Data: {{ event.date|date:"d F Y" }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        
+        <!-- Controlli del carosello -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#eventsCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Precedente</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#eventsCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Successivo</span>
+        </button>
+        
+        <!-- Indicatori del carosello -->
+        <div class="carousel-indicators">
+          {% for event in events %}
+            <button type="button" data-bs-target="#eventsCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="alert alert-info mt-3">
+        <p class="mb-0">Nessun evento in programma al momento.</p>
+      </div>
+    {% endif %}
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="bg-white py-5">
+    <div class="container">
+      <h2 class="fw-bold">F.A.Q.</h2>
+      <p class="text-muted">Risposte alle domande più frequenti</p>
+      <div class="accordion" id="faqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading1">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+              Come posso utilizzare MensaGO?
+            </button>
+          </h2>
+          <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Registrati con la tua email universitaria, seleziona la tua università e inizia subito a esplorare le mense disponibili nella tua città.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading2">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+              Come posso ricaricare il mio credito?
+            </button>
+          </h2>
+          <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Accedi alla sezione "Accreditation" dal tuo profilo per ricaricare il tuo credito utilizzando vari metodi di pagamento.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading3">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+              Posso vedere quali ingredienti contengono i piatti?
+            </button>
+          </h2>
+          <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Sì, ogni piatto ha una descrizione dettagliata degli ingredienti. Inoltre, puoi specificare le tue allergie nel profilo per ricevere avvisi personalizzati.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="container py-5">
+    <h2 class="fw-bold">Contattaci</h2>
+    <p class="text-muted">Hai domande? Scrivici!</p>
+    <form method="post" action="{% url 'home' %}" class="row g-3 mt-3">
+      {% csrf_token %}
+      <div class="col-md-6">
+        <label for="id_name" class="form-label">Nome</label>
+        <input type="text" name="name" id="id_name" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label for="id_email" class="form-label">Email</label>
+        <input type="email" name="email" id="id_email" class="form-control" required>
+      </div>
+      <div class="col-12">
+        <label for="id_message" class="form-label">Messaggio</label>
+        <textarea name="message" id="id_message" class="form-control" rows="4" required></textarea>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-dark">Invia messaggio</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/carousel.js' %}"></script>
 {% endblock %}
