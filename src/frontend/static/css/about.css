@@ -16,12 +16,12 @@ body {
 	padding: 20px;
 }
 
-/* Prima sezione - Coffee Break e Amazing Experience */
+/* Prima sezione  */
 .first-section {
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0;
-	align-items: center; /* Align items vertically in the center */
+	align-items: center;
 }
 
 .left-side {
@@ -47,6 +47,9 @@ body {
 	width: 100%;
 	height: auto;
 	border-radius: 5px;
+	position: relative;
+	margin: 50px 0 0 0;
+
 }
 
 .right-side {
@@ -55,7 +58,7 @@ body {
 	flex-direction: column;
 }
 
-/* Terza sezione - Outdoor Seating */
+/* Seconda sezione */
 .second-section {
 	display: flex;
 	justify-content: space-between;
@@ -107,12 +110,7 @@ body {
 	position: relative;
 }
 
-.banner-content {
-	width: 100%;
-	position: relative;
-}
-
-.banner-content::before {
+.full-banner::before {
 	content: "";
 	position: absolute;
 	top: 0;
