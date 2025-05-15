@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block title %}MensaGO{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
 
 {% block content %}
   <!-- Hero -->
@@ -19,63 +23,60 @@
   </section>
 
 <!-- About -->
-<section id="about" class="container py-5">
-  <!-- Prima sezione -->
-  <div class="row align-items-center mb-5">
-    <div class="col-md-4 d-flex">
-      <div class="d-flex align-items-start mt-3 me-3">
-        <div class="d-flex flex-column">
-          <div class="border-top border-3 border-primary ps-2 mt-3" style="width: 40px;"></div>
-          <div class="ps-2" style="line-height: 1.2; width: 200px;">
-            <p class="small text-muted mb-0">Scopri il piacere di una pausa rilassante nelle nostre accoglienti mense universitarie. Qualità e comfort ti aspettano.</p>
-          </div>
+
+<div class="container">
+        <!-- Prima sezione -->
+        <section id="about" class="first-section">
+            <div class="left-side">
+                <div class="little-first-section-text">
+                    <div class="title-with-line">
+                        <span class="blue-line"></span>
+                        <h3>Take a coffee break<br>or enjoy a meal.</h3>
+                    </div>
+                </div>
+                <div class="first-section-image">
+                    <img src="{% static 'imgs/about/coffee.jpg' %}"  alt="immagine 1 about">
+                </div>
+            </div>
+            <div class="right-side">
+                <h2>Always amazing experience</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste, consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam superiores. Possimus facilis velin, voluptatibus!</p>
+            </div>
+        </section>
+        
+        <!-- Seconda sezione -->
+        <section class="second-section">
+            <div class="second-section-text">
+                <h2>Beautiful outdoor seating</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ullam quia similique asperiores consequatur! Nihil temporibus qui enim. Accusamus voluptates a, id quidem! Quo, et?</p>
+            </div>
+            <div class="second-section-image">
+                <div class="bg-square"></div>
+                <img src="{% static 'imgs/about/outdoor.jpg' %}" alt="immagine 2 about">
+                <div class="little-second-section-text">
+                    <div class="title-with-line">
+                        <span class="blue-line"></span>
+                        <h3>Great variety of<br>foods you will enjoy.</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>    
+
+	<!-- Banner completo -->
+    <div class="full-banner">
+        <div class="banner-content">
+            <div class="banner-text">
+                <div class="title-with-line">
+                    <span class="blue-line"></span>
+                    <h3>Enjoy our specialty coffees and award<br>winning doughnuts in a friendly atmosphere.</h3>
+                </div>
+            </div>
+            <div class="banner-image">
+                <img src="{% static 'imgs/about/banner.jpg' %}" alt="immagine 3 about (banner)">
+            </div>
         </div>
-      </div>
-      <img src="{% static 'imgs/about/coffee.jpg' %}" class="img-fluid rounded" alt="Coffee Break" style="max-height: 220px; object-fit: cover;">
     </div>
-    <div class="col-md-8 ps-md-5">
-      <h5><em>Always</em> amazing experience</h5>
-      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis nisi, consequatur, laborum libero a neque ducimus.</p>
-      <p class="text-muted">Porro rem illum, quo nostrum quisquam asperiores. Possimus facilis velit, voluptatibus!</p>
-    </div>
-  </div>
-
-  <!-- Seconda sezione -->
-  <div class="row align-items-center mb-5">
-    <div class="col-md-4 d-flex order-md-2">
-      <div class="d-flex align-items-start mt-3">
-        <div class="d-flex flex-column">
-          <div class="border-top border-3 border-primary ps-2 mt-3" style="width: 40px;"></div>
-          <div class="ps-2" style="line-height: 1.2; width: 200px;">
-            <p class="small text-muted mb-0">Goditi i nostri spazi all'aperto, perfetti per studiare o socializzare in un ambiente naturale e rigenerante durante la tua giornata universitaria.</p>
-          </div>
-        </div>
-      </div>
-      <img src="{% static 'imgs/about/outdoor.jpg' %}" class="img-fluid rounded ms-3" alt="Coffee Break" style="max-height: 220px; object-fit: cover;">
-    </div>
-    <div class="col-md-8 order-md-1">
-      <h5><em>Beautiful</em> outdoor seating</h5>
-      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis nisi, consequatur, laborum libero a neque ducimus.</p>
-      <p class="text-muted">Porro rem illum, quo nostrum quisquam asperiores. Possimus facilis velit, voluptatibus!</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- Banner con testo -->
-<section class="container-fluid px-0">
-	<div class="position-relative">
-	  <img src="{% static 'imgs/about/food.jpg' %}" class="img-fluid w-100" alt="Coffee Row" style="object-fit: cover;">
-	  <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-start justify-content-center p-4" style="background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);">
-		<div class="d-flex flex-column">
-		  <div class="border-top border-3 border-primary ps-2 mt-3" style="width: 40px;"></div>
-		  <div class="ps-2" style="line-height: 1.2;">
-		    <p class="small text-dark mt-2">Enjoy our specialty coffees and award winning doughnuts in a friendly atmosphere.</p>
-		  </div>
-		</div>
-	  </div>
-	</div>
-</section>
 		
   <!-- Citta -->
   <section id="cities" class="container py-5">
@@ -108,8 +109,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
       <div>
         <h2 class="fw-bold mb-0">Prossimi Eventi</h2>
-        <a href="#" class="btn btn-dark btn-sm mt-2">Vedi tutti</a>
-      </div>
+		</div>
     </div>
     
     {% if events %}
