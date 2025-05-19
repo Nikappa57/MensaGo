@@ -120,17 +120,13 @@
         height: 100vh;
         position: sticky;
         top: 0;
-        pointer-events: none; 
-    }
-
-    #map:focus {
-        pointer-events: auto;     }    
+    }    
 	.cafeteria-container {
         padding-bottom: 100vh;
     }
 
     .filters-section {
-        position: sticky;
+        position: static;
         top: 0;
         background: white;
         z-index: 1;
@@ -170,7 +166,7 @@
 {% block content %}
 <div class="container-fluid px-0">    <div class="row g-0">
         <!-- Left side - Filters and Cafeteria List -->
-        <div class="col-6 border-end">
+        <div class="col-12 col-lg-6 border-end">
             <div class="cafeteria-container">
                 <div class="p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
@@ -191,7 +187,7 @@
                     </div>                    <!-- Cafeteria List -->
                     <div class="cafeteria-list row g-4">
                         {% for mensa in mense %}
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
                             <div class="card mensa-card h-100">
                                 <a href="{% url 'mensa_details' city_name=city.name mensa_name=mensa.name %}" class="text-decoration-none">
                                 <div class="mensa-banner">
@@ -232,7 +228,7 @@
             </div>
         </div>
           <!-- Right side - Map -->
-        <div class="col-6">
+        <div class="col-12 col-lg-6 d-none d-lg-block">
             <div id="map" tabindex="0"></div>
         </div>
     </div>
@@ -244,13 +240,16 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
     const map = L.map('map', {
-        scrollWheelZoom: false
+        scrollWheelZoom: false,
+        dragging: false
     }).setView([{{ city.latitude }}, {{ city.longitude }}], 13);
 
-    map.getContainer().addEventListener('click', function() {
+    map.addEventListener('click', function(event) { // Added 'event' parameter
         map.scrollWheelZoom.enable();
 		map.dragging.enable();
-        this.focus();
+        if (event.originalEvent) {
+            event.originalEvent.stopPropagation(); // Stop event from bubbling to document
+        }
     });
 
     document.addEventListener('click', function(e) {
@@ -262,7 +261,6 @@
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        minZoom: 10,
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
