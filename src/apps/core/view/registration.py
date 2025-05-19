@@ -33,7 +33,7 @@ def register(request,*args, **kwargs):
 	return render(request, 'profile/register.html', context)
 
 def logout_view(request):
-	if request.method == 'POST':
+	if request.user.is_authenticated:
 		logout(request)
 		return redirect('home')
 	else:

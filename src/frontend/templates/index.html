@@ -1,23 +1,22 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}MensaGO{% endblock %}
+{% block title %}Home{% endblock %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/about.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
 
 {% block content %}
   <!-- Hero -->
-  <section class="position-relative">
-    <img src="{% static 'imgs/hero.png' %}" class="w-100" style="object-fit: cover;" alt="Mensa">
+  <section class="position-relative" style="height: 100%;">
+    <img src="{% static 'imgs/hero.png' %}" style="object-fit: cover; width: 100%; height: 100vh;" alt="Mensa">
     <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center text-white" style="background: rgba(0,0,0,0.35)">
       <h1 class="display-3 fw-bold">MensaGO</h1>
       <p class="lead">Il tuo nuovo modo di mangiare</p>
       {% if cities %}
       <a href="#cities" class="btn btn-dark btn-lg">Scopri le mense</a>
-      {% else %}
-      <button class="btn btn-dark btn-lg" disabled>Scopri le mense</button>
       {% endif %}
     </div>
   </section>
@@ -25,43 +24,78 @@
 <!-- About -->
 
 <div class="container">
-        <!-- Prima sezione -->
-        <section id="about" class="first-section">
-            <div class="left-side">
-                <div class="little-first-section-text">
-                    <div class="title-with-line">
-                        <span class="blue-line"></span>
-                        <h3>Take a coffee break<br>or enjoy a meal.</h3>
-                    </div>
+        <section id="about">
+            <section class="about-flex">
+              <section class="about-elem">
+                <div class="about-elem-side">
+                  <div class="about-elem-img">
+                  <div class="bg-square-about-left"></div>
+                  <img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
+                  </div>
                 </div>
-                <div class="first-section-image">
-                    <img src="{% static 'imgs/about/coffee.jpg' %}"  alt="immagine 1 about">
+                <div class="about-elem-side">
+                  <h2>Always amazing experience</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste, consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam superiores. Possimus facilis velin, voluptatibus!</p>
                 </div>
-            </div>
-            <div class="right-side">
-                <h2>Always amazing experience</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste, consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam superiores. Possimus facilis velin, voluptatibus!</p>
-            </div>
+              </section>
+
+              <section class="about-elem">
+                <div class="about-elem-side">
+                    <h2>Always amazing experience</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste, consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam superiores. Possimus facilis velin, voluptatibus!</p>
+                </div>
+                <div class="about-elem-side">
+                  {% comment %} <div class="little-first-section-text">
+                      <div class="title-with-line">
+                          <span class="blue-line"></span>
+                          <h3>Take a coffee break<br>or enjoy a meal.</h3>
+                      </div>
+                  </div> {% endcomment %}
+                  <div class="about-elem-img">
+                    <div class="bg-square-about-right"></div>
+                    <img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
+                  </div>
+                </div>
+              
+              </section>
+            </section>
+
+            <section class="about-flex">
+              <section class="about-elem">
+                <div class="about-elem-side">
+                  <div class="about-elem-img">
+                  <div class="bg-square-about-left"></div>
+                  <img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
+                  </div>
+                </div>
+                <div class="about-elem-side">
+                  <h2>Always amazing experience</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste, consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam superiores. Possimus facilis velin, voluptatibus!</p>
+                </div>
+              </section>
+
+              <section class="about-elem">
+                <div class="about-elem-side">
+                    <h2>Always amazing experience</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste, consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam superiores. Possimus facilis velin, voluptatibus!</p>
+                </div>
+                <div class="about-elem-side">
+                  {% comment %} <div class="little-first-section-text">
+                      <div class="title-with-line">
+                          <span class="blue-line"></span>
+                          <h3>Take a coffee break<br>or enjoy a meal.</h3>
+                      </div>
+                  </div> {% endcomment %}
+                  <div class="about-elem-img">
+                    <div class="bg-square-about-right"></div>
+                    <img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
+                  </div>
+                </div>
+              
+              </section>
+            </section>
         </section>
-        
-        <!-- Seconda sezione -->
-        <section class="second-section">
-            <div class="second-section-text">
-                <h2>Beautiful outdoor seating</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ullam quia similique asperiores consequatur! Nihil temporibus qui enim. Accusamus voluptates a, id quidem! Quo, et?</p>
-            </div>
-            <div class="second-section-image">
-                <div class="bg-square"></div>
-                <img src="{% static 'imgs/about/outdoor.jpg' %}" alt="immagine 2 about">
-                <div class="little-second-section-text">
-                    <div class="title-with-line">
-                        <span class="blue-line"></span>
-                        <h3>Great variety of<br>foods you will enjoy.</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>    
+    </div>
 
 	<!-- Banner completo -->
     <div class="full-banner">
