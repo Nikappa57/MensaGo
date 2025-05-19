@@ -2,86 +2,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{% block title %}MensaGO{% endblock %}</title>
-	
-	<!-- Bootstrap CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="{% static 'css/base_style.css' %}">
-
-	<!-- Font Awesome -->
-	<script src="https://kit.fontawesome.com/3e01ddf114.js" crossorigin="anonymous"></script>
-
-	<!-- Custom CSS -->
-	{% block extra_css %}{% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - MensaGO</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    
+    <!-- Custom CSS -->
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-	<!-- Navbar -->
-	<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
-		<div class="container-fluid px-4">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+        <div class="container-fluid px-4">
+            <!-- Logo + Scritta Mensa GO -->
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+                <img src="{% static 'imgs/logo.png' %}" alt="Logo" width="40" height="40" class="nav_logo" />
+                <span class="fw-semibold fs-5">MensaGO</span>
+            </a>
 
-			<!-- Logo + Scritta Mensa GO -->
-			<a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-				<img src="{% static 'imgs/logo.png' %}" alt="Logo" width="24" height="24" class="me-2" />
-				<span class="fw-semibold fs-5">MensaGO</span>
-			</a>
+            <!-- Roba per mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-			<!-- Roba per mobile (Non so se ha senso TODO:Verificare) -->
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+            <!-- link alle pagine -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#faq">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#about">About Us</a>
+                    </li>
 
-			<!-- link alle pagine -->
-			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-				<ul class="navbar-nav align-items-center">
-					<li class="nav-item">
-						<a class="nav-link text-dark" href="{% url 'home' %}">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" href="#">FAQ</a> <!-- TODO: fai che scorre!! -->
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" href="#">About Us</a>
-					</li>
-					
-					{% if user.is_authenticated %}
-					<li class="nav-item dropdown ms-3">
-						<a class="nav-link dropdown-toggle profile-btn px-3 py-1 d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {% if user.propic %} <!-- TODO: Fai che se non c'è la foto di profilo non da errore -->
-                            <img src="{{ user.propic.url }}" alt="Profile" width="24" height="24" class="rounded-circle me-2" />
-                            {% else %}
-                            <img src="{% static 'imgs/profile_pic/default.jpg' %} " alt="Profile" width="24" height="24" class="rounded-circle me-2" />
-                            {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown ms-3">
+                        <a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             {{ user.first_name }} {{ user.last_name }}
                         </a>
-                        
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-							<li><a class="dropdown-item" href="{% url 'preferences' %}">Preferences</a></li>
-							<li><a class="dropdown-item" href="{% url 'accreditation' %}">Accreditation</a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li>
-								<form method="post" action="{% url 'logout' %}">
-									{% csrf_token %}
-									<button type="submit" class="dropdown-item">Logout</button>
-								</form>
-							</li>
-						</ul>
-					</li>
-					{% else %}
-					<li class="nav-item ms-3">
-						<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
-					</li>
-					{% endif %}
-				</ul>
-			</div>
-		</div>
-	</nav>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'preferences' %}">Preferences</a></li>
+                            <li><a class="dropdown-item" href="{% url 'accreditation' %}">Accreditation</a></li>
+                            <li><hr class="dropdown-divider"> </li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item ms-3">
+                        <a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 	<!-- Main Content -->
 	<main>

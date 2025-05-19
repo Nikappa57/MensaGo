@@ -33,11 +33,11 @@ def register(request, *args, **kwargs):
 
 
 def logout_view(request):
-    if request.method == 'POST':
-        logout(request)
-        return redirect('home')
-    else:
-        return HttpResponse("You are not logged in")
+	if request.user.is_authenticated:
+		logout(request)
+		return redirect('home')
+	else:
+		return HttpResponse("You are not logged in")
 
 
 def login_view(request, *args, **kwargs):
