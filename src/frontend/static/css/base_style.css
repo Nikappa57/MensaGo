@@ -1,0 +1,40 @@
+body {
+	background-color: #f8f9fa;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.navbar-brand {
+	font-weight: bold;
+}
+
+main {
+	flex: 1;
+}
+
+footer {
+	margin-top: auto;
+	padding: 1rem 0;
+	background-color: #f1f1f1;
+}
+
+.login-btn {
+	border: 2px solid #3b82f6; /* bootstrap blue-600 */
+	color: #3b82f6;
+	border-radius: 0.75rem;
+	transition: background-color 0.3s;
+}
+.login-btn:hover {
+	background-color: #e0edff;
+}
+
+.profile-btn {
+	border: 2px solid #3b82f6; /* bootstrap blue-600 */
+	color: #3b82f6;
+	border-radius: 0.75rem;
+	transition: background-color 0.3s;
+}
+.profile-btn:hover {
+	background-color: #e0edff;
+}

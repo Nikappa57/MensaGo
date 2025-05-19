@@ -134,11 +134,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "core.CustomUser"
 
 # Email settings (solo ora per lo sviluppo)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Personalizzazione delle viste di reset password
 PASSWORD_RESET_TIMEOUT = 259200  # 3 giorni in secondi
-
 
 # per production:
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -14,7 +14,7 @@
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         
-                        {% if register_form.errors %}
+                        {% if form.errors %}
                         <div class="alert alert-danger">
                             <strong>Error:</strong> Please correct the errors below.
                         </div>
@@ -22,25 +22,25 @@
                         
                         <div class="form-group mb-3">
                             <label for="id_email">Email address</label>
-                            <input type="email" name="email" class="form-control {% if register_form.email.errors %}is-invalid{% endif %}" 
-                                id="id_email" required placeholder="Enter email" value="{{ register_form.email.value|default:'' }}">
-                            {% if register_form.email.errors %}
+                            <input type="email" name="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
+                                id="id_email" required placeholder="Enter email" value="{{ form.email.value|default:'' }}">
+                            {% if form.email.errors %}
                             <div class="invalid-feedback">
-                                {{ register_form.email.errors.0 }}
+                                {{ form.email.errors.0 }}
                             </div>
                             {% endif %}
-                            <small class="form-text text-muted">{{ register_form.email.help_text }}</small>
+                            <small class="form-text text-muted">{{ form.email.help_text }}</small>
                         </div>
                         
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="id_first_name">First Name</label>
-                                    <input type="text" name="first_name" class="form-control {% if register_form.first_name.errors %}is-invalid{% endif %}" 
-                                        id="id_first_name" required placeholder="First name" value="{{ register_form.first_name.value|default:'' }}">
-                                    {% if register_form.first_name.errors %}
+                                    <input type="text" name="first_name" class="form-control {% if form.first_name.errors %}is-invalid{% endif %}" 
+                                        id="id_first_name" required placeholder="First name" value="{{ form.first_name.value|default:'' }}">
+                                    {% if form.first_name.errors %}
                                     <div class="invalid-feedback">
-                                        {{ register_form.first_name.errors.0 }}
+                                        {{ form.first_name.errors.0 }}
                                     </div>
                                     {% endif %}
                                 </div>
@@ -48,11 +48,11 @@
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label for="id_last_name">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control {% if register_form.last_name.errors %}is-invalid{% endif %}" 
-                                        id="id_last_name" required placeholder="Last name" value="{{ register_form.last_name.value|default:'' }}">
-                                    {% if register_form.last_name.errors %}
+                                    <input type="text" name="last_name" class="form-control {% if form.last_name.errors %}is-invalid{% endif %}" 
+                                        id="id_last_name" required placeholder="Last name" value="{{ form.last_name.value|default:'' }}">
+                                    {% if form.last_name.errors %}
                                     <div class="invalid-feedback">
-                                        {{ register_form.last_name.errors.0 }}
+                                        {{ form.last_name.errors.0 }}
                                     </div>
                                     {% endif %}
                                 </div>
@@ -61,44 +61,44 @@
                         
                         <div class="form-group mb-3">
                             <label for="id_university">University</label>
-                            <select name="university" class="form-control {% if register_form.university.errors %}is-invalid{% endif %}" 
+                            <select name="university" class="form-control {% if form.university.errors %}is-invalid{% endif %}" 
                                 id="id_university">
                                 <option value="">Select your university</option>
-                                {% for uni in register_form.fields.university.queryset %}
-                                <option value="{{ uni.name }}" {% if register_form.university.value == uni.name %}selected{% endif %}>
-                                    {{ uni.name }}
+                                {% for uni in form.fields.university.queryset %}
+                                <option value="{{ uni.name }}" {% if form.university.value == uni.name %}selected{% endif %}>
+                                    <td>{{ uni.name }}</td>
                                 </option>
                                 {% endfor %}
                             </select>
-                            {% if register_form.university.errors %}
+                            {% if form.university.errors %}
                             <div class="invalid-feedback">
-                                {{ register_form.university.errors.0 }}
+                                {{ form.university.errors.0 }}
                             </div>
                             {% endif %}
                         </div>
                         
                         <div class="form-group mb-3">
                             <label for="id_password1">Password</label>
-                            <input type="password" name="password1" class="form-control {% if register_form.password1.errors %}is-invalid{% endif %}" 
+                            <input type="password" name="password1" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" 
                                 id="id_password1" required placeholder="Password">
-                            {% if register_form.password1.errors %}
+                            {% if form.password1.errors %}
                             <div class="invalid-feedback">
-                                {{ register_form.password1.errors.0 }}
+                                {{ form.password1.errors.0 }}
                             </div>
                             {% endif %}
-                            <small class="form-text text-muted">{{ register_form.password1.help_text }}</small>
+                            <small class="form-text text-muted">{{ form.password1.help_text }}</small>
                         </div>
                         
                         <div class="form-group mb-3">
                             <label for="id_password2">Confirm Password</label>
-                            <input type="password" name="password2" class="form-control {% if register_form.password2.errors %}is-invalid{% endif %}" 
+                            <input type="password" name="password2" class="form-control {% if form.password2.errors %}is-invalid{% endif %}" 
                                 id="id_password2" required placeholder="Confirm password">
-                            {% if register_form.password2.errors %}
+                            {% if form.password2.errors %}
                             <div class="invalid-feedback">
-                                {{ register_form.password2.errors.0 }}
+                                {{ form.password2.errors.0 }}
                             </div>
                             {% endif %}
-                            <small class="form-text text-muted">{{ register_form.password2.help_text }}</small>
+                            <small class="form-text text-muted">{{ form.password2.help_text }}</small>
                         </div>
                         
                         <div class="d-grid gap-2">
