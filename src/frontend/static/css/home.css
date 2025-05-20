@@ -10,11 +10,11 @@ body {
 	line-height: 1.6;
 }
 
-/*** About  ***/
-
-#about {
-	margin-top: 100px; /* bordo dall'img iniziale */
+.bg-alt {
+	background-color: #f8f9fa;
 }
+
+/*** About  ***/
 
 .about-flex { /* flex box per dividere la section tra i figli */
 	display: flex;
@@ -164,51 +164,44 @@ body {
 }
 
 
-/* Banner completo */
-.full-banner {
-	width: 100%;
-	margin: 70px 0 0 0;
-	position: relative;
+/* Cities list */
+
+.city-mensa-img {
+	height: 200px!important;
+	object-fit: cover;
 }
 
-.full-banner::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 150px;
-	background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgba(0, 0, 0, 0) 80%);
-	z-index: 1;
+.first-city-mensa-img {
+	height: 300px!important;
+	object-fit: cover;
 }
 
-.banner-text {
-	position: absolute;
-	top: 30px;
-	left: 0;
-	right: 0;
-	z-index: 2;
-	width: 1200px;
-	max-width: 90%;
-	margin: 0 auto;
-	padding: 15px;
-	color: rgb(0, 0, 0);
+.city-mensa-title {
+	color: #fff;
+	font-size: 2rem; /* aumenta se vuoi più effetto */
+	text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+	font-weight: bold;
 }
 
-.banner-image {
-	width: 100%;
-	height: auto;
-	overflow: hidden;
-	position: relative;
+.first-city-mensa-title {
+	color: #fff;
+	font-size: 3rem; /* aumenta se vuoi più effetto */
+	text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+	font-weight: bold;
 }
 
-.banner-image img {
-	width: 100%;
-	height: auto;
-	display: block;
+@media (max-width: 768px) {
+	.first-city-mensa-img {
+		height: 200px!important;
+	}
+
+	.first-city-mensa-title {
+		font-size: 2rem;
+	}
 }
 
-/* Stili generali */
+
+/* Stili generali TODO: rivedere */
 h1, h2, h3 {
 	font-weight: 400;
 	margin-bottom: 15px;

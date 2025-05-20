@@ -22,12 +22,12 @@
 </section>
 
 <!-- About -->
-<div class="container">
-	<section id="about">
-		<!-- About FLEX 1 -->
-		<section class="about-flex">
+<section id="about">
+	<!-- About FLEX 1 -->
+	<div class="bg-alt mt-100">
+		<div class=" about-flex container">
 			<!-- ELEM 1 -->
-			<section class="about-elem">
+			<div class="about-elem">
 				<div class="about-elem-side">
 					<div class="about-elem-img">
 						<div class="bg-square-about-left"></div>
@@ -37,17 +37,17 @@
 				<div class="about-elem-side">
 					<h2>Always amazing experience</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-						 consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-						  superiores. Possimus facilis velin, voluptatibus!</p>
+						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
+						superiores. Possimus facilis velin, voluptatibus!</p>
 				</div>
-			</section>
+			</div>
 			<!-- ELEM 2 -->
-			<section class="about-elem">
+			<div class="about-elem">
 				<div class="about-elem-side">
 					<h2>Always amazing experience</h2>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-						 consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-						  superiores. Possimus facilis velin, voluptatibus!</p>
+						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
+						superiores. Possimus facilis velin, voluptatibus!</p>
 				</div>
 				<div class="about-elem-side">
 					<div class="about-elem-img">
@@ -55,43 +55,43 @@
 					<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
 					</div>
 				</div>
-			</section>
-		</section>
-		<!-- About FLEX 2 -->
-		<section class="about-flex">
-			<!-- ELEM 3 -->
-			<section class="about-elem">
-				<div class="about-elem-side">
-					<div class="about-elem-img">
-					<div class="bg-square-about-left"></div>
-					<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
-					</div>
+			</div>
+		</div>
+	</div>
+	<!-- About FLEX 2 -->
+	<div class="about-flex container">
+		<!-- ELEM 3 -->
+		<div class="about-elem">
+			<div class="about-elem-side">
+				<div class="about-elem-img">
+				<div class="bg-square-about-left"></div>
+				<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
 				</div>
-				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-						 consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-						 superiores. Possimus facilis velin, voluptatibus!</p>
+			</div>
+			<div class="about-elem-side">
+				<h2>Always amazing experience</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
+					consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
+					superiores. Possimus facilis velin, voluptatibus!</p>
+			</div>
+		</div>
+		<!-- ELEM 4 -->
+		<div class="about-elem">
+			<div class="about-elem-side">
+				<h2>Always amazing experience</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
+					consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
+					superiores. Possimus facilis velin, voluptatibus!</p>
+			</div>
+			<div class="about-elem-side">
+				<div class="about-elem-img">
+				<div class="bg-square-about-right"></div>
+				<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
 				</div>
-			</section>
-			<!-- ELEM 4 -->
-			<section class="about-elem">
-				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-						 consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-						 superiores. Possimus facilis velin, voluptatibus!</p>
-				</div>
-				<div class="about-elem-side">
-					<div class="about-elem-img">
-					<div class="bg-square-about-right"></div>
-					<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
-					</div>
-				</div>
-			</section>
-		</section>
-	</section>
-</div>
+			</div>
+		</div>
+	</div>
+</section>
 
 <!-- Banner -->
 <section class="fixed-banner" style="background-image: url('{% static "imgs/about/campo2.png" %}');">
@@ -104,43 +104,57 @@
 	</div>
 </section>
 
-{% comment %} <div class="banner-fixed"> <!--full-banner-->
-	<div class="banner-text">
-		<div class="title-with-line">
-			<span class="blue-line"></span>
-			<h3>Enjoy our specialty coffees and award<br>winning doughnuts in a friendly atmosphere.</h3>
-		</div>
-	</div>
-	<div class="banner-image">
-		<img src="{% static 'imgs/about/banner.jpg' %}" alt="mensa">
-	</div>
-</div> {% endcomment %}
 
-	<!-- Citta -->
-	<section id="cities" class="container py-5">
-	<small class="text-primary text-uppercase">Le città più popolari</small>
+
+<!-- Citta -->
+<section id="cities" class="container py-5">
+	<small class="text-primary text-uppercase">
+		Siamo presenti in tutta Italia
+	</small>
 	<h2 class="fw-bold mt-2">Scopri le mense</h2>
-	<div class="row gy-4 mt-4">
+	<div class="row gy-5 gx-5 mt-4">
 		{% if cities %}
-		{% for city in cities %}
-		<div class="col-sm-6 col-lg-4">
-			<a href="{% url 'mensa_city' city_name=city.name %}" class="text-decoration-none">
-			<div class="card text-white border-0 h-100">
-				<img src="{{ city.landscape.url }}" class="card-img" alt="{{ city.name }}" style="height: 200px; object-fit: cover;">
-				<div class="card-img-overlay d-flex justify-content-center align-items-center" style="background: rgba(0,0,0,0.3)">
-				<h5 class="card-title">{{ city.name }}</h5>
-				</div>
-			</div>
-			</a>
-		</div>
-		{% endfor %}
+			{% for city in cities %}
+				{% if city.mensa_set.exists %}
+					<!-- Prima città in primo piano -->
+					{% if forloop.first %} 
+						<div class="col-12 city-col">
+							<a href="{% url 'mensa_city' city_name=city.name %}" class="text-decoration-none">
+								<div class="card border-0 h-100">
+									<img src="{{ city.landscape.url }}" class="card-img first-city-mensa-img" alt="{{ city.name }}">
+									<div class="card-img-overlay d-flex flex-column justify-content-center align-items-center" style="background: rgba(0,0,0,0.3)">
+										<h5 class="card-title first-city-mensa-title">{{ city.name }}</h5>
+										<span class="badge bg-light text-dark ms-3 mt-2">
+											{{ city.mensa_set.count }} {% if city.mensa_set.count > 1 %} mense attive {% else %} mensa attiva {% endif %}
+										</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% else %}
+						<div class="col-md-6 city-col">
+							<a href="{% url 'mensa_city' city_name=city.name %}" class="text-decoration-none">
+								<div class="card border-0 h-100">
+									<img src="{{ city.landscape.url }}" class="card-img city-mensa-img" alt="{{ city.name }}">
+									<div class="card-img-overlay d-flex flex-column justify-content-center align-items-center" style="background: rgba(0,0,0,0.3)">
+										<h5 class="card-title city-mensa-title">{{ city.name }}</h5>
+										<span class="badge bg-light text-dark ms-3 mt-2">
+											{{ city.mensa_set.count }} {% if city.mensa_set.count > 1 %} mense attive {% else %} mensa attiva {% endif %}
+										</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
 		{% else %}
 		<div class="col-12 text-center">
 			<p>Nessuna città disponibile al momento.</p>
 		</div>
 		{% endif %}
 	</div>
-	</section>
+</section>
 
 	<!-- Upcoming Events -->
 	<section class="container py-5">
