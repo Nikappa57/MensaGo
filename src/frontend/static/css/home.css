@@ -8,9 +8,6 @@
 body {
 	color: #333;
 	line-height: 1.6;
-}
-
-.bg-alt {
 	background-color: #f8f9fa;
 }
 
@@ -125,7 +122,6 @@ body {
 
 /*** BANNER ***/
 .fixed-banner {
-	margin: 100px 0;
 	height: 55vh;
 	width: 100%;
 	/* img path nell'html per jinja2 */
@@ -190,6 +186,11 @@ body {
 	font-weight: bold;
 }
 
+#cities {
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
 @media (max-width: 768px) {
 	.first-city-mensa-img {
 		height: 200px!important;
@@ -198,6 +199,11 @@ body {
 	.first-city-mensa-title {
 		font-size: 2rem;
 	}
+}
+
+#FAQ {
+	margin-top: 100px;
+	margin-bottom: 100px;
 }
 
 

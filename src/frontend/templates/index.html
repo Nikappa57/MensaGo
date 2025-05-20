@@ -24,7 +24,6 @@
 <!-- About -->
 <section id="about">
 	<!-- About FLEX 1 -->
-	<div class="bg-alt mt-100">
 		<div class=" about-flex container">
 			<!-- ELEM 1 -->
 			<div class="about-elem">
@@ -56,7 +55,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 	<!-- About FLEX 2 -->
 	<div class="about-flex container">
@@ -156,14 +154,14 @@
 	</div>
 </section>
 
-	<!-- Upcoming Events -->
-	<section class="container py-5">
+<!-- Upcoming Events -->
+<section class="container" id="Eventi">
 	<div class="d-flex justify-content-between align-items-center mb-4">
 		<div>
 		<h2 class="fw-bold mb-0">Prossimi Eventi</h2>
 		</div>
 	</div>
-	
+
 	{% if events %}
 		<div id="eventsCarousel" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-inner">
@@ -202,10 +200,10 @@
 		<p class="mb-0">Nessun evento in programma al momento.</p>
 		</div>
 	{% endif %}
-	</section>
+</section>
 
-	<!-- FAQ -->
-	<section id="faq" class="bg-white py-5">
+<!-- FAQ -->
+<section id="FAQ" class="py-5">
 	<div class="container">
 		<h2 class="fw-bold">F.A.Q.</h2>
 		<p class="text-muted">Risposte alle domande più frequenti</p>
