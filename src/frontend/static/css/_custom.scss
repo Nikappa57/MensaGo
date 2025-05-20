@@ -1,0 +1,61 @@
+/* -------------------------------------------
+   Palette Coolors ( https://coolors.co/264653-2a9d8f-e9c46a-f4a261-e76f51 )
+------------------------------------------- */
+$cool-dark:   #264653; // blu petrolio
+$cool-green:  #2A9D8F; // verde acqua
+$cool-sand:   #E9C46A; // sabbia
+$cool-orange: #F4A261; // arancio soft
+$cool-red:    #E76F51; // rosso corallo
+
+/* -------------------------------------------
+   Override principali di Bootstrap
+------------------------------------------- */
+
+// mappa base (le chiavi devono esistere per le classi btn-*, alert-*, bg-*, text-*, ecc.)
+$theme-colors: (
+  "primary":   $cool-dark,
+  "secondary": $cool-green,
+  "warning":   $cool-sand,
+  "info":      $cool-orange,
+  "danger":    $cool-red
+);
+
+// colori opzionali d’interfaccia
+$body-bg:         tint-color($cool-dark, 90%);   // sfondo pagina
+$body-color:      shade-color($cool-dark, 80%);  // testo principale
+$link-color:      $cool-green;
+$link-hover-color:shade-color($cool-green, 15%);
+
+// se vuoi personalizzare success/­light/­dark aggiungili qui
+//$theme-colors: map-merge(
+//  $theme-colors,
+//  (
+//    "success": #32a852,
+//    "light":   #f8f9fa,
+//    "dark":    #1a1a1a
+//  )
+//);
+
+/* -------------------------------------------
+   Utilities generate-in-bulk usando le mappe
+------------------------------------------- */
+$utilities: map-merge(
+  $utilities,
+  (
+    "bg" : (
+      property: background-color,
+      class:    bg,
+      values:   $theme-colors   // genera .bg-primary, .bg-secondary, …
+    ),
+    "text" : (
+      property: color,
+      class:    text,
+      values:   $theme-colors   // genera .text-primary, .text-secondary, …
+    )
+  )
+);
+
+/* -------------------------------------------
+   IMPORTA Bootstrap per ultimo!
+------------------------------------------- */
+@import "bootstrap/scss/bootstrap";

@@ -13,8 +13,8 @@
 <section class="position-relative" style="height: 100%;">
 <img src="{% static 'imgs/hero.png' %}" style="object-fit: cover; width: 100%; height: 100vh;" alt="Mensa">
 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center text-white" style="background: rgba(0,0,0,0.35)">
-	<h1 class="display-3 fw-bold">MensaGO</h1>
-	<p class="lead">Il tuo nuovo modo di mangiare</p>
+	<h1 class="fw-bold home-title">Mensa Go</h1>
+	<p class="home-subtitle">Il tuo nuovo modo di mangiare</p>
 	{% if cities %}
 		<a href="#cities" class="btn btn-dark btn-lg">Scopri le mense</a>
 	{% endif %}
@@ -29,8 +29,8 @@
 			<div class="about-elem">
 				<div class="about-elem-side">
 					<div class="about-elem-img">
-						<div class="bg-square-about-left"></div>
-						<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
+						<div class="bg-square-about-left" style=""></div>
+						<img src="{% static 'imgs/about/cucinando.png' %}" class="about-img-left" alt="caffe">
 					</div>
 				</div>
 				<div class="about-elem-side">
@@ -51,43 +51,43 @@
 				<div class="about-elem-side">
 					<div class="about-elem-img">
 					<div class="bg-square-about-right"></div>
-					<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
+					<img src="{% static 'imgs/about/verdure2.png' %}"  class="about-img-right" alt="caffe">
 					</div>
 				</div>
 			</div>
 	</div>
 	<!-- About FLEX 2 -->
-	<div class="about-flex container">
-		<!-- ELEM 3 -->
-		<div class="about-elem">
-			<div class="about-elem-side">
-				<div class="about-elem-img">
-				<div class="bg-square-about-left"></div>
-				<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
+	<div class=" about-flex container">
+			<!-- ELEM 1 -->
+			<div class="about-elem">
+				<div class="about-elem-side">
+					<div class="about-elem-img">
+						<div class="bg-square-about-left"></div>
+						<img src="{% static 'imgs/about/cucinando.png' %}" class="about-img-left" alt="caffe">
+					</div>
+				</div>
+				<div class="about-elem-side">
+					<h2>Always amazing experience</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
+						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
+						superiores. Possimus facilis velin, voluptatibus!</p>
 				</div>
 			</div>
-			<div class="about-elem-side">
-				<h2>Always amazing experience</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-					consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-					superiores. Possimus facilis velin, voluptatibus!</p>
-			</div>
-		</div>
-		<!-- ELEM 4 -->
-		<div class="about-elem">
-			<div class="about-elem-side">
-				<h2>Always amazing experience</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-					consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-					superiores. Possimus facilis velin, voluptatibus!</p>
-			</div>
-			<div class="about-elem-side">
-				<div class="about-elem-img">
-				<div class="bg-square-about-right"></div>
-				<img src="{% static 'imgs/about/coffee.jpg' %}" alt="caffe">
+			<!-- ELEM 2 -->
+			<div class="about-elem">
+				<div class="about-elem-side">
+					<h2>Always amazing experience</h2>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
+						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
+						superiores. Possimus facilis velin, voluptatibus!</p>
+				</div>
+				<div class="about-elem-side">
+					<div class="about-elem-img">
+					<div class="bg-square-about-right"></div>
+					<img src="{% static 'imgs/about/verdure2.png' %}"  class="about-img-right" alt="caffe">
+					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 </section>
 
@@ -105,7 +105,7 @@
 
 
 <!-- Citta -->
-<section id="cities" class="container py-5">
+<section id="Cities" class="container py-5">
 	<small class="text-primary text-uppercase">
 		Siamo presenti in tutta Italia
 	</small>
@@ -294,16 +294,23 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const imgs = document.querySelectorAll('.about-elem-img');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting){
-                entry.target.classList.add('in-view');
-            }
-        });
-    }, { threshold: 0.5 });
+	const imgsLeft = document.querySelectorAll('.about-img-left');
+	const imgsRight = document.querySelectorAll('.about-img-right');
+	const bgLeft = document.querySelectorAll('.bg-square-about-left');
+	const bgRight = document.querySelectorAll('.bg-square-about-right');
 
-    imgs.forEach(img => observer.observe(img));
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+			if(entry.isIntersecting){
+				entry.target.classList.add('in-view');
+			}
+		});
+	}, { threshold: 0.6 });
+
+	imgsLeft.forEach(img => observer.observe(img));
+	imgsRight.forEach(img => observer.observe(img));
+	bgLeft.forEach(bg => observer.observe(bg));
+	bgRight.forEach(bg => observer.observe(bg));
 });
 </script>
 
