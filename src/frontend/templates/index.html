@@ -8,6 +8,44 @@
 {% endblock %}
 
 
+{% block nav_elements %}
+<li class="nav-item">
+	<a class="nav-link text-dark" href="#about">About Us</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link text-dark" href="#citta">Città</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link text-dark" href="#eventi">Eventi</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link text-dark" href="#FAQ">FAQ</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link text-dark" href="#contact">Contattaci</a>
+</li>
+{% if user.is_authenticated %}
+<li class="nav-item dropdown ms-3">
+	<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+		data-bs-toggle="dropdown" aria-expanded="false">
+		{{ user.first_name }} {{ user.last_name }}
+	</a>
+	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+		<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+		<li><a class="dropdown-item" href="{% url 'preferences' %}">Preferences</a></li>
+		<li><a class="dropdown-item" href="{% url 'accreditation' %}">Accreditation</a></li>
+		<li><hr class="dropdown-divider"> </li>
+		<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+	</ul>
+</li>
+{% else %}
+<li class="nav-item ms-3">
+	<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+</li>
+{% endif %}
+{% endblock %}
+
+
 {% block content %}
 <!-- Hero -->
 <section class="position-relative" style="height: 100%;">
@@ -16,7 +54,7 @@
 	<h1 class="fw-bold home-title">Mensa Go</h1>
 	<p class="home-subtitle">Il tuo nuovo modo di mangiare</p>
 	{% if cities %}
-		<a href="#cities" class="btn btn-dark btn-lg">Scopri le mense</a>
+		<a href="#citta" class="btn btn-dark btn-lg">Scopri le mense</a>
 	{% endif %}
 </div>
 </section>
@@ -105,7 +143,7 @@
 
 
 <!-- Citta -->
-<section id="Cities" class="container py-5">
+<section id="citta" class="container py-5">
 	<small class="text-primary text-uppercase">
 		Siamo presenti in tutta Italia
 	</small>
@@ -155,7 +193,7 @@
 </section>
 
 <!-- Upcoming Events -->
-<section class="container" id="Eventi">
+<section class="container" id="eventi">
 	<div class="d-flex justify-content-between align-items-center mb-4">
 		<div>
 		<h2 class="fw-bold mb-0">Prossimi Eventi</h2>
@@ -246,9 +284,10 @@
 		</div>
 		</div>
 	</div>
-	</section> 
-	 <!-- Contact -->
-	<section id="contact" class="container py-5">
+</section> 
+	
+	<!-- Contact -->
+<section id="contact" class="container py-5">
 	<h2 class="fw-bold">Contattaci</h2>
 	<p class="text-muted">Hai domande? Scrivici!</p>
 	<form id="contactForm" class="row g-3 mt-3" method="POST" action="">
@@ -285,7 +324,7 @@
 		</div>
 		<div id="formStatus" class="col-12 mt-2" style="display: none;"></div>
 	</form>
-	</section>
+</section>
 {% endblock %}
 
 {% block extra_js %}
