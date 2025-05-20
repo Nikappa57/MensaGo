@@ -31,10 +31,17 @@ ALLOWED_HOSTS = ["*"]  # TODO: change
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin', 'django.contrib.auth',
-    'django.contrib.contenttypes', 'django.contrib.sessions',
-    'django.contrib.messages', 'django.contrib.staticfiles', 'apps.core',
-    'apps.mensa'
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.gis',  # for geoapp
+    # my apps:
+    'apps.core',
+    'apps.mensa',
+    'apps.world',
 ]
 
 MIDDLEWARE = [
@@ -45,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # my middleware
+    'apps.world.middleware.PositionMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -59,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # my context processors
+                'apps.world.context_processors.position_context'
             ],
         },
     },

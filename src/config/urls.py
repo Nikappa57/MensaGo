@@ -22,8 +22,9 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('mense/', include('apps.mensa.urls')),
+    path('world/', include('apps.world.urls')),
     path('', include('apps.core.urls')),
-    path('mense/', include('apps.mensa.urls'))
 ]
 
 if settings.DEBUG:

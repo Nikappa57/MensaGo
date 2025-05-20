@@ -13,7 +13,12 @@ class City(models.Model):
     longitude = models.FloatField(default=0.0)
 
     def __str__(self):
-        return f"City(name={self.name}, landscape={self.landscape})"
+        return f"City(name={self.name}, landscape={self.landscape}, latitude={self.latitude}, longitude={self.longitude})"
 
     def __repr__(self) -> str:
         return self.__str__()
+
+    class Meta:
+        verbose_name = "City"
+        verbose_name_plural = "Cities"
+        ordering = ['name']
