@@ -10,26 +10,26 @@ body {
 	line-height: 1.6;
 }
 
-/* Prima sezione  */
+/* about  */
 #about {
-	margin-top: 100px;
+	margin-top: 100px; /* bordo dall'img iniziale */
 }
 
-.about-flex {
+.about-flex { /* flex box per dividere la section tra i figli */
 	display: flex;
 	flex-direction: column;
 }
 
-.about-elem {
+.about-elem { /* figlio flex con altezza 50% */
 	flex: 1 1 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: 3vh 0;
+	margin: 10vh 0;
 	height: 50vh;
 }
 
-.about-elem-side {
+.about-elem-side { /* un lato della section */
 	width: 45%;
 	display: flex;
 	flex-direction: column;
@@ -37,17 +37,16 @@ body {
 	height: 100%;
 }
 
-.about-elem-img {
+.about-elem-img { /* wrapper per le img */
 	margin: 10px;
 	position: relative;
 	height: 50vh;
 	aspect-ratio: 1 / 1;
-	/* overflow: hidden; */
 }
 
 .about-elem-img img,
 .bg-square-about-left,
-.bg-square-about-right {
+.bg-square-about-right { /* Dimesione della img, uguale al bg */
 	position: absolute;
 	top: 0; left: 0;
 	width: 100%;
@@ -57,37 +56,78 @@ body {
 	height: auto;
 }
 
-.about-elem-img img {
+.about-elem-img img { /* img fit e index per andare sopra al bg */
 	z-index: 2;
 	object-fit: cover;
-	top: 50%;
-	left: 0;
-	transform: translateY(-50%); /* Center vertically */
-	
 }
 
 .bg-square-about-left,
-.bg-square-about-right {
+.bg-square-about-right { /* bg sotto l'img */
 	z-index: 1;
 	background-color: #d8cfcf;
 }
 
-.bg-square-about-left {
+.bg-square-about-left { /* posizione per i bg a sinistra */
 	top: -15px;
 	left: -15px;
 }
 
-.bg-square-about-right {
+.bg-square-about-right { /* posizione per i bg a destra */
 	top: 15px;
 	left: 15px;
 }
 
+/* About Responsive */
+@media (max-width: 991.98px) {
 
+	/* layout verticale */
+	.about-elem{
+		flex-direction: column;
+		align-items: center;
+		height: auto;
+		margin: 5vh 0;
+	}
+
+	/* NEI PARI invertiamo l’ordine */
+	.about-elem:nth-child(even){
+		flex-direction: column-reverse;   /* img sopra, testo sotto */
+	}
+
+	.about-elem-side{
+		width: 100%;
+		text-align: center;
+		margin-top: 20px;
+	}
+
+	.about-elem-img{
+		width: 80%;
+		max-width: 320px;
+		aspect-ratio: 1 / 1;
+		height: auto;
+		margin: 0 auto 1.5rem;
+	}
+
+	.about-elem-img img,
+	.bg-square-about-left,
+	.bg-square-about-right{
+		width: 100%;
+		height: 100%;
+	}
+
+	/* ombra con offset sempre uguale per mobile */
+	.bg-square-about-left,
+	.bg-square-about-right{
+		top: 15px;
+		left: 15px;
+	}
+}
+
+/* 
 .little-first-section-text {
 	flex: 1;
 	padding-right: 20px;
 	z-index: 2;
-}
+} */
 
 /* .first-section-image {
 	margin-top: 20px;
@@ -102,7 +142,7 @@ body {
 
 
 /* Seconda sezione */
-.second-section {
+/* .second-section {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -144,7 +184,7 @@ body {
 	bottom: -50px;
 	left: 0;
 	z-index: 3;
-}
+} */
 
 /* Banner completo */
 .full-banner {
