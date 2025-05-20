@@ -10,7 +10,8 @@ body {
 	line-height: 1.6;
 }
 
-/* about  */
+/*** About  ***/
+
 #about {
 	margin-top: 100px; /* bordo dall'img iniziale */
 }
@@ -122,69 +123,46 @@ body {
 	}
 }
 
-/* 
-.little-first-section-text {
-	flex: 1;
-	padding-right: 20px;
-	z-index: 2;
-} */
-
-/* .first-section-image {
-	margin-top: 20px;
+/*** BANNER ***/
+.fixed-banner {
+	margin: 100px 0;
+	height: 55vh;
 	width: 100%;
+	/* img path nell'html per jinja2 */
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed; /* fixed img */
 }
 
-.first-section-image img {
-	
+/* TODO: rivedere testo */
 
-} */
-
-
-
-/* Seconda sezione */
-/* .second-section {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin: 100px 0 50px 0;
+.banner-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centra verticalmente */
+  align-items: center; /* centra orizzontalmente */
+  text-align: center;
+  background: rgba(0,0,0,.40); /* filtro sopra all'img per farla più scura */
 }
 
-.second-section-text {
-	flex: 1;
-	padding-right: 20px;
+.banner-title {
+	font-size: clamp(1.5rem, 4vw, 2.5rem);
+	font-weight: 700;
+	margin-bottom: .5rem;
+	color: #fff;
+	text-shadow: 2px 2px 8px rgba(0,0,0,0.6); /* ombra al testo */
 }
 
-.second-section-image {
-	flex: 1;
-	position: relative;
+.banner-subtitle {
+	font-size: clamp(1rem, 2.5vw, 1.25rem);
+	font-weight: 400;
+	margin: 0;
+	color: #fff;
+	text-shadow: 1px 1px 6px rgba(0,0,0,0.5); /* ombra al testo */
 }
 
-.second-section-image img {
-	width: 80%;
-	height: auto;
-	border-radius: 5px;
-	position: relative;
-	z-index: 2;
-	margin-left: 15%;
-}
-
-.bg-square {
-	position: absolute;
-	width: 80%;
-	height: 100%;
-	background-color: #d8cfcf;
-	top: -10%;
-	left: 0;
-	z-index: 1;
-	border-radius: 5px;
-}
-
-.little-second-section-text {
-	position: absolute;
-	bottom: -50px;
-	left: 0;
-	z-index: 3;
-} */
 
 /* Banner completo */
 .full-banner {

@@ -93,18 +93,28 @@
 	</section>
 </div>
 
-<!-- Banner completo -->
-<div class="full-banner">
-		<div class="banner-text">
-			<div class="title-with-line">
-				<span class="blue-line"></span>
-				<h3>Enjoy our specialty coffees and award<br>winning doughnuts in a friendly atmosphere.</h3>
-			</div>
+<!-- Banner -->
+<section class="fixed-banner" style="background-image: url('{% static "imgs/about/campo2.png" %}');">
+	<div class="banner-content">
+		<h2 class="banner-title">Goditi i nostri prodotti naturali</h2>
+		<p class="banner-subtitle">
+			Selezioniamo i migliori ingredienti a km 0 che rispettono i più
+			alti standard di sostenibilità.
+		</p>
+	</div>
+</section>
+
+{% comment %} <div class="banner-fixed"> <!--full-banner-->
+	<div class="banner-text">
+		<div class="title-with-line">
+			<span class="blue-line"></span>
+			<h3>Enjoy our specialty coffees and award<br>winning doughnuts in a friendly atmosphere.</h3>
 		</div>
-		<div class="banner-image">
-			<img src="{% static 'imgs/about/banner.jpg' %}" alt="immagine 3 about (banner)">
-		</div>
-</div>
+	</div>
+	<div class="banner-image">
+		<img src="{% static 'imgs/about/banner.jpg' %}" alt="mensa">
+	</div>
+</div> {% endcomment %}
 
 	<!-- Citta -->
 	<section id="cities" class="container py-5">
