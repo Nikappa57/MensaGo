@@ -51,18 +51,19 @@ body {
 	position: absolute;
 	top: 0; left: 0;
 	width: 100%;
+	max-height: 100%;
+	aspect-ratio: 1 / 1;
 	border-radius: 10px;
+	height: auto;
 }
 
 .about-elem-img img {
-    z-index: 2;
-    object-fit: cover;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%); /* Center vertically */
-    height: auto;
-    max-height: 100%;
-    width: 100%;
+	z-index: 2;
+	object-fit: cover;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%); /* Center vertically */
+	
 }
 
 .bg-square-about-left,
