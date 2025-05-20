@@ -18,7 +18,6 @@ body {
 .about-flex {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
 }
 
 .about-elem {
@@ -26,50 +25,60 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: 10px 0;
+	margin: 3vh 0;
+	height: 50vh;
 }
 
 .about-elem-side {
-	width: 40%;
+	width: 45%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	height: 100%;
 }
 
 .about-elem-img {
-	margin: 20px;
+	margin: 10px;
 	position: relative;
+	height: 50vh;
+	aspect-ratio: 1 / 1;
+	/* overflow: hidden; */
+}
+
+.about-elem-img img,
+.bg-square-about-left,
+.bg-square-about-right {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	border-radius: 10px;
 }
 
 .about-elem-img img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
     z-index: 2;
-    position: relative;
+    object-fit: cover;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%); /* Center vertically */
+    height: auto;
+    max-height: 100%;
+    width: 100%;
+}
+
+.bg-square-about-left,
+.bg-square-about-right {
+	z-index: 1;
+	background-color: #d8cfcf;
 }
 
 .bg-square-about-left {
-	z-index: 1;
-	position: absolute;
-	border-radius: 10px;
-	width: 100%;
-	height: 100%;
 	top: -15px;
 	left: -15px;
-	background-color: #d8cfcf;
 }
 
 .bg-square-about-right {
-	z-index: 1;
-	position: absolute;
-	border-radius: 10px;
-	width: 100%;
-	height: 100%;
 	top: 15px;
-	right: -15px;
-	background-color: #d8cfcf;
+	left: 15px;
 }
 
 
