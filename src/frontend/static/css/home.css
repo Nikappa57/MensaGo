@@ -225,14 +225,23 @@ body {
 	margin-top: 100px;
 	margin-bottom: 100px;
 }
-.city-col .card {
-	transition: transform 0.4s cubic-bezier(.4,2,.6,1);
-	will-change: transform;
+
+.city-col {
+	opacity: 0;
+	transform: translateY(60px) scale(0.95);
+	transition: opacity 0.7s cubic-bezier(.4,2,.6,1), transform 0.7s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
 }
 
-.city-col:hover .card,
-.city-col:focus-within .card {
-	transform: scale(1.07);
+.city-col.in-view {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+.city-col:hover,
+.city-col:focus-within {
+    transform: translateY(0) scale(1.07);
+    z-index: 2;
 }
 
 

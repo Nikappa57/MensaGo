@@ -337,6 +337,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const imgsRight = document.querySelectorAll('.about-img-right');
 	const bgLeft = document.querySelectorAll('.bg-square-about-left');
 	const bgRight = document.querySelectorAll('.bg-square-about-right');
+	const city = document.querySelectorAll('.city-col');
 
 	const observer = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
@@ -344,12 +345,13 @@ document.addEventListener("DOMContentLoaded", function() {
 				entry.target.classList.add('in-view');
 			}
 		});
-	}, { threshold: 0.6 });
+	}, { threshold: 0.5 });
 
 	imgsLeft.forEach(img => observer.observe(img));
 	imgsRight.forEach(img => observer.observe(img));
 	bgLeft.forEach(bg => observer.observe(bg));
 	bgRight.forEach(bg => observer.observe(bg));
+	city.forEach(bg => observer.observe(bg));
 });
 </script>
 
