@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Register - MensaGO{% endblock %}
 
+{% block body_class %}auth-page{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth-animation.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
+<!-- Sandwich Animation -->
+<div class="sandwich-animation-wrapper">
+    {% for i in "123456789X" %}
+        <img src="{% static 'imgs/sandwich.svg' %}" alt="Sandwich" class="sandwich-bubble" width="256" height="256">
+    {% endfor %}
+</div>
+
+<div class="container mt-5 auth-page-container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow">
@@ -113,4 +127,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/sandwich-animation.js' %}"></script>
 {% endblock %}

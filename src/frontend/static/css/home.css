@@ -245,6 +245,7 @@ body {
 }
 
 
+
 @media (max-width: 768px) {
 	.first-city-mensa-img {
 		height: 200px!important;
@@ -411,23 +412,11 @@ body {
 @media (min-width: 992px) {
   .phone-frame {
     transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+    will-change: transform, box-shadow;
   }
   
   .step-box:hover .phone-frame {
-    transform: translateY(-15px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-  }
-  
-  .step-box:hover .phone-left {
-    transform: rotate3d(0, 1, 0, 15deg) rotate3d(1, 0, 0, 5deg) translateY(-15px);
-  }
-  
-  .step-box:hover .phone-center {
-    transform: rotate3d(1, 0, 0, 5deg) translateY(-15px);
-  }
-  
-  .step-box:hover .phone-right {
-    transform: rotate3d(0, 1, 0, -15deg) rotate3d(1, 0, 0, 5deg) translateY(-15px);
   }
 }
 

@@ -224,7 +224,7 @@
       <div class="step-box">
         <div class="step-number">02</div>
         <h4 class="mb-3">Scegli la Mensa</h4>
-        <p>Seleziona la tua città e scopri tutte le mense disponibili nella tua zona.</p>
+        <p>Seleziona la tua città e scopri la mensa piú vicina a te!.</p>
         <div class="phone-mockup">
           <div class="phone-frame phone-center">
             <img class="mockup" src="{% static 'imgs/tutorial/choose.png' %}" alt="Scegli mensa" onerror="this.src='https://via.placeholder.com/280x550?text=Scegli+Mensa'">
@@ -238,7 +238,7 @@
       <div class="step-box">
         <div class="step-number">03</div>
         <h4 class="mb-3">Inizia a Mangiare</h4>
-        <p>Ricarica il tuo credito e inizia subito a gustare i piatti delle mense universitarie.</p>
+        <p>Ricarica il tuo credito, scannerizza il qr code in cassa e inizia subito a gustare i piatti delle nostre mense.</p>
         <div class="phone-mockup">
           <div class="phone-frame phone-right">
             <img class="mockup" src="{% static 'imgs/tutorial/eat.png' %}" alt="Inizia a mangiare" onerror="this.src='https://via.placeholder.com/280x550?text=Buon+Appetito'">
@@ -398,6 +398,7 @@
 {% block extra_js %}
 <script src="{% static 'js/carousel.js' %}"></script>
 <script src="{% static 'js/contact.js' %}"></script>
+<script src="{% static 'js/phone-animation.js' %}"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
