@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         sandwich.style.left = `${posX}%`;
         
         // Random animation delay
-        const delay = Math.random() * 10;
+        const delay = Math.random() * 1;
         sandwich.style.animationDelay = `${delay}s`;
         
         // Random animation duration between 6s and 12s
