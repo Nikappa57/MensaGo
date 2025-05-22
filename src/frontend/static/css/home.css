@@ -1,11 +1,17 @@
-* { /* TODO: rivedere */
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+html {
+    overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
 body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 	color: #333;
 	line-height: 1.6;
 	background-color: #f8f9fa;
@@ -81,7 +87,7 @@ body {
 	top: -15px;
 	left: -15px;
 	opacity: 0;
-	transform: translateX(-200px) translateY(100px) scale(0.75);
+	transform: translateX(-200px) translateY(100px) scale(0.85);
 	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
 	will-change: opacity, transform;
 }
@@ -153,6 +159,41 @@ body {
 		width: 100%;
 		height: 100%;
 	}
+
+	.bg-square-about-left { /* posizione per i bg a sinistra */
+	top: -15px;
+	left: -15px;
+	opacity: 0;
+	transform: translateX(-100px) translateY(50px) scale(0.85);
+	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
+}
+
+.bg-square-about-right { /* posizione per i bg a destra */
+	top: -15px;
+	left: -15px;
+	opacity: 0;
+	transform: translateX(100px) translateY(50px) scale(0.85);
+	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
+}
+
+.about-img-left {
+	opacity: 0;
+	transform: translateX(100px) translateY(50px) scale(0.85);
+	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
+}
+
+.about-img-right {
+	opacity: 0;
+	transform: translateX(-100px) translateY(50px) scale(0.85);
+	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
+}
+
+	
+	
 }
 
 /*** BANNER ***/
