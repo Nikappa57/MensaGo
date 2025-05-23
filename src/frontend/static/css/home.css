@@ -595,7 +595,6 @@ p {
 
 .events-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2) !important;
 }
 
 .events-slider-container {
@@ -637,6 +636,7 @@ p {
 .events-card:hover .events-img {
     transform: scale(1.05);
 }
+
 
 .event-date {
     opacity: 1;

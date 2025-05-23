@@ -4,27 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
   eventCards.forEach(card => {
     card.addEventListener('mouseenter', function() {
       const dateElement = this.querySelector('.event-date');
-      const footerElement = this.querySelector('.event-footer');
       
       if (dateElement) {
         dateElement.style.transform = 'translateY(-5px)';
-      }
-      
-      if (footerElement) {
-        footerElement.style.transform = 'translateY(-5px)';
       }
     });
     
     card.addEventListener('mouseleave', function() {
       const dateElement = this.querySelector('.event-date');
-      const footerElement = this.querySelector('.event-footer');
       
       if (dateElement) {
         dateElement.style.transform = 'translateY(0)';
-      }
-      
-      if (footerElement) {
-        footerElement.style.transform = 'translateY(0)';
       }
     });
   });
