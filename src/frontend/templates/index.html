@@ -67,7 +67,7 @@
 			<div class="about-elem">
 				<div class="about-elem-side">
 					<div class="about-elem-img">
-						<div class="bg-square-about-left" style=""></div>
+						<div class="bg-square-about-left"></div>
 						<img src="{% static 'imgs/about/cucinando.png' %}" class="about-img-left" alt="caffe">
 					</div>
 				</div>
@@ -191,6 +191,74 @@
 		{% endif %}
 	</div>
 </section>
+
+<!-- Tutorial Section -->
+<section id="tutorial" class="container py-5 mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold mb-0">Come Utilizzare MensaGo</h2>
+    </div>
+  </div>
+  
+  <p class="text-start mb-4 mb-md-5">
+    Scopri come utilizzare MensaGo in pochi semplici passi per accedere alle mense universitarie in modo facile e veloce.
+  </p>
+
+  <div class="row g-4">
+    <!-- Step 1 -->
+    <div class="col-lg-4 col-md-6">
+      <div class="step-box">
+        <div class="step-number">01</div>
+        <h4 class="mb-3">Registrati</h4>
+        <p>Crea un account MensaGo con la tua email universitaria per accedere a tutte le funzionalità.</p>
+        <div class="phone-mockup">
+          <div class="phone-frame phone-left">
+            <img class="mockup" src="{% static 'imgs/tutorial/signup.png' %}" alt="Registrazione" onerror="this.src='https://via.placeholder.com/280x550?text=Registrazione'">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="col-lg-4 col-md-6">
+      <div class="step-box">
+        <div class="step-number">02</div>
+        <h4 class="mb-3">Scegli la Mensa</h4>
+        <p>Seleziona la tua città e scopri la mensa piú vicina a te!.</p>
+        <div class="phone-mockup">
+          <div class="phone-frame phone-center">
+            <img class="mockup" src="{% static 'imgs/tutorial/choose.png' %}" alt="Scegli mensa" onerror="this.src='https://via.placeholder.com/280x550?text=Scegli+Mensa'">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="col-lg-4 col-md-12 mx-md-auto">
+      <div class="step-box">
+        <div class="step-number">03</div>
+        <h4 class="mb-3">Inizia a Mangiare</h4>
+        <p>Ricarica il tuo credito, scannerizza il qr code in cassa e inizia subito a gustare i piatti delle nostre mense.</p>
+        <div class="phone-mockup">
+          <div class="phone-frame phone-right">
+            <img class="mockup" src="{% static 'imgs/tutorial/eat.png' %}" alt="Inizia a mangiare" onerror="this.src='https://via.placeholder.com/280x550?text=Buon+Appetito'">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Call to Action -->
+  <div class="text-center mt-5 mb-4">
+    <h3 class="mb-3">Cosa aspetti? Inizia oggi!</h3>
+    <p class="lead mb-4">Registrati subito e scopri tutte le funzionalità che MensaGo ha da offrirti</p>
+    <a href="{% url 'register' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
+      <i class="fas fa-user-plus me-2"></i> Registrati ora
+    </a>
+  </div>
+</section>
+
+<div class="py-4"></div>
 
 <!-- Upcoming Events -->
 <section class="container" id="eventi">
@@ -330,6 +398,7 @@
 {% block extra_js %}
 <script src="{% static 'js/carousel.js' %}"></script>
 <script src="{% static 'js/contact.js' %}"></script>
+<script src="{% static 'js/phone-animation.js' %}"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {

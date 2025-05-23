@@ -1,0 +1,116 @@
+/* Sandwich bubble animation */
+.sandwich-animation-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Allows clicking through the animation */
+    z-index: -1;
+}
+
+.sandwich-bubble {
+    position: absolute;
+    bottom: -100px;
+    opacity: 0;
+    animation: float-up 6s ease-in infinite;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Creating random starting positions and animation delays for sandwiches */
+.sandwich-bubble:nth-child(1) {
+    left: 10%;
+    animation-delay: 0.5s;
+    animation-duration: 8s;
+}
+
+.sandwich-bubble:nth-child(2) {
+    left: 25%;
+    animation-delay: 1.5s;
+    animation-duration: 7s;
+}
+
+.sandwich-bubble:nth-child(3) {
+    left: 40%;
+    animation-delay: 0s;
+    animation-duration: 6s;
+}
+
+.sandwich-bubble:nth-child(4) {
+    left: 55%;
+    animation-delay: 3s;
+    animation-duration: 7.5s;
+}
+
+.sandwich-bubble:nth-child(5) {
+    left: 70%;
+    animation-delay: 1s;
+    animation-duration: 9s;
+}
+
+.sandwich-bubble:nth-child(6) {
+    left: 85%;
+    animation-delay: 2.5s;
+    animation-duration: 6.5s;
+}
+
+.sandwich-bubble:nth-child(7) {
+    left: 15%;
+    animation-delay: 4s;
+    animation-duration: 7s;
+}
+
+.sandwich-bubble:nth-child(8) {
+    left: 35%;
+    animation-delay: 2s;
+    animation-duration: 8.5s;
+}
+
+.sandwich-bubble:nth-child(9) {
+    left: 60%;
+    animation-delay: 3.5s;
+    animation-duration: 7.3s;
+}
+
+.sandwich-bubble:nth-child(10) {
+    left: 80%;
+    animation-delay: 1.8s;
+    animation-duration: 9.2s;
+}
+
+/* Extra styling for auth pages */
+.auth-page-container {
+    position: relative;
+    z-index: 10;
+    min-height: calc(100vh - 200px); /* Adjust to ensure enough space for content */
+}
+
+/* Footer styling for auth pages */
+body.auth-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.auth-page main {
+    flex: 1 0 auto;
+}
+
+.auth-page footer {
+    flex-shrink: 0;
+    margin-top: auto;
+}

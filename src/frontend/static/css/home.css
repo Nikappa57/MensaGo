@@ -1,11 +1,17 @@
-* { /* TODO: rivedere */
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+html {
+    overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
 body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 	color: #333;
 	line-height: 1.6;
 	background-color: #f8f9fa;
@@ -81,7 +87,7 @@ body {
 	top: -15px;
 	left: -15px;
 	opacity: 0;
-	transform: translateX(-200px) translateY(100px) scale(0.75);
+	transform: translateX(-200px) translateY(100px) scale(0.85);
 	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
 	will-change: opacity, transform;
 }
@@ -153,6 +159,41 @@ body {
 		width: 100%;
 		height: 100%;
 	}
+
+	.bg-square-about-left { /* posizione per i bg a sinistra */
+	top: -15px;
+	left: -15px;
+	opacity: 0;
+	transform: translateX(-100px) translateY(50px) scale(0.85);
+	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
+}
+
+.bg-square-about-right { /* posizione per i bg a destra */
+	top: -15px;
+	left: -15px;
+	opacity: 0;
+	transform: translateX(100px) translateY(50px) scale(0.85);
+	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
+}
+
+.about-img-left {
+	opacity: 0;
+	transform: translateX(100px) translateY(50px) scale(0.85);
+	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
+}
+
+.about-img-right {
+	opacity: 0;
+	transform: translateX(-100px) translateY(50px) scale(0.85);
+	transition: opacity 0.6s cubic-bezier(.4,2,.6,1), transform 0.6s cubic-bezier(.4,2,.6,1);
+	will-change: opacity, transform;
+}
+
+	
+	
 }
 
 /*** BANNER ***/
@@ -195,7 +236,7 @@ body {
 }
 
 
-/* Cities list */
+/* City list */
 
 .city-mensa-img {
 	height: 200px!important;
@@ -245,6 +286,7 @@ body {
 }
 
 
+
 @media (max-width: 768px) {
 	.first-city-mensa-img {
 		height: 200px!important;
@@ -255,9 +297,218 @@ body {
 	}
 }
 
+/* Tutorial Section Styles */
+.step-number {
+  width: 40px;
+  height: 40px;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-size: 18px;
+  margin-right: auto;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.step-box {
+  background-color: #d8cfcf;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  text-align: left;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 780px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.step-box:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  border-color: #c0c0c0;
+}
+
+.step-box:hover .step-number {
+  transform: scale(1.1);
+  background-color: #222;
+}
+
+/* Regole responsive per i box dei passi */
+@media (max-width: 1199px) {
+  .step-box {
+    min-height: 760px;
+  }
+}
+
+@media (max-width: 991px) {
+  .step-box {
+    min-height: 730px;
+  }
+}
+
+@media (max-width: 767px) {
+  .step-box {
+    min-height: 780px;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 575px) {
+  .step-box {
+    min-height: 680px;
+  }
+}
+
+.phone-mockup {
+  position: relative;
+  margin: 20px auto;
+  max-width: 260px;
+  width: 100%;
+  height: 580px;
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  perspective: 1000px;
+  transition: transform 0.3s ease-out;
+}
+
+.step-box:hover .phone-mockup {
+  transform: scale(1.02);
+}
+
+/* Regole responsive per i mockup dei telefoni */
+@media (max-width: 1199px) {
+  .phone-mockup {
+    height: 550px;
+  }
+}
+
+@media (max-width: 991px) {
+  .phone-mockup {
+    height: 520px;
+  }
+}
+
+@media (max-width: 767px) {
+  .phone-mockup {
+    height: 580px;
+  }
+}
+
+@media (max-width: 575px) {
+  .phone-mockup {
+    height: 500px;
+  }
+}
+
+.phone-frame {
+  position: relative;
+  border: 12px solid #222;
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  aspect-ratio: 9/19;
+  background: #635f5f;
+  width: 100%;
+  height: 100%;
+}
+
+.phone-left {
+  transform: rotate3d(0, 1, 0, 15deg) rotate3d(1, 0, 0, 5deg);
+}
+
+.phone-center {
+  transform: rotate3d(1, 0, 0, 5deg);
+}
+
+.phone-right {
+  transform: rotate3d(0, 1, 0, -15deg) rotate3d(1, 0, 0, 5deg);
+}
+
+/* Regole responsive per l'inclinazione dei telefoni */
+@media (max-width: 767px) {
+  .phone-left, .phone-center, .phone-right {
+    transform: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .phone-left {
+    transform: rotate3d(0, 1, 0, 8deg) rotate3d(1, 0, 0, 3deg);
+  }
+  .phone-center {
+    transform: rotate3d(1, 0, 0, 3deg);
+  }
+  .phone-right {
+    transform: rotate3d(0, 1, 0, -8deg) rotate3d(1, 0, 0, 3deg);
+  }
+}
+
+/* Animazione al passaggio del mouse */
+@media (min-width: 992px) {
+  .phone-frame {
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+    will-change: transform, box-shadow;
+  }
+  
+  .step-box:hover .phone-frame {
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  }
+}
+
+.phone-frame:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 40%;
+  height: 24px;
+  background: #222;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.step-box:hover .phone-frame:before {
+  background: #333;
+}
+
+img.mockup {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  object-position: top center;
+  -webkit-user-drag: none;
+  transition: filter 0.3s ease;
+}
+
+/* Effetto hover sulle immagini */
+.step-box:hover img.mockup {
+  filter: brightness(1.05);
+}
+
 #FAQ {
 	margin-top: 100px;
 	margin-bottom: 100px;
+}
+
+/* Altri stili generali */
+.icons i {
+  font-size: 24px;
+  margin: 0 10px 0 0;
+}
+
+.highlight {
+  color: green;
+  font-weight: bold;
 }
 
 
