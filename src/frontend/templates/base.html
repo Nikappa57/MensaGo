@@ -32,15 +32,12 @@
 			</a>
 
 			<!-- Roba per mobile -->
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+			{% block nav_mobile %}{% endblock %}
 
 			<!-- link alle pagine -->
 			<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 				<ul class="navbar-nav align-items-center">
-					{% block nav_elements %}{%endblock%}
+					{% block nav_elements %}{% endblock %}
 				</ul>
 			</div>
 		</div>

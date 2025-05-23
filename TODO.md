@@ -26,10 +26,10 @@
 - [ ] fix footer che si alza (basta mettere min-h a 100vh)
 
 ## Citta
+- [x] Cambiare tipo di mappa
 - [ ] Rivedere titolo
 - [ ] Rivedere filtri, magari da mettere a destra e dare titoli sensati
 - [ ] Implementare i filtri
-- [x] Cambiare tipo di mappa
 
 ## Mensa
 da iniziare :)
