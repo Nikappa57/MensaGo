@@ -3,6 +3,7 @@
 ## Home
 
 - [x] Impostare favicon (Ma da rivedere la foto in particolare)
+- [x] Animazione di ingresso per le città
 - [ ] Vedere se tenere il logo. semmai togliere sfondo
 - [ ] Mettere nav fixed??? da decidere
 - [ ] Impostare la palette custom per bootstrap
@@ -14,9 +15,8 @@
 - [ ] Rendere più custom i FAQ
 - [ ] Mettere contact in un altra view (back-end) e fare che manda una mail e semmai impostare che la mail viene inviata su terminale
 - [ ] Footer grande
-- [ ] Animazione di ingresso per le città
 - [ ] Sezione tutorial con call to action per registrarsi, scritta "mostra il qr code alla cassa e paga il giusto..."
-- [ ] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
+- [ ] Metti nella home le features come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
 
 ## Login
 - [ ] Conferma passw ecc?
@@ -26,10 +26,10 @@
 - [ ] fix footer che si alza (basta mettere min-h a 100vh)
 
 ## Citta
+- [x] Cambiare tipo di mappa
 - [ ] Rivedere titolo
 - [ ] Rivedere filtri, magari da mettere a destra e dare titoli sensati
 - [ ] Implementare i filtri
-- [x] Cambiare tipo di mappa
 
 ## Mensa
 da iniziare :)
