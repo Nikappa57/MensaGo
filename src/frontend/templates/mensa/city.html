@@ -10,82 +10,84 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid px-0">    <div class="row g-0">
-		<!-- Left side - Filters and Cafeteria List -->
-		<div class="col-12 col-lg-6 border-end">
-			<div class="mense-container">
-				<div class="p-4">
-					<div class="d-flex align-items-center justify-content-between mb-4">
-						<div>
-							<h4 class="mb-0 fw-bold">Mense in {{ city.name }}</h4>
-							<p class="text-muted mb-0">{{ mense|length }} risultati</p>
-						</div>
-					</div>
-
-					<!-- Filters -->
-					<div class="filters-section">
-						<p class="mb-2 text-muted small">Ordina per</p>
-						<div class="d-flex flex-wrap gap-2">
-							<button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
-							<button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
-							<button class="tag-btn" data-sort="capacity" data-dir="desc">Posti disponibili</button>
-						</div>
-					</div>                    
-					<!-- Cafeteria List -->
-					<div class="mense-list row g-4">
-						{% for mensa in mense %}
-						<div class="col-12 col-md-6">
-							<div class="card mensa-card h-100"
-								data-id="{{ mensa.id }}"
-								data-rating="{{ mensa.stars|default:0 }}"
-								data-distance="{{ mensa.distance|default:0 }}"
-								data-capacity="{{ mensa.capacity|default:0 }}">
-								<a href="{% url 'mensa_details' city_name=city.name mensa_name=mensa.name %}" class="text-decoration-none">
-								<div class="mensa-banner">
-									<img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
-									<div class="mensa-type">{{ mensa.distance }} km</div>
-									<div class="banner-capacity">
-										<i class="fas fa-chair me-1"></i>{{ mensa.capacity }} posti
-									</div>
-									<div class="mensa-banner-content">
-										<h5 class="mensa-title mb-2">{{ mensa.name }}</h5>
-										<div class="rating-stars">
-											{% for _ in "01234" %}
-												{% if forloop.counter <= mensa.stars|default:0 %}
-													<i class="fas fa-star"></i>
-												{% else %}
-													<i class="far fa-star"></i>
-												{% endif %}
-											{% endfor %}
-										</div>
-									</div>
-								</div>
-								<div class="card-body">
-									<p class="card-text text-muted small mb-3">
-										<i class="fas fa-map-marker-alt me-2"></i>{{ mensa.position }}
-									</p>
-									<p class="mensa-description mb-2">
-										{% if mensa.description %}{{ mensa.description}}{% endif %}
-									</p>
-									<div class="small text-muted">
-										<i class="fas fa-utensils me-2"></i>
-										{% if mensa.phone_number %}Telefono: {{ mensa.phone_number }}{% endif %}
-										{% if mensa.email %}{% if mensa.phone_number %} | {% endif %}Email: {{ mensa.email }}{% endif %}
-									</div>
-								</div>
-								</a>
-							</div>
-						</div>
-						{% endfor %}
-					</div>
-				</div>
-			</div>
-		</div>
-		  <!-- Right side - Map -->
-		<div class="col-12 col-lg-6 d-none d-lg-block">
-			<div id="map" tabindex="0"></div>
-		</div>
-	</div>
+<div class="container-fluid px-0">
+    <div class="row g-0">
+        <!-- Left side - Cafeteria List -->
+        <div class="col-12 col-lg-6 border-end">
+            <div class="mense-container">
+                <div class="p-4">
+                    <div class="row align-items-end mb-4">
+                        <div class="col">
+                            <h2 class="mb-0 fw-bold">Mense in {{ city.name }}</h2>
+                            <p class="text-muted mb-0">{{ mense|length }} risultati</p>
+                        </div>
+                        <div class="col-auto">
+                            <div class="filters-section d-flex flex-column align-items-end">
+                                <p class="mb-2 text-muted small">Ordina per</p>
+                                <div class="d-flex flex-wrap gap-2 justify-content-end">
+                                    <button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
+                                    <button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
+                                    <button class="tag-btn" data-sort="capacity" data-dir="desc">Posti disponibili</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<hr class="my-4">
+                    <!-- Cafeteria List -->
+                    <div class="mense-list row g-4">
+                        {% for mensa in mense %}
+                        <div class="col-12 col-md-6">
+                            <div class="card mensa-card h-100"
+                                data-id="{{ mensa.id }}"
+                                data-rating="{{ mensa.stars|default:0 }}"
+                                data-distance="{{ mensa.distance|default:0 }}"
+                                data-capacity="{{ mensa.capacity|default:0 }}">
+                                <a href="{% url 'mensa_details' city_name=city.name mensa_name=mensa.name %}" class="text-decoration-none">
+                                <div class="mensa-banner">
+                                    <img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
+                                    <div class="mensa-type">{{ mensa.distance }} km</div>
+                                    <div class="banner-capacity">
+                                        <i class="fas fa-chair me-1"></i>{{ mensa.capacity }} posti
+                                    </div>
+                                    <div class="mensa-banner-content">
+                                        <h5 class="mensa-title mb-2">{{ mensa.name }}</h5>
+                                        <div class="rating-stars">
+                                            {% for _ in "01234" %}
+                                                {% if forloop.counter <= mensa.stars|default:0 %}
+                                                    <i class="fas fa-star"></i>
+                                                {% else %}
+                                                    <i class="far fa-star"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text text-muted small mb-3">
+                                        <i class="fas fa-map-marker-alt me-2"></i>{{ mensa.position }}
+                                    </p>
+                                    <p class="mensa-description mb-2">
+                                        {% if mensa.description %}{{ mensa.description}}{% endif %}
+                                    </p>
+                                    <div class="small text-muted">
+                                        <i class="fas fa-utensils me-2"></i>
+                                        {% if mensa.phone_number %}Telefono: {{ mensa.phone_number }}{% endif %}
+                                        {% if mensa.email %}{% if mensa.phone_number %} | {% endif %}Email: {{ mensa.email }}{% endif %}
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Right side - Map -->
+        <div class="col-12 col-lg-6 d-none d-lg-block">
+            <div id="map" tabindex="0"></div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
