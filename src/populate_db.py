@@ -4,6 +4,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import django
+from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from django.utils import timezone
 
@@ -14,6 +15,46 @@ django.setup()
 from apps.mensa.models.City import City
 from apps.mensa.models.Events import Event
 from apps.mensa.models.Mensa import Mensa
+from apps.mensa.models.Review import Review
+
+
+def create_admin_user():
+    """Crea un utente admin se non esiste già"""
+    User = get_user_model()
+    if not User.objects.filter(email="admin@admin.com").exists():
+        User.objects.create_superuser(email="admin@admin.com",
+                                      password="admin",
+                                      first_name="Admin",
+                                      last_name="User")
+        print("Creato utente admin (admin@admin.com / admin)")
+    else:
+        print("Utente admin già esistente.")
+
+
+def populate_reviews():
+    """Aggiunge alcune recensioni di esempio alle mense"""
+    User = get_user_model()
+    users = list(User.objects.all())
+    mense = list(Mensa.objects.all())
+    if not users or not mense:
+        print("Nessun utente o mensa trovata, salto le reviews.")
+        return
+    print("Elimino tutte le recensioni esistenti...")
+    Review.objects.all().delete()
+    print("Tutte le recensioni eliminate con successo!")
+    print("Aggiungo recensioni...")
+    for mensa in mense:
+        for i in range(2):  # 2 recensioni per mensa
+            user = users[i % len(users)]
+            if not Review.objects.filter(mensa=mensa, user=user).exists():
+                Review.objects.create(
+                    mensa=mensa,
+                    user=user,
+                    stars=random.randint(1, 5),
+                    text=
+                    f"Recensione di test {i+1} per {mensa.name} da {user.first_name}"
+                )
+                print(f"Aggiunta review per {mensa.name} da {user.email}")
 
 
 def create_sample_image(filename, width=800, height=600, color=None):
@@ -313,8 +354,10 @@ def clear_mense():
 
 if __name__ == "__main__":
     print("Inizio popolazione del database...")
+    create_admin_user()
     populate_cities()
     populate_events()
     clear_mense()
     populate_mense()
+    populate_reviews()
     print("Popolazione del database completata con successo!")
