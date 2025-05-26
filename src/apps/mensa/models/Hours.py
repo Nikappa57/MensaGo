@@ -7,7 +7,7 @@ class Hours(models.Model):
         f.k. Hours[Mensa] ⊆ Mensa[Name]
     """
 
-    WEEKDAY = {
+    WEEKDAY = [
         (0, "Lunedi"),
         (1, "Martedi"),
         (2, "Mercoledi"),
@@ -15,11 +15,11 @@ class Hours(models.Model):
         (4, "Venerdi"),
         (5, "Sabato"),
         (6, "Domenica"),
-    }
-    DAYPART = {
+    ]
+    DAYPART = [
         (0, "Pranzo"),
         (1, "Cena"),
-    }
+    ]
 
     mensa = models.ForeignKey("mensa.Mensa", on_delete=models.CASCADE)
     weekday = models.IntegerField(choices=WEEKDAY)

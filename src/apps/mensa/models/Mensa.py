@@ -33,6 +33,14 @@ class Mensa(models.Model):
             self.geocode_address()
         super().save(*args, **kwargs)
 
+    @property
+    def stars(self):
+        """media delle stelle di Reviews"""
+        reviews = self.review_set.all()
+        if not reviews:
+            return 0
+        return sum(review.stars for review in reviews) // len(reviews)
+
     def geocode_address(self):
         """
         Use Nominatim to convert the address to coordinates

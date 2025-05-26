@@ -1,30 +1,28 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+
+from apps.world.utils import haversine
 
 from .models import City, Mensa
 
 
-from apps.world.utils import haversine
-
 def mensa_city(request, city_name):
     city: City = get_object_or_404(City, name=city_name)
     mense = Mensa.objects.filter(city=city).all()
+    if len(mense) == 0:
+        return redirect("home")
+
     user_lat = request.position['lat']
     user_lon = request.position['lon']
 
-    def distance(mensa):
-        if(mensa.latitude is None or mensa.longitude is None):
-            return haversine(user_lon, user_lat, city.longitude, city.latitude)
-        return haversine(user_lon, user_lat, mensa.longitude, mensa.latitude)
+    for mensa in mense:
+        mensa.distance = round(
+            haversine(user_lat, user_lon, mensa.latitude, mensa.longitude), 2)
 
-    if request.position['valid']:
-        mense = sorted(mense, key=distance)
-        print("Sorted mense:", mense)
+    mense = sorted(mense, key=lambda x: x.stars, reverse=True)
 
     context = {"city": city, "mense": mense}
 
     return render(request, "mensa/city.html", context)
-
-
 
 
 def mensa_details(request, city_name, mensa_name):

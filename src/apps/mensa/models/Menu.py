@@ -27,7 +27,7 @@ class Menu(models.Model):
      incl. Menu[Mensa,WeekDay,DayPart] ⊆ Includes[Mensa,WeekDay,DayPart]
     """
 
-    WEEKDAY = {
+    WEEKDAY = [
         (0, 'Lunedi'),
         (1, 'Martedi'),
         (2, 'Mercoledi'),
@@ -35,12 +35,12 @@ class Menu(models.Model):
         (4, 'Venerdi'),
         (5, 'Sabato'),
         (6, 'Domenica'),
-    }
+    ]
 
-    DAY_PART = {
+    DAY_PART = [
         (0, 'Pranzo'),
         (1, 'Cena'),
-    }
+    ]
 
     mensa = models.ForeignKey('mensa.Mensa', on_delete=models.CASCADE)
     weekday = models.IntegerField(choices=WEEKDAY)
@@ -67,12 +67,12 @@ class Includes(models.Model):
 
     """
 
-    TYPE = {
+    TYPE = [
         (0, 'Primo'),
         (1, 'Secondo'),
         (2, 'Contorno'),
         (3, 'Dessert/Frutta'),
-    }
+    ]
 
     menu = models.ForeignKey('mensa.Menu', on_delete=models.CASCADE)
     dish = models.ForeignKey('mensa.Dish', on_delete=models.CASCADE)
