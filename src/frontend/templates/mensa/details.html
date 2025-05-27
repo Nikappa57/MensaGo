@@ -1,0 +1,489 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ mensa.name }} - MensaGO{% endblock %}
+
+{% block extra_css %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="{% static 'css/mensa-details.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<!-- Restaurant Banner -->
+<section class="restaurant-banner">
+    <img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
+    <div class="restaurant-banner-overlay">
+        <div class="container">
+            <h1 class="fs-2 fw-bold">{{ mensa.name }}</h1>
+            <p class="mb-0">
+                <i class="fa-solid fa-location-dot me-2"></i>
+                {{ mensa.position }}, {{ mensa.city.name }}
+            </p>
+            {% if mensa.phone_number %}
+            <span class="badge bg-light text-dark me-2">
+                <i class="fa-solid fa-star text-warning"></i> {{ mensa.reviews.all|length }} Reviews
+            </span>
+            {% endif %}
+            <button class="btn btn-primary btn-sm mt-2">Leave a Review</button>
+        </div>
+    </div>
+</section>
+
+<div class="container py-4">
+    <div class="row flex-column-reverse flex-lg-row">
+        <!-- Left column - About, Location, Gallery -->
+        <div class="col-lg-8">
+            <!-- About Section -->
+            <div class="info-card mb-4">
+                <small class="text-primary text-uppercase">La nostra storia</small>
+                <h2 class="section-title">About</h2>
+                <p>{{ mensa.description }}</p>
+            </div>
+            
+            <!-- Location Section -->
+            <div class="info-card mb-4">
+                <small class="text-primary text-uppercase">Dove ci troviamo</small>
+                <h2 class="section-title">Location</h2>
+                <div id="map" class="map-container">
+                    <!-- Map will be rendered here by Leaflet -->
+                </div>
+            </div>
+
+			<!-- Weekly Menu Section -->
+            <div class="info-card mb-4">
+                <small class="text-primary text-uppercase">La nostra settimana culinaria</small>
+                <h2 class="section-title">Menu Settimanale</h2>
+                
+                {% if weekly_menus %}
+                    <div class="text-start mb-4">
+                        <p class="text-muted mb-0">Scopri cosa offriamo giorno per giorno nella nostra mensa.<br>Menu freschi preparati con ingredienti di qualità.</p>
+                    </div>
+                    
+                    <!-- Menu Tabs for Days -->
+                    <div class="menu-tab-container">
+                        {% for weekday, day_data in weekly_menus.items %}
+                        <button class="menu-tab {% if day_data.is_today %}active{% endif %}" 
+                                id="day-tab-{{ weekday }}"
+                                onclick="switchDay('{{ weekday }}', this)" 
+                                type="button">
+                            {{ day_data.name }}
+                            {% if day_data.is_today %}
+                                <span class="ms-1 badge bg-primary rounded-pill">Oggi</span>
+                            {% endif %}
+                        </button>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Menu Content per Day -->
+                    <div class="menu-container">
+                        {% for weekday, day_data in weekly_menus.items %}
+                        <div id="menu-day-{{ weekday }}" class="menu-content {% if day_data.is_today %}active{% endif %}">
+                            {% if day_data.menus %}
+                                <!-- Meal tabs: Pranzo & Cena -->
+                                <div class="meal-tab-container">
+                                    <button class="meal-tab active" onclick="switchMeal('{{ weekday }}','0', this)">
+                                        <i class="fa-solid fa-sun me-1"></i>Pranzo
+                                    </button>
+                                    <button class="meal-tab" onclick="switchMeal('{{ weekday }}','1', this)">
+                                        <i class="fa-solid fa-moon me-1"></i>Cena
+                                    </button>
+                                </div>
+
+                                <div class="meal-content-wrapper">
+                                    {% for menu in day_data.menus %}
+                                    <div id="meal-{{ weekday }}-{{ forloop.counter0 }}" class="meal-content {% if forloop.first %}active{% endif %}">
+                                        {% for dish_type, dishes in menu.dishes_by_type.items %}
+                                        <div class="course-section">
+											{% if dish_type == "Primo" %}
+											<h3 class="menu-category">Primi Piatti</h3>
+											{% elif dish_type == "Secondo" %}
+											<h3 class="menu-category">Secondi Piatti</h3>
+											{% elif dish_type == "Contorno" %}
+											<h3 class="menu-category">Contorni</h3>
+											{% elif dish_type == "Dessert/Frutta" %}
+											<h3 class="menu-category">Dessert e Frutta</h3>
+											{% endif %}
+                                            <div class="dish-grid">
+                                                {% for dish in dishes %}
+                                                <div class="dish-card">
+                                                    {% if dish.img %}
+                                                    <div class="dish-photo">
+                                                        <img src="{{ dish.img.url }}" alt="{{ dish.name }}">
+                                                    </div>
+                                                    {% endif %}
+                                                    <div class="dish-desc">
+                                                        <div class="dish-title">{{ dish.name }}</div>
+                                                        <div class="dish-ingredients">{{ dish.description }}</div>
+                                                        {% if dish.allergens.exists %}
+                                                        <div class="dish-allergens">
+                                                            <small class="text-warning">
+                                                                <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                                                                {% for allergen in dish.allergens.all %}
+                                                                    {{ allergen.name }}{% if not forloop.last %}, {% endif %}
+                                                                {% endfor %}
+                                                            </small>
+                                                        </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="text-center py-4">
+                                    <i class="fa-solid fa-utensils text-muted mb-2" style="font-size: 2rem;"></i>
+                                    <p class="text-muted">Menu non ancora disponibile per {{ day_data.name }}.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                <div class="no-menu-message">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                    <p>Menu settimanale non ancora disponibile. Torna più tardi per vedere cosa abbiamo preparato!</p>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        
+        <!-- Right Column - Opening Hours, Contact, Amenities -->
+        <div class="col-lg-4">
+            <!-- Opening Hours -->
+            <div class="info-card mb-4">
+                <small class="text-primary text-uppercase">Quando siamo aperti</small>
+                <h3 class="section-title mb-3">Opening Hours</h3>
+                <table class="hours-table">
+                    {% for day_num, day_name in hours_weekdays %}
+                    <tr>
+                        <td><strong>{{ day_name }}</strong></td>
+                        <td>
+                            {% for hour in mensa.hours_set.all %}
+                                {% if hour.weekday == day_num %}
+                                    {{ hour.open_time|time:"H:i" }} - {{ hour.close_time|time:"H:i" }}
+                                    {% if not forloop.last %}<br>{% endif %}
+                                {% endif %}
+                            {% empty %}
+                                {% if day_num == 5 or day_num == 6 %}
+                                    closed
+                                {% else %}
+                                    8:00 - 20:00
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <!-- Amenities Section -->
+            <div class="info-card mb-4">
+                <small class="text-primary text-uppercase">I nostri servizi</small>
+                <h3 class="section-title mb-3">Amenities</h3>
+                <div class="amenities-list">
+                    <div class="amenity-item">
+                        <i class="fa-solid fa-wifi"></i> Free WiFi
+                    </div>
+                    <div class="amenity-item">
+                        <i class="fa-solid fa-utensils"></i> Vegan Options
+                    </div>
+                    <div class="amenity-item">
+                        <i class="fa-solid fa-wheat-awn"></i> Gluten-free options
+                    </div>
+                    <div class="amenity-item">
+                        <i class="fa-solid fa-book"></i> Study area
+                    </div>
+                    <div class="amenity-item">
+                        <i class="fa-solid fa-charging-station"></i> Charging stations
+                    </div>
+                    <div class="amenity-item">
+                        <i class="fa-solid fa-credit-card"></i> MEAL
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="info-card">
+                <small class="text-primary text-uppercase">Come contattarci</small>
+                <h3 class="section-title mb-3">Contact</h3>
+                {% if mensa.phone_number %}
+                <a href="tel:{{ mensa.phone_number }}" class="contact-link">
+                    <i class="fa-solid fa-phone"></i>
+                    {{ mensa.phone_number }}
+                </a>
+                {% endif %}
+                
+                {% if mensa.email %}
+                <a href="mailto:{{ mensa.email }}" class="contact-link">
+                    <i class="fa-solid fa-envelope"></i>
+                    {{ mensa.email }}
+                </a>
+                {% endif %}
+                
+                <a href="https://www.instagram.com/" class="contact-link">
+                    <i class="fa-brands fa-instagram"></i>
+                    Instagram
+                </a>
+                
+                <a href="https://www.facebook.com/" class="contact-link">
+                    <i class="fa-brands fa-facebook"></i>
+                    Facebook
+                </a>
+                
+                <div class="mt-3">
+                    <button class="review-btn me-2">Leave a Review</button>
+                    <button class="message-btn">Send a Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Gallery Section - Full Width -->
+    <div class="row">
+        <div class="col-12">
+            <div class="info-card mb-4">
+                <small class="text-primary text-uppercase">Le nostre foto</small>
+                <h2 class="section-title">Gallery</h2>
+                <div class="gallery-container">
+                    {% for photo in mensa.gallery.all %}
+                    <div class="gallery-item" onclick="openLightbox({{ forloop.counter0 }})">
+                        <img src="{{ photo.img.url }}" alt="Gallery image {{ forloop.counter }}">
+                        <div class="gallery-overlay">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <button class="lightbox-prev" onclick="event.stopPropagation(); changeSlide(-1)">&#10094;</button>
+            <button class="lightbox-next" onclick="event.stopPropagation(); changeSlide(1)">&#10095;</button>
+            <img id="lightbox-image" src="" alt="Gallery image">
+            <div class="lightbox-counter">
+                <span id="current-image">1</span> / <span id="total-images">{{ mensa.gallery.all|length }}</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reviews Section - Full Width -->
+    <div class="row">
+        <div class="col-12">
+            <div class="info-card mb-4">
+                <small class="text-primary text-uppercase">Feedback dei clienti</small>
+                <h2 class="section-title">
+                    <span>Listing Reviews</span>
+                </h2>
+                
+                <!-- Loop through reviews -->
+                {% for review in mensa.review_set.all %}
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="{{ review.user.profile_pic.url }}" class="reviewer-avatar" alt="{{ review.user.username }}">
+                        <div>
+                            <h5 class="mb-0">{{ review.user.username }}</h5>
+                            <div class="stars-display">
+                                {% for i in "12345" %}
+                                {% if forloop.counter <= review.stars %}
+                                <i class="fa-solid fa-star"></i>
+                                {% else %}
+                                <i class="fa-regular fa-star"></i>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <span class="review-date">{{ review.user.date_joined|date }}</span>
+                        </div>
+                    </div>
+                    <p>{{ review.text }}</p>
+                </div>
+                {% empty %}
+                <p>No reviews yet. Be the first to review this mensa!</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // Tab switch functions for day and meal type
+    function switchDay(dayId, el) {
+        // Deactivate all day tabs
+        document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
+        el.classList.add('active');
+        // Hide all menu contents
+        document.querySelectorAll('.menu-content').forEach(c => c.classList.remove('active'));
+        var content = document.getElementById('menu-day-' + dayId);
+        if (content) {
+            content.classList.add('active');
+            // Trigger first meal type tab in this day
+            var typeTabs = content.querySelectorAll('.meal-tab');
+            if (typeTabs.length > 0) {
+                typeTabs[0].click();
+            }
+        }
+    }
+
+    function switchMeal(dayId, index, el) {
+        var container = document.getElementById('menu-day-' + dayId);
+        if (!container) return;
+        // Activate meal tab
+        container.querySelectorAll('.meal-tab').forEach(tab => tab.classList.remove('active'));
+        el.classList.add('active');
+        // Show corresponding meal content
+        container.querySelectorAll('.meal-content').forEach(c => c.classList.remove('active'));
+        var sel = document.getElementById('meal-' + dayId + '-' + index);
+        if (sel) sel.classList.add('active');
+    }
+
+    // Gallery lightbox functions
+    let currentImageIndex = 0;
+    const galleryImages = [
+        {% for photo in mensa.gallery.all %}
+        "{{ photo.img.url }}"{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    function openLightbox(index) {
+        currentImageIndex = index;
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const currentCounter = document.getElementById('current-image');
+        
+        console.log('Opening lightbox with index:', index, 'Total images:', galleryImages.length);
+        
+        if (galleryImages[currentImageIndex]) {
+            lightboxImage.src = galleryImages[currentImageIndex];
+            currentCounter.textContent = currentImageIndex + 1;
+            lightbox.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        } else {
+            console.error('No image found at index:', currentImageIndex);
+        }
+    }
+
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    function changeSlide(direction) {
+        console.log('Changing slide, direction:', direction, 'Current index:', currentImageIndex);
+        
+        currentImageIndex += direction;
+        
+        if (currentImageIndex >= galleryImages.length) {
+            currentImageIndex = 0;
+        } else if (currentImageIndex < 0) {
+            currentImageIndex = galleryImages.length - 1;
+        }
+        
+        console.log('New index:', currentImageIndex);
+        
+        const lightboxImage = document.getElementById('lightbox-image');
+        const currentCounter = document.getElementById('current-image');
+        
+        if (galleryImages[currentImageIndex]) {
+            lightboxImage.src = galleryImages[currentImageIndex];
+            currentCounter.textContent = currentImageIndex + 1;
+        } else {
+            console.error('No image found at index:', currentImageIndex);
+        }
+    }
+
+    // Keyboard navigation for lightbox
+    document.addEventListener('keydown', function(e) {
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox.style.display === 'block') {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        }
+    });
+
+    // Debug helper function to see active elements
+    function debugMenuState() {
+        console.log('Active day menu:', document.querySelector('.menu-content.active')?.id);
+        console.log('Active dish types:', Array.from(document.querySelectorAll('.menu-type-content.active')).map(el => el.id));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Force all menu content to be properly initialized on page load
+        setTimeout(() => {
+            // First find the active day tab
+            const activeTab = document.querySelector('.menu-tab.active');
+            if (activeTab) {
+                activeTab.click();
+            } else {
+                // If no active tab is found, activate the first one
+                const firstTab = document.querySelector('.menu-tab');
+                if (firstTab) {
+                    firstTab.click();
+                }
+            }
+        }, 50);
+        
+        const map = L.map('map', {
+            scrollWheelZoom: false,
+            dragging: false
+        }).setView([{{ mensa.latitude }}, {{ mensa.longitude }}], 15);
+
+        map.addEventListener('click', function(event) {
+            map.scrollWheelZoom.enable();
+            map.dragging.enable();
+            if (event.originalEvent) {
+                event.originalEvent.stopPropagation();
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!map.getContainer().contains(e.target)) {
+                map.dragging.disable();
+                map.scrollWheelZoom.disable();
+            }
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+            maxZoom: 19,
+            minZoom: 13,
+        }).addTo(map);
+
+        // Add marker for the mensa
+        const marker = L.marker([{{ mensa.latitude }}, {{ mensa.longitude }}]).addTo(map);
+        marker.bindPopup(`
+            <div>
+                <img src="{{ mensa.banner.url }}" class="popup-image" alt="{{ mensa.name }}">
+                <h5 class="mb-2">{{ mensa.name }}</h5>
+                <p class="text-muted mb-0"><i class="fas fa-map-marker-alt me-1"></i> {{ mensa.position }}</p>
+            </div>
+        `, {
+            closeButton: true,
+            className: 'custom-popup'
+        });
+    });
+    
+
+    
+</script>
+{% endblock %}

@@ -192,13 +192,11 @@ function initEventsSlider() {
   prevBtn.addEventListener('click', () => {
     // Reset the timer when user manually navigates
     if (autoScrollTimer) clearInterval(autoScrollTimer);
-    startAutoScroll();
   });
   
   nextBtn.addEventListener('click', () => {
     // Reset the timer when user manually navigates
     if (autoScrollTimer) clearInterval(autoScrollTimer);
-    startAutoScroll();
   });
   
   // Initialize slider
