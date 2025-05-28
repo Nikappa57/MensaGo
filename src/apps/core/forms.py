@@ -85,3 +85,19 @@ class ContactForm(forms.Form):
         if not message:
             raise forms.ValidationError("Il messaggio è obbligatorio")
         return message
+
+
+class ProfileForm(forms.ModelForm):
+    suffers_from = forms.ModelMultipleChoiceField(
+        queryset=CustomUser._meta.get_field('suffers_from').related_model.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        help_text='Select allergens'
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'university', 'economical_level', 'propic', 'suffers_from']
+        widgets = {
+            'propic': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }

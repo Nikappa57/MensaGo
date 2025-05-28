@@ -1,44 +1,56 @@
 from django.shortcuts import redirect, render
+from ..forms import ProfileForm
+import time, hmac, hashlib
+from django.conf import settings
+import qrcode
+from django.http import HttpResponse
+from django.urls import path
 
 
-# TODO: login required
-# TODO: update user profile (altra pagina? boh marius)
 def profile_home(request):
-    context = {
-        "current_user": request.user,
-    }
+	user = request.user
+	if not user.is_authenticated:
+		return redirect('login')
 
-    return render(request, "profile/profile.html", context)
+	if request.method == 'POST':
+		
+		
+		form = ProfileForm(request.POST, request.FILES, instance=user)
+		if form.is_valid():
+			form.save()
+			return redirect('profile')
+	else:
+		form = ProfileForm(instance=user)
+
+	context = {
+		'current_user': user,
+		'form': form,
+	}
+
+	return render(request, 'profile/profile.html', context)
 
 
-# TODO: login required
-def preferences(request):
-    current_user = request.user
-    context = {
-        "current_user": current_user,
-    }
+def profile_qrcode(request):
+	user = request.user
+	current_minute = int(time.time() // 60)
+	msg = f"{user.id}:{current_minute}"
+	sig = hmac.new(settings.SECRET_KEY.encode(), msg.encode(), hashlib.sha256).hexdigest()
+	qr_img = qrcode.make(sig)
+	response = HttpResponse(content_type="image/png")
+	qr_img.save(response, "PNG")
+	return response
 
-    return render(request, "profile/preferences.html", context)
 
+urlpatterns = [
+	path('profile/qrcode/', profile_qrcode, name='profile_qrcode'),
+]
 
-#TODO: login required
 def accreditation(request):
-    current_user = request.user
-    context = {
-        "current_user": current_user,
-    }
-
-    return render(request, "profile/accreditation.html", context)
-
-
-#TODO: login required
+	# Placeholder for accreditation logic
+	return render(request, 'profile/accreditation.html')
 def accreditation_pay(request):
-    current_user = request.user
-    context = {
-        "current_user": current_user,
-    }
-
-    # TODO: controlla il saldo e scala i soldi se li ha
-    # TODO: mostra un mex di success o error (senza pagina a se)
-
-    return redirect("accreditation")
+	# Placeholder for accreditation payment logic
+	return render(request, 'profile/accreditation_pay.html')
+def preferences(request):
+	# Placeholder for user preferences logic
+	return render(request, 'profile/preferences.html')	
