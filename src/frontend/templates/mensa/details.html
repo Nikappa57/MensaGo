@@ -62,13 +62,17 @@
                     <!-- Menu Tabs for Days -->
                     <div class="menu-tab-container">
                         {% for weekday, day_data in weekly_menus.items %}
-                        <button class="menu-tab {% if day_data.is_today %}active{% endif %}" 
+                        <button class="menu-tab {% if day_data.is_today %}active{% endif %} {% if not day_data.is_open %}disabled{% endif %}" 
                                 id="day-tab-{{ weekday }}"
-                                onclick="switchDay('{{ weekday }}', this)" 
-                                type="button">
+                                {% if day_data.is_open %}onclick="switchDay('{{ weekday }}', this)"{% endif %}
+                                type="button"
+                                {% if not day_data.is_open %}disabled{% endif %}>
                             {{ day_data.name }}
                             {% if day_data.is_today %}
                                 <span class="ms-1 badge bg-primary rounded-pill">Oggi</span>
+                            {% endif %}
+                            {% if not day_data.is_open %}
+                                <span class="ms-1 badge bg-secondary rounded-pill">Chiuso</span>
                             {% endif %}
                         </button>
                         {% endfor %}
@@ -78,31 +82,41 @@
                     <div class="menu-container">
                         {% for weekday, day_data in weekly_menus.items %}
                         <div id="menu-day-{{ weekday }}" class="menu-content {% if day_data.is_today %}active{% endif %}">
-                            {% if day_data.menus %}
-                                <!-- Meal tabs: Pranzo & Cena -->
+                            {% if day_data.is_open and day_data.menus %}
+                                <!-- Meal tabs: Always show both Pranzo and Cena -->
                                 <div class="meal-tab-container">
-                                    <button class="meal-tab active" onclick="switchMeal('{{ weekday }}','0', this)">
+                                    <!-- Pranzo button -->
+                                    <button class="meal-tab {% if 0 in day_data.available_dayparts %}{% if forloop.first %}active{% endif %}{% else %}disabled{% endif %}" 
+                                            {% if 0 in day_data.available_dayparts %}onclick="switchMeal('{{ weekday }}', '0', this)"{% else %}disabled{% endif %}>
                                         <i class="fa-solid fa-sun me-1"></i>Pranzo
+                                        {% if 0 not in day_data.available_dayparts %}
+                                            <span class="ms-1 badge bg-secondary rounded-pill">Chiuso</span>
+                                        {% endif %}
                                     </button>
-                                    <button class="meal-tab" onclick="switchMeal('{{ weekday }}','1', this)">
+                                    <!-- Cena button -->
+                                    <button class="meal-tab {% if 1 in day_data.available_dayparts %}{% if 0 not in day_data.available_dayparts %}active{% endif %}{% else %}disabled{% endif %}" 
+                                            {% if 1 in day_data.available_dayparts %}onclick="switchMeal('{{ weekday }}', '1', this)"{% else %}disabled{% endif %}>
                                         <i class="fa-solid fa-moon me-1"></i>Cena
+                                        {% if 1 not in day_data.available_dayparts %}
+                                            <span class="ms-1 badge bg-secondary rounded-pill">Chiuso</span>
+                                        {% endif %}
                                     </button>
                                 </div>
 
                                 <div class="meal-content-wrapper">
                                     {% for menu in day_data.menus %}
-                                    <div id="meal-{{ weekday }}-{{ forloop.counter0 }}" class="meal-content {% if forloop.first %}active{% endif %}">
+                                    <div id="meal-{{ weekday }}-{{ menu.day_part_value }}" class="meal-content {% if forloop.first %}active{% endif %}">
                                         {% for dish_type, dishes in menu.dishes_by_type.items %}
                                         <div class="course-section">
-											{% if dish_type == "Primo" %}
-											<h3 class="menu-category">Primi Piatti</h3>
-											{% elif dish_type == "Secondo" %}
-											<h3 class="menu-category">Secondi Piatti</h3>
-											{% elif dish_type == "Contorno" %}
-											<h3 class="menu-category">Contorni</h3>
-											{% elif dish_type == "Dessert/Frutta" %}
-											<h3 class="menu-category">Dessert e Frutta</h3>
-											{% endif %}
+                                            {% if dish_type == "Primo" %}
+                                            <h3 class="menu-category">Primi Piatti</h3>
+                                            {% elif dish_type == "Secondo" %}
+                                            <h3 class="menu-category">Secondi Piatti</h3>
+                                            {% elif dish_type == "Contorno" %}
+                                            <h3 class="menu-category">Contorni</h3>
+                                            {% elif dish_type == "Dessert/Frutta" %}
+                                            <h3 class="menu-category">Dessert e Frutta</h3>
+                                            {% endif %}
                                             <div class="dish-grid">
                                                 {% for dish in dishes %}
                                                 <div class="dish-card">
@@ -133,6 +147,12 @@
                                     </div>
                                     {% endfor %}
                                 </div>
+                            {% elif not day_data.is_open %}
+                                <div class="text-center py-4">
+                                    <i class="fa-solid fa-lock text-muted mb-2" style="font-size: 2rem;"></i>
+                                    <h4 class="text-muted">Mensa chiusa</h4>
+                                    <p class="text-muted">La mensa è chiusa il {{ day_data.name }}.</p>
+                                </div>
                             {% else %}
                                 <div class="text-center py-4">
                                     <i class="fa-solid fa-utensils text-muted mb-2" style="font-size: 2rem;"></i>
@@ -159,24 +179,29 @@
                 <small class="text-primary text-uppercase">Quando siamo aperti</small>
                 <h3 class="section-title mb-3">Opening Hours</h3>
                 <table class="hours-table">
-                    {% for day_num, day_name in hours_weekdays %}
+                    {% for weekday, day_data in weekly_menus.items %}
                     <tr>
-                        <td><strong>{{ day_name }}</strong></td>
+						{% if day_data.is_today %}
+						<td class="text-primary"><strong>{{ day_data.name }}</strong></td>
+						{% else %}
+						<td><strong>{{ day_data.name }}</strong></td>
+						{% endif %}
                         <td>
                             {% for hour in mensa.hours_set.all %}
-                                {% if hour.weekday == day_num %}
+                                {% if hour.weekday == weekday %}
                                     {{ hour.open_time|time:"H:i" }} - {{ hour.close_time|time:"H:i" }}
                                     {% if not forloop.last %}<br>{% endif %}
                                 {% endif %}
-                            {% empty %}
-                                {% if day_num == 5 or day_num == 6 %}
-                                    closed
-                                {% else %}
-                                    8:00 - 20:00
-                                {% endif %}
-                            {% endfor %}
+							{% endfor %}
+							{% if not day_data.is_open %}
+								<span class="text-muted	">Chiuso</span>
+							{% endif %}
                         </td>
                     </tr>
+					{% empty %}
+					<tr>
+						<td colspan="2">Orari non disponibili</td>
+					</tr>
                     {% endfor %}
                 </table>
             </div>
@@ -329,15 +354,15 @@
         var content = document.getElementById('menu-day-' + dayId);
         if (content) {
             content.classList.add('active');
-            // Trigger first meal type tab in this day
-            var typeTabs = content.querySelectorAll('.meal-tab');
+            // Trigger first available (non-disabled) meal type tab in this day
+            var typeTabs = content.querySelectorAll('.meal-tab:not(.disabled)');
             if (typeTabs.length > 0) {
                 typeTabs[0].click();
             }
         }
     }
 
-    function switchMeal(dayId, index, el) {
+    function switchMeal(dayId, daypart, el) {
         var container = document.getElementById('menu-day-' + dayId);
         if (!container) return;
         // Activate meal tab
@@ -345,7 +370,7 @@
         el.classList.add('active');
         // Show corresponding meal content
         container.querySelectorAll('.meal-content').forEach(c => c.classList.remove('active'));
-        var sel = document.getElementById('meal-' + dayId + '-' + index);
+        var sel = document.getElementById('meal-' + dayId + '-' + daypart);
         if (sel) sel.classList.add('active');
     }
 
@@ -428,16 +453,22 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Force all menu content to be properly initialized on page load
         setTimeout(() => {
-            // First find the active day tab
-            const activeTab = document.querySelector('.menu-tab.active');
+            // First try to find the active day tab (today if open)
+            let activeTab = document.querySelector('.menu-tab.active:not(.disabled)');
+            
+            // If today is not available (closed) or no active tab, select the first available open day
+            if (!activeTab) {
+                activeTab = document.querySelector('.menu-tab:not(.disabled)');
+            }
+            
             if (activeTab) {
+                // Remove any existing active classes
+                document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.menu-content').forEach(content => content.classList.remove('active'));
+                
+                // Activate the selected tab
+                activeTab.classList.add('active');
                 activeTab.click();
-            } else {
-                // If no active tab is found, activate the first one
-                const firstTab = document.querySelector('.menu-tab');
-                if (firstTab) {
-                    firstTab.click();
-                }
             }
         }, 50);
         
