@@ -1,6 +1,6 @@
 import os
 import random
-from datetime import timedelta
+from datetime import timedelta, time
 from pathlib import Path
 
 import django
@@ -16,6 +16,7 @@ from apps.mensa.models.City import City
 from apps.mensa.models.Events import Event
 from apps.mensa.models.Mensa import Mensa, PhotoMensa
 from apps.mensa.models.Review import Review
+from apps.mensa.models.Hours import Hours
 
 
 def create_admin_user():
@@ -354,11 +355,70 @@ def create_mensa_gallery(mensa_name, num_images=4):
     return photos
 
 
+def populate_hours():
+    """Aggiunge orari di apertura per tutte le mense"""
+    print("\nAggiungendo orari di apertura delle mense...")
+    
+    # Elimino eventuali orari esistenti
+    Hours.objects.all().delete()
+    
+    # Configurazione degli orari per tutte le mense
+    mense = Mensa.objects.all()
+    
+    for mensa in mense:
+        print(f"Configurando orari per: {mensa.name}")
+        
+        # Orari di pranzo dal lunedì al venerdì (giorni 0-4)
+        for weekday in range(5):
+            Hours.objects.create(
+                mensa=mensa,
+                weekday=weekday,
+                daypart=0,  # Pranzo
+                open_time=time(11, 30),
+                close_time=time(14, 30)
+            )
+        
+        # Orari di cena dal lunedì al venerdì (giorni 0-4)
+        for weekday in range(5):
+            Hours.objects.create(
+                mensa=mensa,
+                weekday=weekday,
+                daypart=1,  # Cena
+                open_time=time(19, 0),
+                close_time=time(22, 0)
+            )
+        
+        # Alcune mense sono aperte anche il sabato a pranzo (giorno 5)
+        if random.random() < 0.7:  # 70% delle mense aperte il sabato a pranzo
+            Hours.objects.create(
+                mensa=mensa,
+                weekday=5,
+                daypart=0,  # Pranzo
+                open_time=time(11, 30),
+                close_time=time(14, 0)
+            )
+            print(f"  ✓ {mensa.name} aperta il sabato a pranzo")
+    
+    print(f"Orari configurati per {mense.count()} mense")
+
+
 if __name__ == "__main__":
     print("Inizio popolazione del database...")
     create_admin_user()
     populate_cities()
     populate_events()
     populate_mense()
+    populate_hours()
     populate_reviews()
+    
+    # Importazione e esecuzione dello script per popolare i menu
+    try:
+        print("\nEsecuzione di populate_menus_fixed.py...")
+        import populate_menus_fixed
+        populate_menus_fixed.main()
+    except ImportError:
+        print("Attenzione: impossibile importare populate_menus_fixed.py")
+    except Exception as e:
+        print(f"Errore durante l'esecuzione di populate_menus_fixed: {e}")
+    
     print("Popolazione completata con successo!")
