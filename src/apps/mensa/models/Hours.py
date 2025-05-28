@@ -28,10 +28,12 @@ class Hours(models.Model):
     close_time = models.TimeField()
 
     def __str__(self):
-        return f'Hours(mensa={self.mensa}, weekday={self.weekday}, daypart={self.daypart}, open_time={self.open_time}, close_time={self.close_time})'
+        return f"{self.mensa} {self.weekday} {self.daypart}"
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return (
+            f"Hours(mensa={self.mensa}, weekday={self.weekday}, daypart={self.daypart}, open_time={self.open_time}, close_time={self.close_time})"
+        )
 
     class Meta:
         constraints = [

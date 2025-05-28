@@ -22,10 +22,13 @@ class Mensa(models.Model):
     gallery = models.ManyToManyField('PhotoMensa')
 
     def __str__(self):
-        return f'Mensa(name={self.name}, description={self.description}, position={self.position}, banner={self.banner}, capacity={self.capacity}, phone_number={self.phone_number}, city={self.city}, email={self.email})'
+        return self.name
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return (
+            f"Mensa(name={self.name}, description={self.description}, position={self.position}, "
+            f"banner={self.banner}, capacity={self.capacity}, phone_number={self.phone_number}, "
+            f"city={self.city}, email={self.email})")
 
     def save(self, *args, **kwargs):
         # If position changed or coordinates are missing, update coordinates
@@ -94,7 +97,7 @@ class PhotoMensa(models.Model):
     img = models.ImageField(upload_to='photos/', unique=True)
 
     def __str__(self):
-        return f"PhotoMensa(img={self.img})"
+        return str(self.img)
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return f"PhotoMensa(img={self.img})"

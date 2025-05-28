@@ -18,11 +18,11 @@ class EconomicalLevel(models.Model):
                                decimal_places=2,
                                default=Decimal('0.00'))
 
-    def __str__(self) -> str:
-        return f"EconomicalLevel(name={self.name}, cost={self.cost})"
+    def __str__(self):
+        return self.name
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return f"EconomicalLevel(name={self.name}, cost={self.cost})"
 
 
 class CustomUser(AbstractUser):
@@ -66,11 +66,11 @@ class CustomUser(AbstractUser):
         return self.university is None or self.economical_level is None
 
     def __str__(self):
+        return self.email
+
+    def __repr__(self) -> str:
         return (
             f"User(email={self.email}, first_name={self.first_name}, "
             f"last_name={self.last_name}, propic={self.propic}, credit={self.credit}, "
             f"economical_level={self.economical_level}, university={self.university})"
         )
-
-    def __repr__(self) -> str:
-        return self.__str__()

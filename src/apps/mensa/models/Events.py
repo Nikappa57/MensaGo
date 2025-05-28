@@ -19,7 +19,7 @@ class Event(models.Model):
         ordering = ['date']
 
     def __str__(self):
-        return f"Event(name={self.name}, date={self.date}, img={self.img})"
+        return f"{self.name} ({self.date})"
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return f"Event(name={self.name}, date={self.date}, img={self.img})"

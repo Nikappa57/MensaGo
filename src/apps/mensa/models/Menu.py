@@ -13,11 +13,11 @@ class Dish(models.Model):
     ingredients = models.ManyToManyField('mensa.Ingredient')
     allergens = models.ManyToManyField('mensa.Allergen')
 
-    def __str__(self) -> str:
-        return f"Dish(name={self.name}, description={self.description}, img={self.img})"
+    def __str__(self):
+        return self.name
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return f"Dish(name={self.name}, description={self.description}, img={self.img})"
 
 
 class Menu(models.Model):
@@ -55,10 +55,10 @@ class Menu(models.Model):
         ordering = ['weekday', 'day_part']
 
     def __str__(self):
-        return f"Menu(mensa={self.mensa}, weekday={self.weekday}, day_part={self.day_part})"
+        return f"{self.mensa} {self.weekday} {self.day_part}"
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return f"Menu(mensa={self.mensa}, weekday={self.weekday}, day_part={self.day_part})"
 
 
 class Includes(models.Model):
@@ -84,8 +84,8 @@ class Includes(models.Model):
                                     name='unique_menu_dish')
         ]
 
-    def __str__(self) -> str:
-        return f"menu: {self.menu}, dish: {self.dish}, type: {self.type}"
+    def __str__(self):
+        return f"{self.menu} - {self.dish} ({self.type})"
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return f"Includes(menu={self.menu}, dish={self.dish}, type={self.type})"

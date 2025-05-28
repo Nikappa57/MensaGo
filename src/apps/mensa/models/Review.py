@@ -30,7 +30,9 @@ class Review(models.Model):
         ]
 
     def __str__(self):
-        return f"Review(mensa={self.mensa}, user={self.user}, stars={self.stars}, text={self.text})"
+        return f"{self.mensa} - {self.user} ({self.stars}★)"
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return (
+            f"Review(mensa={self.mensa}, user={self.user}, stars={self.stars}, text={self.text})"
+        )

@@ -11,7 +11,7 @@ class Allergen(models.Model):
     icon = models.ImageField(upload_to='allergen-icons/')
 
     def __str__(self):
-        return f"Allergen(name={self.name})"
+        return self.name
 
     def __repr__(self) -> str:
-        return self.__str__()
+        return f"Allergen(name={self.name})"
