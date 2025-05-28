@@ -576,6 +576,18 @@
 	background: rgba(255,255,255,0.5);
 }
 
+.menu-tab.disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	color: #adb5bd;
+}
+
+.menu-tab.disabled:hover {
+	color: #adb5bd;
+	background: transparent;
+	transform: none;
+}
+
 .menu-content {
 	background: white;
 	border-radius: 15px;
