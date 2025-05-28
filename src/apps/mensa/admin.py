@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (Allergen, City, Dish, Event, Hours, Includes,
-                     Mensa, Menu, PhotoMensa, Review)
+                     Mensa, Menu, PhotoMensa, Review, AmenitiesMensa)
 
 
 class PhotoMensaInline(admin.TabularInline):
@@ -58,6 +58,11 @@ class MenuAdmin(admin.ModelAdmin):
     list_display = ('mensa', 'weekday', 'day_part')
     search_fields = ('mensa__name', )
     list_filter = ('mensa', 'weekday', 'day_part')
+    
+class AmenitiesMensaInline(admin.TabularInline):
+    model = AmenitiesMensa
+    extra = 1
+
 
 
 admin.site.register(Mensa, MensaAdmin)
@@ -68,3 +73,6 @@ admin.site.register(Hours, HoursAdmin)
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(City, CityAdmin)
 admin.site.register(Event, EventAdmin)
+admin.site.register(AmenitiesMensa)
+admin.site.register(PhotoMensa)
+admin.site.register(Includes)
