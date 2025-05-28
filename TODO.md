@@ -35,7 +35,12 @@
 - [x] Implementare i filtri
 
 ## Mensa
-da iniziare :)
+- [ ] SErivizi dinamici
+- [ ] Contatti con i link esterni
+- [ ] Recensioni
+- [ ] Allergeni rosso se le hai nel profilo, sennò neutro
+- [ ] FIX menu su ipad pro
+- [ ] Posti mensa
 
 ## Profilo
 da iniziare :)
