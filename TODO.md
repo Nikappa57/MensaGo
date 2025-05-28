@@ -1,5 +1,7 @@
 # TODO
 
+- [ ] Mettere comando per riempire il db come un comando django
+
 ## Home
 
 - [x] Impostare favicon (Ma da rivedere la foto in particolare)
@@ -17,6 +19,7 @@
 - [x] Animazione di ingresso per le città
 - [x] Sezione tutorial con call to action per registrarsi, scritta "mostra il qr code alla cassa e paga il giusto..."
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
+- [ ] Aggiustare i margin
 
 ## Login
 - [x] Conferma passw ecc? NO!

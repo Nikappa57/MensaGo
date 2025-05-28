@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ mensa.name }} - MensaGO{% endblock %}
+{% block title %}{{ mensa.name }}{% endblock %}
 
 {% block extra_css %}
 <!-- Leaflet CSS -->
@@ -21,11 +21,9 @@
                 <i class="fa-solid fa-location-dot me-2"></i>
                 {{ mensa.position }}, {{ mensa.city.name }}
             </p>
-            {% if mensa.phone_number %}
             <span class="badge bg-light text-dark me-2">
-                <i class="fa-solid fa-star text-warning"></i> {{ mensa.reviews.all|length }} Reviews
+                <i class="fa-solid fa-star text-warning"></i> {{ mensa.review_set|length }} Reviews
             </span>
-            {% endif %}
             <button class="btn btn-primary btn-sm mt-2">Leave a Review</button>
         </div>
     </div>

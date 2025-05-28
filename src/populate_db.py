@@ -14,7 +14,7 @@ django.setup()
 # Importazione dei modelli
 from apps.mensa.models.City import City
 from apps.mensa.models.Events import Event
-from apps.mensa.models.Mensa import Mensa
+from apps.mensa.models.Mensa import Mensa, PhotoMensa
 from apps.mensa.models.Review import Review
 
 
@@ -338,21 +338,25 @@ def populate_mense():
                                   city=city,
                                   banner=f"banners/{img_name}.jpg")
                     mensa.save()
-                    
+
                     # Crea e collega le immagini della galleria
                     # Crea 4 immagini di esempio per ogni mensa
                     for i in range(4):
                         img_name = f"{mensa_data['name'].lower().replace(' ', '-')}{i+1}.jpg"
                         img_path = f"uploads/photos/{img_name}"
                         # Crea un'immagine con un colore casuale per ogni foto della galleria
-                        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+                        color = (random.randint(0,
+                                                255), random.randint(0, 255),
+                                 random.randint(0, 255))
                         create_sample_image(img_path, color=color)
                         # Crea l'oggetto PhotoMensa e lo collega alla mensa
-                        photo = PhotoMensa.objects.create(img=f"photos/{img_name}")
+                        photo = PhotoMensa.objects.create(
+                            img=f"photos/{img_name}")
                         mensa.gallery.add(photo)
                     mensa.save()
-                    
-                    print(f"Aggiunta mensa: {mensa_data['name']} con 4 immagini")
+
+                    print(
+                        f"Aggiunta mensa: {mensa_data['name']} con 4 immagini")
                 else:
                     print(f"La mensa {mensa_data['name']} esiste già")
 
@@ -369,7 +373,8 @@ def create_mensa_gallery(mensa_name, num_images=4):
         img_name = f"{mensa_name.lower().replace(' ', '-')}{i+1}.jpg"
         img_path = f"uploads/photos/{img_name}"
         # Crea un'immagine con un colore casuale per ogni foto della galleria
-        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        color = (random.randint(0, 255), random.randint(0, 255),
+                 random.randint(0, 255))
         create_sample_image(img_path)
         photo = PhotoMensa.objects.create(img=f"photos/{img_name}")
         photos.append(photo)
