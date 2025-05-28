@@ -20,6 +20,7 @@ class Mensa(models.Model):
     city = models.ForeignKey('City', on_delete=models.PROTECT)
     email = models.EmailField(blank=True, null=True)
     gallery = models.ManyToManyField('PhotoMensa')
+    amenities = models.ManyToManyField('AmenitiesMensa', blank=True)
 
     def __str__(self):
         return self.name
@@ -101,3 +102,17 @@ class PhotoMensa(models.Model):
 
     def __repr__(self) -> str:
         return f"PhotoMensa(img={self.img})"
+
+class AmenitiesMensa(models.Model):
+    """"
+    Amenities(text, icon)
+    """
+
+    text = models.CharField(max_length=255, unique=True)
+    icon = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.text
+
+    def __repr__(self) -> str:
+        return f"AmenitiesMensa(text={self.text}, icon={self.icon})"
