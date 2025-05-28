@@ -22,13 +22,55 @@ def create_admin_user():
     """Crea un utente admin se non esiste già"""
     User = get_user_model()
     if not User.objects.filter(email="admin@admin.com").exists():
-        User.objects.create_superuser(email="admin@admin.com",
-                                      password="admin",
-                                      first_name="Admin",
-                                      last_name="User")
+        User.objects.create_superuser(
+            email="admin@admin.com",
+            password="admin",
+            first_name="Admin",
+            last_name="User"
+        )
         print("Creato utente admin (admin@admin.com / admin)")
     else:
         print("Utente admin già esistente.")
+
+
+def create_sample_image(filename, width=800, height=600, color=None):
+    """
+    Crea un'immagine di esempio con dimensioni e colore specificati
+    Salva l'immagine nella cartella appropriata e restituisce il percorso relativo
+    Se il file esiste già, lo riusa senza sovrascrivere.
+    """
+    # Se il file esiste già, non ricrearlo
+    if os.path.exists(filename):
+        print(f"Immagine già esistente: {filename}")
+        return filename
+
+    try:
+        from PIL import Image
+
+        # Crea un'immagine con colore casuale se non specificato
+        if color is None:
+            color = (
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255)
+            )
+
+        img = Image.new('RGB', (width, height), color)
+
+        # Crea la directory se non esiste
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+        # Salva l'immagine
+        img.save(filename)
+        print(f"Creata immagine di esempio: {filename}")
+        return filename
+
+    except ImportError:
+        print("PIL non installato. Utilizzo placeholder.")
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        with open(filename, 'w') as f:
+            f.write('placeholder')
+        return filename
 
 
 def populate_reviews():
@@ -39,10 +81,7 @@ def populate_reviews():
     if not users or not mense:
         print("Nessun utente o mensa trovata, salto le reviews.")
         return
-    print("Elimino tutte le recensioni esistenti...")
-    Review.objects.all().delete()
-    print("Tutte le recensioni eliminate con successo!")
-    print("Aggiungo recensioni...")
+
     for mensa in mense:
         for i in range(2):  # 2 recensioni per mensa
             user = users[i % len(users)]
@@ -51,50 +90,20 @@ def populate_reviews():
                     mensa=mensa,
                     user=user,
                     stars=random.randint(1, 5),
-                    text=
-                    f"Recensione di test {i+1} per {mensa.name} da {user.first_name}"
+                    text=f"Recensione di test {i+1} per {mensa.name} da {user.first_name}"
                 )
                 print(f"Aggiunta review per {mensa.name} da {user.email}")
-
-
-def create_sample_image(filename, width=800, height=600, color=None):
-    """
-    Crea un'immagine di esempio con dimensioni e colore specificati
-    Salva l'immagine nella cartella appropriata e restituisce il percorso relativo
-    """
-    try:
-        from PIL import Image
-
-        # Crea un'immagine con colore casuale se non specificato
-        if color is None:
-            color = (random.randint(0, 255), random.randint(0, 255),
-                     random.randint(0, 255))
-
-        img = Image.new('RGB', (width, height), color)
-
-        # Crea la directory se non esiste
-        directory = os.path.dirname(filename)
-        os.makedirs(directory, exist_ok=True)
-
-        # Salva l'immagine
-        img.save(filename)
-        return filename
-    except ImportError:
-        print("PIL non installato. Utilizzo immagine di placeholder."
-              )  # TODO: penso non serva!
-        # Se PIL non è installato, crea solo un file vuoto come placeholder
-        with open(filename, 'w') as f:
-            f.write('placeholder')
-        return filename
+            else:
+                print(f"Review già esistente per {mensa.name} da {user.email}")
 
 
 def populate_cities():
     """Aggiunge alcune città di esempio al database"""
     cities = [
-        "Roma", "Milano", "Napoli", "Torino", "Bologna", "Firenze", "Venezia",
-        "Padova"
+        "Roma", "Milano", "Napoli", "Torino", "Bologna", 
+        "Firenze", "Venezia", "Padova"
     ]
-    cities_pos = {
+    coords = {
         "Roma": (41.9028, 12.4964),
         "Milano": (45.4642, 9.1900),
         "Napoli": (40.8518, 14.2681),
@@ -105,71 +114,47 @@ def populate_cities():
         "Padova": (45.4064, 11.8768)
     }
 
-    print("Aggiungo città...")
-    for city_name in cities:
-        # Controlla se la città esiste già
-        if City.objects.filter(name=city_name).exists():
-            city = City.objects.get(name=city_name)
-        else:
-            city = City(name=city_name)
+    for name in cities:
+        city, created = City.objects.get_or_create(name=name)
+        # Percorso immagine
+        fname = name.lower().replace(' ', '_') + '.jpg'
+        rel_path = f"landscapes/{fname}"
+        img_path = f"frontend/static/imgs/landscapes/{fname}"
 
-        # Crea un'immagine di esempio per la città
-        img_path = f"frontend/static/imgs/landscapes/{city_name.lower().replace(' ', '_')}.jpg"  # TODO: a che serve?
+        # Crea immagine se non esiste
         create_sample_image(img_path)
 
-        # Crea l'oggetto City
-        landscape_file_path = f"landscapes/{city_name.lower().replace(' ', '_')}.jpg"
-        city.landscape = landscape_file_path
-        city.latitude = cities_pos[city_name][0]
-        city.longitude = cities_pos[city_name][1]
+        city.landscape = rel_path
+        city.latitude, city.longitude = coords[name]
         city.save()
-        print(f"Aggiunta città: {city_name}")
+        print(f"{'Aggiunta' if created else 'Aggiornata'} città: {name}")
 
 
 def populate_events():
     """Aggiunge alcuni eventi di esempio al database"""
-    # Eventi con date future (a partire da oggi)
     today = timezone.now().date()
-    events = [{
-        "name": "Festival Culinario Universitario",
-        "days_from_now": 5
-    }, {
-        "name": "Serata Pizza e Birra",
-        "days_from_now": 10
-    }, {
-        "name": "Incontro con Chef Stellato",
-        "days_from_now": 15
-    }, {
-        "name": "Degustazione Vini Locali",
-        "days_from_now": 20
-    }, {
-        "name": "Serata di Cucina Internazionale",
-        "days_from_now": 25
-    }, {
-        "name": "Workshop: Cucina Sostenibile",
-        "days_from_now": 30
-    }]
+    events = [
+        {"name": "Festival Culinario Universitario", "days_from_now": 5},
+        {"name": "Serata Pizza e Birra", "days_from_now": 10},
+        {"name": "Incontro con Chef Stellato", "days_from_now": 15},
+        {"name": "Degustazione Vini Locali", "days_from_now": 20},
+        {"name": "Serata di Cucina Internazionale", "days_from_now": 25},
+        {"name": "Workshop: Cucina Sostenibile", "days_from_now": 30}
+    ]
 
-    print("Aggiungo eventi...")
-    for event in events:
-        event_date = today + timedelta(days=event["days_from_now"])
-        event_name = event["name"]
+    for ev in events:
+        date = today + timedelta(days=ev['days_from_now'])
+        name = ev['name']
+        if not Event.objects.filter(name=name, date=date).exists():
+            img_fname = name.lower().replace(' ', '_') + '.jpg'
+            rel_img = f"events/{img_fname}"
+            img_path = f"frontend/static/imgs/events/{img_fname}"
 
-        # Controlla se l'evento esiste già
-        if not Event.objects.filter(name=event_name, date=event_date).exists():
-            # Crea un'immagine di esempio per l'evento
-            img_path = f"frontend/static/imgs/events/{event_name.lower().replace(' ', '_')}.jpg"
             create_sample_image(img_path)
-
-            # Crea l'oggetto Event
-            event_obj = Event(
-                name=event_name,
-                date=event_date,
-                img=f"events/{event_name.lower().replace(' ', '_')}.jpg")
-            event_obj.save()
-            print(f"Aggiunto evento: {event_name} in data {event_date}")
+            Event.objects.create(name=name, date=date, img=rel_img)
+            print(f"Aggiunto evento: {name} il {date}")
         else:
-            print(f"L'evento {event_name} in data {event_date} esiste già")
+            print(f"Evento già esistente: {name} il {date}")
 
 
 def populate_mense():
@@ -314,80 +299,59 @@ def populate_mense():
         }]
     }
 
-    print("\nAggiungo mense...")
-    for city_name, mense in mense_data.items():
+    for city_name, mense_list in mense_data.items():
         try:
             city = City.objects.get(name=city_name)
-            print(f"\nProcessando {city_name}...")
-
-            for mensa_data in mense:
-                # Controlla se la mensa esiste già
-                if not Mensa.objects.filter(name=mensa_data['name']).exists():
-                    # Crea un'immagine di esempio per la mensa
-                    img_name = mensa_data['name'].lower().replace(' ', '_')
-                    img_path = f"uploads/banners/{img_name}.jpg"
-                    create_sample_image(img_path)
-
-                    # Crea la mensa con i dati base
-                    mensa = Mensa(name=mensa_data['name'],
-                                  description=mensa_data['description'],
-                                  position=mensa_data['position'],
-                                  capacity=mensa_data['capacity'],
-                                  phone_number=mensa_data['phone_number'],
-                                  email=mensa_data['email'],
-                                  city=city,
-                                  banner=f"banners/{img_name}.jpg")
-                    mensa.save()
-
-                    # Crea e collega le immagini della galleria
-                    # Crea 4 immagini di esempio per ogni mensa
-                    for i in range(4):
-                        img_name = f"{mensa_data['name'].lower().replace(' ', '-')}{i+1}.jpg"
-                        img_path = f"uploads/photos/{img_name}"
-                        # Crea un'immagine con un colore casuale per ogni foto della galleria
-                        color = (random.randint(0,
-                                                255), random.randint(0, 255),
-                                 random.randint(0, 255))
-                        create_sample_image(img_path, color=color)
-                        # Crea l'oggetto PhotoMensa e lo collega alla mensa
-                        photo = PhotoMensa.objects.create(
-                            img=f"photos/{img_name}")
-                        mensa.gallery.add(photo)
-                    mensa.save()
-
-                    print(
-                        f"Aggiunta mensa: {mensa_data['name']} con 4 immagini")
-                else:
-                    print(f"La mensa {mensa_data['name']} esiste già")
-
         except City.DoesNotExist:
             print(f"Città {city_name} non trovata, salto...")
+            continue
+
+        for m_data in mense_list:
+            mensa, created = Mensa.objects.get_or_create(
+                name=m_data['name'],
+                defaults={
+                    'description': m_data['description'],
+                    'position': m_data['position'],
+                    'capacity': m_data['capacity'],
+                    'phone_number': m_data['phone_number'],
+                    'email': m_data['email'],
+                    'city': city
+                }
+            )
+
+            # Banner image
+            banner_fname = m_data['name'].lower().replace(' ', '_') + '.jpg'
+            banner_rel = f"banners/{banner_fname}"
+            banner_path = f"uploads/banners/{banner_fname}"
+            create_sample_image(banner_path)
+            mensa.banner = banner_rel
+            mensa.save()
+
+            # Galleria
+            for i in range(4):
+                img_name = f"{m_data['name'].lower().replace(' ', '-')}{i+1}.jpg"
+                rel = f"photos/{img_name}"
+                path = f"uploads/photos/{img_name}"
+                create_sample_image(path)
+
+                photo, p_created = PhotoMensa.objects.get_or_create(img=rel)
+                if not mensa.gallery.filter(pk=photo.pk).exists():
+                    mensa.gallery.add(photo)
+            mensa.save()
+
+            print(f"{'Aggiunta' if created else 'Aggiornata'} mensa: {m_data['name']}")
 
 
 def create_mensa_gallery(mensa_name, num_images=4):
-    """
-    Crea una galleria di immagini per una mensa creando oggetti PhotoMensa
-    """
     photos = []
     for i in range(num_images):
         img_name = f"{mensa_name.lower().replace(' ', '-')}{i+1}.jpg"
-        img_path = f"uploads/photos/{img_name}"
-        # Crea un'immagine con un colore casuale per ogni foto della galleria
-        color = (random.randint(0, 255), random.randint(0, 255),
-                 random.randint(0, 255))
-        create_sample_image(img_path)
-        photo = PhotoMensa.objects.create(img=f"photos/{img_name}")
+        rel = f"photos/{img_name}"
+        path = f"uploads/photos/{img_name}"
+        create_sample_image(path)
+        photo, _ = PhotoMensa.objects.get_or_create(img=rel)
         photos.append(photo)
     return photos
-
-
-def clear_mense():
-    """Elimina tutte le mense e le foto esistenti nel database"""
-    print("Eliminando tutte le mense esistenti...")
-    Mensa.objects.all().delete()
-    print("Eliminando tutte le foto delle mense esistenti...")
-    PhotoMensa.objects.all().delete()
-    print("Tutte le mense e le foto eliminate con successo!")
 
 
 if __name__ == "__main__":
@@ -395,7 +359,6 @@ if __name__ == "__main__":
     create_admin_user()
     populate_cities()
     populate_events()
-    clear_mense()
     populate_mense()
     populate_reviews()
-    print("Popolazione del database completata con successo!")
+    print("Popolazione completata con successo!")
