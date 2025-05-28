@@ -200,15 +200,52 @@ def create_dishes():
     
     created_dishes = []
     
+    # Mapping diretto tra nomi piatti e file immagini
+    dish_image_mapping = {
+        'Spaghetti alla Carbonara': 'dish-photos/spaghetti_alla_carbonara.jpg',
+        'Risotto ai Funghi Porcini': 'dish-photos/risotto_ai_funghi_porcini.jpg',
+        'Pasta al Pomodoro e Basilico': 'dish-photos/pasta_al_pomodoro_e_basilico.jpg',
+        'Lasagne della Nonna': 'dish-photos/lasagna_della_nonna.jpg',
+        'Risotto alla Milanese': 'dish-photos/risotto_alla_milanese.jpg',
+        'Pollo alle Erbe Aromatiche': 'dish-photos/pollo_alle_erbe_aromatiche.jpg',
+        'Scaloppine al Limone': 'dish-photos/scaloppine_al_limone.jpg',
+        'Branzino al Sale': 'dish-photos/branzino_al_sale.jpg',
+        'Cotoletta alla Milanese': 'dish-photos/cotoletta_alla-milanese.jpg',
+        'Salmone Grigliato': 'dish-photos/salmone_grigliato.jpg',
+        'Insalata Verde Mista': 'dish-photos/insalata_verde_mista.jpg',
+        'Patate Arrosto al Rosmarino': 'dish-photos/patate_arrosto_al_rosmarino.jpg',
+        'Spinaci Saltati in Padella': 'dish-photos/spinaci_saltati_in_padella.jpg',
+        'Zucchine alla Griglia': 'dish-photos/zucchine_alla_griglia.jpg',
+        'Caponata Siciliana': 'dish-photos/caponata_alla_siciliana.jpg',
+        'Tiramisù della Casa': 'dish-photos/tiramisu_della_casa.jpeg',
+        'Panna Cotta ai Frutti di Bosco': 'dish-photos/pannacotta_ai_frutti_di_bosco.jpg',
+        'Frutta Fresca di Stagione': 'dish-photos/frutta_fresca_di_stagione.jpg',
+        'Gelato Artigianale': 'dish-photos/gelato_artigianale.jpg',
+        'Crostata della Nonna': 'dish-photos/crostata_della_nonna.jpg'
+    }
+    
+    print(f"Preparati {len(dish_image_mapping)} associazioni di immagini ai piatti")
+    
     for dish_data in dishes_data:
+        # Determina l'immagine da utilizzare
+        img_path = dish_image_mapping.get(
+            dish_data['name'], 'dish-photos/default.jpg'
+        )
+        
         # Crea il piatto
         dish, created = Dish.objects.get_or_create(
             name=dish_data['name'],
             defaults={
                 'description': dish_data['description'],
-                'img': 'dish-photos/default.jpg'  # Immagine di default
+                'img': img_path
             }
         )
+        
+        # Aggiorna l'immagine anche se il piatto esiste già
+        if not created:
+            dish.img = img_path
+            dish.save()
+            print(f"Aggiornata immagine per piatto esistente: {dish_data['name']}")
         
         if created:
             # Aggiungi ingredienti se esistono
