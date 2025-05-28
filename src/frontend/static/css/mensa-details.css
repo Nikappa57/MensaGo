@@ -407,7 +407,6 @@
 	width: 20px;
 	text-align: center;
 }
-}
 
 .leaflet-popup-close-button {
 	padding: 8px !important;
@@ -841,26 +840,6 @@
 	line-height: 1.5;
 }
 
-.dish-allergens {
-	margin-top: auto;
-}
-
-.dish-allergens small {
-	background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-	border: 1px solid #ffeaa7;
-	border-radius: 20px;
-	padding: 4px 12px;
-	display: inline-flex;
-	align-items: center;
-	font-weight: 500;
-	font-size: 0.75rem;
-	color: #856404;
-}
-
-.dish-allergens i {
-	margin-right: 4px;
-}
-
 /* Day-specific menu styles */
 .day-menu-container {
 	margin-top: 20px;
@@ -927,9 +906,30 @@
 	margin-top: 8px;
 }
 
+.dish-allergens .badge {
+	border-radius: 12px;
+	padding: 6px 10px;
+	font-size: 0.8rem;
+	font-weight: 500;
+	margin-right: 6px;
+	margin-bottom: 4px;
+	display: inline-block;
+	border: 1px solid #dee2e6;
+	background-color: #f8f9fa;
+	color: #6c757d;
+}
+
+.dish-allergens .badge.text-danger {
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+	color: #721c24;
+}
+
+.dish-allergens .badge i {
+	margin-right: 4px;
+}
+
 .dish-allergens small {
-	background: #fff3cd;
-	border: 1px solid #ffeaa7;
 	border-radius: 4px;
 	padding: 4px 8px;
 	display: inline-block;

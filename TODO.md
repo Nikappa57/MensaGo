@@ -20,6 +20,7 @@
 - [x] Sezione tutorial con call to action per registrarsi, scritta "mostra il qr code alla cassa e paga il giusto..."
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
 - [ ] Aggiustare i margin
+- [ ] Animazioni che mentre scorri si muovono le img!?
 
 ## Login
 - [x] Conferma passw ecc? NO!
@@ -35,18 +36,15 @@
 - [x] Implementare i filtri
 
 ## Mensa
-- [ ] SErivizi dinamici
-- [ ] Contatti con i link esterni
+- [x] Servizi dinamici
+- [x] Contatti con i link esterni
 - [ ] Recensioni
-- [ ] Allergeni rosso se le hai nel profilo, sennò neutro
+- [x] Allergeni rosso se le hai nel profilo, sennò neutro
 - [ ] FIX menu su ipad pro
 - [ ] Posti mensa
 
 ## Profilo
 da iniziare :)
 
-## Preferences
-da iniziare :)
-
-## Accreditation
-da iniziare :)
+## Admin
+- [ ] Aggiungere possibilità di scannerizzare il qrcode!?

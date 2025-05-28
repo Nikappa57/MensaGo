@@ -11,6 +11,7 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'propic')}),
         ('University info', {'fields': ('university', 'economical_level', 'credit')}),
+        ('Mensa info', {'fields': ('suffers_from', 'likes')}),
         ('Permissions', {'fields': ('is_staff', 'is_active', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )

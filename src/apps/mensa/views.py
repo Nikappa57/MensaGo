@@ -1,8 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from apps.world.utils import haversine
 
-from .models import City, Mensa
+from .models import City, Mensa, Dish
 
 
 def mensa_city(request, city_name):
@@ -106,3 +109,33 @@ def mensa_details(request, city_name, mensa_name):
 	}
 
 	return render(request, "mensa/details.html", context)
+
+
+@login_required
+@require_POST
+def toggle_like_dish(request, dish_name):
+	"""
+	Toggle like/unlike for a dish. Only accessible to logged-in users.
+	Returns JSON response with the new like status.
+	"""
+	dish = get_object_or_404(Dish, name=dish_name)
+	user = request.user
+	
+	if dish in user.likes.all():
+		# Remove like
+		user.likes.remove(dish)
+		liked = False
+		message = f"Rimosso {dish.name} dai preferiti"
+	else:
+		# Add like
+		user.likes.add(dish)
+		liked = True
+		message = f"Aggiunto {dish.name} ai preferiti"
+	
+	return JsonResponse({
+		'liked': liked,
+		'message': message,
+		'dish_id': dish_name
+	})
+
+
