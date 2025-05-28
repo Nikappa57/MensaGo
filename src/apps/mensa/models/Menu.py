@@ -10,7 +10,6 @@ class Dish(models.Model):
     name = models.CharField(max_length=100, unique=True, primary_key=True)
     description = models.TextField()
     img = models.ImageField(upload_to='dish-photos/')
-    ingredients = models.ManyToManyField('mensa.Ingredient')
     allergens = models.ManyToManyField('mensa.Allergen')
 
     def __str__(self):

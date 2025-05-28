@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import (Allergen, City, Dish, Event, Hours, Includes, Ingredient,
+from .models import (Allergen, City, Dish, Event, Hours, Includes,
                      Mensa, Menu, PhotoMensa, Review)
 
 
@@ -21,11 +21,6 @@ class CityAdmin(admin.ModelAdmin):
 
 
 class AllergenAdmin(admin.ModelAdmin):
-    search_fields = ['name']
-    list_display = ('name', )
-
-
-class IngredientAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_display = ('name', )
 
@@ -68,7 +63,6 @@ class MenuAdmin(admin.ModelAdmin):
 admin.site.register(Mensa, MensaAdmin)
 admin.site.register(Menu, MenuAdmin)
 admin.site.register(Dish, DishAdmin)
-admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Allergen, AllergenAdmin)
 admin.site.register(Hours, HoursAdmin)
 admin.site.register(Review, ReviewAdmin)
