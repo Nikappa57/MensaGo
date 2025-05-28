@@ -89,7 +89,6 @@ class Mensa(models.Model):
                 print(f"Geocoding error for {self.name}: {str(e)}")
         return False
 
-
 class PhotoMensa(models.Model):
     """"
     PhotoMensa(Img)

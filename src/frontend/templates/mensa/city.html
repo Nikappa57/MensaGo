@@ -8,6 +8,50 @@
 <link rel="stylesheet" href="{% static 'css/city.css' %}">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 {% endblock %}
+{% block nav_elements %}
+{% if user.is_authenticated %}
+<li class="nav-item dropdown ms-3">
+	<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+		data-bs-toggle="dropdown" aria-expanded="false">
+		{{ user.first_name }} {{ user.last_name }}
+	</a>
+	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+		<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+		<li><a class="dropdown-item" href="{% url 'preferences' %}">Preferences</a></li>
+		<li><a class="dropdown-item" href="{% url 'accreditation' %}">Accreditation</a></li>
+		<li><hr class="dropdown-divider"> </li>
+		<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+	</ul>
+</li>
+{% else %}
+<li class="nav-item ms-3">
+	<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+</li>
+{% endif %}
+{% endblock %}
+
+{% block nav_mobile %}
+{% if user.is_authenticated %}
+<div class="dropdown d-lg-none">
+	<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+		data-bs-toggle="dropdown" aria-expanded="false">
+		{{ user.first_name }} {{ user.last_name }}
+	</a>
+	
+	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="margin: 0">
+		<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+		<li><a class="dropdown-item" href="{% url 'preferences' %}">Preferences</a></li>
+		<li><a class="dropdown-item" href="{% url 'accreditation' %}">Accreditation</a></li>
+		<li><hr class="dropdown-divider"> </li>
+		<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+	</ul>
+</div>
+{% else %}
+<li class="nav-item ms-3">
+	<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+</li>
+{% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-0">
