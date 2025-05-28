@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.shortcuts import redirect, render
 
 from .models import CustomUser, University
@@ -110,3 +110,24 @@ class ProfileForm(forms.ModelForm):
         widgets = {
             'propic': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    """
+    Form personalizzato per il cambio password che aggiunge stile alle classi
+    """
+    old_password = forms.CharField(
+        label="Password attuale",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=True
+    )
+    new_password1 = forms.CharField(
+        label="Nuova password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=True
+    )
+    new_password2 = forms.CharField(
+        label="Conferma nuova password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=True
+    )

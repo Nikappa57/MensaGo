@@ -1,10 +1,12 @@
 from django.shortcuts import redirect, render
-from ..forms import ProfileForm, AllergensForm
+from ..forms import ProfileForm, AllergensForm, CustomPasswordChangeForm
 import time, hmac, hashlib
 from django.conf import settings
 import qrcode
 from django.http import HttpResponse
 from django.urls import path
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 
 
 def profile_home(request):
@@ -15,6 +17,7 @@ def profile_home(request):
 	# Initialize forms
 	form = ProfileForm(instance=user)
 	allergens_form = AllergensForm(initial={'suffers_from': user.suffers_from.all()})
+	password_form = CustomPasswordChangeForm(user)
 
 	if request.method == 'POST':
 		update_section = request.POST.get('update_section')
@@ -43,6 +46,17 @@ def profile_home(request):
 				# Debug: stampa errori del form
 				print("DEBUG: AllergensForm errors:", allergens_form.errors)
 			return redirect('profile')
+		elif update_section == 'password':
+			# Handle password update
+			password_form = CustomPasswordChangeForm(user, request.POST)
+			if password_form.is_valid():
+				user = password_form.save()
+				# Aggiorna la sessione per evitare il logout dell'utente
+				update_session_auth_hash(request, user)
+				print("DEBUG: Password updated successfully")
+			else:
+				print("DEBUG: Password form errors:", password_form.errors)
+			return redirect('profile')
 		else:
 			# Handle full form update (fallback)
 			form = ProfileForm(request.POST, request.FILES, instance=user)
@@ -54,6 +68,7 @@ def profile_home(request):
 		'current_user': user,
 		'form': form,
 		'allergens_form': allergens_form,
+		'password_form': password_form,
 	}
 
 	return render(request, 'profile/profile.html', context)
@@ -62,9 +77,8 @@ def profile_home(request):
 def profile_qrcode(request):
 	user = request.user
 	current_minute = int(time.time() // 60)
-	msg = f"{user.id}:{current_minute}"
-	sig = hmac.new(settings.SECRET_KEY.encode(), msg.encode(), hashlib.sha256).hexdigest()
-	qr_img = qrcode.make(sig)
+	msg = f"{user.email}:{current_minute}"
+	qr_img = qrcode.make(msg)
 	response = HttpResponse(content_type="image/png")
 	qr_img.save(response, "PNG")
 	return response
@@ -82,4 +96,25 @@ def accreditation_pay(request):
 	return render(request, 'profile/accreditation_pay.html')
 def preferences(request):
 	# Placeholder for user preferences logic
-	return render(request, 'profile/preferences.html')	
+	return render(request, 'profile/preferences.html')
+
+
+def change_password(request):
+	if not request.user.is_authenticated:
+		return redirect('login')
+
+	if request.method == 'POST':
+		form = CustomPasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			# Importante: aggiorna la sessione per evitare il logout dell'utente
+			update_session_auth_hash(request, user)
+			# Redirect alla pagina del profilo con un parametro per mostrare un messaggio di successo
+			return redirect('profile' + '?password_changed=true')
+		else:
+			# Se il form non è valido, mostra gli errori
+			print("DEBUG: Form non valido:", form.errors)
+	else:
+		form = CustomPasswordChangeForm(request.user)
+	
+	return redirect('profile')	

@@ -100,19 +100,17 @@
                 </button>
               </li>
               
-              <!-- First Name -->
+              <!-- First Name and Last Name -->
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
-                <div>
-                  <strong class="d-block">Nome</strong>
-                  <span id="display-first_name" class="profile-data">{{ current_user.first_name }}</span>
-                </div>
-              </li>
-              
-              <!-- Last Name -->
-              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
-                <div>
-                  <strong class="d-block">Cognome</strong>
-                  <span id="display-last_name" class="profile-data">{{ current_user.last_name }}</span>
+                <div class="d-flex w-100">
+                  <div class="me-5">
+                    <strong class="d-block">Nome</strong>
+                    <span id="display-first_name" class="profile-data">{{ current_user.first_name }}</span>
+                  </div>
+                  <div>
+                    <strong class="d-block">Cognome</strong>
+                    <span id="display-last_name" class="profile-data">{{ current_user.last_name }}</span>
+                  </div>
                 </div>
               </li>
               
@@ -124,8 +122,20 @@
                 </div>
               </li>
               
+              <!-- Password -->
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+                <div>
+                  <strong class="d-block">Password</strong>
+                  <span class="profile-data">*********</span>
+                </div>
+                <button class="btn btn-outline-primary btn-sm rounded-pill edit-password-btn" type="button">
+                  <i class="bi bi-pencil me-1"></i>Modifica
+                </button>
+              </li>
+              
               <!-- Avatar Edit Form (hidden) -->
               <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-avatar-edit">
+                <hr class="my-4">
                 <div class="form-section-title mb-3">Modifica immagine profilo</div>
                 <div class="form-group mb-3">
                   <label class="form-label fw-bold mb-2">Immagine profilo</label>
@@ -139,6 +149,73 @@
                     <i class="bi bi-x-circle me-2"></i>Annulla
                   </button>
                   <button type="button" class="btn btn-success save-avatar-btn">
+                    <i class="bi bi-check-circle me-2"></i>Salva
+                  </button>
+                </div>
+              </div>
+
+              <!-- Password Edit Form (hidden) -->
+              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-password-edit">
+                <hr class="my-4">
+                <div class="form-section-title mb-3">Modifica password</div>
+                <div class="form-group mb-3">
+                  <label class="form-label fw-bold mb-2">
+                    <i class="bi bi-shield-lock me-2" style="color: #6a11cb;"></i>Modifica la tua password
+                  </label>
+                  <div class="form-control-custom">
+                    <div class="password-edit-form">
+                      <div class="mb-3">
+                        <label for="id_old_password" class="form-label">Password attuale</label>
+                        {{ password_form.old_password }}
+                        {% if password_form.old_password.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in password_form.old_password.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="id_new_password1" class="form-label">Nuova password</label>
+                        {{ password_form.new_password1 }}
+                        {% if password_form.new_password1.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in password_form.new_password1.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                        <small class="form-text text-muted mt-1">
+                          <ul class="ps-3 mb-0">
+                            <li>La password non può essere troppo simile ai tuoi dati personali.</li>
+                            <li>La password deve contenere almeno 8 caratteri.</li>
+                            <li>La password non può essere una di quelle comunemente utilizzate.</li>
+                            <li>La password non può contenere solo numeri.</li>
+                          </ul>
+                        </small>
+                      </div>
+                      
+                      <div class="mb-2">
+                        <label for="id_new_password2" class="form-label">Conferma nuova password</label>
+                        {{ password_form.new_password2 }}
+                        {% if password_form.new_password2.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in password_form.new_password2.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="button" class="btn btn-secondary me-2 cancel-password-btn">
+                    <i class="bi bi-x-circle me-2"></i>Annulla
+                  </button>
+                  <button type="button" class="btn btn-success save-password-btn">
                     <i class="bi bi-check-circle me-2"></i>Salva
                   </button>
                 </div>
@@ -162,26 +239,25 @@
           
           <div class="card-body">
             <ul class="list-group list-group-flush profile-list">
-              <!-- University -->
+              <!-- University and Economical Level -->
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
-                <div>
-                  <strong class="d-block">Università</strong>
-                  {% if current_user.university.name %}
-                    <span id="display-university" class="profile-data">{{ current_user.university.name }}</span>
-                  {% else %}
-                    <span id="display-university" class="profile-data text-muted">Non specificata</span>
-                  {% endif %}
-                </div>
-
-              </li>              <!-- Economical Level -->
-              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
-                <div>
-                  <strong class="d-block">Livello Economico</strong>
-                  {% if current_user.economical_level %}
-                    <span id="display-economical_level" class="profile-data">{{ current_user.economical_level.name }}</span>
-                  {% else %}
-                    <span id="display-economical_level" class="profile-data text-muted">Non specificato</span>
-                  {% endif %}
+                <div class="d-flex w-100">
+                  <div class="me-5">
+                    <strong class="d-block">Università</strong>
+                    {% if current_user.university.name %}
+                      <span id="display-university" class="profile-data">{{ current_user.university.name }}</span>
+                    {% else %}
+                      <span id="display-university" class="profile-data text-muted">Non specificata</span>
+                    {% endif %}
+                  </div>
+                  <div>
+                    <strong class="d-block">Livello Economico</strong>
+                    {% if current_user.economical_level %}
+                      <span id="display-economical_level" class="profile-data">{{ current_user.economical_level.name }}</span>
+                    {% else %}
+                      <span id="display-economical_level" class="profile-data text-muted">Non specificato</span>
+                    {% endif %}
+                  </div>
                 </div>
               </li>                  <!-- Allergens -->
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
@@ -210,6 +286,7 @@
               
               <!-- Allergens Edit Form (hidden) -->
               <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-allergens-edit">
+                <hr class="my-4">
                 <div class="form-section-title mb-3">Modifica allergie</div>
                 <div class="form-group mb-3">
                   <label class="form-label fw-bold mb-2">
@@ -272,14 +349,22 @@
   </form>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
+<script>  document.addEventListener('DOMContentLoaded', function() {
   // Aggiungi bootstrap icons se non è già presente
   if (!document.querySelector('link[href*="bootstrap-icons"]')) {
     const iconLink = document.createElement('link');
     iconLink.rel = 'stylesheet';
     iconLink.href = 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css';
     document.head.appendChild(iconLink);
+  }
+  
+  // Controlla se c'è un messaggio di successo nella URL e mostra notifica
+  const urlParams = new URLSearchParams(window.location.search);
+  const passwordChanged = urlParams.get('password_changed');
+  if (passwordChanged === 'true') {
+    showNotification('Password modificata con successo', 'success');
+    // Rimuovi il parametro dalla URL senza ricaricare la pagina
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
   
   // Aggiungi animate.css se non è già presente
@@ -324,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const qrcodeWrapper = qrcode.closest('.qrcode-wrapper');
     qrcodeWrapper.classList.add('loading');
     
-    // Crea nuovo src con timestamp
+    // Crea nuovo src with timestamp
     const newSrc = `{% url 'profile_qrcode' %}?t=${Math.floor(Date.now()/60000)}`;
     
     // Quando la nuova immagine è caricata, rimuovi classe loading e aggiungi animazione pulse
@@ -610,6 +695,19 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+  
+  // Password edit button handler
+  const editPasswordBtn = document.querySelector('.edit-password-btn');
+  if (editPasswordBtn) {
+    editPasswordBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-password-edit');
+      if (collapseElement) {
+        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.show();
+      }
+    });
+  }
 
   // Allergens cancel button handler
   const cancelAllergensBtn = document.querySelector('.cancel-allergens-btn');
@@ -681,6 +779,104 @@ document.addEventListener('DOMContentLoaded', function() {
       if (form) {
         form.appendChild(sectionInput);
         console.log('DEBUG: About to submit form');
+        form.submit();
+      }
+    });
+  }
+  
+  // Password cancel button handler
+  const cancelPasswordBtn = document.querySelector('.cancel-password-btn');
+  if (cancelPasswordBtn) {
+    cancelPasswordBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-password-edit');
+      if (collapseElement) {
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.hide();
+        
+        // Reset form fields
+        setTimeout(() => {
+          const passwordForm = document.querySelectorAll('#collapse-password-edit input');
+          passwordForm.forEach(input => {
+            input.value = '';
+            input.classList.remove('is-invalid');
+          });
+          
+          // Remove any error messages
+          const errorMessages = document.querySelectorAll('#collapse-password-edit .invalid-feedback');
+          errorMessages.forEach(el => {
+            el.innerHTML = '';
+          });
+        }, 300);
+      }
+    });
+  }
+  
+  // Password save button handler
+  const savePasswordBtn = document.querySelector('.save-password-btn');
+  if (savePasswordBtn) {
+    savePasswordBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Validazione del form
+      const oldPassword = document.getElementById('id_old_password').value;
+      const newPassword1 = document.getElementById('id_new_password1').value;
+      const newPassword2 = document.getElementById('id_new_password2').value;
+      
+      let isValid = true;
+      
+      if (!oldPassword) {
+        isValid = false;
+        document.getElementById('id_old_password').classList.add('is-invalid');
+      } else {
+        document.getElementById('id_old_password').classList.remove('is-invalid');
+      }
+      
+      if (!newPassword1) {
+        isValid = false;
+        document.getElementById('id_new_password1').classList.add('is-invalid');
+      } else {
+        document.getElementById('id_new_password1').classList.remove('is-invalid');
+      }
+      
+      if (!newPassword2) {
+        isValid = false;
+        document.getElementById('id_new_password2').classList.add('is-invalid');
+      } else if (newPassword1 !== newPassword2) {
+        isValid = false;
+        document.getElementById('id_new_password2').classList.add('is-invalid');
+        // Mostra messaggio di errore per password non corrispondenti
+        const errorContainer = document.getElementById('id_new_password2').nextElementSibling || document.createElement('div');
+        errorContainer.className = 'invalid-feedback d-block';
+        errorContainer.textContent = 'Le password non corrispondono';
+        if (!document.getElementById('id_new_password2').nextElementSibling) {
+          document.getElementById('id_new_password2').parentNode.appendChild(errorContainer);
+        }
+      } else {
+        document.getElementById('id_new_password2').classList.remove('is-invalid');
+      }
+      
+      if (!isValid) {
+        return;
+      }
+      
+      // Add loading state
+      const loadingSpinner = document.createElement('div');
+      loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
+      loadingSpinner.setAttribute('role', 'status');
+      loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
+      this.appendChild(loadingSpinner);
+      this.disabled = true;
+      
+      // Add hidden field to indicate password update
+      const sectionInput = document.createElement('input');
+      sectionInput.type = 'hidden';
+      sectionInput.name = 'update_section';
+      sectionInput.value = 'password';
+      const form = document.querySelector('form');
+      if (form) {
+        form.appendChild(sectionInput);
+        console.log('DEBUG: About to submit password form');
         form.submit();
       }
     });
@@ -925,6 +1121,68 @@ document.addEventListener('DOMContentLoaded', function() {
   .allergens-checkboxes ul {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
+}
+
+/* Stili per il form di modifica password */
+.password-edit-form {
+  padding: 0.5rem;
+}
+
+.password-edit-form .form-label {
+  font-weight: 500;
+  color: #343a40;
+  margin-bottom: 0.5rem;
+}
+
+.password-edit-form .form-text ul {
+  font-size: 0.85rem;
+}
+
+/* Indicatore forza password */
+.password-strength {
+  height: 5px;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  background-color: #e9ecef;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.password-strength-meter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+.password-strength.weak .password-strength-meter {
+  width: 25%;
+  background-color: #dc3545;
+}
+
+.password-strength.medium .password-strength-meter {
+  width: 50%;
+  background-color: #ffc107;
+}
+
+.password-strength.strong .password-strength-meter {
+  width: 75%;
+  background-color: #17a2b8;
+}
+
+.password-strength.very-strong .password-strength-meter {
+  width: 100%;
+  background-color: #28a745;
+}
+
+.password-feedback {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  transition: all 0.3s ease;
+  color: #6c757d;
 }
 </style>
 {% endblock %}
