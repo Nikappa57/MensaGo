@@ -87,11 +87,20 @@ class ContactForm(forms.Form):
         return message
 
 
+class AllergensForm(forms.Form):
+    suffers_from = forms.ModelMultipleChoiceField(
+        queryset=CustomUser._meta.get_field('suffers_from').related_model.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        help_text='Select allergens'
+    )
+
+
 class ProfileForm(forms.ModelForm):
     suffers_from = forms.ModelMultipleChoiceField(
         queryset=CustomUser._meta.get_field('suffers_from').related_model.objects.all(),
         required=False,
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={'class': 'form-control', 'size': '8'}),
         help_text='Select allergens'
     )
 

@@ -10,6 +10,22 @@
     width: 60px !important;
     height: 60px !important;
   }
+  
+  /* Footer sticky solo per questa pagina */
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main {
+    flex: 1;
+  }
+  
+  footer {
+    margin-top: auto;
+    flex-shrink: 0;
+  }
 </style>
 {% endblock %}
 
@@ -55,19 +71,14 @@
       <div class="col-lg-8">
         <div class="card profile-card shadow-sm mb-4 animate__animated animate__fadeInUp">
           <div class="card-header bg-transparent">
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="d-flex align-items-center">
-                <div class="profile-icon me-3">
-                  <i class="bi bi-person-circle"></i>
-                </div>
-                <div>
-                  <h4 class="mb-0">Informazioni Personali</h4>
-                  <p class="text-muted small mb-0">Gestisci i tuoi dati personali</p>
-                </div>
+            <div class="d-flex align-items-center">
+              <div class="profile-icon me-3">
+                <i class="bi bi-person-circle"></i>
               </div>
-              <button class="btn btn-outline-primary rounded-pill section-edit-btn" type="button" data-section="personal">
-                <i class="btn-icon bi bi-pencil me-2"></i><span class="btn-text">Modifica</span>
-              </button>
+              <div>
+                <h4 class="mb-0">Informazioni Personali</h4>
+                <p class="text-muted small mb-0">Gestisci i tuoi dati personali</p>
+              </div>
             </div>
           </div>
           
@@ -84,8 +95,12 @@
                     <small class="text-muted">La tua immagine del profilo</small>
                   </div>
                 </div>
-
-              </li>              <!-- First Name -->
+                <button class="btn btn-outline-primary btn-sm rounded-pill edit-avatar-btn" type="button">
+                  <i class="bi bi-pencil me-1"></i>Modifica
+                </button>
+              </li>
+              
+              <!-- First Name -->
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
                 <div>
                   <strong class="d-block">Nome</strong>
@@ -109,42 +124,22 @@
                 </div>
               </li>
               
-              <!-- Form sezione personale (nascosto) -->
-              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-personal-info">
-                <div class="form-section-title mb-3">Modifica informazioni personali</div>
-                <!-- Avatar -->
+              <!-- Avatar Edit Form (hidden) -->
+              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-avatar-edit">
+                <div class="form-section-title mb-3">Modifica immagine profilo</div>
                 <div class="form-group mb-3">
                   <label class="form-label fw-bold mb-2">Immagine profilo</label>
                   <div class="d-flex align-items-center mb-2">
-                    <img id="avatar-display" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar me-3" alt="Avatar" style="width: 60px; height: 60px;">
+                    <img id="avatar-edit-preview" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar me-3" alt="Avatar" style="width: 60px; height: 60px;">
                     <div class="form-control-custom flex-grow-1">{{ form.propic }}</div>
                   </div>
                 </div>
-                
-                <!-- First Name -->
-                <div class="form-group mb-3">
-                  <label class="form-label fw-bold mb-2">Nome</label>
-                  <div class="form-control-custom">{{ form.first_name }}</div>
-                </div>
-                
-                <!-- Last Name -->
-                <div class="form-group mb-3">
-                  <label class="form-label fw-bold mb-2">Cognome</label>
-                  <div class="form-control-custom">{{ form.last_name }}</div>
-                </div>
-                
-                <!-- Email -->
-                <div class="form-group mb-3">
-                  <label class="form-label fw-bold mb-2">Email</label>
-                  <div class="form-control-custom">{{ form.email }}</div>
-                </div>
-                
                 <div class="d-flex justify-content-end mt-4">
-                  <button type="button" class="btn btn-secondary me-2 section-cancel-btn" data-section="personal">
+                  <button type="button" class="btn btn-secondary me-2 cancel-avatar-btn">
                     <i class="bi bi-x-circle me-2"></i>Annulla
                   </button>
-                  <button type="button" class="btn btn-success section-save-btn" data-section="personal">
-                    <i class="bi bi-check-circle me-2"></i>Salva modifiche
+                  <button type="button" class="btn btn-success save-avatar-btn">
+                    <i class="bi bi-check-circle me-2"></i>Salva
                   </button>
                 </div>
               </div>
@@ -154,19 +149,14 @@
         
         <div class="card profile-card shadow-sm animate__animated animate__fadeInUp animate__delay-1s">
           <div class="card-header bg-transparent">
-            <div class="d-flex align-items-center justify-content-between">
-              <div class="d-flex align-items-center">
-                <div class="profile-icon me-3">
-                  <i class="bi bi-mortarboard-fill"></i>
-                </div>
-                <div>
-                  <h4 class="mb-0">Informazioni Accademiche</h4>
-                  <p class="text-muted small mb-0">Gestisci le tue informazioni universitarie</p>
-                </div>
+            <div class="d-flex align-items-center">
+              <div class="profile-icon me-3">
+                <i class="bi bi-mortarboard-fill"></i>
               </div>
-              <button class="btn btn-outline-primary rounded-pill section-edit-btn" type="button" data-section="academic">
-                <i class="btn-icon bi bi-pencil me-2"></i><span class="btn-text">Modifica</span>
-              </button>
+              <div>
+                <h4 class="mb-0">Informazioni Accademiche</h4>
+                <p class="text-muted small mb-0">Gestisci le tue informazioni universitarie</p>
+              </div>
             </div>
           </div>
           
@@ -196,68 +186,50 @@
               </li>                  <!-- Allergens -->
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
                 <div style="width: 100%;">
-                  <strong class="d-block">Allergie</strong>
-                  {% if current_user.suffers_from.all %}
-                    <div class="allergen-tags">
-                      {% for allergen in current_user.suffers_from.all %}
-                        <span class="allergen-tag">
-                          {{ allergen.name }}
-                        </span>
-                      {% endfor %}
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <strong class="d-block">Allergie</strong>
+                      {% if current_user.suffers_from.all %}
+                        <div class="allergen-tags">
+                          {% for allergen in current_user.suffers_from.all %}
+                            <span class="allergen-tag">
+                              {{ allergen.name }}
+                            </span>
+                          {% endfor %}
+                        </div>
+                      {% else %}
+                        <span class="profile-data text-muted">Nessuna allergia registrata</span>
+                      {% endif %}
                     </div>
-                  {% else %}
-                    <span class="profile-data text-muted">Nessuna allergia registrata</span>
-                  {% endif %}
+                    <button class="btn btn-outline-primary btn-sm rounded-pill edit-allergens-btn" type="button">
+                      <i class="bi bi-pencil me-1"></i>Modifica
+                    </button>
+                  </div>
                 </div>
               </li>
               
-              <!-- Form sezione accademica (nascosto) -->
-              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-academic-info">
-                <div class="form-section-title mb-3">Modifica informazioni accademiche</div>
-                
-                <!-- University -->
-                <div class="form-group mb-3">
-                  <label class="form-label fw-bold mb-2">Università</label>
-                  <div class="form-control-custom">
-                    <div class="select-with-icon">
-                      <i class="bi bi-buildings-fill select-icon"></i>
-                      {{ form.university }}
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Economical Level -->
-                <div class="form-group mb-3">
-                  <label class="form-label fw-bold mb-2">Livello Economico</label>
-                  <div class="form-control-custom">
-                    <div class="select-with-icon">
-                      <i class="bi bi-currency-euro select-icon"></i>
-                      {{ form.economical_level }}
-                    </div>
-                  </div>
-                </div>
-                
-                <!-- Allergens -->
+              <!-- Allergens Edit Form (hidden) -->
+              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-allergens-edit">
+                <div class="form-section-title mb-3">Modifica allergie</div>
                 <div class="form-group mb-3">
                   <label class="form-label fw-bold mb-2">
                     <i class="bi bi-exclamation-triangle me-2" style="color: #6a11cb;"></i>Allergie
                   </label>
                   <div class="form-control-custom">
-                    <div class="select-with-allergens">
-                      {{ form.suffers_from }}
+                    <div class="allergens-checkboxes">
+                      {{ allergens_form.suffers_from }}
                       <small class="allergen-helper text-muted mt-2 d-block">
-                        <i class="bi bi-info-circle me-1"></i>Seleziona più allergie tenendo premuto Ctrl (o Cmd su Mac)
+                        <i class="bi bi-info-circle me-1"></i>Seleziona una o più allergie dalla lista
                       </small>
                     </div>
                   </div>
                 </div>
-                
                 <div class="d-flex justify-content-end mt-4">
-                  <button type="button" class="btn btn-secondary me-2 section-cancel-btn" data-section="academic">
+                  <button type="button" class="btn btn-secondary me-2 cancel-allergens-btn">
                     <i class="bi bi-x-circle me-2"></i>Annulla
                   </button>
-                  <button type="button" class="btn btn-success section-save-btn" data-section="academic">
-                    <i class="bi bi-check-circle me-2"></i>Salva modifiche
+                  <button type="button" class="btn btn-success save-allergens-btn">
+                    <i class="bi bi-check-circle me-2"></i>Salva
                   </button>
                 </div>
               </div>
@@ -301,6 +273,7 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
   // Aggiungi bootstrap icons se non è già presente
   if (!document.querySelector('link[href*="bootstrap-icons"]')) {
     const iconLink = document.createElement('link');
@@ -317,22 +290,35 @@
     document.head.appendChild(animateLink);
   }
 
-  // Preview avatar
-  document.querySelector('input[name="propic"]').addEventListener('change', function(e) {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      document.getElementById('avatar-display').src = ev.target.result;
-      // Aggiungi animazione quando cambi avatar
-      const avatar = document.getElementById('avatar-display');
-      avatar.classList.add('animate__animated', 'animate__pulse');
-      setTimeout(() => {
-        avatar.classList.remove('animate__animated', 'animate__pulse');
-      }, 1000);
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  });
+  // Preview avatar for both main display and edit form
+  const propicInput = document.querySelector('input[name="propic"]');
+  if (propicInput) {
+    propicInput.addEventListener('change', function(e) {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        // Update main avatar display
+        const avatarDisplay = document.getElementById('avatar-display');
+        if (avatarDisplay) {
+          avatarDisplay.src = ev.target.result;
+          
+          // Add animation when avatar changes
+          avatarDisplay.classList.add('animate__animated', 'animate__pulse');
+          setTimeout(() => {
+            avatarDisplay.classList.remove('animate__animated', 'animate__pulse');
+          }, 1000);
+        }
+        
+        // Update edit preview if it exists
+        const avatarEditPreview = document.getElementById('avatar-edit-preview');
+        if (avatarEditPreview) {
+          avatarEditPreview.src = ev.target.result;
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    });
+  }
   
-  // Refresh QR code ogni minuto con animazione
+  // Refresh QR code every minute with animation
   setInterval(() => {
     const qrcode = document.getElementById('qrcode-img');
     const qrcodeWrapper = qrcode.closest('.qrcode-wrapper');
@@ -413,176 +399,292 @@
     target.classList.add('profile-edit-form');
   });
   
-  // Animazione speciale per la selezione allergeni
-  const allergensSelect = document.querySelector('select[name="suffers_from"]');
-  if (allergensSelect) {
-    allergensSelect.addEventListener('change', function() {
-      const selectedCount = Array.from(this.selectedOptions).length;
+  // Trasforma le checkbox degli allergeni per il nuovo design
+  function setupAllergenCheckboxes() {
+    const allergensContainer = document.querySelector('.allergens-checkboxes');
+    if (!allergensContainer) return;
+    
+    // Se già trasformato, saltiamo
+    if (allergensContainer.dataset.transformed === 'true') return;
+    
+    // Ottieni tutti gli elementi di input originali
+    const originalInputs = [...allergensContainer.querySelectorAll('input[type="checkbox"]')];
+    
+    // Crea un container UL
+    const ul = document.createElement('ul');
+    
+    // Per ogni input, crea una struttura di lista appropriata
+    originalInputs.forEach(input => {
+      // Ottieni il testo dalla label esistente o dall'elemento vicino
+      const originalLabel = input.parentElement.tagName === 'LABEL' ? 
+                             input.parentElement : 
+                             document.querySelector(`label[for="${input.id}"]`);
       
-      // Aggiorniamo il testo di aiuto
-      const helperText = this.closest('.form-control-custom').querySelector('.allergen-helper');
-      if (helperText) {
-        if (selectedCount > 0) {
-          helperText.innerHTML = `<i class="bi bi-check-circle-fill me-1" style="color: #20bf55;"></i>Hai selezionato ${selectedCount} ${selectedCount === 1 ? 'allergia' : 'allergie'}`;
-        } else {
-          helperText.innerHTML = `<i class="bi bi-info-circle me-1"></i>Seleziona più allergie tenendo premuto Ctrl (o Cmd su Mac)`;
-        }
-      }
+      const labelText = originalLabel ? 
+                        originalLabel.textContent.trim() : 
+                        input.nextSibling?.textContent?.trim() || "Opzione";
       
-      // Aggiungiamo effetto animato
-      this.classList.add('select-changed');
-      setTimeout(() => {
-        this.classList.remove('select-changed');
-      }, 800);
+      // Crea elemento lista
+      const li = document.createElement('li');
+      
+      // Clona l'input per preservare eventuali attributi e stato
+      const newInput = input.cloneNode(true);
+      
+      // Crea nuova label
+      const newLabel = document.createElement('label');
+      newLabel.setAttribute('for', newInput.id || `allergen-${Math.random().toString(36).substring(2, 9)}`);
+      newLabel.textContent = labelText;
+      
+      // Aggiungi elementi al DOM
+      li.appendChild(newInput);
+      li.appendChild(newLabel);
+      ul.appendChild(li);
     });
+    
+    // Salva il testo di aiuto se esiste
+    const helperText = allergensContainer.querySelector('.allergen-helper');
+    
+    // Svuota il container e aggiungi la nuova struttura
+    allergensContainer.innerHTML = '';
+    allergensContainer.appendChild(ul);
+    
+    // Riaggiungi il testo di aiuto
+    if (helperText) {
+      allergensContainer.appendChild(helperText);
+    } else {
+      // Crea un nuovo helper text se non esisteva
+      const newHelperText = document.createElement('small');
+      newHelperText.className = 'allergen-helper text-muted mt-2 d-block';
+      newHelperText.innerHTML = '<i class="bi bi-info-circle me-1"></i>Seleziona una o più allergie dalla lista';
+      allergensContainer.appendChild(newHelperText);
+    }
+    
+    // Marca come trasformato
+    allergensContainer.dataset.transformed = 'true';
+    
+    // Riapplica gli event listener alle nuove checkbox
+    attachAllergensEventListeners();
   }
   
-  // Gestione pulsanti modifica per sezioni
-  document.querySelectorAll('.section-edit-btn').forEach(btn => {
-    const section = btn.getAttribute('data-section');
-    const target = document.getElementById(`collapse-${section}-info`);
+  function attachAllergensEventListeners() {
+    const allergensCheckboxes = document.querySelectorAll('input[name="suffers_from"]');
+    if (allergensCheckboxes.length > 0) {
+      allergensCheckboxes.forEach(checkbox => {
+        // Rimuovi eventuali listener esistenti (per sicurezza)
+        checkbox.removeEventListener('change', checkboxChangeHandler);
+        // Aggiungi il nuovo listener
+        checkbox.addEventListener('change', checkboxChangeHandler);
+      });
+    }
+  }
+  
+  function checkboxChangeHandler() {
+    const selectedCount = document.querySelectorAll('input[name="suffers_from"]:checked').length;
     
-    // Inizializza il collapsible con l'opzione toggle false
-    let collapse;
-    try {
-      collapse = new bootstrap.Collapse(target, { toggle: false });
-    } catch (e) {
-      console.error(`Errore nell'inizializzazione del collapse per ${section}:`, e);
-      // In caso di errore, crea un elemento fittizio per evitare errori
-      collapse = {
-        show: function() { 
-          target.classList.add('show');
-        },
-        hide: function() {
-          target.classList.remove('show');
-        }
-      };
+    // Aggiorniamo il testo di aiuto
+    const helperText = document.querySelector('.allergen-helper');
+    if (helperText) {
+      if (selectedCount > 0) {
+        helperText.innerHTML = `<i class="bi bi-check-circle-fill me-1" style="color: #20bf55;"></i>Hai selezionato ${selectedCount} ${selectedCount === 1 ? 'allergia' : 'allergie'}`;
+      } else {
+        helperText.innerHTML = `<i class="bi bi-info-circle me-1"></i>Seleziona una o più allergie dalla lista`;
+      }
     }
     
-    // Event listener principale per il pulsante modifica/salva
-    btn.addEventListener('click', function(e) {
-      e.preventDefault(); // Previene l'invio del form o altre azioni predefinite
-      
-      // Controlla se il pulsante è già in modalità modifica
-      const isEditMode = btn.getAttribute('data-edit-mode') === 'true';
-      
-      if (!isEditMode) {
-        // MODALITÀ MODIFICA: Mostra il form di modifica della sezione
-        try {
-          collapse.show();
-          
-          // Cambiamo stile del pulsante
-          btn.classList.remove('btn-outline-primary');
-          btn.classList.add('btn-success');
-          btn.querySelector('.btn-icon').classList.remove('bi-pencil');
-          btn.querySelector('.btn-icon').classList.add('bi-check-lg');
-          btn.querySelector('.btn-text').textContent = 'Salva';
-          
-          // Aggiungiamo un attributo per tenere traccia dello stato
-          btn.setAttribute('data-edit-mode', 'true');
-        } catch (error) {
-          console.error('Errore durante la visualizzazione del form:', error);
-        }
-      } else {
-        // MODALITÀ SALVA: Invia il form per salvare le modifiche
-        e.stopPropagation(); // Ferma la propagazione per evitare che venga gestito come toggle
-        
-        // Mostra animazione di caricamento
-        const loadingSpinner = document.createElement('div');
-        loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
-        loadingSpinner.setAttribute('role', 'status');
-        loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
-        btn.appendChild(loadingSpinner);
-        btn.disabled = true;
-        
-        // Aggiungi un campo nascosto al form per indicare la sezione
-        const sectionInput = document.createElement('input');
-        sectionInput.type = 'hidden';
-        sectionInput.name = 'update_section';
-        sectionInput.value = section;
-        document.querySelector('form').appendChild(sectionInput);
-        
-        try {
-          // Invia il form
-          document.querySelector('form').submit();
-        } catch (error) {
-          console.error('Errore durante l\'invio del form:', error);
-          btn.removeChild(loadingSpinner);
-          btn.disabled = false;
-          showNotification('Errore durante il salvataggio dei dati', 'danger');
-        }
-      }
-    });
+    // Aggiungiamo effetto animato alla label
+    const label = document.querySelector(`label[for="${this.id}"]`) || this.nextElementSibling;
+    if (label) {
+      label.classList.add('checkbox-changed');
+      setTimeout(() => {
+        label.classList.remove('checkbox-changed');
+      }, 600);
+    }
+  }
+  
+  // Prima configurazione
+  setupAllergenCheckboxes();
+  
+  // Configurazione quando il pannello degli allergeni viene aperto
+  document.querySelector('.edit-allergens-btn')?.addEventListener('click', function() {
+    setTimeout(setupAllergenCheckboxes, 100);
   });
   
-  // Event listener per i pulsanti di annullamento
-  document.querySelectorAll('.section-cancel-btn').forEach(btn => {
-    const section = btn.getAttribute('data-section');
-    const target = document.getElementById(`collapse-${section}-info`);
-    const editBtn = document.querySelector(`.section-edit-btn[data-section="${section}"]`);
-    
-    let collapse;
-    try {
-      collapse = bootstrap.Collapse.getInstance(target) || new bootstrap.Collapse(target, { toggle: false });
-    } catch (e) {
-      console.error(`Errore nell'inizializzazione del collapse per cancel ${section}:`, e);
-      collapse = {
-        hide: function() { 
-          target.classList.remove('show'); 
-        }
-      };
-    }
-    
-    btn.addEventListener('click', function(e) {
-      e.preventDefault(); // Previene l'invio del form
-      
-      // Nascondi il form
-      try {
+  // Animazione speciale per la selezione allergeni - già gestita sopra
+  
+  // Avatar edit button handler
+  const editAvatarBtn = document.querySelector('.edit-avatar-btn');
+  if (editAvatarBtn) {
+    editAvatarBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-avatar-edit');
+      if (collapseElement) {
+        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.show();
+      }
+    });
+  }
+
+  // Avatar cancel button handler
+  const cancelAvatarBtn = document.querySelector('.cancel-avatar-btn');
+  if (cancelAvatarBtn) {
+    cancelAvatarBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-avatar-edit');
+      if (collapseElement) {
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
         collapse.hide();
         
-        // Ripristina lo stile originale del pulsante modifica
-        editBtn.classList.remove('btn-success');
-        editBtn.classList.add('btn-outline-primary');
-        editBtn.querySelector('.btn-icon').classList.add('bi-pencil');
-        editBtn.querySelector('.btn-icon').classList.remove('bi-check-lg');
-        editBtn.querySelector('.btn-text').textContent = 'Modifica';
-        editBtn.setAttribute('data-edit-mode', 'false');
-        
-        // Ripristina i valori originali nel form
+        // Reset avatar preview to original
         setTimeout(() => {
-          // Reset del form - Resetta i campi agli ultimi valori salvati
-          const form = document.querySelector('form');
-          if (form) {
-            form.reset();
+          const avatarEditPreview = document.getElementById('avatar-edit-preview');
+          const propicInput = document.querySelector('input[name="propic"]');
+          if (avatarEditPreview) {
+            avatarEditPreview.src = "{{ current_user.propic.url }}";
           }
-          
-          // Se c'è un'immagine profilo, ripristina l'anteprima originale
-          if (section === 'personal') {
-            document.querySelectorAll('#avatar-display').forEach(img => {
-              img.src = "{{ current_user.propic.url }}";
+          if (propicInput) {
+            propicInput.value = '';
+          }
+        }, 300);
+      }
+    });
+  }
+
+  // Avatar save button handler
+  const saveAvatarBtn = document.querySelector('.save-avatar-btn');
+  if (saveAvatarBtn) {
+    saveAvatarBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Add loading state
+      const loadingSpinner = document.createElement('div');
+      loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
+      loadingSpinner.setAttribute('role', 'status');
+      loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
+      this.appendChild(loadingSpinner);
+      this.disabled = true;
+      
+      // Add hidden field to indicate avatar update
+      const sectionInput = document.createElement('input');
+      sectionInput.type = 'hidden';
+      sectionInput.name = 'update_section';
+      sectionInput.value = 'avatar';
+      const form = document.querySelector('form');
+      if (form) {
+        form.appendChild(sectionInput);
+        form.submit();
+      }
+    });
+  }
+
+  // Avatar file input change handler for preview
+  const avatarInput = document.querySelector('input[name="propic"]');
+  if (avatarInput) {
+    avatarInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const avatarEditPreview = document.getElementById('avatar-edit-preview');
+          const avatarDisplay = document.getElementById('avatar-display');
+          if (avatarEditPreview) {
+            avatarEditPreview.src = e.target.result;
+          }
+          if (avatarDisplay) {
+            avatarDisplay.src = e.target.result;
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // Allergens edit button handler
+  const editAllergensBtn = document.querySelector('.edit-allergens-btn');
+  if (editAllergensBtn) {
+    editAllergensBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-allergens-edit');
+      if (collapseElement) {
+        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.show();
+      }
+    });
+  }
+
+  // Allergens cancel button handler
+  const cancelAllergensBtn = document.querySelector('.cancel-allergens-btn');
+  if (cancelAllergensBtn) {
+    cancelAllergensBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-allergens-edit');
+      if (collapseElement) {
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.hide();
+        
+        // Reset allergens selection to original values
+        setTimeout(() => {
+          const allergensCheckboxes = document.querySelectorAll('input[name="suffers_from"]');
+          if (allergensCheckboxes.length > 0) {
+            // Reset all checkboxes first
+            allergensCheckboxes.forEach(checkbox => {
+              checkbox.checked = false;
+            });
+            
+            // Re-check original allergens using data stored in the DOM
+            const originalAllergens = document.querySelectorAll('.allergen-tag');
+            originalAllergens.forEach(tag => {
+              const allergenName = tag.textContent.trim();
+              allergensCheckboxes.forEach(checkbox => {
+                const label = checkbox.nextElementSibling;
+                if (label && label.textContent.trim() === allergenName) {
+                  checkbox.checked = true;
+                }
+              });
             });
           }
         }, 300);
-      } catch (error) {
-        console.error('Errore durante la chiusura del form:', error);
       }
     });
-  });
-  
-  // Event listener per i pulsanti di salvataggio all'interno dei form
-  document.querySelectorAll('.section-save-btn').forEach(btn => {
-    const section = btn.getAttribute('data-section');
-    const editBtn = document.querySelector(`.section-edit-btn[data-section="${section}"]`);
-    
-    btn.addEventListener('click', function(e) {
+  }
+
+  // Allergens save button handler
+  const saveAllergensBtn = document.querySelector('.save-allergens-btn');
+  if (saveAllergensBtn) {
+    saveAllergensBtn.addEventListener('click', function(e) {
       e.preventDefault();
       
-      // Simula il click sul pulsante di modifica/salva principale
-      if (editBtn && editBtn.getAttribute('data-edit-mode') === 'true') {
-        editBtn.click();
+      // Debug: log selected allergens
+      const allergensCheckboxes = document.querySelectorAll('input[name="suffers_from"]:checked');
+      if (allergensCheckboxes.length > 0) {
+        const selectedValues = Array.from(allergensCheckboxes).map(checkbox => checkbox.value);
+        const selectedLabels = Array.from(allergensCheckboxes).map(checkbox => checkbox.nextElementSibling ? checkbox.nextElementSibling.textContent.trim() : checkbox.value);
+        console.log('DEBUG: Selected allergen values:', selectedValues);
+        console.log('DEBUG: Selected allergen labels:', selectedLabels);
+      } else {
+        console.log('DEBUG: No allergens selected');
+      }
+      
+      // Add loading state
+      const loadingSpinner = document.createElement('div');
+      loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
+      loadingSpinner.setAttribute('role', 'status');
+      loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
+      this.appendChild(loadingSpinner);
+      this.disabled = true;
+      
+      // Add hidden field to indicate allergens update
+      const sectionInput = document.createElement('input');
+      sectionInput.type = 'hidden';
+      sectionInput.name = 'update_section';
+      sectionInput.value = 'allergens';
+      const form = document.querySelector('form');
+      if (form) {
+        form.appendChild(sectionInput);
+        console.log('DEBUG: About to submit form');
+        form.submit();
       }
     });
-  });
+  }
   
   // Effetto ripple per i pulsanti
   document.querySelectorAll('.btn').forEach(button => {
@@ -646,5 +748,183 @@
       toast.remove();
     });
   }
+});
 </script>
+
+<style>
+/* Stili per le checkbox degli allergeni */
+.allergens-checkboxes {
+  max-height: 250px;
+  overflow-y: auto;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.allergens-checkboxes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem;
+}
+
+.allergens-checkboxes li {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* Nascondere le checkbox native */
+.allergens-checkboxes input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.allergens-checkboxes label {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: white;
+  border: 1px solid #e2e8f0;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.allergens-checkboxes label:before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 0.6rem;
+  border: 2px solid #cbd5e0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background-color: white;
+  flex-shrink: 0;
+}
+
+/* Effetto hover */
+.allergens-checkboxes label:hover {
+  transform: translateY(-1px);
+  border-color: #6a11cb;
+  box-shadow: 0 4px 8px rgba(106, 17, 203, 0.1);
+}
+
+.allergens-checkboxes label:hover:before {
+  border-color: #6a11cb;
+}
+
+/* Stile per checkbox selezionata */
+.allergens-checkboxes input[type="checkbox"]:checked + label {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  border-color: #6a11cb;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(106, 17, 203, 0.2);
+}
+
+.allergens-checkboxes input[type="checkbox"]:checked + label:before {
+  border-color: white;
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236a11cb' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+/* Effetto selezione */
+.allergens-checkboxes input[type="checkbox"]:focus + label {
+  box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.3);
+  border-color: #6a11cb;
+}
+
+/* Effetto quando cambia stato */
+.checkbox-changed {
+  animation: checkboxScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes checkboxScale {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Effetto ripple al click */
+.allergens-checkboxes label:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.allergens-checkboxes label:active:after {
+  animation: ripple 0.6s ease;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0) translate(-50%, -50%);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(20) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* Stile testo */
+.allergens-checkboxes label > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Scrollbar personalizzata */
+.allergens-checkboxes::-webkit-scrollbar {
+  width: 6px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.02);
+  border-radius: 8px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #6a11cb, #2575fc);
+  border-radius: 8px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #5a0fb0, #1b67e3);
+}
+
+/* Design responsive */
+@media (max-width: 768px) {
+  .allergens-checkboxes ul {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+</style>
 {% endblock %}

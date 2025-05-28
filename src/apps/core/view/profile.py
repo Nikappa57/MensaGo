@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from ..forms import ProfileForm
+from ..forms import ProfileForm, AllergensForm
 import time, hmac, hashlib
 from django.conf import settings
 import qrcode
@@ -12,19 +12,48 @@ def profile_home(request):
 	if not user.is_authenticated:
 		return redirect('login')
 
+	# Initialize forms
+	form = ProfileForm(instance=user)
+	allergens_form = AllergensForm(initial={'suffers_from': user.suffers_from.all()})
+
 	if request.method == 'POST':
+		update_section = request.POST.get('update_section')
+		print(f"DEBUG: update_section = {update_section}")
+		print(f"DEBUG: POST data = {request.POST}")
 		
-		
-		form = ProfileForm(request.POST, request.FILES, instance=user)
-		if form.is_valid():
-			form.save()
+		if update_section == 'avatar':
+			# Handle only avatar update
+			if 'propic' in request.FILES:
+				user.propic = request.FILES['propic']
+				user.save()
+				print("DEBUG: Avatar updated successfully")
 			return redirect('profile')
-	else:
-		form = ProfileForm(instance=user)
+		elif update_section == 'allergens':
+			# Handle only allergens update using AllergensForm
+			allergens_form = AllergensForm(request.POST)
+			print(f"DEBUG: AllergensForm is_valid = {allergens_form.is_valid()}")
+			if allergens_form.is_valid():
+				# Save only allergens field
+				allergens_data = allergens_form.cleaned_data['suffers_from']
+				print(f"DEBUG: Allergens data = {allergens_data}")
+				user.suffers_from.set(allergens_data)
+				user.save()
+				print("DEBUG: Allergens updated successfully")
+			else:
+				# Debug: stampa errori del form
+				print("DEBUG: AllergensForm errors:", allergens_form.errors)
+			return redirect('profile')
+		else:
+			# Handle full form update (fallback)
+			form = ProfileForm(request.POST, request.FILES, instance=user)
+			if form.is_valid():
+				form.save()
+				return redirect('profile')
 
 	context = {
 		'current_user': user,
 		'form': form,
+		'allergens_form': allergens_form,
 	}
 
 	return render(request, 'profile/profile.html', context)
