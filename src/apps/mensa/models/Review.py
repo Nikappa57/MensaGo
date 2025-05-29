@@ -22,6 +22,7 @@ class Review(models.Model):
     text = models.TextField(blank=True, null=True)
     user = models.ForeignKey("core.CustomUser", on_delete=models.CASCADE)
     mensa = models.ForeignKey("mensa.Mensa", on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         constraints = [

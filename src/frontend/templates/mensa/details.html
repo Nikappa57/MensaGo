@@ -366,9 +366,9 @@
 				{% for review in mensa.review_set.all %}
 				<div class="review-card">
 					<div class="review-header">
-						<img src="{{ review.user.profile_pic.url }}" class="reviewer-avatar" alt="{{ review.user.username }}">
+						<img src="{{ review.user.propic.url }}" class="reviewer-avatar" alt="{{ review.user.get_full_name }}">
 						<div>
-							<h5 class="mb-0">{{ review.user.username }}</h5>
+							<h5 class="mb-0">{{ review.user.get_full_name }}</h5>
 							<div class="stars-display">
 								{% for i in "12345" %}
 								{% if forloop.counter <= review.stars %}
@@ -378,7 +378,7 @@
 								{% endif %}
 								{% endfor %}
 							</div>
-							<span class="review-date">{{ review.user.date_joined|date }}</span>
+							<span class="review-date">{{ review.date|date }}</span>
 						</div>
 					</div>
 					<p>{{ review.text }}</p>
