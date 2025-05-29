@@ -1,0 +1,1188 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profilo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<style>
+  .profile-avatar, .avatar-container {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  /* Footer sticky solo per questa pagina */
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main {
+    flex: 1;
+  }
+  
+  footer {
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+</style>
+{% endblock %}
+
+{% block nav_mobile %}
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
+{% endblock %}
+
+{% block nav_elements %}
+<li class="nav-item">
+	<a class="nav-link text-dark" href="{% url 'home' %}">Home</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link text-dark active" href="{% url 'profile' %}">Profilo</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link text-dark" href="{% url 'preferences' %}">Preferenze</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link text-dark" href="{% url 'accreditation' %}">Accreditazione</a>
+</li>
+<li class="nav-item ms-3">
+	<a class="btn login-btn px-3 py-1" href="{% url 'logout' %}">Logout</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="profile-header mb-5 text-center">
+    <div class="profile-banner"></div>
+    <div class="profile-overlay animate__animated animate__fadeIn">
+      <h1 class="display-4 fw-bold">Il tuo Profilo</h1>
+      <p class="lead">Gestisci i tuoi dati e visualizza il tuo QR code</p>
+    </div>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row g-4">
+      <!-- Colonna sinistra - Informazioni personali -->
+      <div class="col-lg-8">
+        <div class="card profile-card shadow-sm mb-4 animate__animated animate__fadeInUp">
+          <div class="card-header bg-transparent">
+            <div class="d-flex align-items-center">
+              <div class="profile-icon me-3">
+                <i class="bi bi-person-circle"></i>
+              </div>
+              <div>
+                <h4 class="mb-0">Informazioni Personali</h4>
+                <p class="text-muted small mb-0">Gestisci i tuoi dati personali</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-body">
+            <ul class="list-group list-group-flush profile-list">
+              <!-- Avatar -->
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+                <div class="d-flex align-items-center">
+                  <div class="avatar-container me-3">
+                    <img id="avatar-display" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar" alt="Avatar" style="width: 60px; height: 60px;">
+                  </div>
+                  <div>
+                    <strong class="d-block">Avatar</strong>
+                    <small class="text-muted">La tua immagine del profilo</small>
+                  </div>
+                </div>
+                <button class="btn btn-outline-primary btn-sm rounded-pill edit-avatar-btn" type="button">
+                  <i class="bi bi-pencil me-1"></i>Modifica
+                </button>
+              </li>
+              
+              <!-- First Name and Last Name -->
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+                <div class="d-flex w-100">
+                  <div class="me-5">
+                    <strong class="d-block">Nome</strong>
+                    <span id="display-first_name" class="profile-data">{{ current_user.first_name }}</span>
+                  </div>
+                  <div>
+                    <strong class="d-block">Cognome</strong>
+                    <span id="display-last_name" class="profile-data">{{ current_user.last_name }}</span>
+                  </div>
+                </div>
+              </li>
+              
+              <!-- Email -->
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+                <div>
+                  <strong class="d-block">Email</strong>
+                  <span id="display-email" class="profile-data">{{ current_user.email }}</span>
+                </div>
+              </li>
+              
+              <!-- Password -->
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+                <div>
+                  <strong class="d-block">Password</strong>
+                  <span class="profile-data">*********</span>
+                </div>
+                <button class="btn btn-outline-primary btn-sm rounded-pill edit-password-btn" type="button">
+                  <i class="bi bi-pencil me-1"></i>Modifica
+                </button>
+              </li>
+              
+              <!-- Avatar Edit Form (hidden) -->
+              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-avatar-edit">
+                <hr class="my-4">
+                <div class="form-section-title mb-3">Modifica immagine profilo</div>
+                <div class="form-group mb-3">
+                  <label class="form-label fw-bold mb-2">Immagine profilo</label>
+                  <div class="d-flex align-items-center mb-2">
+                    <img id="avatar-edit-preview" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar me-3" alt="Avatar" style="width: 60px; height: 60px;">
+                    <div class="form-control-custom flex-grow-1">{{ form.propic }}</div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="button" class="btn btn-secondary me-2 cancel-avatar-btn">
+                    <i class="bi bi-x-circle me-2"></i>Annulla
+                  </button>
+                  <button type="button" class="btn btn-success save-avatar-btn">
+                    <i class="bi bi-check-circle me-2"></i>Salva
+                  </button>
+                </div>
+              </div>
+
+              <!-- Password Edit Form (hidden) -->
+              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-password-edit">
+                <hr class="my-4">
+                <div class="form-section-title mb-3">Modifica password</div>
+                <div class="form-group mb-3">
+                  <label class="form-label fw-bold mb-2">
+                    <i class="bi bi-shield-lock me-2" style="color: #6a11cb;"></i>Modifica la tua password
+                  </label>
+                  <div class="form-control-custom">
+                    <div class="password-edit-form">
+                      <div class="mb-3">
+                        <label for="id_old_password" class="form-label">Password attuale</label>
+                        {{ password_form.old_password }}
+                        {% if password_form.old_password.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in password_form.old_password.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="id_new_password1" class="form-label">Nuova password</label>
+                        {{ password_form.new_password1 }}
+                        {% if password_form.new_password1.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in password_form.new_password1.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                        <small class="form-text text-muted mt-1">
+                          <ul class="ps-3 mb-0">
+                            <li>La password non può essere troppo simile ai tuoi dati personali.</li>
+                            <li>La password deve contenere almeno 8 caratteri.</li>
+                            <li>La password non può essere una di quelle comunemente utilizzate.</li>
+                            <li>La password non può contenere solo numeri.</li>
+                          </ul>
+                        </small>
+                      </div>
+                      
+                      <div class="mb-2">
+                        <label for="id_new_password2" class="form-label">Conferma nuova password</label>
+                        {{ password_form.new_password2 }}
+                        {% if password_form.new_password2.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in password_form.new_password2.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="button" class="btn btn-secondary me-2 cancel-password-btn">
+                    <i class="bi bi-x-circle me-2"></i>Annulla
+                  </button>
+                  <button type="button" class="btn btn-success save-password-btn">
+                    <i class="bi bi-check-circle me-2"></i>Salva
+                  </button>
+                </div>
+              </div>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="card profile-card shadow-sm animate__animated animate__fadeInUp animate__delay-1s">
+          <div class="card-header bg-transparent">
+            <div class="d-flex align-items-center">
+              <div class="profile-icon me-3">
+                <i class="bi bi-mortarboard-fill"></i>
+              </div>
+              <div>
+                <h4 class="mb-0">Informazioni Accademiche</h4>
+                <p class="text-muted small mb-0">Gestisci le tue informazioni universitarie</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card-body">
+            <ul class="list-group list-group-flush profile-list">
+              <!-- University and Economical Level -->
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+                <div class="d-flex w-100">
+                  <div class="me-5">
+                    <strong class="d-block">Università</strong>
+                    {% if current_user.university.name %}
+                      <span id="display-university" class="profile-data">{{ current_user.university.name }}</span>
+                    {% else %}
+                      <span id="display-university" class="profile-data text-muted">Non specificata</span>
+                    {% endif %}
+                  </div>
+                  <div>
+                    <strong class="d-block">Livello Economico</strong>
+                    {% if current_user.economical_level %}
+                      <span id="display-economical_level" class="profile-data">{{ current_user.economical_level.name }}</span>
+                    {% else %}
+                      <span id="display-economical_level" class="profile-data text-muted">Non specificato</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </li>                  <!-- Allergens -->
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+                <div style="width: 100%;">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <strong class="d-block">Allergie</strong>
+                      {% if current_user.suffers_from.all %}
+                        <div class="allergen-tags">
+                          {% for allergen in current_user.suffers_from.all %}
+                            <span class="allergen-tag">
+                              {{ allergen.name }}
+                            </span>
+                          {% endfor %}
+                        </div>
+                      {% else %}
+                        <span class="profile-data text-muted">Nessuna allergia registrata</span>
+                      {% endif %}
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill edit-allergens-btn" type="button">
+                      <i class="bi bi-pencil me-1"></i>Modifica
+                    </button>
+                  </div>
+                </div>
+              </li>
+              
+              <!-- Allergens Edit Form (hidden) -->
+              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-allergens-edit">
+                <hr class="my-4">
+                <div class="form-section-title mb-3">Modifica allergie</div>
+                <div class="form-group mb-3">
+                  <label class="form-label fw-bold mb-2">
+                    <i class="bi bi-exclamation-triangle me-2" style="color: #6a11cb;"></i>Allergie
+                  </label>
+                  <div class="form-control-custom">
+                    <div class="allergens-checkboxes">
+                      {{ allergens_form.suffers_from }}
+                      <small class="allergen-helper text-muted mt-2 d-block">
+                        <i class="bi bi-info-circle me-1"></i>Seleziona una o più allergie dalla lista
+                      </small>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                  <button type="button" class="btn btn-secondary me-2 cancel-allergens-btn">
+                    <i class="bi bi-x-circle me-2"></i>Annulla
+                  </button>
+                  <button type="button" class="btn btn-success save-allergens-btn">
+                    <i class="bi bi-check-circle me-2"></i>Salva
+                  </button>
+                </div>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Colonna destra - QR Code -->
+      <div class="col-lg-4">
+        <div class="card profile-card shadow-sm h-100 animate__animated animate__fadeInRight">
+          <div class="card-header bg-transparent">
+            <div class="d-flex align-items-center">
+              <div class="profile-icon me-3">
+                <i class="bi bi-qr-code"></i>
+              </div>
+              <div>
+                <h4 class="mb-0">QR Code Personale</h4>
+                <p class="text-muted small mb-0">Per l'accreditamento alle mense</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body d-flex flex-column align-items-center justify-content-center">
+            <div id="qrcode-container" class="text-center mb-4">
+              <div class="qrcode-wrapper">
+                <img id="qrcode-img" src="{% url 'profile_qrcode' %}" alt="QR Code" class="img-fluid qrcode-image">
+              </div>
+              <p class="qrcode-text mt-3">
+                <small class="text-muted">
+                  <i class="bi bi-info-circle me-2"></i>Il QR code si aggiorna automaticamente ogni minuto
+                </small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </form>
+</div>
+
+<script>  document.addEventListener('DOMContentLoaded', function() {
+  // Aggiungi bootstrap icons se non è già presente
+  if (!document.querySelector('link[href*="bootstrap-icons"]')) {
+    const iconLink = document.createElement('link');
+    iconLink.rel = 'stylesheet';
+    iconLink.href = 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css';
+    document.head.appendChild(iconLink);
+  }
+  
+  // Controlla se c'è un messaggio di successo nella URL e mostra notifica
+  const urlParams = new URLSearchParams(window.location.search);
+  const passwordChanged = urlParams.get('password_changed');
+  if (passwordChanged === 'true') {
+    showNotification('Password modificata con successo', 'success');
+    // Rimuovi il parametro dalla URL senza ricaricare la pagina
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+  
+  // Aggiungi animate.css se non è già presente
+  if (!document.querySelector('link[href*="animate.css"]')) {
+    const animateLink = document.createElement('link');
+    animateLink.rel = 'stylesheet';
+    animateLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
+    document.head.appendChild(animateLink);
+  }
+
+  // Preview avatar for both main display and edit form
+  const propicInput = document.querySelector('input[name="propic"]');
+  if (propicInput) {
+    propicInput.addEventListener('change', function(e) {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        // Update main avatar display
+        const avatarDisplay = document.getElementById('avatar-display');
+        if (avatarDisplay) {
+          avatarDisplay.src = ev.target.result;
+          
+          // Add animation when avatar changes
+          avatarDisplay.classList.add('animate__animated', 'animate__pulse');
+          setTimeout(() => {
+            avatarDisplay.classList.remove('animate__animated', 'animate__pulse');
+          }, 1000);
+        }
+        
+        // Update edit preview if it exists
+        const avatarEditPreview = document.getElementById('avatar-edit-preview');
+        if (avatarEditPreview) {
+          avatarEditPreview.src = ev.target.result;
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    });
+  }
+  
+  // Refresh QR code every minute with animation
+  setInterval(() => {
+    const qrcode = document.getElementById('qrcode-img');
+    const qrcodeWrapper = qrcode.closest('.qrcode-wrapper');
+    qrcodeWrapper.classList.add('loading');
+    
+    // Crea nuovo src with timestamp
+    const newSrc = `{% url 'profile_qrcode' %}?t=${Math.floor(Date.now()/60000)}`;
+    
+    // Quando la nuova immagine è caricata, rimuovi classe loading e aggiungi animazione pulse
+    qrcode.onload = () => {
+      qrcodeWrapper.classList.remove('loading');
+      qrcode.classList.add('animate__animated', 'animate__pulse');
+      setTimeout(() => {
+        qrcode.classList.remove('animate__animated', 'animate__pulse');
+      }, 1000);
+    };
+    
+    qrcode.src = newSrc;
+  }, 60000);
+  
+  // Aggiungi effetti di hover e focus sui form elements
+  document.querySelectorAll('.profile-edit-form input, .profile-edit-form select').forEach(el => {
+    el.addEventListener('focus', function() {
+      this.closest('.form-control-custom').classList.add('focused');
+    });
+    el.addEventListener('blur', function() {
+      this.closest('.form-control-custom').classList.remove('focused');
+    });
+    
+    // Aggiungiamo classi speciali per i select
+    if (el.tagName === 'SELECT') {
+      // Aggiungiamo un effetto di apertura
+      el.addEventListener('mousedown', function() {
+        this.classList.add('select-active');
+      });
+      
+      // Stilizzare le opzioni al passaggio del mouse (per select multipli)
+      if (el.multiple) {
+        const options = el.querySelectorAll('option');
+        options.forEach(option => {
+          option.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(2px)';
+          });
+          option.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0)';
+          });
+        });
+      }
+    }
+  });
+  
+  // Animazione per i bottoni di modifica
+  document.querySelectorAll('.profile-item-hover').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      const btn = this.querySelector('.btn');
+      btn.classList.add('btn-hover');
+    });
+    item.addEventListener('mouseleave', function() {
+      const btn = this.querySelector('.btn');
+      btn.classList.remove('btn-hover');
+    });
+  });
+  
+  // Animazione per i form al collasso/espandere
+  document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(btn => {
+    const targetId = btn.getAttribute('data-bs-target').substring(1);
+    const target = document.getElementById(targetId);
+    
+    target.addEventListener('show.bs.collapse', function() {
+      this.classList.add('show');
+    });
+    
+    target.addEventListener('hide.bs.collapse', function() {
+      this.classList.remove('show');
+    });
+    
+    // Aggiungi classi necessarie per transizioni fluide
+    target.classList.add('profile-edit-form');
+  });
+  
+  // Trasforma le checkbox degli allergeni per il nuovo design
+  function setupAllergenCheckboxes() {
+    const allergensContainer = document.querySelector('.allergens-checkboxes');
+    if (!allergensContainer) return;
+    
+    // Se già trasformato, saltiamo
+    if (allergensContainer.dataset.transformed === 'true') return;
+    
+    // Ottieni tutti gli elementi di input originali
+    const originalInputs = [...allergensContainer.querySelectorAll('input[type="checkbox"]')];
+    
+    // Crea un container UL
+    const ul = document.createElement('ul');
+    
+    // Per ogni input, crea una struttura di lista appropriata
+    originalInputs.forEach(input => {
+      // Ottieni il testo dalla label esistente o dall'elemento vicino
+      const originalLabel = input.parentElement.tagName === 'LABEL' ? 
+                             input.parentElement : 
+                             document.querySelector(`label[for="${input.id}"]`);
+      
+      const labelText = originalLabel ? 
+                        originalLabel.textContent.trim() : 
+                        input.nextSibling?.textContent?.trim() || "Opzione";
+      
+      // Crea elemento lista
+      const li = document.createElement('li');
+      
+      // Clona l'input per preservare eventuali attributi e stato
+      const newInput = input.cloneNode(true);
+      
+      // Crea nuova label
+      const newLabel = document.createElement('label');
+      newLabel.setAttribute('for', newInput.id || `allergen-${Math.random().toString(36).substring(2, 9)}`);
+      newLabel.textContent = labelText;
+      
+      // Aggiungi elementi al DOM
+      li.appendChild(newInput);
+      li.appendChild(newLabel);
+      ul.appendChild(li);
+    });
+    
+    // Salva il testo di aiuto se esiste
+    const helperText = allergensContainer.querySelector('.allergen-helper');
+    
+    // Svuota il container e aggiungi la nuova struttura
+    allergensContainer.innerHTML = '';
+    allergensContainer.appendChild(ul);
+    
+    // Riaggiungi il testo di aiuto
+    if (helperText) {
+      allergensContainer.appendChild(helperText);
+    } else {
+      // Crea un nuovo helper text se non esisteva
+      const newHelperText = document.createElement('small');
+      newHelperText.className = 'allergen-helper text-muted mt-2 d-block';
+      newHelperText.innerHTML = '<i class="bi bi-info-circle me-1"></i>Seleziona una o più allergie dalla lista';
+      allergensContainer.appendChild(newHelperText);
+    }
+    
+    // Marca come trasformato
+    allergensContainer.dataset.transformed = 'true';
+    
+    // Riapplica gli event listener alle nuove checkbox
+    attachAllergensEventListeners();
+  }
+  
+  function attachAllergensEventListeners() {
+    const allergensCheckboxes = document.querySelectorAll('input[name="suffers_from"]');
+    if (allergensCheckboxes.length > 0) {
+      allergensCheckboxes.forEach(checkbox => {
+        // Rimuovi eventuali listener esistenti (per sicurezza)
+        checkbox.removeEventListener('change', checkboxChangeHandler);
+        // Aggiungi il nuovo listener
+        checkbox.addEventListener('change', checkboxChangeHandler);
+      });
+    }
+  }
+  
+  function checkboxChangeHandler() {
+    const selectedCount = document.querySelectorAll('input[name="suffers_from"]:checked').length;
+    
+    // Aggiorniamo il testo di aiuto
+    const helperText = document.querySelector('.allergen-helper');
+    if (helperText) {
+      if (selectedCount > 0) {
+        helperText.innerHTML = `<i class="bi bi-check-circle-fill me-1" style="color: #20bf55;"></i>Hai selezionato ${selectedCount} ${selectedCount === 1 ? 'allergia' : 'allergie'}`;
+      } else {
+        helperText.innerHTML = `<i class="bi bi-info-circle me-1"></i>Seleziona una o più allergie dalla lista`;
+      }
+    }
+    
+    // Aggiungiamo effetto animato alla label
+    const label = document.querySelector(`label[for="${this.id}"]`) || this.nextElementSibling;
+    if (label) {
+      label.classList.add('checkbox-changed');
+      setTimeout(() => {
+        label.classList.remove('checkbox-changed');
+      }, 600);
+    }
+  }
+  
+  // Prima configurazione
+  setupAllergenCheckboxes();
+  
+  // Configurazione quando il pannello degli allergeni viene aperto
+  document.querySelector('.edit-allergens-btn')?.addEventListener('click', function() {
+    setTimeout(setupAllergenCheckboxes, 100);
+  });
+  
+  // Animazione speciale per la selezione allergeni - già gestita sopra
+  
+  // Avatar edit button handler
+  const editAvatarBtn = document.querySelector('.edit-avatar-btn');
+  if (editAvatarBtn) {
+    editAvatarBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-avatar-edit');
+      if (collapseElement) {
+        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.show();
+      }
+    });
+  }
+
+  // Avatar cancel button handler
+  const cancelAvatarBtn = document.querySelector('.cancel-avatar-btn');
+  if (cancelAvatarBtn) {
+    cancelAvatarBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-avatar-edit');
+      if (collapseElement) {
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.hide();
+        
+        // Reset avatar preview to original
+        setTimeout(() => {
+          const avatarEditPreview = document.getElementById('avatar-edit-preview');
+          const propicInput = document.querySelector('input[name="propic"]');
+          if (avatarEditPreview) {
+            avatarEditPreview.src = "{{ current_user.propic.url }}";
+          }
+          if (propicInput) {
+            propicInput.value = '';
+          }
+        }, 300);
+      }
+    });
+  }
+
+  // Avatar save button handler
+  const saveAvatarBtn = document.querySelector('.save-avatar-btn');
+  if (saveAvatarBtn) {
+    saveAvatarBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Add loading state
+      const loadingSpinner = document.createElement('div');
+      loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
+      loadingSpinner.setAttribute('role', 'status');
+      loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
+      this.appendChild(loadingSpinner);
+      this.disabled = true;
+      
+      // Add hidden field to indicate avatar update
+      const sectionInput = document.createElement('input');
+      sectionInput.type = 'hidden';
+      sectionInput.name = 'update_section';
+      sectionInput.value = 'avatar';
+      const form = document.querySelector('form');
+      if (form) {
+        form.appendChild(sectionInput);
+        form.submit();
+      }
+    });
+  }
+
+  // Avatar file input change handler for preview
+  const avatarInput = document.querySelector('input[name="propic"]');
+  if (avatarInput) {
+    avatarInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const avatarEditPreview = document.getElementById('avatar-edit-preview');
+          const avatarDisplay = document.getElementById('avatar-display');
+          if (avatarEditPreview) {
+            avatarEditPreview.src = e.target.result;
+          }
+          if (avatarDisplay) {
+            avatarDisplay.src = e.target.result;
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  // Allergens edit button handler
+  const editAllergensBtn = document.querySelector('.edit-allergens-btn');
+  if (editAllergensBtn) {
+    editAllergensBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-allergens-edit');
+      if (collapseElement) {
+        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.show();
+      }
+    });
+  }
+  
+  // Password edit button handler
+  const editPasswordBtn = document.querySelector('.edit-password-btn');
+  if (editPasswordBtn) {
+    editPasswordBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-password-edit');
+      if (collapseElement) {
+        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.show();
+      }
+    });
+  }
+
+  // Allergens cancel button handler
+  const cancelAllergensBtn = document.querySelector('.cancel-allergens-btn');
+  if (cancelAllergensBtn) {
+    cancelAllergensBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-allergens-edit');
+      if (collapseElement) {
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.hide();
+        
+        // Reset allergens selection to original values
+        setTimeout(() => {
+          const allergensCheckboxes = document.querySelectorAll('input[name="suffers_from"]');
+          if (allergensCheckboxes.length > 0) {
+            // Reset all checkboxes first
+            allergensCheckboxes.forEach(checkbox => {
+              checkbox.checked = false;
+            });
+            
+            // Re-check original allergens using data stored in the DOM
+            const originalAllergens = document.querySelectorAll('.allergen-tag');
+            originalAllergens.forEach(tag => {
+              const allergenName = tag.textContent.trim();
+              allergensCheckboxes.forEach(checkbox => {
+                const label = checkbox.nextElementSibling;
+                if (label && label.textContent.trim() === allergenName) {
+                  checkbox.checked = true;
+                }
+              });
+            });
+          }
+        }, 300);
+      }
+    });
+  }
+
+  // Allergens save button handler
+  const saveAllergensBtn = document.querySelector('.save-allergens-btn');
+  if (saveAllergensBtn) {
+    saveAllergensBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Debug: log selected allergens
+      const allergensCheckboxes = document.querySelectorAll('input[name="suffers_from"]:checked');
+      if (allergensCheckboxes.length > 0) {
+        const selectedValues = Array.from(allergensCheckboxes).map(checkbox => checkbox.value);
+        const selectedLabels = Array.from(allergensCheckboxes).map(checkbox => checkbox.nextElementSibling ? checkbox.nextElementSibling.textContent.trim() : checkbox.value);
+        console.log('DEBUG: Selected allergen values:', selectedValues);
+        console.log('DEBUG: Selected allergen labels:', selectedLabels);
+      } else {
+        console.log('DEBUG: No allergens selected');
+      }
+      
+      // Add loading state
+      const loadingSpinner = document.createElement('div');
+      loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
+      loadingSpinner.setAttribute('role', 'status');
+      loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
+      this.appendChild(loadingSpinner);
+      this.disabled = true;
+      
+      // Add hidden field to indicate allergens update
+      const sectionInput = document.createElement('input');
+      sectionInput.type = 'hidden';
+      sectionInput.name = 'update_section';
+      sectionInput.value = 'allergens';
+      const form = document.querySelector('form');
+      if (form) {
+        form.appendChild(sectionInput);
+        console.log('DEBUG: About to submit form');
+        form.submit();
+      }
+    });
+  }
+  
+  // Password cancel button handler
+  const cancelPasswordBtn = document.querySelector('.cancel-password-btn');
+  if (cancelPasswordBtn) {
+    cancelPasswordBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-password-edit');
+      if (collapseElement) {
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.hide();
+        
+        // Reset form fields
+        setTimeout(() => {
+          const passwordForm = document.querySelectorAll('#collapse-password-edit input');
+          passwordForm.forEach(input => {
+            input.value = '';
+            input.classList.remove('is-invalid');
+          });
+          
+          // Remove any error messages
+          const errorMessages = document.querySelectorAll('#collapse-password-edit .invalid-feedback');
+          errorMessages.forEach(el => {
+            el.innerHTML = '';
+          });
+        }, 300);
+      }
+    });
+  }
+  
+  // Password save button handler
+  const savePasswordBtn = document.querySelector('.save-password-btn');
+  if (savePasswordBtn) {
+    savePasswordBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Validazione del form
+      const oldPassword = document.getElementById('id_old_password').value;
+      const newPassword1 = document.getElementById('id_new_password1').value;
+      const newPassword2 = document.getElementById('id_new_password2').value;
+      
+      let isValid = true;
+      
+      if (!oldPassword) {
+        isValid = false;
+        document.getElementById('id_old_password').classList.add('is-invalid');
+      } else {
+        document.getElementById('id_old_password').classList.remove('is-invalid');
+      }
+      
+      if (!newPassword1) {
+        isValid = false;
+        document.getElementById('id_new_password1').classList.add('is-invalid');
+      } else {
+        document.getElementById('id_new_password1').classList.remove('is-invalid');
+      }
+      
+      if (!newPassword2) {
+        isValid = false;
+        document.getElementById('id_new_password2').classList.add('is-invalid');
+      } else if (newPassword1 !== newPassword2) {
+        isValid = false;
+        document.getElementById('id_new_password2').classList.add('is-invalid');
+        // Mostra messaggio di errore per password non corrispondenti
+        const errorContainer = document.getElementById('id_new_password2').nextElementSibling || document.createElement('div');
+        errorContainer.className = 'invalid-feedback d-block';
+        errorContainer.textContent = 'Le password non corrispondono';
+        if (!document.getElementById('id_new_password2').nextElementSibling) {
+          document.getElementById('id_new_password2').parentNode.appendChild(errorContainer);
+        }
+      } else {
+        document.getElementById('id_new_password2').classList.remove('is-invalid');
+      }
+      
+      if (!isValid) {
+        return;
+      }
+      
+      // Add loading state
+      const loadingSpinner = document.createElement('div');
+      loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
+      loadingSpinner.setAttribute('role', 'status');
+      loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
+      this.appendChild(loadingSpinner);
+      this.disabled = true;
+      
+      // Add hidden field to indicate password update
+      const sectionInput = document.createElement('input');
+      sectionInput.type = 'hidden';
+      sectionInput.name = 'update_section';
+      sectionInput.value = 'password';
+      const form = document.querySelector('form');
+      if (form) {
+        form.appendChild(sectionInput);
+        console.log('DEBUG: About to submit password form');
+        form.submit();
+      }
+    });
+  }
+  
+  // Effetto ripple per i pulsanti
+  document.querySelectorAll('.btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+      const x = e.clientX - e.target.getBoundingClientRect().left;
+      const y = e.clientY - e.target.getBoundingClientRect().top;
+      
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+  
+  // Funzione per mostrare notifiche
+  function showNotification(message, type) {
+    const toast = document.createElement('div');
+    toast.className = `toast align-items-center text-white bg-${type} border-0`;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    
+    const toastContent = document.createElement('div');
+    toastContent.className = 'd-flex';
+    
+    const toastBody = document.createElement('div');
+    toastBody.className = 'toast-body';
+    toastBody.textContent = message;
+    
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'btn-close btn-close-white me-2 m-auto';
+    closeButton.setAttribute('data-bs-dismiss', 'toast');
+    closeButton.setAttribute('aria-label', 'Close');
+    
+    toastContent.appendChild(toastBody);
+    toastContent.appendChild(closeButton);
+    toast.appendChild(toastContent);
+    
+    // Crea un toast container se non esiste
+    let toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+      toastContainer = document.createElement('div');
+      toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
+      document.body.appendChild(toastContainer);
+    }
+    
+    toastContainer.appendChild(toast);
+    
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+    
+    // Rimuovi il toast dopo che è stato nascosto
+    toast.addEventListener('hidden.bs.toast', function() {
+      toast.remove();
+    });
+  }
+});
+</script>
+
+<style>
+/* Stili per le checkbox degli allergeni */
+.allergens-checkboxes {
+  max-height: 250px;
+  overflow-y: auto;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.allergens-checkboxes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem;
+}
+
+.allergens-checkboxes li {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* Nascondere le checkbox native */
+.allergens-checkboxes input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.allergens-checkboxes label {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: white;
+  border: 1px solid #e2e8f0;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.allergens-checkboxes label:before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 0.6rem;
+  border: 2px solid #cbd5e0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background-color: white;
+  flex-shrink: 0;
+}
+
+/* Effetto hover */
+.allergens-checkboxes label:hover {
+  transform: translateY(-1px);
+  border-color: #6a11cb;
+  box-shadow: 0 4px 8px rgba(106, 17, 203, 0.1);
+}
+
+.allergens-checkboxes label:hover:before {
+  border-color: #6a11cb;
+}
+
+/* Stile per checkbox selezionata */
+.allergens-checkboxes input[type="checkbox"]:checked + label {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  border-color: #6a11cb;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(106, 17, 203, 0.2);
+}
+
+.allergens-checkboxes input[type="checkbox"]:checked + label:before {
+  border-color: white;
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236a11cb' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+/* Effetto selezione */
+.allergens-checkboxes input[type="checkbox"]:focus + label {
+  box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.3);
+  border-color: #6a11cb;
+}
+
+/* Effetto quando cambia stato */
+.checkbox-changed {
+  animation: checkboxScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes checkboxScale {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Effetto ripple al click */
+.allergens-checkboxes label:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.allergens-checkboxes label:active:after {
+  animation: ripple 0.6s ease;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0) translate(-50%, -50%);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(20) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* Stile testo */
+.allergens-checkboxes label > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Scrollbar personalizzata */
+.allergens-checkboxes::-webkit-scrollbar {
+  width: 6px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.02);
+  border-radius: 8px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #6a11cb, #2575fc);
+  border-radius: 8px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #5a0fb0, #1b67e3);
+}
+
+/* Design responsive */
+@media (max-width: 768px) {
+  .allergens-checkboxes ul {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+/* Stili per il form di modifica password */
+.password-edit-form {
+  padding: 0.5rem;
+}
+
+.password-edit-form .form-label {
+  font-weight: 500;
+  color: #343a40;
+  margin-bottom: 0.5rem;
+}
+
+.password-edit-form .form-text ul {
+  font-size: 0.85rem;
+}
+
+/* Indicatore forza password */
+.password-strength {
+  height: 5px;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  background-color: #e9ecef;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.password-strength-meter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+.password-strength.weak .password-strength-meter {
+  width: 25%;
+  background-color: #dc3545;
+}
+
+.password-strength.medium .password-strength-meter {
+  width: 50%;
+  background-color: #ffc107;
+}
+
+.password-strength.strong .password-strength-meter {
+  width: 75%;
+  background-color: #17a2b8;
+}
+
+.password-strength.very-strong .password-strength-meter {
+  width: 100%;
+  background-color: #28a745;
+}
+
+.password-feedback {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  transition: all 0.3s ease;
+  color: #6c757d;
+}
+</style>
+{% endblock %}

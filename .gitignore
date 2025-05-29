@@ -171,4 +171,8 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+<<<<<<< HEAD
 db.sqlite3
+=======
+db.sqlite3
+>>>>>>> Profile
