@@ -7,26 +7,26 @@
 - [x] Impostare favicon (Ma da rivedere la foto in particolare)
 - [x] Vedere se tenere il logo. semmai togliere sfondo
 - [x] Mettere nav fixed??? da decidere. NO!
-- [ ] Impostare la palette custom per bootstrap
-- [ ] Scegliere le img finali per about e il testo
-- [ ] Rivedere se mettere le img fuori dal bg nell'about e fix nel caso di tablet per quelle a sinistra
-- [ ] Mettere titolo ad about
-- [ ] Vedere font e dim generale dei titoli ecc
+- [x] Impostare la palette custom per bootstra. no!
+- [ ] Scegliere le img finali per about e il testo (I)
+- [x] Rivedere se mettere le img fuori dal bg nell'about e fix nel caso di tablet per quelle a sinistra
+- [ ] Mettere titolo ad about (V)
+- [ ] Vedere font e dim generale dei titoli ecc (I)
 - [x] Decidere se cambiare un po' gli eventi, se farlo più grande o che.
 - [x] Rendere più custom i FAQ
-- [ ] Mettere contact in un altra view (back-end) e fare che manda una mail e semmai impostare che la mail viene inviata su terminale
-- [ ] Footer grande
+- [ ] Mettere contact in un altra view (back-end) e fare che manda una mail e semmai impostare che la mail viene inviata su terminale (L)
+- [ ] Footer grande (V)
 - [x] Animazione di ingresso per le città
 - [x] Sezione tutorial con call to action per registrarsi, scritta "mostra il qr code alla cassa e paga il giusto..."
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
-- [ ] Aggiustare i margin
-- [ ] Animazioni che mentre scorri si muovono le img!?
+- [ ] Aggiustare i margin (L)
+- [ ] Animazioni che mentre scorri si muovono le img!? (L)
 
 ## Login
 - [x] Conferma passw ecc? NO!
-- [ ] Fare una base per i login ecc
-- [ ] Mettere o italiano o inglese. ora è un misto
-- [ ] Rendere più moderno magari cambiando bordi e colori
+- [x] Fare una base per i login ecc NO!
+- [ ] Mettere o italiano o inglese. ora è un misto (V)
+- [ ] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
 
 ## Citta
@@ -38,13 +38,13 @@
 ## Mensa
 - [x] Servizi dinamici
 - [x] Contatti con i link esterni
-- [ ] Recensioni
+- [ ] Recensioni (L)
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
-- [ ] FIX menu su ipad pro
-- [ ] Posti mensa
+- [ ] FIX menu su ipad pro (V)
+- [ ] Posti mensa (L e V)
 
 ## Profilo
-da iniziare :)
+fatto!
 
 ## Admin
-- [ ] Aggiungere possibilità di scannerizzare il qrcode!?
+- [ ] Aggiungere possibilità di scannerizzare il qrcode!? (V)
