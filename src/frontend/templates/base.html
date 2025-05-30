@@ -52,7 +52,7 @@
 	</main>
 
 	<!-- Footer -->
-	<footer class="text-center text-muted"> <!-- TODO: FAi grosso! -->
+	<footer class="text-center text-muted">
 		<div class="container">
 			<p>© {% now "Y" %} MensaGO</p>
 		</div>
@@ -87,7 +87,7 @@
 		});
 	</script>
 	{% endif %}
-
+	<script src="{% static 'js/base.js' %}"></script>
 	<!-- Custom JS -->
 	{% block extra_js %}{% endblock %}
 </body>

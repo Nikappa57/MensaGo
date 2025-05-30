@@ -1033,3 +1033,7 @@ p {
   justify-content: center;
   align-items: center;
 }
+
+#contact {
+	padding: 8% 0;
+}

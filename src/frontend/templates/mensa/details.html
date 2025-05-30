@@ -9,6 +9,21 @@
 <link rel="stylesheet" href="{% static 'css/mensa-details.css' %}">
 {% endblock %}
 {% block nav_elements %}
+<li class="nav-item">
+	<a class="nav-link" href="#about">About</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#location">Location</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#menu">Menu</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#gallery">Gallery</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#reviews">Reviews</a>
+</li>
 {% if user.is_authenticated %}
 <li class="nav-item dropdown ms-3">
 	<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
@@ -85,14 +100,14 @@
 		<!-- Left column - About, Location, Gallery -->
 		<div class="col-lg-8">
 			<!-- About Section -->
-			<div class="info-card mb-4">
+			<div class="info-card mb-4" id="about">
 				<small class="text-primary text-uppercase">La nostra storia</small>
 				<h2 class="section-title">About</h2>
 				<p>{{ mensa.description }}</p>
 			</div>
 			
 			<!-- Location Section -->
-			<div class="info-card mb-4">
+			<div class="info-card mb-4" id="location">
 				<small class="text-primary text-uppercase">Dove ci troviamo</small>
 				<h2 class="section-title">Location</h2>
 				<div id="map" class="map-container">
@@ -101,7 +116,7 @@
 			</div>
 
 			<!-- Weekly Menu Section -->
-			<div class="info-card mb-4">
+			<div class="info-card mb-4" id="menu">
 				<small class="text-primary text-uppercase">La nostra settimana culinaria</small>
 				<h2 class="section-title">Menu Settimanale</h2>
 				
@@ -321,7 +336,7 @@
 	</div>
 	
 	<!-- Gallery Section - Full Width -->
-	<div class="row">
+	<div class="row" id="gallery">
 		<div class="col-12">
 			<div class="info-card mb-4">
 				<small class="text-primary text-uppercase">Le nostre foto</small>
@@ -354,7 +369,7 @@
 	</div>
 	
 	<!-- Reviews Section - Full Width -->
-	<div class="row">
+	<div class="row" id="reviews">
 		<div class="col-12">
 			<div class="info-card mb-4">
 				<small class="text-primary text-uppercase">Feedback dei clienti</small>
