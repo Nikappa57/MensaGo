@@ -4,29 +4,14 @@
 {% block title %}Profilo{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/profile.css' %}"> -->
+
 <style>
-  .profile-avatar, .avatar-container {
-    width: 60px !important;
-    height: 60px !important;
-  }
-  
-  /* Footer sticky solo per questa pagina */
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  main {
-    flex: 1;
-  }
-  
-  footer {
-    margin-top: auto;
-    flex-shrink: 0;
-  }
+	.profile-header {
+		padding-top: 80px;
+	}
 </style>
+
 {% endblock %}
 
 {% block nav_mobile %}
@@ -37,14 +22,9 @@
 {% endblock %}
 
 {% block nav_elements %}
-<li class="nav-item">
-	<a class="nav-link text-dark" href="{% url 'home' %}">Home</a>
-</li>
-<li class="nav-item">
-	<a class="nav-link text-dark active" href="{% url 'profile' %}">Profilo</a>
-</li>
+
 <li class="nav-item ms-3">
-	<a class="btn login-btn px-3 py-1" href="{% url 'logout' %}">Logout</a>
+	<a class="btn logout-btn px-3 py-1" href="{% url 'logout' %}">Logout</a>
 </li>
 {% endblock %}
 
@@ -453,11 +433,15 @@
   document.querySelectorAll('.profile-item-hover').forEach(item => {
     item.addEventListener('mouseenter', function() {
       const btn = this.querySelector('.btn');
-      btn.classList.add('btn-hover');
+      if (btn) {
+        btn.classList.add('btn-hover');
+      }
     });
     item.addEventListener('mouseleave', function() {
       const btn = this.querySelector('.btn');
-      btn.classList.remove('btn-hover');
+      if (btn) {
+        btn.classList.remove('btn-hover');
+      }
     });
   });
   

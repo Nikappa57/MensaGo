@@ -1,12 +1,13 @@
 # TODO
 
-- [ ] Mettere comando per riempire il db come un comando django
+- [ ] Mettere comando per riempire il db come un comando django (L)
+- [ ] Mettere js e css in file appositi quando non si usa jinja (V)
 
 ## Home
 
 - [x] Impostare favicon (Ma da rivedere la foto in particolare)
 - [x] Vedere se tenere il logo. semmai togliere sfondo
-- [x] Mettere nav fixed??? da decidere. NO!
+- [x] Mettere nav fixed??? da decidere. 
 - [x] Impostare la palette custom per bootstra. no!
 - [ ] Scegliere le img finali per about e il testo (I)
 - [x] Rivedere se mettere le img fuori dal bg nell'about e fix nel caso di tablet per quelle a sinistra
@@ -14,7 +15,7 @@
 - [ ] Vedere font e dim generale dei titoli ecc (I)
 - [x] Decidere se cambiare un po' gli eventi, se farlo più grande o che.
 - [x] Rendere più custom i FAQ
-- [ ] Mettere contact in un altra view (back-end) e fare che manda una mail e semmai impostare che la mail viene inviata su terminale (L)
+- [x] Mettere contact in un altra view (back-end) e fare che manda una mail e semmai impostare che la mail viene inviata su terminale (L)
 - [ ] Footer grande (V)
 - [x] Animazione di ingresso per le città
 - [x] Sezione tutorial con call to action per registrarsi, scritta "mostra il qr code alla cassa e paga il giusto..."
@@ -42,10 +43,14 @@
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
 - [ ] FIX menu su ipad pro (V)
 - [ ] Posti mensa (L e V)
-- [ ] Aggiungi nella nav altri elementi come reviews ecc
+- [x] Aggiungi nella nav altri elementi come reviews ecc
 
 ## Profilo
-fatto!
+- [ ] Fix animazione (V)
+- [x] fix link navbar (L)
+- [ ] Quando si modifica, solo 1 dei due campi si deve poter vedere
+- [ ] Quando si modifica, se riclicco modifica deve essere come annulla
+- [ ] Rivedere colore profile ed effetti quando si va sopra agli elementi 
 
 ## Admin
 - [ ] Aggiungere possibilità di scannerizzare il qrcode!? (V)
