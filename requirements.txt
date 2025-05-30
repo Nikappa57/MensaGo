@@ -80,7 +80,9 @@ pure_eval==0.2.3
 Pygments==2.19.1
 python-dateutil==2.9.0.post0
 python-qt-binding==1.1.2
+PyYAML==6.0.2
 pyzmq==26.4.0
+qrcode==8.2
 qt-dotgraph==2.2.4
 qt-gui==2.2.4
 qt-gui-cpp==2.2.4
