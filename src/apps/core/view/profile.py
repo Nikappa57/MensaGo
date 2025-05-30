@@ -73,7 +73,6 @@ def profile_home(request):
 
 	return render(request, 'profile/profile.html', context)
 
-
 def profile_qrcode(request):
 	user = request.user
 	current_minute = int(time.time() // 60)
@@ -82,22 +81,6 @@ def profile_qrcode(request):
 	response = HttpResponse(content_type="image/png")
 	qr_img.save(response, "PNG")
 	return response
-
-
-urlpatterns = [
-	path('profile/qrcode/', profile_qrcode, name='profile_qrcode'),
-]
-
-def accreditation(request):
-	# Placeholder for accreditation logic
-	return render(request, 'profile/accreditation.html')
-def accreditation_pay(request):
-	# Placeholder for accreditation payment logic
-	return render(request, 'profile/accreditation_pay.html')
-def preferences(request):
-	# Placeholder for user preferences logic
-	return render(request, 'profile/preferences.html')
-
 
 def change_password(request):
 	if not request.user.is_authenticated:

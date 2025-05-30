@@ -1,7 +1,6 @@
 from django import forms
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
-from django.shortcuts import redirect, render
 
 from .models import CustomUser, University
 
@@ -11,7 +10,7 @@ class RegistrationForm(UserCreationForm):
         max_length=255,
         required=True,
         help_text='Required. Inform a valid email address.')
-    #queryset for university and economical level
+
     university = forms.ModelChoiceField(
         queryset=University.objects.all(),
         required=True,
@@ -98,7 +97,7 @@ class AllergensForm(forms.Form):
 
 class ProfileForm(forms.ModelForm):
     suffers_from = forms.ModelMultipleChoiceField(
-        queryset=CustomUser._meta.get_field('suffers_from').related_model.objects.all(),
+        queryset=CustomUser._meta.get_field('suffers_from').related_model.objects.all(), # TODO: ma mettere direttamente il modello no?
         required=False,
         widget=forms.SelectMultiple(attrs={'class': 'form-control', 'size': '8'}),
         help_text='Select allergens'

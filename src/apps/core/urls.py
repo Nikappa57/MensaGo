@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
-from .view import (accreditation, accreditation_pay, homepage, preferences,
+from .view import (homepage,
                    profile_home, register, login_view, logout_view, profile_qrcode,
                    change_password)
 
@@ -24,12 +24,7 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(), 
          name="password_reset_complete"),
 	
-    path("profile/preferences/", preferences, name="preferences"),
     path("profile/password/change/", change_password, name="password_change"),
-    path("profile/accreditation/", accreditation, name="accreditation"),
-    path("profile/accreditation/pay/",
-         accreditation_pay,
-         name="accreditation_pay"),
     path("profile/qrcode/", profile_qrcode, name="profile_qrcode"),
 
     # Password reset URLs

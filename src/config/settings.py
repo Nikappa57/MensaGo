@@ -149,6 +149,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Personalizzazione delle viste di reset password
 PASSWORD_RESET_TIMEOUT = 259200  # 3 giorni in secondi
 
+CONTACT_EMAIL = 'help@mensago.it'
+
 # per production:
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.tuoserver.com'

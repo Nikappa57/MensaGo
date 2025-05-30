@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.conf import settings
+from django.core.mail import send_mail
 
 from apps.core.forms import ContactForm
 from apps.mensa.models import City, Event
@@ -24,29 +26,27 @@ def homepage(request):
 
     events = Event.objects.all().order_by('date')
 
-    # Gestione del form di contatto
-    if request.method == 'POST':  # TODO: a sto punto perchè non fare una view a parte?
+    if request.method == 'POST':
         form = ContactForm(request.POST)
-        if form.is_valid():  # TODO: da cambiare con una mail
-            # Estrai i dati dal form
+        if form.is_valid():
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
 
-            # Stampa i dati sulla console del server
-            print("================= CONTACT FORM DATA =================")
-            print(f"Nome: {name}")
-            print(f"Email: {email}")
-            print(f"Messaggio: {message}")
-            print("====================================================")
-
-            # Ritorna una risposta JSON di successo
+            # Send mail to settings.CONTACT_MAIL
+            send_mail(
+                subject=f"Messaggio da {name} ({email})",
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.CONTACT_EMAIL],
+                fail_silently=False
+            )
+            
             return JsonResponse({
                 'status': 'success',
                 'message': 'Messaggio inviato con successo!'
             })
         else:
-            # Ritorna errori del form
             return JsonResponse({
                 'status': 'error',
                 'errors': form.errors
