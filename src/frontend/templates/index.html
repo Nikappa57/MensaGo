@@ -6,80 +6,6 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-<style>
-/* Event card styles */
-.event-card-inner {
-  position: relative;
-  overflow: hidden;
-}
-
-.event-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.75);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-  border-radius: 0.25rem;
-  padding: 1rem;
-  overflow: auto;
-}
-
-.event-description {
-  line-height: 1.5;
-  font-size: 0.95rem;
-}
-
-.event-overlay-content {
-  width: 100%;
-}
-
-.mobile-indicator {
-  bottom: 10px;
-  right: 10px;
-  background-color: rgba(0,0,0,0.6);
-  color: white;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.event-image-container {
-  overflow: hidden;
-  border-radius: 0.25rem;
-  transition: transform 0.3s ease;
-}
-
-/* Subtle zoom effect on hover for desktop */
-@media (min-width: 992px) {
-  .event-card-inner:hover .event-image-container {
-    transform: scale(1.03);
-  }
-}
-
-/* Desktop hover effect */
-@media (min-width: 992px) {
-  .event-card-inner:hover .event-overlay {
-    opacity: 1;
-  }
-}
-
-/* Mobile styles for the overlay */
-.event-overlay.show {
-  opacity: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</style>
 {% endblock %}
 
 {% block nav_mobile %}
@@ -90,40 +16,40 @@
 {% endblock %}
 
 {% block nav_elements %}
-<li class="nav-item">
-	<a class="nav-link text-dark" href="#about">About Us</a>
-</li>
-<li class="nav-item">
-	<a class="nav-link text-dark" href="#citta">Città</a>
-</li>
-<li class="nav-item">
-	<a class="nav-link text-dark" href="#eventi">Eventi</a>
-</li>
-<li class="nav-item">
-	<a class="nav-link text-dark" href="#FAQ">FAQ</a>
-</li>
-<li class="nav-item">
-	<a class="nav-link text-dark" href="#contact">Contattaci</a>
-</li>
-{% if user.is_authenticated %}
-<li class="nav-item dropdown ms-3">
-	<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
-		data-bs-toggle="dropdown" aria-expanded="false">
-		{{ user.first_name }} {{ user.last_name }}
-	</a>
-	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-		<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-		<li><a class="dropdown-item" href="{% url 'preferences' %}">Preferences</a></li>
-		<li><a class="dropdown-item" href="{% url 'accreditation' %}">Accreditation</a></li>
-		<li><hr class="dropdown-divider"> </li>
-		<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-	</ul>
-</li>
-{% else %}
-<li class="nav-item ms-3">
-	<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
-</li>
-{% endif %}
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#about">About Us</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#citta">Città</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#eventi">Eventi</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#FAQ">FAQ</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#contact">Contattaci</a>
+	</li>
+	{% if user.is_authenticated %}
+	<li class="nav-item dropdown ms-3">
+		<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+			data-bs-toggle="dropdown" aria-expanded="false">
+			{{ user.first_name }} {{ user.last_name }}
+		</a>
+		<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+			<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+			<li><a class="dropdown-item" href="{% url 'preferences' %}">Preferences</a></li>
+			<li><a class="dropdown-item" href="{% url 'accreditation' %}">Accreditation</a></li>
+			<li><hr class="dropdown-divider"> </li>
+			<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+		</ul>
+	</li>
+	{% else %}
+	<li class="nav-item ms-3">
+		<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+	</li>
+	{% endif %}
 {% endblock %}
 
 
@@ -339,8 +265,6 @@
   </div>
 </section>
 
-<div class="py-4"></div>
-
 <!-- Upcoming Events -->
 <section class="pb-5" id="eventi">
 	<div class="container">
@@ -350,7 +274,6 @@
 			</small>
 			<h2 class="fw-bold mt-2">Eventi</h2>
 		</div>
-	
 
 	{% if events %}
 		<div class="position-relative">
@@ -411,7 +334,7 @@
 </section>
 
 <!-- FAQ -->
-<section id="FAQ" class="py-5">
+<section id="FAQ">
 	<div class="container faq-container">
 		<div class="faq-bg-shape faq-bg-shape-1"></div>
 		<div class="faq-bg-shape faq-bg-shape-2"></div>

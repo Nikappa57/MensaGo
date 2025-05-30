@@ -19,8 +19,8 @@
 - [x] Animazione di ingresso per le città
 - [x] Sezione tutorial con call to action per registrarsi, scritta "mostra il qr code alla cassa e paga il giusto..."
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
-- [ ] Aggiustare i margin (L)
-- [ ] Animazioni che mentre scorri si muovono le img!? (L)
+- [x] Aggiustare i margin (L)
+- [X] Animazioni che mentre scorri si muovono le img!? (L). NO!
 
 ## Login
 - [x] Conferma passw ecc? NO!
@@ -42,6 +42,7 @@
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
 - [ ] FIX menu su ipad pro (V)
 - [ ] Posti mensa (L e V)
+- [ ] Aggiungi nella nav altri elementi come reviews ecc
 
 ## Profilo
 fatto!
