@@ -97,6 +97,7 @@
     position: relative;
     z-index: 10;
     min-height: calc(100vh - 200px); /* Adjust to ensure enough space for content */
+	padding-top: 80px;
 }
 
 /* Footer styling for auth pages */
