@@ -12,7 +12,8 @@ class Mensa(models.Model):
     name = models.CharField(max_length=255, primary_key=True)
     description = models.TextField()
     position = models.CharField(max_length=255)
-    latitude = models.FloatField(null=True, blank=True)
+    latitude = models.FloatField(null=True,
+                                 blank=True)  # TODO: da rendere required
     longitude = models.FloatField(null=True, blank=True)
     banner = models.ImageField(upload_to='banners/')
     capacity = models.IntegerField()
@@ -21,6 +22,8 @@ class Mensa(models.Model):
     email = models.EmailField(blank=True, null=True)
     gallery = models.ManyToManyField('PhotoMensa')
     amenities = models.ManyToManyField('AmenitiesMensa', blank=True)
+
+    distance: float = 0.0  # Used for sorting, not a database field
 
     def __str__(self):
         return self.name
@@ -89,6 +92,7 @@ class Mensa(models.Model):
                 print(f"Geocoding error for {self.name}: {str(e)}")
         return False
 
+
 class PhotoMensa(models.Model):
     """"
     PhotoMensa(Img)
@@ -101,6 +105,7 @@ class PhotoMensa(models.Model):
 
     def __repr__(self) -> str:
         return f"PhotoMensa(img={self.img})"
+
 
 class AmenitiesMensa(models.Model):
     """"

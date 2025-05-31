@@ -362,9 +362,7 @@
 				<span id="current-image">1</span> / <span id="total-images">{{ mensa.gallery.all|length }}</span>
 			</div>
 		</div>
-	</div>
-	
-	<!-- Reviews Section - Full Width -->
+	</div>		<!-- Reviews Section - Full Width -->
 	<div class="row" id="reviews">
 		<div class="col-12">
 			<div class="info-card mb-4">
@@ -373,12 +371,56 @@
 					<span>Listing Reviews</span>
 				</h2>
 				
+				<!-- Add Review Form - Only if logged in and hasn't reviewed yet -->
+				{% if user.is_authenticated %}
+					{% if not user_has_reviewed %}
+						<div class="review-form-card mb-4">
+							<h4 class="mb-3">Scrivi una recensione</h4>
+							<form id="review-form" method="post">
+								{% csrf_token %}
+								<div class="mb-3">
+									<label class="form-label fw-bold">Valutazione</label>
+									<div class="star-rating">
+										<input type="radio" name="stars" value="5" id="star5">
+										<label for="star5"><i class="fa-solid fa-star"></i></label>
+										<input type="radio" name="stars" value="4" id="star4">
+										<label for="star4"><i class="fa-solid fa-star"></i></label>
+										<input type="radio" name="stars" value="3" id="star3">
+										<label for="star3"><i class="fa-solid fa-star"></i></label>
+										<input type="radio" name="stars" value="2" id="star2">
+										<label for="star2"><i class="fa-solid fa-star"></i></label>
+										<input type="radio" name="stars" value="1" id="star1">
+										<label for="star1"><i class="fa-solid fa-star"></i></label>
+									</div>
+									<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
+								</div>
+								
+								<div class="mb-3">
+									<label for="comment" class="form-label fw-bold">Commento (opzionale)</label>
+									<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
+								</div>
+								
+								<button type="submit" class="btn btn-primary">
+									<i class="fa-solid fa-paper-plane me-2"></i>Invia Recensione
+								</button>
+							</form>
+						</div>
+					{% endif %}
+				{% else %}
+					<div class="review-form-card mb-4">
+						<p class="text-muted">
+							<i class="fa-solid fa-user me-2"></i>
+							<a href="{% url 'login' %}?next={{ request.path|urlencode }}" class="text-primary">Accedi</a> per scrivere una recensione.
+						</p>
+					</div>
+				{% endif %}
+				
 				<!-- Loop through reviews -->
-				{% for review in mensa.review_set.all %}
-				<div class="review-card">
+				{% for review in reviews %}
+				<div class="review-card" data-review-id="{{ review.id }}">
 					<div class="review-header">
 						<img src="{{ review.user.propic.url }}" class="reviewer-avatar" alt="{{ review.user.get_full_name }}">
-						<div>
+						<div class="flex-grow-1">
 							<h5 class="mb-0">{{ review.user.get_full_name }}</h5>
 							<div class="stars-display">
 								{% for i in "12345" %}
@@ -391,6 +433,13 @@
 							</div>
 							<span class="review-date">{{ review.date|date }}</span>
 						</div>
+						{% if current_user.is_authenticated and review.user == current_user %}
+						<div class="review-actions">
+							<button class="btn btn-outline-danger btn-sm delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione">
+								<i class="fa-solid fa-trash"></i>
+							</button>
+						</div>
+						{% endif %}
 					</div>
 					<p>{{ review.text }}</p>
 				</div>
@@ -538,7 +587,7 @@
 		const map = L.map('map', {
 			scrollWheelZoom: false,
 			dragging: false
-		}).setView([{{ mensa.latitude }}, {{ mensa.longitude }}], 15);
+		}).setView([{{ mensa.latitude|default:"0" }}, {{ mensa.longitude|default:"0" }}], 15);
 
 		map.addEventListener('click', function(event) {
 			map.scrollWheelZoom.enable();
@@ -562,7 +611,7 @@
 		}).addTo(map);
 
 		// Add marker for the mensa
-		const marker = L.marker([{{ mensa.latitude }}, {{ mensa.longitude }}]).addTo(map);
+		const marker = L.marker([{{ mensa.latitude|default:"0" }}, {{ mensa.longitude|default:"0" }}]).addTo(map);
 		marker.bindPopup(`
 			<div>
 				<img src="{{ mensa.banner.url }}" class="popup-image" alt="{{ mensa.name }}">
@@ -624,6 +673,295 @@
 		}
 	});
 
+	// Function to handle review deletion
+	function handleDeleteReview(e) {
+		e.preventDefault();
+		const deleteBtn = e.target.closest('.delete-review-btn');
+		const mensaName = deleteBtn.getAttribute('data-mensa-name');
+		const reviewCard = deleteBtn.closest('.review-card');
+		
+		// Confirm deletion
+		if (confirm('Sei sicuro di voler eliminare questa recensione?')) {
+			// Disable button and show loading
+			deleteBtn.disabled = true;
+			deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+			
+			// Prepare form data
+			const formData = new FormData();
+			formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+			
+			// Send AJAX request
+			fetch('{% url "remove_review" mensa.name %}', {
+				method: 'POST',
+				headers: {
+					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+				},
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					// Remove the review card with animation
+					reviewCard.style.transition = 'opacity 0.3s ease';
+					reviewCard.style.opacity = '0';
+					setTimeout(() => {
+						reviewCard.remove();
+						
+						// Show review form again if user just deleted their review and no form exists
+						const reviewFormCard = document.querySelector('.review-form-card');
+						if (!reviewFormCard) {
+							// Create a new form container
+							const reviewsContainer = document.querySelector('#reviews .info-card');
+							const formHTML = `
+								<div class="review-form-card mb-4">
+									<h4 class="mb-3">Scrivi una recensione</h4>
+									<form id="review-form" method="post">
+										{% csrf_token %}
+										
+										<div class="mb-3">
+											<label class="form-label fw-bold">Valutazione</label>
+											<div class="star-rating">
+												<input type="radio" name="stars" value="5" id="star5">
+												<label for="star5"><i class="fa-solid fa-star"></i></label>
+												<input type="radio" name="stars" value="4" id="star4">
+												<label for="star4"><i class="fa-solid fa-star"></i></label>
+												<input type="radio" name="stars" value="3" id="star3">
+												<label for="star3"><i class="fa-solid fa-star"></i></label>
+												<input type="radio" name="stars" value="2" id="star2">
+												<label for="star2"><i class="fa-solid fa-star"></i></label>
+												<input type="radio" name="stars" value="1" id="star1">
+												<label for="star1"><i class="fa-solid fa-star"></i></label>
+											</div>
+											<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
+										</div>
+										
+										<div class="mb-3">
+											<label for="comment" class="form-label fw-bold">Commento (opzionale)</label>
+											<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
+										</div>
+										
+										<button type="submit" class="btn btn-primary">
+											<i class="fa-solid fa-paper-plane me-2"></i>Invia Recensione
+										</button>
+									</form>
+								</div>
+							`;
+							
+							// Insert the form after the title
+							const titleElement = reviewsContainer.querySelector('.section-title');
+							if (titleElement) {
+								titleElement.insertAdjacentHTML('afterend', formHTML);
+							}
+							
+							// Reinitialize the review form functionality
+							initializeReviewForm();
+						}
+					}, 300);
+					
+				} else {
+					console.error('Error deleting review:', data.message);
+					
+					// Re-enable button
+					deleteBtn.disabled = false;
+					deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				
+				// Re-enable button
+				deleteBtn.disabled = false;
+				deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+			});
+		}
+	}
+
+	// Initialize review form functionality
+	function initializeReviewForm() {
+		const reviewForm = document.getElementById('review-form');
+		const starInputs = document.querySelectorAll('input[name="stars"]');
+		const starLabels = document.querySelectorAll('.star-rating label');
+		const starsError = document.getElementById('stars-error');
+		
+		if (!reviewForm) return; // Exit if form doesn't exist
+		
+		// Star rating interaction
+		starLabels.forEach((label, index) => {
+			label.addEventListener('mouseover', function() {
+				highlightStars(starLabels.length - index);
+			});
+			
+			label.addEventListener('mouseout', function() {
+				const checkedStar = document.querySelector('input[name="stars"]:checked');
+				if (checkedStar) {
+					highlightStars(parseInt(checkedStar.value));
+				} else {
+					highlightStars(0);
+				}
+			});
+			
+			label.addEventListener('click', function() {
+				const value = starLabels.length - index;
+				document.getElementById(`star${value}`).checked = true;
+				highlightStars(value);
+				if (starsError) {
+					starsError.style.display = 'none';
+				}
+			});
+		});
+		
+		function highlightStars(rating) {
+			starLabels.forEach((label, index) => {
+				const star = label.querySelector('i');
+				if (starLabels.length - index <= rating) {
+					star.classList.remove('fa-regular');
+					star.classList.add('fa-solid');
+					star.style.color = '#ffc107';
+				} else {
+					star.classList.remove('fa-solid');
+					star.classList.add('fa-regular');
+					star.style.color = '#dee2e6';
+				}
+			});
+		}
+		
+		// Form submission
+		reviewForm.addEventListener('submit', function(e) {
+			e.preventDefault();
+			
+			// Client-side validation
+			const selectedStar = document.querySelector('input[name="stars"]:checked');
+			if (!selectedStar) {
+				if (starsError) {
+					starsError.textContent = 'Seleziona una valutazione dalle stelle';
+					starsError.style.display = 'block';
+				}
+				return;
+			}
+			
+			if (starsError) {
+				starsError.style.display = 'none';
+			}
+			
+			// Disable submit button to prevent double submission
+			const submitBtn = reviewForm.querySelector('button[type="submit"]');
+			const originalText = submitBtn.innerHTML;
+			submitBtn.disabled = true;
+			submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Invio in corso...';
+			
+			// Prepare form data
+			const formData = new FormData(reviewForm);
+			
+			// Send AJAX request
+			fetch('{% url "add_review" mensa.name %}', {
+				method: 'POST',
+				headers: {
+					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+				},
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					// Get form data to create the new review element
+					const selectedStar = document.querySelector('input[name="stars"]:checked');
+					const stars = selectedStar ? selectedStar.value : 0;
+					const comment = document.getElementById('comment').value;
+					const userFullName = '{{ current_user.get_full_name }}';
+					const userPropic = '{% if current_user.propic %}{{ current_user.propic.url }}{% else %}/static/imgs/default-avatar.png{% endif %}';
+					const currentDate = new Date().toLocaleDateString('en-US', { 
+						year: 'numeric', 
+						month: 'short', 
+						day: 'numeric' 
+					});
+					
+					// Create new review HTML
+					const newReviewHTML = `
+						<div class="review-card" data-review-id="new-review">
+							<div class="review-header">
+								<img src="${userPropic}" class="reviewer-avatar" alt="${userFullName}">
+								<div class="flex-grow-1">
+									<h5 class="mb-0">${userFullName}</h5>
+									<div class="stars-display">
+										${Array.from({length: 5}, (_, i) => 
+											i < stars ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>'
+										).join('')}
+									</div>
+									<span class="review-date">${currentDate}</span>
+								</div>
+								<div class="review-actions">
+									<button class="btn btn-outline-danger btn-sm delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione">
+										<i class="fa-solid fa-trash"></i>
+									</button>
+								</div>
+							</div>
+							<p>${comment}</p>
+						</div>
+					`;
+					
+					// Add the new review at the top of the reviews list
+					const reviewsContainer = document.querySelector('#reviews .info-card');
+					if (!reviewsContainer) {
+						console.error('Reviews container not found');
+						return;
+					}
+					
+					// Insert new review at the beginning of reviews
+					const existingReviews = reviewsContainer.querySelector('.review-card');
+					if (existingReviews) {
+						existingReviews.insertAdjacentHTML('beforebegin', newReviewHTML);
+					} else {
+						// If no reviews exist, replace the "No reviews yet" message
+						const noReviewsMsg = reviewsContainer.querySelector('p');
+						if (noReviewsMsg && noReviewsMsg.textContent.includes('No reviews yet')) {
+							noReviewsMsg.remove();
+						}
+						reviewsContainer.insertAdjacentHTML('beforeend', newReviewHTML);
+					}
+					
+					// Hide the review form since user has now reviewed
+					const reviewFormCard = document.querySelector('.review-form-card');
+					if (reviewFormCard) {
+						reviewFormCard.remove();
+					}
+				} else {
+					// Show form errors if any
+					if (data.errors) {
+						console.error('Form errors:', data.errors);
+					}
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			})
+			.finally(() => {
+				// Re-enable submit button
+				submitBtn.disabled = false;
+				submitBtn.innerHTML = originalText;
+			});
+		});
+		
+		// Initialize star display
+		const checkedStar = document.querySelector('input[name="stars"]:checked');
+		if (checkedStar) {
+			highlightStars(parseInt(checkedStar.value));
+		} else {
+			highlightStars(0);
+		}
+	}
+
+	// Review form functionality
+	document.addEventListener('DOMContentLoaded', function() {
+		// Initialize the review form on page load
+		initializeReviewForm();
+	});
+
+	// Delete review functionality - Use event delegation for dynamic content
+	document.addEventListener('click', function(e) {
+		if (e.target.closest('.delete-review-btn')) {
+			handleDeleteReview(e);
+		}
+	});
 	
 </script>
 {% endblock %}

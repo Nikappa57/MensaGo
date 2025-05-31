@@ -2,6 +2,8 @@
 
 - [ ] Mettere comando per riempire il db come un comando django (L)
 - [ ] Mettere js e css in file appositi quando non si usa jinja (V)
+- [ ] Footer (L)
+- [ ] Rivedere il diagramma ER e il diagramma di flusso (I)
 
 ## Home
 
@@ -29,6 +31,7 @@
 - [ ] Mettere o italiano o inglese. ora è un misto (V)
 - [ ] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
+- [ ] fix next redirection
 
 ## Citta
 - [x] Cambiare tipo di mappa
@@ -39,7 +42,7 @@
 ## Mensa
 - [x] Servizi dinamici
 - [x] Contatti con i link esterni
-- [ ] Recensioni (L)
+- [x] Recensioni (L)
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
 - [ ] FIX menu su ipad pro (V)
 - [ ] Posti mensa (L e V)
