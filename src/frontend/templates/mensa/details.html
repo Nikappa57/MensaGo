@@ -680,8 +680,16 @@
 		const mensaName = deleteBtn.getAttribute('data-mensa-name');
 		const reviewCard = deleteBtn.closest('.review-card');
 		
-		// Confirm deletion
-		if (confirm('Sei sicuro di voler eliminare questa recensione?')) {
+		// Show the delete confirmation modal
+		const deleteModal = new bootstrap.Modal(document.getElementById('deleteReviewModal'));
+		deleteModal.show();
+		
+		// Set up the confirm button click handler
+		document.getElementById('confirmDeleteBtn').onclick = function() {
+			// close popup
+			deleteModal.hide();
+
+			// Confirm deletion
 			// Disable button and show loading
 			deleteBtn.disabled = true;
 			deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
@@ -964,4 +972,30 @@
 	});
 	
 </script>
+
+<!-- Delete Review Confirmation Modal -->
+<div class="modal fade" id="deleteReviewModal" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteReviewModalLabel">
+                    <i class="fa-solid fa-exclamation-triangle text-warning me-2"></i>
+                    Conferma eliminazione
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">Sei sicuro di voler eliminare questa recensione? Questa azione non può essere annullata.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-times me-1"></i>Annulla
+                </button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                    <i class="fa-solid fa-trash me-1"></i>Elimina recensione
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

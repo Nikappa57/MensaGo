@@ -54,6 +54,7 @@
 - [ ] Quando si modifica, solo 1 dei due campi si deve poter vedere
 - [ ] Quando si modifica, se riclicco modifica deve essere come annulla
 - [ ] Rivedere colore profile ed effetti quando si va sopra agli elementi
+- [ ] Salvataggio senza ricaricare la pagina?
 
 NOTA: per adesso ho rimosso il css, ho messo nello style solo quello che serve per avere lo spazio nella navbar
 
