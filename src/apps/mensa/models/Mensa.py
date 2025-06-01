@@ -23,6 +23,13 @@ class Mensa(models.Model):
     gallery = models.ManyToManyField('PhotoMensa')
     amenities = models.ManyToManyField('AmenitiesMensa', blank=True)
 
+    # for api simulation
+    queue_speed = models.FloatField(
+        default=0.3, help_text="Average speed of the queue in persons per sec")
+    block_nbr = models.IntegerField(
+        default=1,
+        help_text="Number of blocks of 10 tables, each table seats 4 persons")
+
     distance: float = 0.0  # Used for sorting, not a database field
 
     def __str__(self):
@@ -38,6 +45,11 @@ class Mensa(models.Model):
         # If position changed or coordinates are missing, update coordinates
         if not self.pk or not self.latitude or not self.longitude:
             self.geocode_address()
+        # set set capacity to the nearest multiple of 40
+        self.capacity = ((self.capacity + 39) // 40) * 40
+        # get block number from capacity
+        self.block_nbr = self.capacity // 40
+
         super().save(*args, **kwargs)
 
     @property
