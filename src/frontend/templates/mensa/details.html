@@ -110,7 +110,7 @@
 					<!-- Map will be rendered here by Leaflet -->
 				</div>
 			</div>
-
+	
 			<!-- Weekly Menu Section -->
 			<div class="info-card mb-4" id="menu">
 				<small class="text-primary text-uppercase">La nostra settimana culinaria</small>
@@ -250,7 +250,9 @@
 			</div>
 
 		</div>
+
 		
+
 		<!-- Right Column - Opening Hours, Contact, Amenities -->
 		<div class="col-lg-4">
 			<!-- Opening Hours -->
@@ -330,7 +332,15 @@
 			</div>
 		</div>
 	</div>
-	
+
+	<div id="mensa-info" class="mb-4">
+		<!-- Qui verranno inserite le info (coda, attesa, tavoli liberi ecc.) -->
+		</div>
+
+	<div id="seat-visualization" class="mb-4">
+			<!-- Qui verrà inserita la griglia dei tavoli via JavaScript -->
+		</div>
+
 	<!-- Gallery Section - Full Width -->
 	<div class="row" id="gallery">
 		<div class="col-12">
@@ -455,6 +465,153 @@
 {% block extra_js %}
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Intervallo di aggiornamento in millisecondi
+  const UPDATE_INTERVAL_MS = 1000;  // ogni 0.5 secondi
+
+  // Nome mensa dal context Django
+  const mensaName = "{{ mensa.name }}";
+  const apiUrl = `/api/${encodeURIComponent(mensaName)}/`;
+
+  /**
+   * Mostra le info generali della mensa:
+   *  - queue_len
+   *  - wait_time (in secondi)
+   *  - free_tables
+   *  - free_seats
+   *  - pct_free_seats
+   */
+  function renderMensaInfo(data) {
+    const infoDiv = document.getElementById("mensa-info");
+    infoDiv.innerHTML = "";
+
+    // Creiamo un contenitore a riga
+    const row = document.createElement("div");
+    row.style.display = "flex";
+    row.style.flexWrap = "wrap";
+    row.style.gap = "16px";
+
+    // Funzione di utilità per creare una card info
+    function makeCard(label, value) {
+      const card = document.createElement("div");
+      card.style.padding = "8px 12px";
+      card.style.border = "1px solid #ccc";
+      card.style.borderRadius = "4px";
+      card.style.backgroundColor = "#f8f9fa";
+      card.style.minWidth = "120px";
+      card.style.textAlign = "center";
+
+      const lbl = document.createElement("div");
+      lbl.style.fontSize = "0.8rem";
+      lbl.style.color = "#555";
+      lbl.textContent = label;
+
+      const val = document.createElement("div");
+      val.style.fontSize = "1.2rem";
+      val.style.fontWeight = "bold";
+      val.style.marginTop = "4px";
+      val.textContent = value;
+
+      card.appendChild(lbl);
+      card.appendChild(val);
+      return card;
+    }
+
+    // Aggiungiamo le card con i dati
+    row.appendChild(makeCard("In coda", data.queue_len));
+    row.appendChild(makeCard("Attesa (s)", data.wait_time));
+    row.appendChild(makeCard("Tavoli liberi", data.free_tables));
+    row.appendChild(makeCard("Posti liberi", data.free_seats));
+    row.appendChild(makeCard("% posti liberi", data.pct_free_seats + "%"));
+
+    infoDiv.appendChild(row);
+  }
+
+  /**
+   * Disegna la griglia dei tavoli per ogni blocco in 5 colonne × 2 righe.
+   */
+  function renderSeats(blockList) {
+    const container = document.getElementById("seat-visualization");
+    container.innerHTML = "";
+
+    blockList.forEach((block, blockIndex) => {
+      const blockLetter = String.fromCharCode(65 + blockIndex);
+
+      const blockDiv = document.createElement("div");
+      blockDiv.classList.add("mb-3");
+
+      // Titolo del blocco
+      const title = document.createElement("h5");
+      title.textContent = `Block ${blockLetter}`;
+      blockDiv.appendChild(title);
+
+      // Griglia 5 colonne × 2 righe (10 tavoli)
+      const grid = document.createElement("div");
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = "repeat(5, 1fr)";
+      grid.style.gridAutoRows = "50px";
+      grid.style.gap = "8px";
+
+      block.forEach((table, tableIndex) => {
+        const occupiedCount = table.reduce((sum, seat) => sum + seat, 0);
+        let bgColor;
+        if (occupiedCount === 0) {
+          bgColor = "#d4edda";      // verde chiaro
+        } else if (occupiedCount === 1) {
+          bgColor = "#fff3cd";      // giallo chiaro
+        } else if (occupiedCount <= 3) {
+          bgColor = "#ffe5b4";      // arancione chiaro
+        } else {
+          bgColor = "#f8d7da";      // rosso chiaro
+        }
+
+        const tableDiv = document.createElement("div");
+        tableDiv.style.backgroundColor = bgColor;
+        tableDiv.style.border = "1px solid #666";
+        tableDiv.style.borderRadius = "4px";
+        tableDiv.style.display = "flex";
+        tableDiv.style.alignItems = "center";
+        tableDiv.style.justifyContent = "center";
+        tableDiv.style.fontSize = "0.9rem";
+        tableDiv.style.fontWeight = "bold";
+        tableDiv.style.color = "#333";
+
+        const identifier = `${blockLetter}${tableIndex + 1}`;
+        tableDiv.textContent = identifier;
+
+        grid.appendChild(tableDiv);
+      });
+
+      blockDiv.appendChild(grid);
+      container.appendChild(blockDiv);
+    });
+  }
+
+  /**
+   * Fetch ai dati API e render sia delle info generali che della griglia tavoli.
+   */
+  async function fetchAndRender() {
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error("Status " + response.status);
+      const data = await response.json();
+
+      renderMansaInfo: renderMensaInfo(data);  // mostro le card delle info
+      renderSeats(data.block_list);            // mostro la griglia dei tavoli
+    } catch (err) {
+      console.error("Errore nel fetch dei dati mensa:", err);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    fetchAndRender();
+    setInterval(fetchAndRender, UPDATE_INTERVAL_MS);
+  });
+</script>
+
+
+
+
 <script>
 	// Tab switch functions for day and meal type
 	function switchDay(dayId, el) {
