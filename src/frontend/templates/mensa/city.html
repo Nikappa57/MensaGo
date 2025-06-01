@@ -165,7 +165,6 @@
 			map.scrollWheelZoom.disable();
 		}
 	});
-
 	
 	L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
 			attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
@@ -212,39 +211,130 @@
 	})();
 	{% endfor %}
 </script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Intervallo di aggiornamento in millisecondi
-    const UPDATE_INTERVAL_MS = 1000;  // ogni 5 secondi
+document.addEventListener("DOMContentLoaded", () => {
+  // -------------------------------------------------------------------
+  // 1) CONFIGURAZIONE
+  // -------------------------------------------------------------------
+  const UPDATE_INTERVAL_MS = 1000;  // Ogni 5 secondi
 
-    // Funzione che aggiorna wait_time e free_tables di tutte le card
-    function updateMensaCards() {
-      const cards = document.querySelectorAll(".mensa-card");
-      cards.forEach(card => {
-        const mensaName = card.getAttribute("data-id");
-        const url = `/api/${mensaName}/`;
+  // Contenitore di tutte le card (le singole col-12 col-md-6 dentro .mense-list)
+  const menseListContainer = document.querySelector(".mense-list");
 
-        fetch(url)
-          .then(resp => {
-            if (!resp.ok) throw new Error("Status " + resp.status);
-            return resp.json();
-          })
-          .then(data => {
-            const waitElem = card.querySelector(".wait-time");
-            const freeElem = card.querySelector(".free-tables");
-            if (waitElem)  waitElem.textContent  = data.wait_time;
-            if (freeElem) freeElem.textContent = data.free_tables;
-          })
-          .catch(err => {
-            console.warn(`Errore fetch ${mensaName}:`, err);
-          });
-      });
-    }
+  // Bottoni filtro
+  const filterButtons = Array.from(document.querySelectorAll(".tag-btn"));
 
-    // Primo aggiornamento al caricamento pagina
-    updateMensaCards();
-    // Poi lo ripeto a intervalli regolari
-    setInterval(updateMensaCards, UPDATE_INTERVAL_MS);
+  // Stato corrente dell’ordinamento
+  let currentSortKey = "rating";
+  let currentSortDir = "desc";
+
+  // -------------------------------------------------------------------
+  // 2) GESTIONE CLICK BOTTONE FILTRO
+  // -------------------------------------------------------------------
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // Rimuovo classe active da tutti
+      filterButtons.forEach(b => b.classList.remove("active"));
+      // Aggiungo active a questo bottone
+      btn.classList.add("active");
+
+      // Leggo nuova chiave e direzione
+      currentSortKey = btn.getAttribute("data-sort");
+      currentSortDir = btn.getAttribute("data-dir");
+
+      // Riordino subito con i valori attuali
+      reorderMensaList();
+    });
   });
+
+  // -------------------------------------------------------------------
+  // 3) FUNZIONI DI ORDINAMENTO
+  // -------------------------------------------------------------------
+  function sortCols(cols, key, dir) {
+    return cols.sort((colA, colB) => {
+      // Ogni col contiene una .mensa-card al suo interno
+      const cardA = colA.querySelector(".mensa-card");
+      const cardB = colB.querySelector(".mensa-card");
+
+      // Leggo valore dal data-attribute corrispondente (fallback 0)
+      let valA = parseFloat(cardA.getAttribute(`data-${key}`)) || 0;
+      let valB = parseFloat(cardB.getAttribute(`data-${key}`)) || 0;
+
+      if (valA < valB) return dir === "asc" ? -1 : 1;
+      if (valA > valB) return dir === "asc" ? 1 : -1;
+      return 0;
+    });
+  }
+
+  function reorderMensaList() {
+    // Prendo un array di tutti i wrapper .col-12.col-md-6 dentro .mense-list
+    const colItems = Array.from(menseListContainer.querySelectorAll(".col-12.col-md-6"));
+
+    // Li ordino secondo currentSortKey/Dir
+    const sortedCols = sortCols(colItems, currentSortKey, currentSortDir);
+
+    // Ripulisco il container e rimetto dentro i div ordinati
+    menseListContainer.innerHTML = "";
+    sortedCols.forEach(col => menseListContainer.appendChild(col));
+  }
+
+  // -------------------------------------------------------------------
+  // 4) FETCH E AGGIORNAMENTO “LIVE” DEI DATI
+  // -------------------------------------------------------------------
+  async function updateMensaCards() {
+    const colItems = Array.from(menseListContainer.querySelectorAll(".col-12.col-md-6"));
+
+    // Per ogni col, prendo il card e faccio fetch
+    const promises = colItems.map(col => {
+      const card = col.querySelector(".mensa-card");
+      const mensaName = card.getAttribute("data-id");
+      const url = `/api/${mensaName}/`;
+
+      return fetch(url)
+        .then(resp => {
+          if (!resp.ok) throw new Error("Status " + resp.status);
+          return resp.json();
+        })
+        .then(data => {
+          // Aggiorno i data-attributes con i valori live
+          card.setAttribute("data-free_seats", data.free_seats);
+          card.setAttribute("data-wait_time", data.wait_time);
+
+          // Aggiorno la visuale interna degli span
+          const waitElem = card.querySelector(".wait-time");
+          const freeElem = card.querySelector(".free-tables");
+          if (waitElem)  waitElem.textContent  = data.wait_time;
+          if (freeElem) freeElem.textContent = data.free_tables;
+        })
+        .catch(err => {
+          console.warn(`Errore fetch per ${mensaName}:`, err);
+          // In caso di errore, fallback
+          card.setAttribute("data-free_seats", 0);
+          card.setAttribute("data-wait_time", 999999);
+          const waitElem = card.querySelector(".wait-time");
+          const freeElem = card.querySelector(".free-tables");
+          if (waitElem)  waitElem.textContent  = "--";
+          if (freeElem) freeElem.textContent = "--";
+        });
+    });
+
+    // Aspetto che finiscano tutte le chiamate
+    await Promise.all(promises);
+
+    // Dopodiché riordino la lista (in base al filtro attivo)
+    reorderMensaList();
+  }
+
+  // -------------------------------------------------------------------
+  // 5) INIZIALIZZAZIONE
+  // -------------------------------------------------------------------
+  // 5.1: Carico subito i valori live al caricamento pagina
+  updateMensaCards();
+
+  // 5.2: Imposto il polling a intervalli regolari
+  setInterval(updateMensaCards, UPDATE_INTERVAL_MS);
+});
 </script>
+
 {% endblock %}
