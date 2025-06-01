@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Mense in {{ city.name }} - MensaGO{% endblock %}
+{% block title %}{{ city.name }}{% endblock %}
 
 {% block extra_css %}
 
@@ -70,6 +70,8 @@
                                     <button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
                                     <button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
                                     <button class="tag-btn" data-sort="capacity" data-dir="desc">Posti disponibili</button>
+									<button class="tag-btn" data-sort="free_seats" data-dir="desc">Posti liberi</button>
+    								<button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda</button>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +82,7 @@
                         {% for mensa in mense %}
                         <div class="col-12 col-md-6">
                             <div class="card mensa-card h-100"
-                                data-id="{{ mensa.id }}"
+                                data-id="{{ mensa.name|urlencode }}"
                                 data-rating="{{ mensa.stars|default:0 }}"
                                 data-distance="{{ mensa.distance|default:0 }}"
                                 data-capacity="{{ mensa.capacity|default:0 }}">
@@ -108,15 +110,21 @@
                                     <p class="card-text text-muted small mb-3">
                                         <i class="fas fa-map-marker-alt me-2"></i>{{ mensa.position }}
                                     </p>
-                                    <p class="mensa-description mb-2">
-                                        {% if mensa.description %}{{ mensa.description}}{% endif %}
-                                    </p>
-                                    <div class="small text-muted">
-                                        <i class="fas fa-utensils me-2"></i>
-                                        {% if mensa.phone_number %}Telefono: {{ mensa.phone_number }}{% endif %}
-                                        {% if mensa.email %}{% if mensa.phone_number %} | {% endif %}Email: {{ mensa.email }}{% endif %}
-                                    </div>
-                                </div>
+                                     <p class="mensa-description mb-2">
+										{% if mensa.description %}{{ mensa.description }}{% endif %}
+									</p>
+									<div class="mt-2 small text-muted">
+										<i class="fas fa-clock me-1"></i>
+										Attesa: <span class="wait-time">--</span> s<br>
+										<i class="fas fa-chair me-1"></i>
+										Tavoli liberi: <span class="free-tables">--</span>
+									</div>
+									<div class="small text-muted">
+										<i class="fas fa-utensils me-2"></i>
+										{% if mensa.phone_number %}Telefono: {{ mensa.phone_number }}{% endif %}
+										{% if mensa.email %}{% if mensa.phone_number %} | {% endif %}Email: {{ mensa.email }}{% endif %}
+									</div>
+									</div>
                                 </a>
                             </div>
                         </div>
@@ -203,5 +211,40 @@
 		});
 	})();
 	{% endfor %}
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Intervallo di aggiornamento in millisecondi
+    const UPDATE_INTERVAL_MS = 1000;  // ogni 5 secondi
+
+    // Funzione che aggiorna wait_time e free_tables di tutte le card
+    function updateMensaCards() {
+      const cards = document.querySelectorAll(".mensa-card");
+      cards.forEach(card => {
+        const mensaName = card.getAttribute("data-id");
+        const url = `/api/${mensaName}/`;
+
+        fetch(url)
+          .then(resp => {
+            if (!resp.ok) throw new Error("Status " + resp.status);
+            return resp.json();
+          })
+          .then(data => {
+            const waitElem = card.querySelector(".wait-time");
+            const freeElem = card.querySelector(".free-tables");
+            if (waitElem)  waitElem.textContent  = data.wait_time;
+            if (freeElem) freeElem.textContent = data.free_tables;
+          })
+          .catch(err => {
+            console.warn(`Errore fetch ${mensaName}:`, err);
+          });
+      });
+    }
+
+    // Primo aggiornamento al caricamento pagina
+    updateMensaCards();
+    // Poi lo ripeto a intervalli regolari
+    setInterval(updateMensaCards, UPDATE_INTERVAL_MS);
+  });
 </script>
 {% endblock %}

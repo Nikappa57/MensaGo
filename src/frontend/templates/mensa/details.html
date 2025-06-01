@@ -644,9 +644,7 @@ const statusIndicator = document.getElementById('connection-status');
     fetchAndRender();
     setInterval(fetchAndRender, UPDATE_INTERVAL_MS);
   }); {% endcomment %}
-</script>
 
-<script>
 // Funzione per verificare la visibilità della sezione "Info Smart"
 let fetchInterval;
 
@@ -671,8 +669,6 @@ function observeInfoSmartSection() {
 // Avvia l'osservazione quando la pagina è caricata
 document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 </script>
-
-
 
 
 
