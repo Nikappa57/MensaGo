@@ -5,7 +5,7 @@ from datetime import datetime
 
 import numpy as np
 
-MAX_WAIT_SEC = 30 * 60  # 30 minutes in seconds
+MAX_WAIT_SEC = 30 * 60  # 20 minutes in seconds
 UPDATE_TIME = 1
 
 
@@ -34,6 +34,8 @@ def init_mensa_data(mensa) -> dict:
     queue_speed = 0.05 * capacity / 60
     max_queue = queue_speed * MAX_WAIT_SEC
     queue_len = random.randint(0, int(max_queue))
+
+    print("QUEUE SPEED:", queue_speed, "MAX QUEUE:", max_queue)
 
     timestamp = int(datetime.now().timestamp())
     # 25% chance a seat is occupied

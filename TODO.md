@@ -2,7 +2,6 @@
 
 - [ ] Mettere comando per riempire il db come un comando django (L)
 - [ ] Mettere js e css in file appositi quando non si usa jinja (V)
-- [ ] Footer (L)
 - [ ] Rivedere il diagramma ER e il diagramma di flusso (I)
 
 ## Home
