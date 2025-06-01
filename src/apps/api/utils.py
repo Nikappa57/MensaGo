@@ -5,7 +5,7 @@ from datetime import datetime
 
 import numpy as np
 
-MAX_WAIT_SEC = 30 * 60  # 20 minutes in seconds
+MAX_WAIT_SEC = 20 * 60  # 20 minutes in seconds
 UPDATE_TIME = 1
 
 
@@ -31,7 +31,7 @@ def compute_table_stats(block_array: np.ndarray) -> dict:
 def init_mensa_data(mensa) -> dict:
     block_nbr = mensa.block_nbr
     capacity = block_nbr * 10 * 4
-    queue_speed = 0.05 * capacity / 60
+    queue_speed = 0.01 * capacity / 60
     max_queue = queue_speed * MAX_WAIT_SEC
     queue_len = random.randint(0, int(max_queue))
 
