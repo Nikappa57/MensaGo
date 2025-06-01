@@ -606,6 +606,7 @@
    * Fetch ai dati API e render sia delle info generali che della griglia tavoli.
 */
   async function fetchAndRender() {
+	console.log("FETCH");
 const statusIndicator = document.getElementById('connection-status');
  try {
 	const response = await fetch(apiUrl);
@@ -639,11 +640,38 @@ const statusIndicator = document.getElementById('connection-status');
 }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  {% comment %} document.addEventListener("DOMContentLoaded", () => {
     fetchAndRender();
     setInterval(fetchAndRender, UPDATE_INTERVAL_MS);
-  });
+  }); {% endcomment %}
 </script>
+
+<script>
+// Funzione per verificare la visibilità della sezione "Info Smart"
+let fetchInterval;
+
+function observeInfoSmartSection() {
+    const infoSmartSection = document.getElementById('api');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // La sezione è visibile, avvia l'intervallo di aggiornamento
+                fetchAndRender();
+                fetchInterval = setInterval(fetchAndRender, UPDATE_INTERVAL_MS);
+            } else {
+                // La sezione non è più visibile, ferma l'intervallo
+                clearInterval(fetchInterval);
+            }
+        });
+    });
+
+    observer.observe(infoSmartSection);
+}
+
+// Avvia l'osservazione quando la pagina è caricata
+document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
+</script>
+
 
 
 
