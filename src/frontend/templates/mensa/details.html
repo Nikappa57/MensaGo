@@ -333,11 +333,15 @@
 		</div>
 	</div>
 
+	<!-- Info Smart Section -->
 	<div id="api" class="row">
 		<div class="col-12">
 			<div class="info-card mb-4">
 				<small class="text-primary text-uppercase">in tempo reale</small>
-				<h2 class="section-title">Info Smart</h2>
+				<h2 class="section-title">
+					Info Smart
+					<span id="connection-status" class="status-indicator"></span>
+				</h2>
 				<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
 				<div id="mensa-info" class="mb-4">
 				<!-- Qui verranno inserite le info (coda, attesa, tavoli liberi ecc.) -->
@@ -349,7 +353,7 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<!-- Gallery Section - Full Width -->
 	<div class="row" id="gallery">
 		<div class="col-12">
@@ -474,7 +478,9 @@
 {% block extra_js %}
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
+	/* INFO SMART */
   // Intervallo di aggiornamento in millisecondi
   const UPDATE_INTERVAL_MS = 1000;  // ogni 0.5 secondi
 
@@ -598,18 +604,39 @@
 
   /**
    * Fetch ai dati API e render sia delle info generali che della griglia tavoli.
-   */
+*/
   async function fetchAndRender() {
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error("Status " + response.status);
-      const data = await response.json();
+const statusIndicator = document.getElementById('connection-status');
+ try {
+	const response = await fetch(apiUrl);
+	if (!response.ok) throw new Error("Status " + response.status);
+	const data = await response.json();
 
-      renderMansaInfo: renderMensaInfo(data);  // mostro le card delle info
-      renderSeats(data.block_list);            // mostro la griglia dei tavoli
-    } catch (err) {
-      console.error("Errore nel fetch dei dati mensa:", err);
-    }
+	renderMensaInfo(data);  // mostro le card delle info
+	renderSeats(data.block_list);            // mostro la griglia dei tavoli
+
+  statusIndicator.classList.remove('error');
+  statusIndicator.style.backgroundColor = 'green';
+  statusIndicator.style.animation = 'pulse 1.5s infinite';
+
+	// Rimuovi eventuale alert precedente
+	let oldAlert = document.getElementById('mensa-info-alert');
+	if (oldAlert) oldAlert.remove();
+ } catch (err) {
+  statusIndicator.classList.add('error');
+  statusIndicator.style.backgroundColor = 'red';
+  statusIndicator.style.animation = 'none';
+  // Mostra alert sotto le info
+  let infoDiv = document.getElementById("mensa-info");
+  let oldAlert = document.getElementById('mensa-info-alert');
+  if (oldAlert) oldAlert.remove();
+  const alert = document.createElement('div');
+  alert.className = 'alert alert-danger mt-2';
+  alert.id = 'mensa-info-alert';
+  alert.role = 'alert';
+  alert.innerHTML = 'Impossibile recuperare le informazioni in tempo reale. Riprova più tardi.';
+  infoDiv.parentNode.insertBefore(alert, infoDiv.nextSibling);
+}
   }
 
   document.addEventListener("DOMContentLoaded", () => {
