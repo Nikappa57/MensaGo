@@ -11,12 +11,12 @@
 - [x] Impostare la palette custom per bootstra. no!
 - [ ] Scegliere le img finali per about e il testo (I)
 - [x] Rivedere se mettere le img fuori dal bg nell'about e fix nel caso di tablet per quelle a sinistra
-- [ ] Mettere titolo ad about (V)
+- [x] Mettere titolo ad about (V)
 - [ ] Vedere font e dim generale dei titoli ecc (I)
 - [x] Decidere se cambiare un po' gli eventi, se farlo più grande o che.
 - [x] Rendere più custom i FAQ
 - [x] Mettere contact in un altra view (back-end) e fare che manda una mail e semmai impostare che la mail viene inviata su terminale (L)
-- [ ] Footer grande (V)
+- [x] Footer grande (V)
 - [x] Animazione di ingresso per le città
 - [x] Sezione tutorial con call to action per registrarsi, scritta "mostra il qr code alla cassa e paga il giusto..."
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
