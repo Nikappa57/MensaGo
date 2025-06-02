@@ -70,8 +70,8 @@
                                     <button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
                                     <button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
                                     <button class="tag-btn" data-sort="capacity" data-dir="desc">Posti disponibili</button>
-									<button class="tag-btn" data-sort="free_seats" data-dir="desc">Posti liberi</button>
-    								<button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda</button>
+									<button class="tag-btn" data-sort="free_seats" data-dir="desc">Tavoli liberi <span id="connection-status1" class="status-indicator"></span></button>
+    								<button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda <span id="connection-status2" class="status-indicator"></span></button>
                                 </div>
                             </div>
                         </div>
@@ -306,6 +306,13 @@ document.addEventListener("DOMContentLoaded", () => {
           const freeElem = card.querySelector(".free-tables");
           if (waitElem)  waitElem.textContent  = data.wait_time;
           if (freeElem) freeElem.textContent = data.free_tables;
+
+		  // rimuovo la classe error dallo stato di connessione
+		  const connectionStatus1 = document.getElementById("connection-status1");
+		  const connectionStatus2 = document.getElementById("connection-status2");
+		  if (connectionStatus1) connectionStatus1.classList.remove("error");
+		  if (connectionStatus2) connectionStatus2.classList.remove("error");
+
         })
         .catch(err => {
           console.warn(`Errore fetch per ${mensaName}:`, err);
@@ -316,15 +323,23 @@ document.addEventListener("DOMContentLoaded", () => {
           const freeElem = card.querySelector(".free-tables");
           if (waitElem)  waitElem.textContent  = "--";
           if (freeElem) freeElem.textContent = "--";
+
+		  // Aggiungo la classe error allo stato di connessione
+		  const connectionStatus1 = document.getElementById("connection-status1");
+		  const connectionStatus2 = document.getElementById("connection-status2");
+		  if (connectionStatus1) connectionStatus1.classList.add("error");
+		  if (connectionStatus2) connectionStatus2.classList.add("error");
         });
     });
 
     // Aspetto che finiscano tutte le chiamate
     await Promise.all(promises);
 
-    // Dopodiché riordino la lista (in base al filtro attivo)
-    reorderMensaList();
-  }
+    // Dopodiché riordino la lista
+	if (currentSortKey == "wait_time" || currentSortKey == "free_seats") {
+		reorderMensaList();
+	}
+}
 
   // -------------------------------------------------------------------
   // 5) INIZIALIZZAZIONE
