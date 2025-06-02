@@ -42,9 +42,9 @@
               <div class="profile-icon me-3">
                 <i class="bi bi-person-circle"></i>
               </div>
-              <div>
+              <div class="profile-header-text">
                 <h4 class="mb-0">Informazioni Personali</h4>
-                <p class="text-muted small mb-0">Gestisci i tuoi dati personali</p>
+                <p class="text-muted small mb-0 ">Gestisci i tuoi dati personali</p>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
                 <div class="d-flex align-items-center">
                   <div class="avatar-container me-3">
-                    <img id="avatar-display" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar" alt="Avatar" style="width: 60px; height: 60px;">
+                    <img id="avatar-display" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar" alt="Avatar">
                   </div>
                   <div>
                     <strong class="d-block">Avatar</strong>
@@ -107,7 +107,7 @@
                 <div class="form-group mb-3">
                   <label class="form-label fw-bold mb-2">Immagine profilo</label>
                   <div class="d-flex align-items-center mb-2">
-                    <img id="avatar-edit-preview" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar me-3" alt="Avatar" style="width: 60px; height: 60px;">
+                    <img id="avatar-edit-preview" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar me-3" alt="Avatar">
                     <div class="form-control-custom flex-grow-1">{{ form.propic }}</div>
                   </div>
                 </div>

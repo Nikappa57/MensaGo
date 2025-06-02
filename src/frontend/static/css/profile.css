@@ -37,6 +37,7 @@ body {
 	transition: transform 0.3s, box-shadow 0.3s;
 	overflow: hidden;
 	box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+	padding: 0.5rem 0;
 }
 
 .profile-card::after {
@@ -57,6 +58,48 @@ body {
 .profile-card .card-header {
 	border-bottom: 1px solid rgba(0,0,0,0.05);
 	padding: 1.25rem;
+	text-align: left;
+}
+
+.card-header.bg-transparent {
+	text-align: left;
+}
+
+.card-header .d-flex {
+	justify-content: flex-start !important;
+	width: 100%; /* Assicura che il contenitore occupi tutta la larghezza disponibile */
+}
+
+.profile-header-text, 
+.card-header .d-flex > div:not(.profile-icon) {
+	text-align: left;
+	width: calc(100% - 80px); /* Larghezza regolata per lasciare spazio all'icona */
+}
+.card-header h4 {
+	text-align: left;
+	margin-left: 0; /* Rimuove qualsiasi margine a sinistra */
+}
+
+/* Ensure card header content aligns left */
+.card-header .d-flex div h4,
+.card-header .d-flex div p {
+	text-align: left;
+	margin-left: 0; /* Assicura che non ci siano margini a sinistra */
+}
+
+/* Ensure section headers are left-aligned regardless of parent */
+.card-header h4.mb-0,
+.card-header .mb-0 {
+	text-align: left !important;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+/* Styling specifico per il contenitore del testo dell'header */
+.profile-header-text {
+	display: block;
+	width: 100%;
+	text-align: left !important;
 }
 
 .profile-icon {
@@ -65,10 +108,23 @@ body {
 	justify-content: center;
 	width: 60px;
 	height: 60px;
+	min-width: 60px; /* Imposta una larghezza minima per l'icona */
 	border-radius: 10px;
 	background: #0d6efd;
 	color: white;
 	font-size: 1.2rem;
+	margin-right: 15px; /* Assicura una spaziatura uniforme */
+	text-align: center; /* Centra il testo all'interno del contenitore */
+	padding: 0; /* Rimuove padding interno che può spostare l'icona */
+}
+
+.profile-icon i {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem; /* Dimensione icona leggermente aumentata */
 }
 
 /* Avatar Styling */
@@ -80,15 +136,20 @@ body {
 	box-shadow: 0 3px 10px rgba(13, 110, 253, 0.2);
 	border: 2px solid #fff;
 	transition: all 0.3s ease;
+	aspect-ratio: 1/1;
 }
 
 .avatar-container {
 	position: relative;
-	width: 40px;
-	height: 40px;
 	border-radius: 50%;
 	overflow: hidden;
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 1/1;
+	max-width: 60px;
+	max-height: 60px;
 }
 
 .avatar-overlay {
@@ -118,11 +179,12 @@ body {
 /* Profile List Styling */
 .profile-list {
 	margin: 0 -1.25rem;
+	row-gap: 0.25rem;
 }
 
 .profile-item-hover {
 	transition: all 0.3s ease;
-	padding: 1.25rem;
+	padding: 0.9rem 1.25rem;
 	border-radius: 0.5rem;
 	position: relative;
 	overflow: hidden;
@@ -699,6 +761,13 @@ body {
 	box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 	margin: 0 auto;
 	max-width: 200px;
+	width: 200px;
+	height: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 8px;
+	padding: 10px;
 	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -720,6 +789,11 @@ body {
 	border-radius: 0.7rem;
 	transition: all 0.3s;
 	border: 1px solid rgba(0,0,0,0.05);
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+	margin: 0 auto;
 }
 
 .qrcode-loading .qrcode-image {
@@ -739,10 +813,16 @@ body {
 #qrcode-container {
 	text-align: center;
 	margin: 20px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 #qrcode-container img {
-	max-width: 200px;
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
 	border-radius: 0.7rem;
 	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -851,16 +931,39 @@ body {
 
 /* Responsive adjustments */
 @media (max-width: 767px) {
+
+
+	.row{
+		flex-direction: column-reverse;   /* img sopra, testo sotto */
+
+	}
 	.profile-header {
-		padding: 2rem 1rem;
+		padding: 1.5rem 1rem;
+		margin-bottom: 1.5rem;
 	}
 	
 	.qrcode-wrapper {
-		max-width: 150px;
+		max-width: 180px;
+		margin-bottom: 10px;
+	}
+	
+	/* Spacing for mobile column order */
+	.order-1 {
+		margin-bottom: 1.5rem;
 	}
 	
 	.d-flex {
 		flex-direction: column;
+	}
+	
+	/* Mantiene allineati a sinistra gli elementi del profilo */
+	.list-group-item.d-flex.justify-content-between {
+		justify-content: flex-start !important;
+	}
+	
+	.profile-item-hover .d-flex {
+		align-items: flex-start;
+		text-align: left;
 	}
 	
 	.d-flex .btn {
@@ -871,5 +974,80 @@ body {
 	
 	.profile-card {
 		margin-bottom: 20px;
+	}
+	
+	/* Allineamento specifico per elementi di profilo */
+	.profile-list .list-group-item {
+		text-align: left;
+		padding-top: 0.75rem;
+		padding-bottom: 0.75rem;
+	}
+	
+	.profile-list .list-group-item .d-flex {
+		justify-content: flex-start !important;
+		align-items: flex-start !important;
+		width: 100%;
+	}
+	
+	.profile-list .list-group-item button {
+		margin-top: 10px;
+		display: block;
+		width: 100%;
+	}
+	
+	.profile-item-hover div {
+		text-align: left;
+		width: 100%;
+	}
+	
+	/* Forza l'ordine originale degli elementi */
+	.list-group-item.d-flex {
+		flex-direction: column;
+	}
+	
+	/* Sistemazione per elementi con avatar */
+	.list-group-item .d-flex.align-items-center {
+		flex-direction: row !important;
+	}
+
+	
+	/* Override forzato per garantire l'allineamento a sinistra */
+	@media (max-width: 767px) {
+		.card-header.bg-transparent,
+		.card-header .d-flex,
+		.card-header h4,
+		.card-header div {
+			text-align: left !important;
+			justify-content: flex-start !important;
+            padding-left: 0; /* Rimuove il padding a sinistra */
+            margin-left: 0; /* Rimuove il margine a sinistra */
+		}
+        
+        /* Force override for any Bootstrap text-center classes inside card headers */
+        .card-header .text-center {
+            text-align: left !important;
+        }
+        
+        /* Struttura migliorata per allineamento mobile */
+        .card-header .d-flex {
+            flex-direction: row !important; /* Forza la direzione in orizzontale */
+            align-items: center !important;
+            width: 100%;
+        }
+        
+        .profile-header-text {
+            text-align: left !important;
+            margin-left: 0;
+        }
+		
+		.profile-list .list-group-item {
+			display: flex !important;
+			flex-direction: column !important;
+			align-items: flex-start !important;
+		}
+		
+		.profile-list .list-group-item > div:first-child {
+			margin-bottom: 10px;
+		}
 	}
 }

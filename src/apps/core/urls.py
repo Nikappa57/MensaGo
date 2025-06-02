@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from .view import (homepage,
                    profile_home, register, login_view, logout_view, profile_qrcode,
                    change_password)
+from .view.qr_scanner import QRScannerView, qr_scan_api
 from .forms import CustomPasswordResetForm, CustomSetPasswordForm
 
 urlpatterns = [
@@ -32,5 +33,7 @@ urlpatterns = [
     path("profile/qrcode/", profile_qrcode, name="profile_qrcode"),
 
     # Password reset URLs
-   
+    
+    # QR Scanner API
+    path("admin-qr-scan-api/", qr_scan_api, name="admin_qr_scan_api"),
 ]
