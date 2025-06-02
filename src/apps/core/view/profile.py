@@ -3,7 +3,7 @@ from ..forms import ProfileForm, AllergensForm, CustomPasswordChangeForm
 import time, hmac, hashlib
 from django.conf import settings
 import qrcode
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import path
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
@@ -49,14 +49,28 @@ def profile_home(request):
 		elif update_section == 'password':
 			# Handle password update
 			password_form = CustomPasswordChangeForm(user, request.POST)
+			# Detect AJAX request
+			is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest'
 			if password_form.is_valid():
 				user = password_form.save()
 				# Aggiorna la sessione per evitare il logout dell'utente
 				update_session_auth_hash(request, user)
 				print("DEBUG: Password updated successfully")
+				if is_ajax:
+					return JsonResponse({'success': True})
+				return redirect('profile')  # Redirect only on non-AJAX success
 			else:
 				print("DEBUG: Password form errors:", password_form.errors)
-			return redirect('profile')
+				# On invalid form, return JSON for AJAX or render for non-AJAX
+				if is_ajax:
+					return JsonResponse({'success': False, 'errors': password_form.errors}, status=400)
+				# non-AJAX fallback: render with errors
+				return render(request, 'profile/profile.html', {
+					'current_user': user,
+					'form': form,
+					'allergens_form': allergens_form,
+					'password_form': password_form,
+				})
 		else:
 			# Handle full form update (fallback)
 			form = ProfileForm(request.POST, request.FILES, instance=user)
@@ -69,6 +83,8 @@ def profile_home(request):
 		'form': form,
 		'allergens_form': allergens_form,
 		'password_form': password_form,
+		# Serialize original allergens as list of IDs for JSON in template
+		'original_allergens': list(user.suffers_from.values_list('name', flat=True)),
 	}
 
 	return render(request, 'profile/profile.html', context)
@@ -97,7 +113,9 @@ def change_password(request):
 		else:
 			# Se il form non è valido, mostra gli errori
 			print("DEBUG: Form non valido:", form.errors)
+		# Puoi anche mostrare un messaggio di errore all'utente
+			messages.error(request, "Errore nel cambio password. Assicurati di aver inserito correttamente la password attuale e la nuova password.")
 	else:
 		form = CustomPasswordChangeForm(request.user)
 	
-	return redirect('profile')	
+	return redirect('profile')

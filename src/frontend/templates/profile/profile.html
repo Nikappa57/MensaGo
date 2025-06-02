@@ -4,14 +4,7 @@
 {% block title %}Profilo{% endblock %}
 
 {% block extra_css %}
-<!-- <link rel="stylesheet" href="{% static 'css/profile.css' %}"> -->
-
-<style>
-	.profile-header {
-		padding-top: 80px;
-	}
-</style>
-
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock %}
 
 {% block nav_mobile %}
@@ -129,7 +122,7 @@
               </div>
 
               <!-- Password Edit Form (hidden) -->
-              <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-password-edit">
+              <div class="collapse px-3 pt-3 mb-3 profile-edit-form {% if password_form.errors %}show{% endif %}" id="collapse-password-edit">
                 <hr class="my-4">
                 <div class="form-section-title mb-3">Modifica password</div>
                 <div class="form-group mb-3">
@@ -198,7 +191,7 @@
           </div>
         </div>
         
-        <div class="card profile-card shadow-sm animate__animated animate__fadeInUp animate__delay-1s">
+        <div class="card profile-card shadow-sm animate__animated animate__fadeInUp">
           <div class="card-header bg-transparent">
             <div class="d-flex align-items-center">
               <div class="profile-icon me-3">
@@ -240,7 +233,7 @@
                     <div>
                       <strong class="d-block">Allergie</strong>
                       {% if current_user.suffers_from.all %}
-                        <div class="allergen-tags">
+                        <div id="allergeni" class="allergen-tags" >
                           {% for allergen in current_user.suffers_from.all %}
                             <span class="allergen-tag">
                               {{ allergen.name }}
@@ -330,6 +323,27 @@
     iconLink.rel = 'stylesheet';
     iconLink.href = 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css';
     document.head.appendChild(iconLink);
+  }
+  
+  // Funzione per chiudere tutti i pannelli di modifica aperti
+  function closeAllEditPanels(exceptId = null) {
+    // Elenco di tutti i pannelli di modifica
+    const editPanels = [
+      'collapse-avatar-edit',
+      'collapse-password-edit',
+      'collapse-allergens-edit'
+    ];
+    
+    // Chiudi tutti i pannelli eccetto quello specificato
+    editPanels.forEach(panelId => {
+      if (panelId !== exceptId) {
+        const panel = document.getElementById(panelId);
+        if (panel && panel.classList.contains('show')) {
+          const panelInstance = bootstrap.Collapse.getInstance(panel);
+          if (panelInstance) panelInstance.hide();
+        }
+      }
+    });
   }
   
   // Controlla se c'è un messaggio di successo nella URL e mostra notifica
@@ -567,10 +581,7 @@
   // Prima configurazione
   setupAllergenCheckboxes();
   
-  // Configurazione quando il pannello degli allergeni viene aperto
-  document.querySelector('.edit-allergens-btn')?.addEventListener('click', function() {
-    setTimeout(setupAllergenCheckboxes, 100);
-  });
+  // Rimuovo questo event listener poiché ora è già gestito nel handler dell'edit-allergens-btn
   
   // Animazione speciale per la selezione allergeni - già gestita sopra
   
@@ -581,8 +592,18 @@
       e.preventDefault();
       const collapseElement = document.getElementById('collapse-avatar-edit');
       if (collapseElement) {
-        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
-        collapse.show();
+        // Controlla se il pannello è già aperto
+        const isExpanded = collapseElement.classList.contains('show');
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        
+        // Toggle: se è aperto, chiudi; altrimenti, apri
+        if (isExpanded) {
+          collapse.hide();
+        } else {
+          collapse.show();
+          // Chiudi altri pannelli di modifica aperti
+          closeAllEditPanels('collapse-avatar-edit');
+        }
       }
     });
   }
@@ -668,8 +689,20 @@
       e.preventDefault();
       const collapseElement = document.getElementById('collapse-allergens-edit');
       if (collapseElement) {
-        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
-        collapse.show();
+        // Controlla se il pannello è già aperto
+        const isExpanded = collapseElement.classList.contains('show');
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        
+        // Toggle: se è aperto, chiudi; altrimenti, apri
+        if (isExpanded) {
+          collapse.hide();
+        } else {
+          collapse.show();
+          // Esegui setupAllergenCheckboxes solo quando apriamo il pannello
+          setTimeout(setupAllergenCheckboxes, 100);
+          // Chiudi altri pannelli di modifica aperti
+          closeAllEditPanels('collapse-allergens-edit');
+        }
       }
     });
   }
@@ -681,8 +714,42 @@
       e.preventDefault();
       const collapseElement = document.getElementById('collapse-password-edit');
       if (collapseElement) {
-        const collapse = new bootstrap.Collapse(collapseElement, { toggle: false });
-        collapse.show();
+        // Controlla se il pannello è già aperto
+        const isExpanded = collapseElement.classList.contains('show');
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        
+        // Toggle: se è aperto, chiudi; altrimenti, apri
+        if (isExpanded) {
+          collapse.hide();
+        } else {
+          collapse.show();
+          // Chiudi altri pannelli di modifica aperti
+          closeAllEditPanels('collapse-password-edit');
+        }
+      }
+    });
+  }
+
+  // Password cancel button handler
+  const cancelPasswordBtn = document.querySelector('.cancel-password-btn');
+  if (cancelPasswordBtn) {
+    cancelPasswordBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const collapseElement = document.getElementById('collapse-password-edit');
+      if (collapseElement) {
+        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
+        collapse.hide();
+        
+        // Reset password form fields
+        setTimeout(() => {
+          ['old_password', 'new_password1', 'new_password2'].forEach(field => {
+            const input = document.querySelector(`#id_${field}`);
+            if (input) input.value = '';
+          });
+          
+          // Rimuovi eventuali messaggi di errore
+          document.querySelectorAll('#collapse-password-edit .invalid-feedback.d-block').forEach(el => el.remove());
+        }, 300);
       }
     });
   }
@@ -699,164 +766,153 @@
         
         // Reset allergens selection to original values
         setTimeout(() => {
-          const allergensCheckboxes = document.querySelectorAll('input[name="suffers_from"]');
-          if (allergensCheckboxes.length > 0) {
-            // Reset all checkboxes first
-            allergensCheckboxes.forEach(checkbox => {
-              checkbox.checked = false;
-            });
-            
-            // Re-check original allergens using data stored in the DOM
-            const originalAllergens = document.querySelectorAll('.allergen-tag');
-            originalAllergens.forEach(tag => {
-              const allergenName = tag.textContent.trim();
-              allergensCheckboxes.forEach(checkbox => {
-                const label = checkbox.nextElementSibling;
-                if (label && label.textContent.trim() === allergenName) {
-                  checkbox.checked = true;
-                }
-              });
-            });
-          }
+          const original = JSON.parse(document.getElementById('original_allergens').textContent);
+          // ...reset logic if needed...
         }, 300);
       }
     });
   }
 
-  // Allergens save button handler
+  // Allergens save button handler (AJAX)
   const saveAllergensBtn = document.querySelector('.save-allergens-btn');
   if (saveAllergensBtn) {
     saveAllergensBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      
-      // Debug: log selected allergens
-      const allergensCheckboxes = document.querySelectorAll('input[name="suffers_from"]:checked');
-      if (allergensCheckboxes.length > 0) {
-        const selectedValues = Array.from(allergensCheckboxes).map(checkbox => checkbox.value);
-        const selectedLabels = Array.from(allergensCheckboxes).map(checkbox => checkbox.nextElementSibling ? checkbox.nextElementSibling.textContent.trim() : checkbox.value);
-        console.log('DEBUG: Selected allergen values:', selectedValues);
-        console.log('DEBUG: Selected allergen labels:', selectedLabels);
-      } else {
-        console.log('DEBUG: No allergens selected');
-      }
-      
-      // Add loading state
-      const loadingSpinner = document.createElement('div');
-      loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
-      loadingSpinner.setAttribute('role', 'status');
-      loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
-      this.appendChild(loadingSpinner);
-      this.disabled = true;
-      
-      // Add hidden field to indicate allergens update
-      const sectionInput = document.createElement('input');
-      sectionInput.type = 'hidden';
-      sectionInput.name = 'update_section';
-      sectionInput.value = 'allergens';
+      const btn = this;
       const form = document.querySelector('form');
-      if (form) {
-        form.appendChild(sectionInput);
-        console.log('DEBUG: About to submit form');
-        form.submit();
-      }
-    });
-  }
-  
-  // Password cancel button handler
-  const cancelPasswordBtn = document.querySelector('.cancel-password-btn');
-  if (cancelPasswordBtn) {
-    cancelPasswordBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const collapseElement = document.getElementById('collapse-password-edit');
-      if (collapseElement) {
-        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
-        collapse.hide();
-        
-        // Reset form fields
-        setTimeout(() => {
-          const passwordForm = document.querySelectorAll('#collapse-password-edit input');
-          passwordForm.forEach(input => {
-            input.value = '';
-            input.classList.remove('is-invalid');
-          });
+      
+      // Build FormData for AJAX
+      const formData = new FormData();
+      formData.append('csrfmiddlewaretoken', document.querySelector('input[name="csrfmiddlewaretoken"]').value);
+      formData.append('update_section', 'allergens');
+      
+      // Get all checked allergens
+      const selectedAllergens = document.querySelectorAll('input[name="suffers_from"]:checked');
+      selectedAllergens.forEach(checkbox => {
+        formData.append('suffers_from', checkbox.value);
+      });
+      
+      // Clear previous error messages if any
+      document.querySelectorAll('#collapse-allergens-edit .invalid-feedback.d-block').forEach(el => el.remove());
+      
+      // Show spinner
+      btn.disabled = true;
+      const spinner = document.createElement('span');
+      spinner.className = 'spinner-border spinner-border-sm text-light ms-2';
+      btn.appendChild(spinner);
+      
+      fetch(window.location.pathname, {
+        method: 'POST',
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        body: formData
+      })
+      .then(response => {
+        btn.disabled = false;
+        spinner.remove();
+		console.log("jesus1");
+		
+        if (response.ok) {
+          // Success: hide collapse and show notification
+          const collapseEl = document.getElementById('collapse-allergens-edit');
+          const ex = bootstrap.Collapse.getInstance(collapseEl);
+          if (ex) ex.hide();
+          // refresh page
+		  window.location.reload();
+		  // Show success notification
+
           
-          // Remove any error messages
-          const errorMessages = document.querySelectorAll('#collapse-password-edit .invalid-feedback');
-          errorMessages.forEach(el => {
-            el.innerHTML = '';
+          showNotification('Allergie aggiornate con successo', 'success');
+        } else {
+          return response.json().then(data => {
+            // Render field errors
+            if (data.errors) {
+              Object.entries(data.errors).forEach(([field, msgs]) => {
+                const fieldContainer = document.querySelector('.allergens-checkboxes');
+                if (fieldContainer) {
+                  const div = document.createElement('div');
+                  div.className = 'invalid-feedback d-block mt-2';
+                  msgs.forEach(msg => {
+                    const p = document.createElement('div');
+                    p.textContent = msg;
+                    div.appendChild(p);
+                  });
+                  fieldContainer.appendChild(div);
+                }
+              });
+            }
           });
-        }, 300);
-      }
+        }
+      })
+      .catch(() => {
+        btn.disabled = false;
+        spinner.remove();
+        showNotification('Errore di rete, riprova', 'error');
+      });
     });
   }
-  
-  // Password save button handler
+
+  // Password save button handler (AJAX)
   const savePasswordBtn = document.querySelector('.save-password-btn');
   if (savePasswordBtn) {
     savePasswordBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      
-      // Validazione del form
-      const oldPassword = document.getElementById('id_old_password').value;
-      const newPassword1 = document.getElementById('id_new_password1').value;
-      const newPassword2 = document.getElementById('id_new_password2').value;
-      
-      let isValid = true;
-      
-      if (!oldPassword) {
-        isValid = false;
-        document.getElementById('id_old_password').classList.add('is-invalid');
-      } else {
-        document.getElementById('id_old_password').classList.remove('is-invalid');
-      }
-      
-      if (!newPassword1) {
-        isValid = false;
-        document.getElementById('id_new_password1').classList.add('is-invalid');
-      } else {
-        document.getElementById('id_new_password1').classList.remove('is-invalid');
-      }
-      
-      if (!newPassword2) {
-        isValid = false;
-        document.getElementById('id_new_password2').classList.add('is-invalid');
-      } else if (newPassword1 !== newPassword2) {
-        isValid = false;
-        document.getElementById('id_new_password2').classList.add('is-invalid');
-        // Mostra messaggio di errore per password non corrispondenti
-        const errorContainer = document.getElementById('id_new_password2').nextElementSibling || document.createElement('div');
-        errorContainer.className = 'invalid-feedback d-block';
-        errorContainer.textContent = 'Le password non corrispondono';
-        if (!document.getElementById('id_new_password2').nextElementSibling) {
-          document.getElementById('id_new_password2').parentNode.appendChild(errorContainer);
-        }
-      } else {
-        document.getElementById('id_new_password2').classList.remove('is-invalid');
-      }
-      
-      if (!isValid) {
-        return;
-      }
-      
-      // Add loading state
-      const loadingSpinner = document.createElement('div');
-      loadingSpinner.className = 'spinner-border spinner-border-sm text-light ms-2';
-      loadingSpinner.setAttribute('role', 'status');
-      loadingSpinner.innerHTML = '<span class="visually-hidden">Caricamento...</span>';
-      this.appendChild(loadingSpinner);
-      this.disabled = true;
-      
-      // Add hidden field to indicate password update
-      const sectionInput = document.createElement('input');
-      sectionInput.type = 'hidden';
-      sectionInput.name = 'update_section';
-      sectionInput.value = 'password';
+      const btn = this;
       const form = document.querySelector('form');
-      if (form) {
-        form.appendChild(sectionInput);
-        console.log('DEBUG: About to submit password form');
-        form.submit();
-      }
+      // Build FormData for AJAX
+      const formData = new FormData();
+      formData.append('csrfmiddlewaretoken', document.querySelector('input[name="csrfmiddlewaretoken"]').value);
+      formData.append('update_section', 'password');
+      ['old_password','new_password1','new_password2'].forEach(field => {
+        const input = document.querySelector(`#id_${field}`);
+        if (input) formData.append(field, input.value);
+      });
+      // Clear previous error messages
+      document.querySelectorAll('#collapse-password-edit .invalid-feedback.d-block').forEach(el => el.remove());
+      // Show spinner
+      btn.disabled = true;
+      const spinner = document.createElement('span');
+      spinner.className = 'spinner-border spinner-border-sm text-light ms-2';
+      btn.appendChild(spinner);
+      fetch(window.location.pathname, {
+        method: 'POST',
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        body: formData
+      })
+      .then(response => {
+        btn.disabled = false;
+        spinner.remove();
+        if (response.ok) {
+          // Success: hide collapse and show notification
+          const collapseEl = document.getElementById('collapse-password-edit');
+          const ex = bootstrap.Collapse.getInstance(collapseEl);
+          if (ex) ex.hide();
+          showNotification('Password modificata con successo', 'success');
+        } else {
+          return response.json().then(data => {
+            // Render field errors
+            const errors = data.errors;
+            Object.entries(errors).forEach(([field, msgs]) => {
+              const input = document.querySelector(`#id_${field}`);
+              if (input) {
+                const parent = input.parentNode;
+                const div = document.createElement('div');
+                div.className = 'invalid-feedback d-block';
+                msgs.forEach(msg => {
+                  const p = document.createElement('div');
+                  p.textContent = msg;
+                  div.appendChild(p);
+                });
+                parent.appendChild(div);
+              }
+            });
+          });
+        }
+      })
+      .catch(() => {
+        btn.disabled = false;
+        spinner.remove();
+        showNotification('Errore di rete, riprova', 'error');
+      });
     });
   }
   

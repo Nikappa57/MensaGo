@@ -1,3 +1,6 @@
+body {
+    padding-top: 80px !important;
+}
 /* Banner section */
 .restaurant-banner {
 	position: relative;

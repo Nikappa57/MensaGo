@@ -26,8 +26,8 @@
 ## Login
 - [x] Conferma passw ecc? NO!
 - [x] Fare una base per i login ecc NO!
-- [ ] Mettere o italiano o inglese. ora è un misto (V)
-- [ ] Rendere più moderno magari cambiando bordi e colori (V)
+- [x] Mettere o italiano o inglese. ora è un misto (V)
+- [x] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
 
 ## Citta
@@ -46,11 +46,11 @@
 - [x] Aggiungi nella nav altri elementi come reviews ecc
 
 ## Profilo
-- [ ] Fix animazione (V)
+- [x] Fix animazione (V)
 - [x] fix link navbar (L)
-- [ ] Quando si modifica, solo 1 dei due campi si deve poter vedere
-- [ ] Quando si modifica, se riclicco modifica deve essere come annulla
-- [ ] Rivedere colore profile ed effetti quando si va sopra agli elementi
+- [x] Quando si modifica, solo 1 dei due campi si deve poter vedere
+- [x] Quando si modifica, se riclicco modifica deve essere come annulla
+- [x] Rivedere colore profile ed effetti quando si va sopra agli elementi
 
 NOTA: per adesso ho rimosso il css, ho messo nello style solo quello che serve per avere lo spazio nella navbar
 
