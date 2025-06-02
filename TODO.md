@@ -21,7 +21,7 @@
 - [x] Sezione tutorial con call to action per registrarsi, scritta "mostra il qr code alla cassa e paga il giusto..."
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
 - [x] Aggiustare i margin (L)
-- [X] Animazioni che mentre scorri si muovono le img!? (L). NO!
+- [x] Animazioni che mentre scorri si muovono le img!? (L). NO!
 
 ## Login
 - [x] Conferma passw ecc? NO!
@@ -41,7 +41,7 @@
 - [x] Contatti con i link esterni
 - [ ] Recensioni (L)
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
-- [ ] FIX menu su ipad pro (V)
+- [x] FIX menu su ipad pro (V)
 - [ ] Posti mensa (L e V)
 - [x] Aggiungi nella nav altri elementi come reviews ecc
 
