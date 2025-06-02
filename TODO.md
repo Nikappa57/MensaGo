@@ -52,8 +52,7 @@
 - [x] Quando si modifica, se riclicco modifica deve essere come annulla
 - [x] Rivedere colore profile ed effetti quando si va sopra agli elementi
 
-NOTA: per adesso ho rimosso il css, ho messo nello style solo quello che serve per avere lo spazio nella navbar
 
 
 ## Admin
-- [ ] Aggiungere possibilità di scannerizzare il qrcode!? (V)
+- [x] Aggiungere possibilità di scannerizzare il qrcode!? (V)
