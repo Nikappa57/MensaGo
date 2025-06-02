@@ -488,6 +488,11 @@
   const mensaName = "{{ mensa.name }}";
   const apiUrl = `/api/${encodeURIComponent(mensaName)}/`;
 
+  function secondsToMinutes(seconds) {
+	const minutes = Math.floor(seconds / 60);
+	return minutes > 0 ? `${minutes} min` : '< 1 min';
+	}
+
   /**
    * Mostra le info generali della mensa:
    *  - queue_len
@@ -534,7 +539,7 @@
 
     // Aggiungiamo le card con i dati
     row.appendChild(makeCard("In coda", data.queue_len));
-    row.appendChild(makeCard("Attesa (s)", data.wait_time));
+    row.appendChild(makeCard("Attesa", secondsToMinutes(data.wait_time)));
     row.appendChild(makeCard("Tavoli liberi", data.free_tables));
     row.appendChild(makeCard("Posti liberi", data.free_seats));
     row.appendChild(makeCard("% posti liberi", data.pct_free_seats + "%"));
@@ -637,6 +642,7 @@ const statusIndicator = document.getElementById('connection-status');
   alert.role = 'alert';
   alert.innerHTML = 'Impossibile recuperare le informazioni in tempo reale. Riprova più tardi.';
   infoDiv.parentNode.insertBefore(alert, infoDiv.nextSibling);
+  console.error("Error fetching API data:", err);
 }
   }
 

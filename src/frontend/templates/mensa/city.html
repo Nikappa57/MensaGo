@@ -69,7 +69,7 @@
                                 <div class="d-flex flex-wrap gap-2 justify-content-end">
                                     <button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
                                     <button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
-                                    <button class="tag-btn" data-sort="capacity" data-dir="desc">Posti disponibili</button>
+                                    <button class="tag-btn" data-sort="capacity" data-dir="desc">Capienza</button>
 									<button class="tag-btn" data-sort="free_seats" data-dir="desc">Tavoli liberi <span id="connection-status1" class="status-indicator"></span></button>
     								<button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda <span id="connection-status2" class="status-indicator"></span></button>
                                 </div>
@@ -115,7 +115,7 @@
 									</p>
 									<div class="mt-2 small text-muted">
 										<i class="fas fa-clock me-1"></i>
-										Attesa: <span class="wait-time">--</span> s<br>
+										Attesa: <span class="wait-time">--</span><br>
 										<i class="fas fa-chair me-1"></i>
 										Tavoli liberi: <span class="free-tables">--</span>
 									</div>
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------------------------------------------
   // 1) CONFIGURAZIONE
   // -------------------------------------------------------------------
-  const UPDATE_INTERVAL_MS = 1000;  // Ogni 5 secondi
+  const UPDATE_INTERVAL_MS = 3000;  // Ogni 5 secondi
 
   // Contenitore di tutte le card (le singole col-12 col-md-6 dentro .mense-list)
   const menseListContainer = document.querySelector(".mense-list");
@@ -282,6 +282,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------------------------------------------
   // 4) FETCH E AGGIORNAMENTO “LIVE” DEI DATI
   // -------------------------------------------------------------------
+  function secondsToMinutes(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  return minutes > 0 ? `${minutes} min` : '< 1 min';
+}
+
   async function updateMensaCards() {
     const colItems = Array.from(menseListContainer.querySelectorAll(".col-12.col-md-6"));
 
@@ -304,15 +309,8 @@ document.addEventListener("DOMContentLoaded", () => {
           // Aggiorno la visuale interna degli span
           const waitElem = card.querySelector(".wait-time");
           const freeElem = card.querySelector(".free-tables");
-          if (waitElem)  waitElem.textContent  = data.wait_time;
+          if (waitElem)  waitElem.textContent  = secondsToMinutes(data.wait_time);
           if (freeElem) freeElem.textContent = data.free_tables;
-
-		  // rimuovo la classe error dallo stato di connessione
-		  const connectionStatus1 = document.getElementById("connection-status1");
-		  const connectionStatus2 = document.getElementById("connection-status2");
-		  if (connectionStatus1) connectionStatus1.classList.remove("error");
-		  if (connectionStatus2) connectionStatus2.classList.remove("error");
-
         })
         .catch(err => {
           console.warn(`Errore fetch per ${mensaName}:`, err);
@@ -323,23 +321,19 @@ document.addEventListener("DOMContentLoaded", () => {
           const freeElem = card.querySelector(".free-tables");
           if (waitElem)  waitElem.textContent  = "--";
           if (freeElem) freeElem.textContent = "--";
-
-		  // Aggiungo la classe error allo stato di connessione
-		  const connectionStatus1 = document.getElementById("connection-status1");
-		  const connectionStatus2 = document.getElementById("connection-status2");
-		  if (connectionStatus1) connectionStatus1.classList.add("error");
-		  if (connectionStatus2) connectionStatus2.classList.add("error");
         });
     });
 
     // Aspetto che finiscano tutte le chiamate
     await Promise.all(promises);
 
-    // Dopodiché riordino la lista
-	if (currentSortKey == "wait_time" || currentSortKey == "free_seats") {
+	if (currentSortKey === "free_seats" || currentSortKey === "wait_time") {
 		reorderMensaList();
 	}
-}
+	else {
+		console.log("Reordering by non-live attribute, skipping sort");
+	}
+  }
 
   // -------------------------------------------------------------------
   // 5) INIZIALIZZAZIONE
