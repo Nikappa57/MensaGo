@@ -37,6 +37,8 @@
 - [x] Rivedere titolo
 - [x] Rivedere filtri, magari da mettere a destra e dare titoli sensati
 - [x] Implementare i filtri
+- [ ] Implementare posti liberi live
+- [ ] Implementare tempo di attesa live
 
 ## Mensa
 - [x] Servizi dinamici

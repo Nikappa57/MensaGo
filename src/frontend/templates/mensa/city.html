@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function reorderMensaList() {
+  function reorderMensaList(live = false) {
     // Prendo un array di tutti i wrapper .col-12.col-md-6 dentro .mense-list
     const colItems = Array.from(menseListContainer.querySelectorAll(".col-12.col-md-6"));
 
@@ -275,8 +275,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const sortedCols = sortCols(colItems, currentSortKey, currentSortDir);
 
     // Ripulisco il container e rimetto dentro i div ordinati
-    menseListContainer.innerHTML = "";
-    sortedCols.forEach(col => menseListContainer.appendChild(col));
+	if (live) {
+		// Imposto l'ordine CSS per ogni elemento con animazione
+		sortedCols.forEach((col, index) => {
+			if (col.style.order != index) {
+				col.classList.add("reordering"); // Aggiungo classe per animazione
+				col.style.order = index;
+
+				// Rimuovo la classe dopo un breve intervallo
+				setTimeout(() => {
+					col.classList.remove("reordering");
+				}, 300); // Durata dell'animazione
+			}
+		});
+	} else {
+		menseListContainer.innerHTML = "";
+		sortedCols.forEach(col => menseListContainer.appendChild(col));
+	}
+
+   
   }
 
   // -------------------------------------------------------------------
@@ -346,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await Promise.all(promises);
 
 	if (currentSortKey === "free_seats" || currentSortKey === "wait_time") {
-		reorderMensaList();
+		reorderMensaList(true);
 	}
 	else {
 		console.log("Reordering by non-live attribute, skipping sort");
