@@ -311,6 +311,15 @@ document.addEventListener("DOMContentLoaded", () => {
           const freeElem = card.querySelector(".free-tables");
           if (waitElem)  waitElem.textContent  = secondsToMinutes(data.wait_time);
           if (freeElem) freeElem.textContent = data.free_tables;
+		  // remove error indicator
+		  const statusIndicator1 = document.getElementById("connection-status1");
+		  const statusIndicator2 = document.getElementById("connection-status2");
+		  if (!statusIndicator1 || !statusIndicator2) {
+			  console.error("Status indicators not found");
+			  return;
+		  }
+		  statusIndicator1.classList.remove("error");
+		  statusIndicator2.classList.remove("error");
         })
         .catch(err => {
           console.warn(`Errore fetch per ${mensaName}:`, err);
@@ -321,6 +330,15 @@ document.addEventListener("DOMContentLoaded", () => {
           const freeElem = card.querySelector(".free-tables");
           if (waitElem)  waitElem.textContent  = "--";
           if (freeElem) freeElem.textContent = "--";
+		  // add error indicator
+		  const statusIndicator1 = document.getElementById("connection-status1");
+		  const statusIndicator2 = document.getElementById("connection-status2");
+		  if (!statusIndicator1 || !statusIndicator2) {
+			  console.error("Status indicators not found");
+			  return;
+		  }
+		  statusIndicator1.classList.add("error");
+		  statusIndicator2.classList.add("error");
         });
     });
 
