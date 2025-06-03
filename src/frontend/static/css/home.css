@@ -663,11 +663,11 @@ p {
 }
 
 .events-prev-btn {
-    left: -10px;
+    left: -50px;
 }
 
 .events-next-btn {
-    right: -10px;
+    right: -50px;
 }
 
 .events-prev-btn.disabled, .events-next-btn.disabled {
@@ -703,14 +703,6 @@ p {
     #eventi h3.card-title {
         font-size: 1.5rem;
     }
-    
-    .events-prev-btn {
-        left: 0px;
-    }
-
-    .events-next-btn {
-        right: 0px;
-    }
 }
 
 @media (max-width: 767px) {
@@ -726,6 +718,16 @@ p {
         width: 36px;
         height: 36px;
     }
+}
+
+@media (max-width: 600px) {
+	.events-prev-btn {
+    left: 0px;
+}
+
+.events-next-btn {
+    right: 0px;
+}
 }
 
 @media (max-width: 575px) {
