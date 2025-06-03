@@ -1,11 +1,15 @@
 /* Styling for Profile Page - Modern and Animated Version */
 
+body {
+	padding-top: 80px;
+}
+
 /* Header and Banner */
 .profile-header {
 	position: relative;
 	padding: 3rem 1rem;
 	margin-bottom: 2rem;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 	border-radius: 1rem;
 	color: white;
 	overflow: hidden;
@@ -18,7 +22,6 @@
 	right: 0;
 	bottom: 0;
 	z-index: 0;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v");
 }
 
 .profile-overlay {
@@ -34,6 +37,7 @@
 	transition: transform 0.3s, box-shadow 0.3s;
 	overflow: hidden;
 	box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+	padding: 0.5rem 0;
 }
 
 .profile-card::after {
@@ -43,25 +47,59 @@
 	left: -2px;
 	right: -2px;
 	bottom: -2px;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 	border-radius: 0.85rem;
 	z-index: -1;
 	opacity: 0;
 	transition: all 0.3s ease;
 }
 
-.profile-card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 10px 20px rgba(0,0,0,0.12);
-}
-
-.profile-card:hover::after {
-	opacity: 0.5;
-}
 
 .profile-card .card-header {
 	border-bottom: 1px solid rgba(0,0,0,0.05);
 	padding: 1.25rem;
+	text-align: left;
+}
+
+.card-header.bg-transparent {
+	text-align: left;
+}
+
+.card-header .d-flex {
+	justify-content: flex-start !important;
+	width: 100%; /* Assicura che il contenitore occupi tutta la larghezza disponibile */
+}
+
+.profile-header-text, 
+.card-header .d-flex > div:not(.profile-icon) {
+	text-align: left;
+	width: calc(100% - 80px); /* Larghezza regolata per lasciare spazio all'icona */
+}
+.card-header h4 {
+	text-align: left;
+	margin-left: 0; /* Rimuove qualsiasi margine a sinistra */
+}
+
+/* Ensure card header content aligns left */
+.card-header .d-flex div h4,
+.card-header .d-flex div p {
+	text-align: left;
+	margin-left: 0; /* Assicura che non ci siano margini a sinistra */
+}
+
+/* Ensure section headers are left-aligned regardless of parent */
+.card-header h4.mb-0,
+.card-header .mb-0 {
+	text-align: left !important;
+	margin-left: 0;
+	padding-left: 0;
+}
+
+/* Styling specifico per il contenitore del testo dell'header */
+.profile-header-text {
+	display: block;
+	width: 100%;
+	text-align: left !important;
 }
 
 .profile-icon {
@@ -70,10 +108,23 @@
 	justify-content: center;
 	width: 60px;
 	height: 60px;
+	min-width: 60px; /* Imposta una larghezza minima per l'icona */
 	border-radius: 10px;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 	color: white;
 	font-size: 1.2rem;
+	margin-right: 15px; /* Assicura una spaziatura uniforme */
+	text-align: center; /* Centra il testo all'interno del contenitore */
+	padding: 0; /* Rimuove padding interno che può spostare l'icona */
+}
+
+.profile-icon i {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem; /* Dimensione icona leggermente aumentata */
 }
 
 /* Avatar Styling */
@@ -85,15 +136,20 @@
 	box-shadow: 0 3px 10px rgba(13, 110, 253, 0.2);
 	border: 2px solid #fff;
 	transition: all 0.3s ease;
+	aspect-ratio: 1/1;
 }
 
 .avatar-container {
 	position: relative;
-	width: 40px;
-	height: 40px;
 	border-radius: 50%;
 	overflow: hidden;
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 1/1;
+	max-width: 60px;
+	max-height: 60px;
 }
 
 .avatar-overlay {
@@ -123,11 +179,12 @@
 /* Profile List Styling */
 .profile-list {
 	margin: 0 -1.25rem;
+	row-gap: 0.25rem;
 }
 
 .profile-item-hover {
 	transition: all 0.3s ease;
-	padding: 1.25rem;
+	padding: 0.9rem 1.25rem;
 	border-radius: 0.5rem;
 	position: relative;
 	overflow: hidden;
@@ -140,7 +197,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(135deg, rgba(106, 17, 203, 0.03) 0%, rgba(37, 117, 252, 0.03) 100%);
+	background: rgba(13, 110, 253, 0.03);
 	opacity: 0;
 	transition: opacity 0.3s ease;
 	z-index: 0;
@@ -177,13 +234,13 @@
 	left: 0;
 	width: 0;
 	height: 1px;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 	transition: width 0.3s ease;
 	opacity: 0.5;
 }
 
 .profile-item-hover:hover .profile-data {
-	color: #6a11cb;
+	color: #0d6efd;
 }
 
 .profile-item-hover:hover .profile-data::after {
@@ -215,7 +272,7 @@
 	left: 0;
 	width: 0;
 	height: 2px;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 	transition: all 0.4s ease;
 	z-index: 2;
 }
@@ -241,7 +298,7 @@
 	left: 0;
 	width: 80px;
 	height: 2px;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 }
 
 .form-group label {
@@ -271,7 +328,7 @@
 	left: 1rem;
 	top: 50%;
 	transform: translateY(-50%);
-	color: #6a11cb;
+	color: #0d6efd;
 	opacity: 0.7;
 	z-index: 1;
 	pointer-events: none;
@@ -288,7 +345,7 @@
 
 .form-control-custom select {
 	appearance: none;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236a11cb' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230d6efd' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: right 1rem center;
 	background-size: 1rem;
@@ -298,16 +355,16 @@
 	transition: all 0.3s ease;
 	border-color: #e0e0e0;
 	border-radius: 0.75rem;
-	box-shadow: 0 2px 8px rgba(106, 17, 203, 0.05);
+	box-shadow: 0 2px 8px rgba(13, 110, 253, 0.05);
 	font-weight: 500;
 	color: #495057;
 	background-color: #fff;
 	background-blend-mode: soft-light;
-	border: 1px solid rgba(106, 17, 203, 0.15);
+	border: 1px solid rgba(13, 110, 253, 0.15);
 }
 
 .form-control-custom select:focus {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236a11cb' class='bi bi-chevron-up' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z'/%3E%3C/svg%3E");
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230d6efd' class='bi bi-chevron-up' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z'/%3E%3C/svg%3E");
 }
 
 .form-control-custom select option {
@@ -322,12 +379,12 @@
 
 .form-control-custom input:focus,
 .form-control-custom select:focus {
-	border-color: #6a11cb;
+	border-color: #0d6efd;
 	border-width: 2px;
 	box-shadow: 0 3px 10px rgba(13, 110, 253, 0.1);
 	outline: none;
 	padding: calc(0.875rem - 1px) calc(1.125rem - 1px);
-	background-color: rgba(106, 17, 203, 0.02);
+	background-color: rgba(13, 110, 253, 0.02);
 }
 
 /* Stile specifico per gli input di tipo file */
@@ -341,7 +398,7 @@
 }
 
 .form-control-custom input[type="file"]:hover {
-	border-color: #6a11cb;
+	border-color: #0d6efd;
 	background: rgba(13, 110, 253, 0.05);
 }
 
@@ -350,7 +407,7 @@
 	display: inline-block;
 	margin-right: 0.75rem;
 	padding: 0.35rem 0.85rem;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 	color: white;
 	border-radius: 0.5rem;
 	font-size: 0.9rem;
@@ -382,7 +439,7 @@
 	left: 0;
 	width: 0%;
 	height: 100%;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 	transition: all 0.3s ease;
 	z-index: -1;
 	opacity: 0;
@@ -411,7 +468,7 @@
 }
 
 .edit-toggle-btn.btn-success {
-	background: linear-gradient(135deg, #20bf55 0%, #01baef 100%);
+	background: #198754;
 	border-color: transparent;
 	color: white;
 }
@@ -423,7 +480,7 @@
 	left: 0;
 	width: 0%;
 	height: 100%;
-	background: linear-gradient(135deg, #01baef 0%, #20bf55 100%);
+	background: #157347;
 	transition: all 0.3s ease;
 	z-index: -1;
 	opacity: 0;
@@ -458,7 +515,7 @@
 
 .profile-item-hover:hover .text-muted {
 	opacity: 1;
-	color: #6a11cb !important;
+	color: #0d6efd !important;
 }
 
 /* Allergen tags style */
@@ -513,19 +570,19 @@
 }
 
 .toast.bg-success {
-	background: linear-gradient(135deg, rgba(32, 191, 85, 0.95) 0%, rgba(1, 186, 239, 0.95) 100%) !important;
+	background: rgba(25, 135, 84, 0.95) !important;
 }
 
 .toast.bg-danger {
-	background: linear-gradient(135deg, rgba(220, 53, 69, 0.95) 0%, rgba(255, 98, 98, 0.95) 100%) !important;
+	background: rgba(220, 53, 69, 0.95) !important;
 }
 
 .toast.bg-warning {
-	background: linear-gradient(135deg, rgba(255, 193, 7, 0.95) 0%, rgba(255, 159, 0, 0.95) 100%) !important;
+	background: rgba(255, 193, 7, 0.95) !important;
 }
 
 .toast.bg-info {
-	background: linear-gradient(135deg, rgba(13, 202, 240, 0.95) 0%, rgba(106, 17, 203, 0.95) 100%) !important;
+	background: rgba(13, 202, 240, 0.95) !important;
 }
 
 .toast .btn-close {
@@ -551,7 +608,7 @@
 }
 
 .section-edit-btn[data-edit-mode="true"] {
-	background: linear-gradient(135deg, #20bf55 0%, #01baef 100%);
+	background: #198754;
 	border-color: transparent;
 	color: white;
 }
@@ -563,7 +620,7 @@
 	left: 0;
 	width: 0%;
 	height: 100%;
-	background: linear-gradient(135deg, #01baef 0%, #20bf55 100%);
+	background: #157347;
 	transition: all 0.3s ease;
 	z-index: -1;
 	opacity: 0;
@@ -593,7 +650,7 @@
 	padding: 0.5rem 1rem;
 	border-radius: 50px;
 	transition: all 0.3s ease;
-	background: linear-gradient(135deg, #20bf55 0%, #01baef 100%);
+	background: #198754;
 	border: none;
 	color: white;
 }
@@ -610,7 +667,7 @@
 }
 
 .btn-primary {
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+	background: #0d6efd;
 	border: none;
 	transition: all 0.3s;
 	border-radius: 50px;
@@ -626,7 +683,7 @@
 	left: -100%;
 	width: 100%;
 	height: 100%;
-	background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+	background: #0b5ed7;
 	transition: all 0.4s ease;
 	z-index: -1;
 }
@@ -652,11 +709,11 @@
 	background-image: none;
 	padding: 0.5rem;
 	overflow-y: auto;
-	border: 1px solid rgba(106, 17, 203, 0.2);
-	background-color: #fcfaff;
-	box-shadow: inset 0 1px 10px rgba(106, 17, 203, 0.05);
+	border: 1px solid rgba(13, 110, 253, 0.2);
+	background-color: #f8f9ff;
+	box-shadow: inset 0 1px 10px rgba(13, 110, 253, 0.05);
 	scrollbar-width: thin;
-	scrollbar-color: rgba(106, 17, 203, 0.3) rgba(106, 17, 203, 0.1);
+	scrollbar-color: rgba(13, 110, 253, 0.3) rgba(13, 110, 253, 0.1);
 }
 
 .form-control-custom select[multiple]::-webkit-scrollbar {
@@ -664,12 +721,12 @@
 }
 
 .form-control-custom select[multiple]::-webkit-scrollbar-track {
-	background: rgba(106, 17, 203, 0.05);
+	background: rgba(13, 110, 253, 0.05);
 	border-radius: 10px;
 }
 
 .form-control-custom select[multiple]::-webkit-scrollbar-thumb {
-	background-color: rgba(106, 17, 203, 0.2);
+	background-color: rgba(13, 110, 253, 0.2);
 	border-radius: 10px;
 }
 
@@ -685,11 +742,11 @@
 }
 
 .form-control-custom select[multiple] option:checked {
-	background: linear-gradient(135deg, rgba(106, 17, 203, 0.08) 0%, rgba(37, 117, 252, 0.08) 100%);
-	color: #6a11cb;
+	background: rgba(13, 110, 253, 0.08);
+	color: #0d6efd;
 	font-weight: 600;
-	box-shadow: 0 2px 5px rgba(106, 17, 203, 0.1);
-	border-left: 3px solid #6a11cb;
+	box-shadow: 0 2px 5px rgba(13, 110, 253, 0.1);
+	border-left: 3px solid #0d6efd;
 }
 
 .form-control-custom select[multiple] option:hover {
@@ -700,43 +757,43 @@
 /* QR Code Styling */
 .qrcode-wrapper {
 	position: relative;
-	padding: 1rem;
-	border-radius: 1.2rem;
 	background: linear-gradient(145deg, #ffffff, #f5f5f5);
 	box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 	margin: 0 auto;
 	max-width: 200px;
+	width: 200px;
+	height: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 8px;
+	padding: 10px;
 	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	border: 4px solid white;
 }
 
 .qrcode-wrapper::before {
-	content: '';
 	position: absolute;
 	top: -2px;
 	left: -2px;
 	right: -2px;
 	bottom: -2px;
 	z-index: -1;
-	background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
 	border-radius: 1.3rem;
 	opacity: 0;
 	transition: all 0.4s ease;
 }
 
-.qrcode-wrapper:hover {
-	transform: scale(1.05) translateY(-5px);
-	box-shadow: 0 15px 30px rgba(13, 110, 253, 0.15);
-}
 
-.qrcode-wrapper:hover::before {
-	opacity: 1;
-}
 
 .qrcode-image {
 	border-radius: 0.7rem;
 	transition: all 0.3s;
 	border: 1px solid rgba(0,0,0,0.05);
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
+	margin: 0 auto;
 }
 
 .qrcode-loading .qrcode-image {
@@ -756,10 +813,16 @@
 #qrcode-container {
 	text-align: center;
 	margin: 20px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 #qrcode-container img {
-	max-width: 200px;
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
 	border-radius: 0.7rem;
 	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -830,13 +893,13 @@
 /* Select animation */
 @keyframes selectPulse {
 	0% {
-		box-shadow: 0 0 0 0 rgba(106, 17, 203, 0.4);
+		box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
 	}
 	70% {
-		box-shadow: 0 0 0 6px rgba(106, 17, 203, 0);
+		box-shadow: 0 0 0 6px rgba(13, 110, 253, 0);
 	}
 	100% {
-		box-shadow: 0 0 0 0 rgba(106, 17, 203, 0);
+		box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
 	}
 }
 
@@ -868,16 +931,39 @@
 
 /* Responsive adjustments */
 @media (max-width: 767px) {
+
+
+	.row{
+		flex-direction: column-reverse;   /* img sopra, testo sotto */
+
+	}
 	.profile-header {
-		padding: 2rem 1rem;
+		padding: 1.5rem 1rem;
+		margin-bottom: 1.5rem;
 	}
 	
 	.qrcode-wrapper {
-		max-width: 150px;
+		max-width: 180px;
+		margin-bottom: 10px;
+	}
+	
+	/* Spacing for mobile column order */
+	.order-1 {
+		margin-bottom: 1.5rem;
 	}
 	
 	.d-flex {
 		flex-direction: column;
+	}
+	
+	/* Mantiene allineati a sinistra gli elementi del profilo */
+	.list-group-item.d-flex.justify-content-between {
+		justify-content: flex-start !important;
+	}
+	
+	.profile-item-hover .d-flex {
+		align-items: flex-start;
+		text-align: left;
 	}
 	
 	.d-flex .btn {
@@ -888,5 +974,80 @@
 	
 	.profile-card {
 		margin-bottom: 20px;
+	}
+	
+	/* Allineamento specifico per elementi di profilo */
+	.profile-list .list-group-item {
+		text-align: left;
+		padding-top: 0.75rem;
+		padding-bottom: 0.75rem;
+	}
+	
+	.profile-list .list-group-item .d-flex {
+		justify-content: flex-start !important;
+		align-items: flex-start !important;
+		width: 100%;
+	}
+	
+	.profile-list .list-group-item button {
+		margin-top: 10px;
+		display: block;
+		width: 100%;
+	}
+	
+	.profile-item-hover div {
+		text-align: left;
+		width: 100%;
+	}
+	
+	/* Forza l'ordine originale degli elementi */
+	.list-group-item.d-flex {
+		flex-direction: column;
+	}
+	
+	/* Sistemazione per elementi con avatar */
+	.list-group-item .d-flex.align-items-center {
+		flex-direction: row !important;
+	}
+
+	
+	/* Override forzato per garantire l'allineamento a sinistra */
+	@media (max-width: 767px) {
+		.card-header.bg-transparent,
+		.card-header .d-flex,
+		.card-header h4,
+		.card-header div {
+			text-align: left !important;
+			justify-content: flex-start !important;
+            padding-left: 0; /* Rimuove il padding a sinistra */
+            margin-left: 0; /* Rimuove il margine a sinistra */
+		}
+        
+        /* Force override for any Bootstrap text-center classes inside card headers */
+        .card-header .text-center {
+            text-align: left !important;
+        }
+        
+        /* Struttura migliorata per allineamento mobile */
+        .card-header .d-flex {
+            flex-direction: row !important; /* Forza la direzione in orizzontale */
+            align-items: center !important;
+            width: 100%;
+        }
+        
+        .profile-header-text {
+            text-align: left !important;
+            margin-left: 0;
+        }
+		
+		.profile-list .list-group-item {
+			display: flex !important;
+			flex-direction: column !important;
+			align-items: flex-start !important;
+		}
+		
+		.profile-list .list-group-item > div:first-child {
+			margin-bottom: 10px;
+		}
 	}
 }

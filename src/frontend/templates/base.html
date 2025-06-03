@@ -52,9 +52,84 @@
 	</main>
 
 	<!-- Footer -->
-	<footer class="text-center text-muted">
-		<div class="container">
-			<p>© {% now "Y" %} MensaGO</p>
+	<footer class="modern-footer bg-primary">
+		<div class="container py-5">
+			<div class="row g-4">
+				<!-- MensaGO Info -->
+				<div class="col-lg-4 col-md-6">
+					<div class="footer-brand mb-4">
+						<img src="{% static 'imgs/logo.png' %}" alt="Logo" width="40" height="40" class="mb-3" />
+						<h5 class="text-white fw-bold">MensaGO</h5>
+						<p class="text-light-gray">La tua app per scoprire le migliori mense universitarie nella tua città. Trova, prendi e gusta!</p>
+					</div>
+					<div class="social-links">
+						<a href="https://www.facebook.com/" class="social-link me-3"><i class="fab fa-facebook-f"></i></a>
+						<a href="https://www.instagram.com/" class="social-link me-3"><i class="fab fa-instagram"></i></a>
+						<a href="https://x.com/" class="social-link me-3"><i class="fab fa-x"></i></a>
+						<a href="https://www.linkedin.com/" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+					</div>
+				</div>
+
+				<!-- Link Utili -->
+				<div class="col-lg-2 col-md-6">
+					<h6 class="text-white fw-semibold mb-3">Navigazione</h6>
+					<ul class="footer-links list-unstyled">
+						<li><a href="{% url 'home' %}" class="footer-link">Home</a></li>
+						<li><a href="{% url 'home' %}#citta" class="footer-link">Mense</a></li>
+						<li><a href="{% url 'home' %}#about" class="footer-link">Chi Siamo</a></li>
+						
+						{% if user.is_authenticated %}
+							<li><a href="{% url 'profile' %}" class="footer-link">Profilo</a></li>
+						{% else %}
+							<li><a href="{% url 'login' %}" class="footer-link">Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
+
+				<!-- Supporto -->
+				<div class="col-lg-3 col-md-6">
+					<h6 class="text-white fw-semibold mb-3">Supporto</h6>
+					<ul class="footer-links list-unstyled">
+						<li><a href="{% url 'home' %}#FAQ" class="footer-link">FAQ</a></li>
+						<li><a href="{% url 'home' %}#contact" class="footer-link">Contattaci</a></li>
+						<li><a href="{% url 'home' %}#tutorial" class="footer-link">Tutorial</a></li>
+					</ul>
+				</div>
+
+				<!-- Contatti -->
+				<div class="col-lg-3 col-md-6">
+					<h6 class="text-white fw-semibold mb-3">Contatti</h6>
+					<div class="contact-info">
+						<div class="contact-item mb-2">
+							<i class="fas fa-envelope text-white me-2"></i>
+							<span class="text-light-gray">info@mensago.it</span>
+						</div>
+						<div class="contact-item mb-2">
+							<i class="fas fa-phone text-white me-2"></i>
+							<span class="text-light-gray">+39 02 1234 5678</span>
+						</div>
+						<div class="contact-item">
+							<i class="fas fa-map-marker-alt text-white me-2"></i>
+							<span class="text-light-gray">Roma, Italia</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Divider -->
+			<hr class="footer-divider my-4">
+
+			<!-- Bottom Footer -->
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<p class="mb-0 text-light-gray">© {% now "Y" %} MensaGO. Tutti i diritti riservati.</p>
+				</div>
+				<div class="col-md-6 text-md-end">
+					<a href="#" class="footer-link me-3">Privacy Policy</a>
+					<a href="#" class="footer-link me-3">Termini di Servizio</a>
+					<a href="#" class="footer-link">Cookie Policy</a>
+				</div>
+			</div>
 		</div>
 	</footer>
 

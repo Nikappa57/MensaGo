@@ -1,0 +1,22 @@
+{% extends "admin/app_index.html" %}
+{% load i18n %}
+
+{% block content %}
+{{ block.super }}
+<div class="app-qrscanner module">
+    <table>
+        <caption>
+            <a href="{% url 'admin:qr_scanner' %}" class="section">{% trans "QR Scanner" %}</a>
+        </caption>
+        <tbody>
+            <tr>
+                <th scope="row">
+                    <a href="{% url 'admin:qr_scanner' %}">{% trans "Scansiona QR Code" %}</a>
+                </th>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

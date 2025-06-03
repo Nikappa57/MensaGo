@@ -4,6 +4,8 @@ from django.contrib.auth import views as auth_views
 from .view import (homepage,
                    profile_home, register, login_view, logout_view, profile_qrcode,
                    change_password)
+from .view.qr_scanner import QRScannerView, qr_scan_api
+from .forms import CustomPasswordResetForm, CustomSetPasswordForm
 
 urlpatterns = [
     path("", homepage, name="home"),
@@ -12,13 +14,16 @@ urlpatterns = [
 	path("profile/login/", login_view, name="login"),
 	path("profile/logout/", logout_view, name="logout"), 
 	path("profile/password_reset/", 
-         auth_views.PasswordResetView.as_view(), 
-         name="password_reset"),
+         auth_views.PasswordResetView.as_view(
+			form_class=CustomPasswordResetForm),
+        	 name="password_reset"),
     path("profile/password_reset/done/", 
          auth_views.PasswordResetDoneView.as_view(), 
          name="password_reset_done"),
     path("profile/reset/<uidb64>/<token>/", 
-         auth_views.PasswordResetConfirmView.as_view(), 
+         auth_views.PasswordResetConfirmView.as_view(
+			form_class=CustomSetPasswordForm
+		 ), 
          name="password_reset_confirm"),
     path("profile/reset/done/", 
          auth_views.PasswordResetCompleteView.as_view(), 
@@ -28,5 +33,7 @@ urlpatterns = [
     path("profile/qrcode/", profile_qrcode, name="profile_qrcode"),
 
     # Password reset URLs
-   
+    
+    # QR Scanner API
+    path("admin-qr-scan-api/", qr_scan_api, name="admin_qr_scan_api"),
 ]

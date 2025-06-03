@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.urls import path
 
 from .models import CustomUser, EconomicalLevel, University
+from .view.qr_scanner import QRScannerView, qr_scan_api
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
@@ -23,6 +25,14 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('email', 'first_name', 'last_name')
     ordering = ('email',)
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('qr-scanner/', QRScannerView.as_view(), name='qr_scanner'),
+            path('qr-scan-api/', qr_scan_api, name='qr_scan_api'),
+        ]
+        return custom_urls + urls
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(EconomicalLevel)

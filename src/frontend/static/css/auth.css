@@ -1,3 +1,6 @@
+body {
+    padding-top: 80px !important;
+}
 /* Sandwich bubble animation */
 .sandwich-animation-wrapper {
     position: fixed;
@@ -97,7 +100,7 @@
     position: relative;
     z-index: 10;
     min-height: calc(100vh - 200px); /* Adjust to ensure enough space for content */
-	padding-top: 80px;
+    padding-bottom: 6rem; /* Spazio extra verso il footer */
 }
 
 /* Footer styling for auth pages */
@@ -114,4 +117,35 @@ body.auth-page {
 .auth-page footer {
     flex-shrink: 0;
     margin-top: auto;
+}
+
+/* Stili per form moderni nelle pagine di autenticazione */
+.auth-page-container .card {
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    border: none;
+}
+
+.auth-page-container .form-control,
+.auth-page-container .form-select {
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.auth-page-container .form-control:focus,
+.auth-page-container .form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
+    border-color: #0d6efd;
+}
+
+.auth-page-container .btn {
+    border-radius: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.auth-page-container .btn:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }

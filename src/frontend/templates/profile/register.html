@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Register - MensaGO{% endblock %}
+{% block title %}Registrati - MensaGO{% endblock %}
 
 {% block body_class %}auth-page{% endblock %}
 
@@ -22,22 +22,21 @@
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Sign Up</h4>
+                    <h4 class="mb-0">Registrati</h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
-                        
+
                         {% if form.errors %}
                         <div class="alert alert-danger">
-                            <strong>Error:</strong> Please correct the errors below.
+                            <strong>Errore:</strong> Correggi gli errori qui sotto.
                         </div>
                         {% endif %}
-                        
-                        <div class="form-group mb-3">
-                            <label for="id_email">Email address</label>
-                            <input type="email" name="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
-                                id="id_email" required placeholder="Enter email" value="{{ form.email.value|default:'' }}">
+
+                        <div class="form-floating mb-3">
+                            <input type="email" name="email" id="id_email" class="form-control form-control-lg rounded {% if form.email.errors %}is-invalid{% endif %}" placeholder="Indirizzo email" required value="{{ form.email.value|default:'' }}">
+                            <label for="id_email">Indirizzo email</label>
                             {% if form.email.errors %}
                             <div class="invalid-feedback">
                                 {{ form.email.errors.0 }}
@@ -45,13 +44,12 @@
                             {% endif %}
                             <small class="form-text text-muted">{{ form.email.help_text }}</small>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label for="id_first_name">First Name</label>
-                                    <input type="text" name="first_name" class="form-control {% if form.first_name.errors %}is-invalid{% endif %}" 
-                                        id="id_first_name" required placeholder="First name" value="{{ form.first_name.value|default:'' }}">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="first_name" id="id_first_name" class="form-control form-control-lg rounded {% if form.first_name.errors %}is-invalid{% endif %}" placeholder="Nome" required value="{{ form.first_name.value|default:'' }}">
+                                    <label for="id_first_name">Nome</label>
                                     {% if form.first_name.errors %}
                                     <div class="invalid-feedback">
                                         {{ form.first_name.errors.0 }}
@@ -60,10 +58,9 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label for="id_last_name">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control {% if form.last_name.errors %}is-invalid{% endif %}" 
-                                        id="id_last_name" required placeholder="Last name" value="{{ form.last_name.value|default:'' }}">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="last_name" id="id_last_name" class="form-control form-control-lg rounded {% if form.last_name.errors %}is-invalid{% endif %}" placeholder="Cognome" required value="{{ form.last_name.value|default:'' }}">
+                                    <label for="id_last_name">Cognome</label>
                                     {% if form.last_name.errors %}
                                     <div class="invalid-feedback">
                                         {{ form.last_name.errors.0 }}
@@ -72,29 +69,43 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="form-group mb-3">
-                            <label for="id_university">University</label>
-                            <select name="university" class="form-control {% if form.university.errors %}is-invalid{% endif %}" 
-                                id="id_university">
-                                <option value="">Select your university</option>
+
+                        <div class="form-floating mb-3">
+                            <select name="university" id="id_university" class="form-select form-control-lg rounded {% if form.university.errors %}is-invalid{% endif %}">
+                                <option value="" disabled selected>Seleziona la tua università</option>
                                 {% for uni in form.fields.university.queryset %}
-                                <option value="{{ uni.name }}" {% if form.university.value == uni.name %}selected{% endif %}>
-                                    <td>{{ uni.name }}</td>
-                                </option>
+                                <option value="{{ uni.name }}" {% if form.university.value == uni.name %}selected{% endif %}>{{ uni.name }}</option>
                                 {% endfor %}
                             </select>
+                            <label for="id_university">Università</label>
                             {% if form.university.errors %}
                             <div class="invalid-feedback">
                                 {{ form.university.errors.0 }}
                             </div>
                             {% endif %}
+                            <small class="form-text text-muted">{{ form.university.help_text }}</small>
                         </div>
-                        
-                        <div class="form-group mb-3">
+
+                        <!-- Campo Livello Economico (opzionale) -->
+                        <div class="form-floating mb-3">
+                            <select name="economical_level" id="id_economical_level" class="form-select form-control-lg rounded {% if form.economical_level.errors %}is-invalid{% endif %}" placeholder="Livello economico (opzionale)">
+                                <option value="" disabled selected>Seleziona il tuo livello economico (opzionale)</option>
+                                {% for level in form.fields.economical_level.queryset %}
+                                <option value="{{ level.name }}" {% if form.economical_level.value == level.name %}selected{% endif %}>{{ level.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="id_economical_level">Livello economico (opzionale)</label>
+                            {% if form.economical_level.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.economical_level.errors.0 }}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.economical_level.help_text }}</small>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" name="password1" id="id_password1" class="form-control form-control-lg rounded {% if form.password1.errors %}is-invalid{% endif %}" placeholder="Password" required>
                             <label for="id_password1">Password</label>
-                            <input type="password" name="password1" class="form-control {% if form.password1.errors %}is-invalid{% endif %}" 
-                                id="id_password1" required placeholder="Password">
                             {% if form.password1.errors %}
                             <div class="invalid-feedback">
                                 {{ form.password1.errors.0 }}
@@ -102,11 +113,10 @@
                             {% endif %}
                             <small class="form-text text-muted">{{ form.password1.help_text }}</small>
                         </div>
-                        
-                        <div class="form-group mb-3">
-                            <label for="id_password2">Confirm Password</label>
-                            <input type="password" name="password2" class="form-control {% if form.password2.errors %}is-invalid{% endif %}" 
-                                id="id_password2" required placeholder="Confirm password">
+
+                        <div class="form-floating mb-4">
+                            <input type="password" name="password2" id="id_password2" class="form-control form-control-lg rounded {% if form.password2.errors %}is-invalid{% endif %}" placeholder="Conferma password" required>
+                            <label for="id_password2">Conferma password</label>
                             {% if form.password2.errors %}
                             <div class="invalid-feedback">
                                 {{ form.password2.errors.0 }}
@@ -114,14 +124,14 @@
                             {% endif %}
                             <small class="form-text text-muted">{{ form.password2.help_text }}</small>
                         </div>
-                        
+
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill w-100">Registrati</button>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    Already have an account? <a href="{% url 'login' %}">Login</a>
+                    Hai già un account? <a href="{% url 'login' %}">Accedi</a>
                 </div>
             </div>
         </div>

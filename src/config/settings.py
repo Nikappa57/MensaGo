@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-pfo60c*job(sn8ix$d)lfm3+o*e$hu^=j5-uudkg=!!x&#6zh0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # TODO: change
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.82.201']  
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.82.201','172.18.141.56','192.168.0.127',]  
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.mensa',
     'apps.world',
+    'apps.api',
 ]
 
 MIDDLEWARE = [

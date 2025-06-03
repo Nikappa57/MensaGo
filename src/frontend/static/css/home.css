@@ -10,7 +10,7 @@ html {
 
 body {
     margin: 0;
-    padding: 0;
+    padding-top: 80px;
     overflow-x: hidden;
 	color: #333;
 	line-height: 1.6;
