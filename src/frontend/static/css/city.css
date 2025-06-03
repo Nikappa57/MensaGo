@@ -179,3 +179,42 @@ body {
 	background-color: red;
 	animation: none;
 }
+
+/* Wait time badge indicator */
+.wait-time-indicator {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 12px;
+	margin-right: 5px;
+	vertical-align: middle;
+	position: relative;
+	top: -1px;
+	font-size: 0.75rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	border: 1px solid transparent;
+}
+
+.wait-time-indicator.green {
+	background-color: #28a745;
+	color: white;
+	border-color: #1e7e34;
+}
+
+
+.wait-time-indicator.yellow {
+	background-color: #ffc107;
+	color: #212529;
+	border-color: #d39e00;
+}
+
+
+
+.wait-time-indicator.red {
+	background-color: #dc3545;
+	color: white;
+	border-color: #c82333;
+}
+
+

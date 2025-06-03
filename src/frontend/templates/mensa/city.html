@@ -115,7 +115,7 @@
 									</p>
 									<div class="mt-2 small text-muted">
 										<i class="fas fa-clock me-1"></i>
-										Attesa: <span class="wait-time">--</span><br>
+										Attesa: <span class="wait-time wait-time-indicator">--</span>  <span class=""></span><br>
 										<i class="fas fa-chair me-1"></i>
 										Tavoli liberi: <span class="free-tables">--</span>
 									</div>
@@ -332,8 +332,24 @@ document.addEventListener("DOMContentLoaded", () => {
           // Aggiorno la visuale interna degli span
           const waitElem = card.querySelector(".wait-time");
           const freeElem = card.querySelector(".free-tables");
-          if (waitElem)  waitElem.textContent  = secondsToMinutes(data.wait_time);
+          const waitIndicator = card.querySelector(".wait-time-indicator");
+          
+          if (waitElem) waitElem.textContent = secondsToMinutes(data.wait_time);
           if (freeElem) freeElem.textContent = data.free_tables;
+          
+          // Update traffic light indicator based on wait time
+          if (waitIndicator) {
+            const waitMinutes = Math.floor(data.wait_time / 60);
+            waitIndicator.classList.remove("green", "yellow", "red");
+            
+            if (waitMinutes < 8) {
+              waitIndicator.classList.add("green");
+            } else if (waitMinutes <= 15) {
+              waitIndicator.classList.add("yellow");
+            } else {
+              waitIndicator.classList.add("red");
+            }
+          }
 		  // remove error indicator
 		  const statusIndicator1 = document.getElementById("connection-status1");
 		  const statusIndicator2 = document.getElementById("connection-status2");
@@ -351,8 +367,15 @@ document.addEventListener("DOMContentLoaded", () => {
           card.setAttribute("data-wait_time", 999999);
           const waitElem = card.querySelector(".wait-time");
           const freeElem = card.querySelector(".free-tables");
-          if (waitElem)  waitElem.textContent  = "--";
+          const waitIndicator = card.querySelector(".wait-time-indicator");
+          
+          if (waitElem) waitElem.textContent = "--";
           if (freeElem) freeElem.textContent = "--";
+          
+          // Reset traffic light indicator on error
+          if (waitIndicator) {
+            waitIndicator.classList.remove("green", "yellow", "red");
+          }
 		  // add error indicator
 		  const statusIndicator1 = document.getElementById("connection-status1");
 		  const statusIndicator2 = document.getElementById("connection-status2");

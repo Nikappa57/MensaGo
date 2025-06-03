@@ -39,6 +39,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="profile-preview me-3">
                                     <img id="profile-preview" src="{% static 'imgs/profile_pics/default.jpg' %}" 
+                                         data-default-src="{% static 'imgs/profile_pics/default.jpg' %}"
                                          alt="Anteprima profilo" class="rounded-circle" 
                                          style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #e9ecef;">
                                 </div>
@@ -171,7 +172,7 @@
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    Hai già un account? <a href="{% url 'login' %}">Accedi</a>
+                    Hai già un account? <a href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Accedi</a>
                 </div>
             </div>
         </div>
@@ -181,41 +182,5 @@
 
 {% block extra_js %}
 <script src="{% static 'js/sandwich-animation.js' %}"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Anteprima foto profilo
-    const propicInput = document.getElementById('id_propic');
-    const profilePreview = document.getElementById('profile-preview');
-    
-    if (propicInput && profilePreview) {
-        propicInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                // Verifica che sia un'immagine
-                if (!file.type.startsWith('image/')) {
-                    alert('Per favore seleziona un file immagine valido.');
-                    e.target.value = '';
-                    return;
-                }
-                
-                // Verifica dimensione file (max 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('Il file è troppo grande. Seleziona un\'immagine di massimo 5MB.');
-                    e.target.value = '';
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    profilePreview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                // Reset dell'anteprima se nessun file è selezionato
-                profilePreview.src = "{% static 'imgs/profile_pics/default.jpg' %}";
-            }
-        });
-    }
-});
-</script>
+<script src="{% static 'js/auth.js' %}"></script>
 {% endblock %}
