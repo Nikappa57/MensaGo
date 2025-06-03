@@ -267,34 +267,40 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function reorderMensaList(live = false) {
-    // Prendo un array di tutti i wrapper .col-12.col-md-6 dentro .mense-list
-    const colItems = Array.from(menseListContainer.querySelectorAll(".col-12.col-md-6"));
+	function reorderMensaList() {
+	/* 1. snapshot iniziale */
+	const cols    = [...menseListContainer.querySelectorAll(".col-12.col-md-6")];
+	const sorted  = sortCols(cols, currentSortKey, currentSortDir);
+	const first   = new Map(cols.map(c => [c, c.getBoundingClientRect()]));
 
-    // Li ordino secondo currentSortKey/Dir
-    const sortedCols = sortCols(colItems, currentSortKey, currentSortDir);
+	/* 2. riordino DOM */
+	menseListContainer.append(...sorted);
 
-    // Ripulisco il container e rimetto dentro i div ordinati
-	if (live) {
-		// Imposto l'ordine CSS per ogni elemento con animazione
-		sortedCols.forEach((col, index) => {
-			if (col.style.order != index) {
-				col.classList.add("reordering"); // Aggiungo classe per animazione
-				col.style.order = index;
+	/* 3. snapshot finale */
+	const last = new Map(sorted.map(c => [c, c.getBoundingClientRect()]));
 
-				// Rimuovo la classe dopo un breve intervallo
-				setTimeout(() => {
-					col.classList.remove("reordering");
-				}, 300); // Durata dell'animazione
-			}
+	/* 4. FLIP (invert → play) */
+	sorted.forEach(col => {
+		const f = first.get(col), l = last.get(col);
+		const dx = f.left - l.left;
+		const dy = f.top  - l.top;
+
+		col.style.transform  = `translate(${dx}px, ${dy}px)`;
+		col.style.transition = 'transform 0s';
+
+		requestAnimationFrame(() => {
+		col.style.transform  = '';
+		col.style.transition = 'transform 400ms cubic-bezier(.4,.2,.2,1)';
 		});
-	} else {
-		menseListContainer.innerHTML = "";
-		sortedCols.forEach(col => menseListContainer.appendChild(col));
-	}
 
-   
-  }
+		col.addEventListener(
+		'transitionend',
+		() => (col.style.transition = ''),
+		{ once: true }
+		);
+	});
+}
+
 
   // -------------------------------------------------------------------
   // 4) FETCH E AGGIORNAMENTO “LIVE” DEI DATI
@@ -363,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await Promise.all(promises);
 
 	if (currentSortKey === "free_seats" || currentSortKey === "wait_time") {
-		reorderMensaList(true);
+		reorderMensaList();
 	}
 	else {
 		console.log("Reordering by non-live attribute, skipping sort");
