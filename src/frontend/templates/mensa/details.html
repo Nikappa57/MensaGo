@@ -338,16 +338,58 @@
 		<div class="col-12">
 			<div class="info-card mb-4">
 				<small class="text-primary text-uppercase">in tempo reale</small>
-				<h2 class="section-title">
-					Info Smart
-					<span id="connection-status" class="status-indicator"></span>
-				</h2>
-				<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
+				<!-- Layout desktop con titolo e legenda affiancati -->
+				<div class="d-none d-md-flex justify-content-between align-items-flex-start">
+					<div>
+						<h2 class="section-title">
+							Info Smart
+							<span id="connection-status" class="status-indicator"></span>
+						</h2>
+						<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
+					</div>
+					<div class="legend" style="margin-left: 20px; border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
+						<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
+						<div class="legend-items">
+							<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+								<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
+								<span class="legend-label">Posto libero</span>
+							</div>
+							<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+								<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0d6efd; border: 1px solid #ddd; margin-right: 8px;"></div>
+								<span class="legend-label">Posto occupato</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Layout mobile con titolo e legenda in colonna -->
+				<div class="d-md-none">
+					<h2 class="section-title">
+						Info Smart
+						<span id="connection-status" class="status-indicator"></span>
+					</h2>
+					<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
+					
+					<div class="legend mb-3" style="border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
+						<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
+						<div class="legend-items">
+							<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+								<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
+								<span class="legend-label">Posto libero</span>
+							</div>
+							<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+								<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0d6efd; border: 1px solid #ddd; margin-right: 8px;"></div>
+								<span class="legend-label">Posto occupato</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div id="mensa-info" class="mb-4">
 				<!-- Qui verranno inserite le info (coda, attesa, tavoli liberi ecc.) -->
 				</div>
 
-				<div id="seat-visualization" class="mb-4">
+				<div id="seat-visualization">
 					<!-- Qui verrà inserita la griglia dei tavoli via JavaScript -->
 				</div>
 			</div>
@@ -549,62 +591,126 @@
 
   /**
    * Disegna la griglia dei tavoli per ogni blocco in 5 colonne × 2 righe.
+   * Visualizza ogni tavolo come visto dall'alto con 4 posti.
+   * I posti occupati sono mostrati in grigio.
+   * Se tutti e 4 i posti sono occupati, l'intero tavolo diventa grigio.
+   * I blocchi sono nascosti per default e si espandono al click.
+   * Mantiene lo stato aperto/chiuso durante gli aggiornamenti.
    */
   function renderSeats(blockList) {
     const container = document.getElementById("seat-visualization");
+    
+    // Salva lo stato corrente dei blocchi aperti prima di ricreare
+    const openBlocks = new Set();
+    const existingBlocks = container.querySelectorAll('.block-container');
+    existingBlocks.forEach((blockDiv, index) => {
+      const grid = blockDiv.querySelector('.table-grid');
+      if (grid && grid.style.display === "grid") {
+        const blockLetter = String.fromCharCode(65 + index);
+        openBlocks.add(blockLetter);
+      }
+    });
+    
     container.innerHTML = "";
 
     blockList.forEach((block, blockIndex) => {
       const blockLetter = String.fromCharCode(65 + blockIndex);
+      const wasOpen = openBlocks.has(blockLetter);
 
       const blockDiv = document.createElement("div");
-      blockDiv.classList.add("mb-3");
+      blockDiv.classList.add("block-container");
+      if (wasOpen) {
+        blockDiv.classList.add("expanded");
+      }
 
-      // Titolo del blocco
+      // Titolo del blocco con icona
+      const titleContainer = document.createElement("div");
+      titleContainer.classList.add("block-title-container");
+      
       const title = document.createElement("h5");
-      title.textContent = `Block ${blockLetter}`;
-      blockDiv.appendChild(title);
+      title.classList.add("block-title");
+      title.innerHTML = `Fila ${blockLetter} <i class="fa-solid fa-chevron-${wasOpen ? 'up' : 'down'} block-toggle-icon"></i>`;
+      title.style.cursor = "pointer";
+      titleContainer.appendChild(title);
+      blockDiv.appendChild(titleContainer);
 
-      // Griglia 5 colonne × 2 righe (10 tavoli)
+      // Griglia 5 colonne × 2 righe (10 tavoli) - stato iniziale basato su wasOpen
       const grid = document.createElement("div");
-      grid.style.display = "grid";
-      grid.style.gridTemplateColumns = "repeat(5, 1fr)";
-      grid.style.gridAutoRows = "50px";
-      grid.style.gap = "8px";
+      grid.classList.add("table-grid");
+      grid.style.display = wasOpen ? "grid" : "none";
+      grid.style.transition = "all 0.3s ease";
+      grid.style.overflow = "hidden";
+
+      // Aggiungi event listener per espandere/comprimere il blocco
+      title.addEventListener("click", function() {
+        const isExpanded = grid.style.display !== "none";
+        const icon = title.querySelector('.block-toggle-icon');
+        
+        if (isExpanded) {
+          // Nascondi il grid
+          grid.style.display = "none";
+          blockDiv.classList.remove("expanded");
+          icon.classList.remove("fa-chevron-up");
+          icon.classList.add("fa-chevron-down");
+        } else {
+          // Mostra il grid
+          grid.style.display = "grid";
+          blockDiv.classList.add("expanded");
+          icon.classList.remove("fa-chevron-down");
+          icon.classList.add("fa-chevron-up");
+        }
+      });
 
       block.forEach((table, tableIndex) => {
         const occupiedCount = table.reduce((sum, seat) => sum + seat, 0);
-        let bgColor;
-        if (occupiedCount === 0) {
-          bgColor = "#d4edda";      // verde chiaro
-        } else if (occupiedCount === 1) {
-          bgColor = "#fff3cd";      // giallo chiaro
-        } else if (occupiedCount <= 3) {
-          bgColor = "#ffe5b4";      // arancione chiaro
-        } else {
-          bgColor = "#f8d7da";      // rosso chiaro
-        }
-
+        const allOccupied = occupiedCount === 4; // Tavolo completamente occupato se tutti e 4 i posti sono occupati
+        
+        // Container per il tavolo
+        const tableContainer = document.createElement("div");
+        tableContainer.classList.add("table-container");
+        
+        // Tavolo (rettangolare)
         const tableDiv = document.createElement("div");
-        tableDiv.style.backgroundColor = bgColor;
-        tableDiv.style.border = "1px solid #666";
-        tableDiv.style.borderRadius = "4px";
-        tableDiv.style.display = "flex";
-        tableDiv.style.alignItems = "center";
-        tableDiv.style.justifyContent = "center";
-        tableDiv.style.fontSize = "0.9rem";
-        tableDiv.style.fontWeight = "bold";
-        tableDiv.style.color = "#333";
-
-        const identifier = `${blockLetter}${tableIndex + 1}`;
-        tableDiv.textContent = identifier;
-
-        grid.appendChild(tableDiv);
+        tableDiv.classList.add("table");
+        if (allOccupied) {
+          tableDiv.classList.add("occupied");
+        }
+        tableContainer.appendChild(tableDiv);
+        
+        // ID del tavolo al centro
+        const tableId = document.createElement("div");
+        tableId.classList.add("table-id");
+        tableId.textContent = `${blockLetter}${tableIndex + 1}`;
+        tableContainer.appendChild(tableId);
+        
+        // Mappiamo i 4 posti ai lati lunghi del tavolo (2 a sinistra, 2 a destra)
+        // Per ogni posto dell'array originale, assegniamo una posizione ai lati
+        const seatPositions = [
+          "seat-left-top",    // Primo posto a sinistra in alto
+          "seat-right-top",   // Secondo posto a destra in alto
+          "seat-left-bottom", // Terzo posto a sinistra in basso
+          "seat-right-bottom" // Quarto posto a destra in basso
+        ];
+        
+        // Creazione dei 4 posti ai lati lunghi
+        table.forEach((isOccupied, seatIndex) => {
+          const seat = document.createElement("div");
+          seat.classList.add("seat", seatPositions[seatIndex]);
+          if (isOccupied) {
+            seat.classList.add("occupied");
+          }
+          
+          tableContainer.appendChild(seat);
+        });
+        
+        grid.appendChild(tableContainer);
       });
 
       blockDiv.appendChild(grid);
       container.appendChild(blockDiv);
     });
+    
+    // La leggenda è stata spostata in HTML
   }
 
   /**
