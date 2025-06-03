@@ -262,11 +262,19 @@
   
   <!-- Call to Action -->
   <div class="text-center mt-5 mb-4">
-    <h3 class="mb-3">Cosa aspetti? Inizia oggi!</h3>
-    <p class="lead mb-4">Registrati subito e scopri tutte le funzionalità che MensaGo ha da offrirti</p>
-    <a href="{% url 'register' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
-      <i class="fas fa-user-plus me-2"></i> Registrati ora
-    </a>
+	{% if user.is_authenticated %}
+		<h3 class="mb-3">Sei pronto per iniziare?</h3>
+		<p class="lead mb-4">Accedi al tuo account e scopri tutte le funzionalità di MensaGo</p>
+		<a href="{% url 'profile' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
+			<i class="fas fa-sign-in-alt me-2"></i> Vai al profilo
+		</a>
+	{% else %}
+		<h3 class="mb-3">Cosa aspetti? Inizia oggi!</h3>
+		<p class="lead mb-4">Registrati subito e scopri tutte le funzionalità che MensaGo ha da offrirti</p>
+		<a href="{% url 'register' %}?next={{ request.path }}#tutorial" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
+			<i class="fas fa-user-plus me-2"></i> Registrati ora
+		</a>
+	{% endif %}
   </div>
 </section>
 
@@ -305,19 +313,19 @@
 									<div class="mobile-indicator d-lg-none position-absolute">
 										<i class="fas fa-expand-alt"></i>
 									</div>
-									
+
 									<!-- Hover/click overlay (only on the image) -->
 									<div class="event-overlay d-flex align-items-center">
 										<div class="event-overlay-content text-start p-3">
 											<h4 class="text-white fw-bold mb-2">{{ event.name }}</h4>
 											<p class="text-white-50 mb-3"><i class="far fa-calendar-alt me-2"></i>{{ event.date|date:"d F Y" }}</p>
 											<div class="event-description">
-												<p class="text-white mb-0">Partecipa a questo evento speciale organizzato da MensaGO. Un'opportunità per connetterti con altri studenti e godere di un'esperienza culinaria unica.</p>
+												<p class="text-white mb-0">{{ event.desc }}</p>
 											</div>
 										</div>
 									</div>
 								</div>
-								
+
 								<!-- Normal view (date and name below image) -->
 								<div class="event-details mt-3 text-start">
 									<p class="text-muted mb-1"><i class="far fa-calendar-alt me-2"></i>{{ event.date|date:"d F Y" }}</p>

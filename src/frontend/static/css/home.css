@@ -587,7 +587,6 @@ p {
 
 .events-card {
     transition: transform 0.3s ease-in-out;
-    height: 100%;
 }
 
 .events-card:hover {

@@ -61,10 +61,6 @@ class CustomUser(AbstractUser):
 
     objects: CustomUserManager = CustomUserManager()
 
-    @property
-    def need_setup(self):
-        return self.university is None or self.economical_level is None
-
     def __str__(self):
         return self.email
 

@@ -10,6 +10,7 @@ class Event(models.Model):
     name = models.CharField(max_length=100)
     date = models.DateField()
     img = models.ImageField(upload_to='events/')
+    desc = models.TextField()
 
     class Meta:
         constraints = [

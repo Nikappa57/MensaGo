@@ -137,30 +137,55 @@ def populate_cities():
 
 
 def populate_events():
-	"""Aggiunge alcuni eventi di esempio al database"""
-	today = timezone.now().date()
-	events = [
-		{"name": "Festival Culinario Universitario", "days_from_now": 5},
-		{"name": "Serata Pizza e Birra", "days_from_now": 10},
-		{"name": "Incontro con Chef Stellato", "days_from_now": 15},
-		{"name": "Degustazione Vini Locali", "days_from_now": 20},
-		{"name": "Serata di Cucina Internazionale", "days_from_now": 25},
-		{"name": "Workshop: Cucina Sostenibile", "days_from_now": 30}
-	]
+    """Aggiunge alcuni eventi di esempio al database"""
+    today = timezone.now().date()
+    events = [
+        {
+            "name": "Festival Culinario Universitario",
+            "desc": "Un festival dedicato alla cucina universitaria con stand gastronomici e showcooking.",
+            "days_from_now": 5
+        },
+        {
+            "name": "Serata Pizza e Birra",
+            "desc": "Una serata informale con pizza artigianale e birre locali.",
+            "days_from_now": 10
+        },
+        {
+            "name": "Incontro con Chef Stellato",
+            "desc": "Un incontro esclusivo con uno chef stellato che presenterà ricette innovative.",
+            "days_from_now": 15
+        },
+        {
+            "name": "Degustazione Vini Locali",
+            "desc": "Degustazione guidata di vini del territorio con sommelier professionisti.",
+            "days_from_now": 20
+        },
+        {
+            "name": "Serata di Cucina Internazionale",
+            "desc": "Un viaggio tra i sapori del mondo con piatti tipici di diversi paesi.",
+            "days_from_now": 25
+        },
+        {
+            "name": "Workshop: Cucina Sostenibile",
+            "desc": "Laboratorio pratico su tecniche di cucina sostenibile e a basso impatto ambientale.",
+            "days_from_now": 30
+        }
+    ]
 
-	for ev in events:
-		date = today + timedelta(days=ev['days_from_now'])
-		name = ev['name']
-		if not Event.objects.filter(name=name, date=date).exists():
-			img_fname = name.lower().replace(' ', '_') + '.jpg'
-			rel_img = f"events/{img_fname}"
-			img_path = f"frontend/static/imgs/events/{img_fname}"
+    for ev in events:
+        date = today + timedelta(days=ev['days_from_now'])
+        name = ev['name']
+        desc = ev['desc']
+        if not Event.objects.filter(name=name, date=date).exists():
+            img_fname = name.lower().replace(' ', '_') + '.jpg'
+            rel_img = f"events/{img_fname}"
+            img_path = f"frontend/static/imgs/events/{img_fname}"
 
-			create_sample_image(img_path)
-			Event.objects.create(name=name, date=date, img=rel_img)
-			print(f"Aggiunto evento: {name} il {date}")
-		else:
-			print(f"Evento già esistente: {name} il {date}")
+            create_sample_image(img_path)
+            Event.objects.create(name=name, desc=desc, date=date, img=rel_img)
+            print(f"Aggiunto evento: {name} il {date}")
+        else:
+            print(f"Evento già esistente: {name} il {date}")
 
 
 def populate_mense():
