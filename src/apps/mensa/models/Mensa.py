@@ -24,8 +24,6 @@ class Mensa(models.Model):
     amenities = models.ManyToManyField('AmenitiesMensa', blank=True)
 
     # for api simulation
-    queue_speed = models.FloatField(
-        default=0.3, help_text="Average speed of the queue in persons per sec")
     block_nbr = models.IntegerField(
         default=1,
         help_text="Number of blocks of 10 tables, each table seats 4 persons")

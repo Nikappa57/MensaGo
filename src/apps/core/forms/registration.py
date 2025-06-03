@@ -3,8 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.utils.safestring import mark_safe
 
-from .models import CustomUser, University
-from .models.CustomUser import EconomicalLevel  
+from apps.core.models import CustomUser, University, EconomicalLevel
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
