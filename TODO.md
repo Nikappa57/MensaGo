@@ -26,6 +26,8 @@
 - [ ] Btn registrati da togliere se già registrati?! oppure mettere altro
 - [ ] Aggiungere tasto per triggerare la richiesta di accesso alla posizione se non c'è all'altezza delle mense
 - [ ] Contatti e faq container mobile
+- [ ] Fix img eventi 3:4
+- [ ] Cambiare colore tasto sopra hero, magari come il login?!
 
 ## Login
 - [x] Conferma passw ecc? NO!
@@ -34,6 +36,9 @@
 - [x] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
 - [ ] Se si va in una pagina e si è già log, da rimandare al profilo
+- [ ] TOS
+- [ ] propic
+- [ ] fix next da register a login
 
 ## Citta
 - [x] Cambiare tipo di mappa
