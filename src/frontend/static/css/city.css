@@ -205,7 +205,7 @@ body {
 
 .wait-time-indicator.yellow {
 	background-color: #ffc107;
-	color: #212529;
+	color: white;
 	border-color: #d39e00;
 }
 
