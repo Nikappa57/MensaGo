@@ -24,7 +24,7 @@
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
 - [x] Aggiustare i margin (L)
 - [X] Animazioni che mentre scorri si muovono le img!? (L). NO!
-
+- [ ] Contatti e faq container mobile
 ## Login
 - [x] Conferma passw ecc? NO!
 - [x] Fare una base per i login ecc NO!
@@ -44,9 +44,10 @@
 - [x] Contatti con i link esterni
 - [x] Recensioni (L)
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
-- [ ] FIX menu su ipad pro (V)
+- [x] FIX menu su ipad pro (V)
 - [ ] Posti mensa (L e V)
 - [x] Aggiungi nella nav altri elementi come reviews ecc
+- [ ] Tasto navbar mobile
 
 ## Profilo
 - [ ] Fix animazione (V)
