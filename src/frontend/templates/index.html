@@ -291,16 +291,15 @@
 	{% if events %}
 		<div class="position-relative">
 			<!-- Navigation Arrows -->
-			<button class="carousel-control-prev events-prev-btn" type="button">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next events-next-btn" type="button">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
-
 			<div class="events-slider-container">
+				<button class="carousel-control-prev events-prev-btn" type="button">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next events-next-btn" type="button">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
 				<div class="events-slider">
 					{% for event in events %}
 					<div class="event-slide">

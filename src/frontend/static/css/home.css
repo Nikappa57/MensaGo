@@ -614,7 +614,8 @@ p {
 }
 
 .events-img {
-    height: 300px;
+    width: 100%;
+	aspect-ratio: 1;
     object-fit: cover;
     transition: all 0.5s ease;
 }
@@ -696,9 +697,9 @@ p {
         flex: 0 0 calc(50% - 10px); /* For tablets - 2 cards */
     }
     
-    .events-img {
+    /* .events-img {
         height: 280px;
-    }
+    } */
     
     #eventi h3.card-title {
         font-size: 1.5rem;
@@ -710,9 +711,9 @@ p {
         flex: 0 0 100%; /* For mobile - 1 card */
     }
     
-    .events-img {
+    /* .events-img {
         height: 300px;
-    }
+    } */
     
     .events-prev-btn, .events-next-btn {
         width: 36px;
@@ -731,9 +732,6 @@ p {
 }
 
 @media (max-width: 575px) {
-    .events-img {
-        height: 250px;
-    }
     
     #eventi h3.card-title {
         font-size: 1.3rem;
