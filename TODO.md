@@ -23,6 +23,8 @@
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
 - [x] Aggiustare i margin (L)
 - [X] Animazioni che mentre scorri si muovono le img!? (L). NO!
+- [ ] Btn registrati da togliere se già registrati?! oppure mettere altro
+- [ ] Aggiungere tasto per triggerare la richiesta di accesso alla posizione se non c'è all'altezza delle mense
 
 ## Login
 - [x] Conferma passw ecc? NO!
@@ -30,7 +32,7 @@
 - [ ] Mettere o italiano o inglese. ora è un misto (V)
 - [ ] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
-- [ ] fix next redirection
+- [ ] Se si va in una pagina e si è già log, da rimandare al profilo
 
 ## Citta
 - [x] Cambiare tipo di mappa
@@ -39,6 +41,8 @@
 - [x] Implementare i filtri
 - [ ] Implementare posti liberi live
 - [ ] Implementare tempo di attesa live
+- [ ] Colore in base all'attesa
+- [ ] Fix tempo di attesa che scende subito
 
 ## Mensa
 - [x] Servizi dinamici
@@ -48,7 +52,7 @@
 - [ ] FIX menu su ipad pro (V)
 - [ ] Posti mensa (L e V)
 - [x] Aggiungi nella nav altri elementi come reviews ecc
-
+- [ ] Fix login in reviews
 ## Profilo
 - [ ] Fix animazione (V)
 - [x] fix link navbar (L)
