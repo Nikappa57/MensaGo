@@ -4,6 +4,7 @@
 - [ ] Mettere js e css in file appositi quando non si usa jinja (V)
 - [ ] Rivedere il diagramma ER e il diagramma di flusso (I)
 - [ ] Refactoring
+- [ ] Controlla tutti i todo
 
 ## Home
 
@@ -14,7 +15,7 @@
 - [ ] Scegliere le img finali per about e il testo (I)
 - [x] Rivedere se mettere le img fuori dal bg nell'about e fix nel caso di tablet per quelle a sinistra
 - [x] Mettere titolo ad about (V)
-- [ ] Vedere font e dim generale dei titoli ecc (I)
+
 - [x] Decidere se cambiare un po' gli eventi, se farlo più grande o che.
 - [x] Rendere più custom i FAQ
 - [x] Mettere contact in un altra view (back-end) e fare che manda una mail e semmai impostare che la mail viene inviata su terminale (L)
@@ -26,10 +27,11 @@
 - [x] Animazioni che mentre scorri si muovono le img!? (L). NO!
 - [x] Btn registrati da togliere se già registrati?! oppure mettere altro
 - [x] Aggiungere tasto per triggerare la richiesta di accesso alla posizione se non c'è all'altezza delle mense. NO!
-- [ ] Contatti e faq container mobile
-- [ ] Fix img eventi 3:4
+- [x] Contatti e faq container mobile
+- [x] Fix img eventi 3:4
+- [x] Fix orientamento cell in home da mobile
 - [ ] Cambiare colore tasto sopra hero, magari come il login?!
-- [ ] Fix orientamento cell in home da mobile
+- [ ] Vedere font e dim generale dei titoli ecc (I)
 
 ## Login
 - [x] Conferma passw ecc? NO!
@@ -38,7 +40,7 @@
 - [x] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
 - [ ] Se si va in una pagina e si è già log, da rimandare al profilo
-- [ ] TOS
+- [ ] TOS.
 - [ ] propic
 - [ ] fix next da register a login
 
@@ -47,10 +49,10 @@
 - [x] Rivedere titolo
 - [x] Rivedere filtri, magari da mettere a destra e dare titoli sensati
 - [x] Implementare i filtri
-- [ ] Implementare posti liberi live
-- [ ] Implementare tempo di attesa live
+- [x] Implementare posti liberi live
+- [x] Implementare tempo di attesa live
+- [x] Fix tempo di attesa che scende subito
 - [ ] Colore in base all'attesa
-- [ ] Fix tempo di attesa che scende subito
 
 ## Mensa
 - [x] Servizi dinamici
@@ -58,8 +60,8 @@
 - [x] Recensioni (L)
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
 - [x] FIX menu su ipad pro (V)
-- [ ] Posti mensa (L e V)
 - [x] Aggiungi nella nav altri elementi come reviews ecc
+- [ ] Posti mensa (L e V)
 
 ## Profilo
 - [x] Fix animazione (V)
@@ -67,7 +69,6 @@
 - [x] Quando si modifica, solo 1 dei due campi si deve poter vedere
 - [x] Quando si modifica, se riclicco modifica deve essere come annulla
 - [x] Rivedere colore profile ed effetti quando si va sopra agli elementi
-
 
 
 ## Admin
