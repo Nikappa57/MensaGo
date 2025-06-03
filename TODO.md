@@ -1,8 +1,9 @@
 # TODO
 
-- [ ] Mettere comando per riempire il db come un comando django (L)
+- [x] Mettere comando per riempire il db come un comando django (L) NO!
 - [ ] Mettere js e css in file appositi quando non si usa jinja (V)
 - [ ] Rivedere il diagramma ER e il diagramma di flusso (I)
+- [ ] Refactoring
 
 ## Home
 
@@ -23,8 +24,8 @@
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
 - [x] Aggiustare i margin (L)
 - [x] Animazioni che mentre scorri si muovono le img!? (L). NO!
-- [ ] Btn registrati da togliere se già registrati?! oppure mettere altro
-- [ ] Aggiungere tasto per triggerare la richiesta di accesso alla posizione se non c'è all'altezza delle mense
+- [x] Btn registrati da togliere se già registrati?! oppure mettere altro
+- [x] Aggiungere tasto per triggerare la richiesta di accesso alla posizione se non c'è all'altezza delle mense. NO!
 - [ ] Contatti e faq container mobile
 - [ ] Fix img eventi 3:4
 - [ ] Cambiare colore tasto sopra hero, magari come il login?!

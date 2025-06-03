@@ -739,10 +739,6 @@ p {
 }
 
 /* FAQ Section Styles */
-.faq-container {
-  position: relative;
-  padding: 2rem 0;
-}
 
 .faq-title-section {
   margin-bottom: 2rem;
@@ -1034,5 +1030,6 @@ p {
 }
 
 #contact {
-	padding: 8% 0;
+	padding-top: 8%;
+	padding-bottom: 8%;
 }
