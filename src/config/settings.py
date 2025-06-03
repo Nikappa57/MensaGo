@@ -24,9 +24,9 @@ print("base:", BASE_DIR)
 SECRET_KEY = 'django-insecure-pfo60c*job(sn8ix$d)lfm3+o*e$hu^=j5-uudkg=!!x&#6zh0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # TODO: change
+DEBUG = False  # TODO: change
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.82.201','172.18.141.56','192.168.0.127',]  
+ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -112,9 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'it'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Rome'
 
 USE_I18N = True
 
@@ -127,7 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR / "frontend"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_DIRS = [
     BASE_DIR / "frontend/static",
