@@ -29,6 +29,7 @@
 - [ ] Contatti e faq container mobile
 - [ ] Fix img eventi 3:4
 - [ ] Cambiare colore tasto sopra hero, magari come il login?!
+- [ ] Fix orientamento cell in home da mobile
 
 ## Login
 - [x] Conferma passw ecc? NO!

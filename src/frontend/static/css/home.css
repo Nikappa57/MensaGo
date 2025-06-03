@@ -438,14 +438,8 @@ body {
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  .phone-left {
-    transform: rotate3d(0, 1, 0, 8deg) rotate3d(1, 0, 0, 3deg);
-  }
-  .phone-center {
-    transform: rotate3d(1, 0, 0, 3deg);
-  }
-  .phone-right {
-    transform: rotate3d(0, 1, 0, -8deg) rotate3d(1, 0, 0, 3deg);
+  .phone-left, .phone-center, .phone-right {
+    transform: none;
   }
 }
 
