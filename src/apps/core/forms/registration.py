@@ -52,7 +52,7 @@ class RegistrationForm(UserCreationForm):
 		}
 	)
 
-	first_name = forms.CharField(
+	last_name = forms.CharField(
 		max_length=255,
 		required=True,
 		help_text='Inserisci il tuo cognome.',
@@ -60,7 +60,14 @@ class RegistrationForm(UserCreationForm):
 			'required': "Il cognome è obbligatorio.",
 		}
 	)
-	
+
+	propic = forms.ImageField(
+		required=False,
+		help_text='Carica una foto profilo (opzionale).',
+		error_messages={
+			'invalid_image': "Il file caricato non è un'immagine valida.",
+		}
+	)
 
 	university = forms.ModelChoiceField(
 		queryset=University.objects.all(),
@@ -114,10 +121,18 @@ class RegistrationForm(UserCreationForm):
 		}
 	)
 
+	# Campo per i termini di servizio
+	terms_accepted = forms.BooleanField(
+		required=True,
+		error_messages={
+			'required': "Devi accettare i termini di servizio per registrarti.",
+		}
+	)
+
 	class Meta:
 		model = CustomUser
 		fields = (
-			'email', 'first_name', 'last_name',
+			'email', 'first_name', 'last_name', 'propic',
 			'university', 'economical_level',
 			'password1', 'password2'
 		)
@@ -126,6 +141,8 @@ class RegistrationForm(UserCreationForm):
 		user = super().save(commit=False)
 		user.email = self.cleaned_data['email']
 		user.economical_level = self.cleaned_data.get('economical_level')
+		if self.cleaned_data.get('propic'):
+			user.propic = self.cleaned_data['propic']
 		if commit:
 			user.save()
 		return user

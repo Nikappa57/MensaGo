@@ -6,30 +6,30 @@ from apps.core.forms import ProfileAuthenticationForm, RegistrationForm
 
 
 def register(request, *args, **kwargs):
-    user = request.user
-    if user.is_authenticated:
-        return HttpResponse(f"You are already registered as {user.email}")
+	user = request.user
+	if user.is_authenticated:
+		return redirect('profile')
 
-    if request.POST:
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email')
-            psw = form.cleaned_data.get('password1')
+	if request.POST:
+		form = RegistrationForm(request.POST, request.FILES)
+		if form.is_valid():
+			form.save()
+			email = form.cleaned_data.get('email')
+			psw = form.cleaned_data.get('password1')
 
-            user = authenticate(email=email, password=psw)
-            login(request, user)
-            destination = get_redirect_if_exists(request)
-            if destination:
-                return redirect(destination)
-            else:
-                return redirect('home')
-    else:
-        form = RegistrationForm()
+			user = authenticate(email=email, password=psw)
+			login(request, user)
+			destination = get_redirect_if_exists(request)
+			if destination:
+				return redirect(destination)
+			else:
+				return redirect('home')
+	else:
+		form = RegistrationForm()
 
-    context = {'form': form}
+	context = {'form': form}
 
-    return render(request, 'profile/register.html', context)
+	return render(request, 'profile/register.html', context)
 
 
 def logout_view(request):
@@ -37,44 +37,55 @@ def logout_view(request):
 		logout(request)
 		return redirect('home')
 	else:
-		return HttpResponse("You are not logged in")
+		#go to login page
+		return redirect('login')
 
 
 def login_view(request, *args, **kwargs):
-    context = {}
+	context = {}
 
-    user = request.user
-    if user.is_authenticated:
-        return redirect('home')
+	user = request.user
+	if user.is_authenticated:
+		return redirect('profile')
 
-    destination = get_redirect_if_exists(request)
+	destination = get_redirect_if_exists(request)
 
-    if request.POST:
-        form = ProfileAuthenticationForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            psw = form.cleaned_data.get('password')
-            user = authenticate(email=email, password=psw)
-            if user is not None:
-                login(request, user)
+	if request.POST:
+		form = ProfileAuthenticationForm(request.POST)
+		if form.is_valid():
+			email = form.cleaned_data.get('email')
+			psw = form.cleaned_data.get('password')
+			user = authenticate(email=email, password=psw)
+			if user is not None:
+				login(request, user)
 
-                destination = get_redirect_if_exists(request)
+				destination = get_redirect_if_exists(request)
 
-                if destination:
-                    return redirect(destination)
-                else:
-                    return redirect('home')
-        else:
-            context['form'] = form
+				if destination:
+					return redirect(destination)
+				else:
+					return redirect('home')
+		else:
+			context['form'] = form
 
-    return render(request, 'profile/login.html', context)
+	return render(request, 'profile/login.html', context)
 
 
 def get_redirect_if_exists(request):
-    redirect = None
-    if request.GET:
-        if request.GET.get('next'):
-            redirect = str(request.GET.get('next'))
-    return redirect
+	redirect = None
+	if request.GET:
+		if request.GET.get('next'):
+			redirect = str(request.GET.get('next'))
+	return redirect
+
+
+def terms_of_service(request):
+	"""View per visualizzare i termini di servizio"""
+	return render(request, 'profile/terms_of_service.html')
+
+
+def privacy_policy(request):
+	"""View per visualizzare la privacy policy"""
+	return render(request, 'profile/privacy_policy.html')
 
 

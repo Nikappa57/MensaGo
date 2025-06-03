@@ -34,6 +34,29 @@
                         </div>
                         {% endif %}
 
+						 <!-- Campo Foto Profilo (opzionale) -->
+                        <div class="form-floating mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="profile-preview me-3">
+                                    <img id="profile-preview" src="{% static 'imgs/profile_pics/default.jpg' %}" 
+                                         alt="Anteprima profilo" class="rounded-circle" 
+                                         style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #e9ecef;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <input type="file" name="propic" id="id_propic" 
+                                           class="form-control form-control-lg rounded {% if form.propic.errors %}is-invalid{% endif %}" 
+                                           accept="image/*">
+                                    <label for="id_propic" class="form-label mt-2">Foto profilo (opzionale)</label>
+                                    {% if form.propic.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.propic.errors.0 }}
+                                    </div>
+                                    {% endif %}
+                                    <small class="form-text text-muted">{{ form.propic.help_text }}</small>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-floating mb-3">
                             <input type="email" name="email" id="id_email" class="form-control form-control-lg rounded {% if form.email.errors %}is-invalid{% endif %}" placeholder="Indirizzo email" required value="{{ form.email.value|default:'' }}">
                             <label for="id_email">Indirizzo email</label>
@@ -103,6 +126,8 @@
                             <small class="form-text text-muted">{{ form.economical_level.help_text }}</small>
                         </div>
 
+                       
+
                         <div class="form-floating mb-3">
                             <input type="password" name="password1" id="id_password1" class="form-control form-control-lg rounded {% if form.password1.errors %}is-invalid{% endif %}" placeholder="Password" required>
                             <label for="id_password1">Password</label>
@@ -125,6 +150,21 @@
                             <small class="form-text text-muted">{{ form.password2.help_text }}</small>
                         </div>
 
+                        <!-- Termini di Servizio -->
+                        <div class="form-check mb-4">
+                            <input type="checkbox" name="terms_accepted" id="id_terms_accepted" 
+                                   class="form-check-input {% if form.terms_accepted.errors %}is-invalid{% endif %}" required>
+                            <label for="id_terms_accepted" class="form-check-label">
+                                Accetto i <a href="{% url 'terms_of_service' %}" target="_blank" class="text-primary">Termini di Servizio</a> 
+                                e la <a href="{% url 'privacy_policy' %}" target="_blank" class="text-primary">Privacy Policy</a>
+                            </label>
+                            {% if form.terms_accepted.errors %}
+                            <div class="invalid-feedback d-block">
+                                {{ form.terms_accepted.errors.0 }}
+                            </div>
+                            {% endif %}
+                        </div>
+
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn-lg rounded-pill w-100">Registrati</button>
                         </div>
@@ -141,4 +181,41 @@
 
 {% block extra_js %}
 <script src="{% static 'js/sandwich-animation.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Anteprima foto profilo
+    const propicInput = document.getElementById('id_propic');
+    const profilePreview = document.getElementById('profile-preview');
+    
+    if (propicInput && profilePreview) {
+        propicInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Verifica che sia un'immagine
+                if (!file.type.startsWith('image/')) {
+                    alert('Per favore seleziona un file immagine valido.');
+                    e.target.value = '';
+                    return;
+                }
+                
+                // Verifica dimensione file (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Il file è troppo grande. Seleziona un\'immagine di massimo 5MB.');
+                    e.target.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Reset dell'anteprima se nessun file è selezionato
+                profilePreview.src = "{% static 'imgs/profile_pics/default.jpg' %}";
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

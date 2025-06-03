@@ -39,9 +39,9 @@
 - [x] Mettere o italiano o inglese. ora è un misto (V)
 - [x] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
-- [ ] Se si va in una pagina e si è già log, da rimandare al profilo
-- [ ] TOS.
-- [ ] propic
+- [x] Se si va in una pagina e si è già log, da rimandare al profilo
+- [x] TOS.
+- [x] propic
 - [ ] fix next da register a login
 
 ## Citta
@@ -61,7 +61,7 @@
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
 - [x] FIX menu su ipad pro (V)
 - [x] Aggiungi nella nav altri elementi come reviews ecc
-- [ ] Posti mensa (L e V)
+- [x] Posti mensa (L e V)
 
 ## Profilo
 - [x] Fix animazione (V)
