@@ -9,7 +9,11 @@ MAX_WAIT_SEC = 20 * 60  # 20 minutes in seconds
 UPDATE_TIME = 1
 
 
-def compute_table_stats(block_array: np.ndarray) -> dict:
+def _queue_speed(capacity):
+    return 0.01 * capacity / 60  # seats per minute
+
+
+def _compute_table_stats(block_array: np.ndarray) -> dict:
     block_nbr = block_array.shape[0]
     total_seats = block_nbr * 10 * 4
     occupied_seats = int((block_array == 1).sum())
@@ -31,17 +35,16 @@ def compute_table_stats(block_array: np.ndarray) -> dict:
 def init_mensa_data(mensa) -> dict:
     block_nbr = mensa.block_nbr
     capacity = block_nbr * 10 * 4
-    queue_speed = 0.01 * capacity / 60
-    max_queue = queue_speed * MAX_WAIT_SEC
+    max_queue = _queue_speed(capacity) * MAX_WAIT_SEC
     queue_len = random.randint(0, int(max_queue))
-
-    print("QUEUE SPEED:", queue_speed, "MAX QUEUE:", max_queue)
 
     timestamp = int(datetime.now().timestamp())
     # 25% chance a seat is occupied
     block_array = (np.random.rand(block_nbr, 10, 4) < 0.25).astype(int)
-    wait_time = int(queue_len / queue_speed) if queue_speed > 0 else 0
-    stats = compute_table_stats(block_array)
+    wait_time = int(
+        queue_len /
+        _queue_speed(capacity)) if _queue_speed(capacity) > 0 else 0
+    stats = _compute_table_stats(block_array)
 
     return {
         "queue_len": queue_len,
@@ -62,19 +65,21 @@ def update_mensa_data(mensa, mensa_data: dict) -> dict:
 
     block_nbr = mensa.block_nbr
     capacity = block_nbr * 10 * 4
-    queue_speed = 0.05 * capacity / 60
     # update queue length by ±5%
     change_pct = random.uniform(-0.05, 0.05)
     new_queue = int(mensa_data["queue_len"] * (1 + change_pct))
-    max_queue = queue_speed * MAX_WAIT_SEC
+    max_queue = _queue_speed(capacity) * MAX_WAIT_SEC
 
     if new_queue < max_queue / 2 and random.random() < 0.5:
         new_queue += random.randint(1, 2)
-
+        print("Queue length increased by 1-2 to:", new_queue)
+    if new_queue >= max_queue:
+        print("Queue length capped at max queue:", max_queue)
     mensa_data["queue_len"] = max(0, min(new_queue, int(max_queue)))
     mensa_data["timestamp"] = current_ts
-    mensa_data["wait_time"] = int(mensa_data["queue_len"] /
-                                  queue_speed) if queue_speed > 0 else 0
+    mensa_data["wait_time"] = int(
+        mensa_data["queue_len"] /
+        _queue_speed(capacity)) if _queue_speed(capacity) > 0 else 0
 
     block_array: np.ndarray = mensa_data["block_list"]
 
@@ -105,7 +110,7 @@ def update_mensa_data(mensa, mensa_data: dict) -> dict:
             for tbl in to_free:
                 block[tbl, :] = 0
 
-    stats = compute_table_stats(block_array)
+    stats = _compute_table_stats(block_array)
     mensa_data["block_list"] = block_array
     mensa_data["free_tables"] = stats["free_tables"]
     mensa_data["free_seats"] = stats["free_seats"]
