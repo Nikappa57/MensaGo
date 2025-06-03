@@ -2,6 +2,7 @@
 
 - [ ] Mettere comando per riempire il db come un comando django (L)
 - [ ] Mettere js e css in file appositi quando non si usa jinja (V)
+- [ ] Rivedere il diagramma ER e il diagramma di flusso (I)
 
 ## Home
 
@@ -22,6 +23,8 @@
 - [x] Metti nella home le feature come il poter trovare la mensa più vicina, la meno affollata e vedere i posti disponibili
 - [x] Aggiustare i margin (L)
 - [x] Animazioni che mentre scorri si muovono le img!? (L). NO!
+- [ ] Btn registrati da togliere se già registrati?! oppure mettere altro
+- [ ] Aggiungere tasto per triggerare la richiesta di accesso alla posizione se non c'è all'altezza delle mense
 
 ## Login
 - [x] Conferma passw ecc? NO!
@@ -29,22 +32,27 @@
 - [x] Mettere o italiano o inglese. ora è un misto (V)
 - [x] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
+- [ ] Se si va in una pagina e si è già log, da rimandare al profilo
 
 ## Citta
 - [x] Cambiare tipo di mappa
 - [x] Rivedere titolo
 - [x] Rivedere filtri, magari da mettere a destra e dare titoli sensati
 - [x] Implementare i filtri
+- [ ] Implementare posti liberi live
+- [ ] Implementare tempo di attesa live
+- [ ] Colore in base all'attesa
+- [ ] Fix tempo di attesa che scende subito
 
 ## Mensa
 - [x] Servizi dinamici
 - [x] Contatti con i link esterni
-- [ ] Recensioni (L)
+- [x] Recensioni (L)
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
 - [x] FIX menu su ipad pro (V)
 - [ ] Posti mensa (L e V)
 - [x] Aggiungi nella nav altri elementi come reviews ecc
-
+- [ ] Fix login in reviews
 ## Profilo
 - [x] Fix animazione (V)
 - [x] fix link navbar (L)

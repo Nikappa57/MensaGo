@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from ..forms import ProfileAuthenticationForm, RegistrationForm
+from apps.core.forms import ProfileAuthenticationForm, RegistrationForm
 
 
 def register(request, *args, **kwargs):

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Mense in {{ city.name }} - MensaGO{% endblock %}
+{% block title %}{{ city.name }}{% endblock %}
 
 {% block extra_css %}
 
@@ -69,7 +69,9 @@
                                 <div class="d-flex flex-wrap gap-2 justify-content-end">
                                     <button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
                                     <button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
-                                    <button class="tag-btn" data-sort="capacity" data-dir="desc">Posti disponibili</button>
+                                    <button class="tag-btn" data-sort="capacity" data-dir="desc">Capienza</button>
+									<button class="tag-btn" data-sort="free_seats" data-dir="desc">Tavoli liberi <span id="connection-status1" class="status-indicator"></span></button>
+    								<button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda <span id="connection-status2" class="status-indicator"></span></button>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +82,7 @@
                         {% for mensa in mense %}
                         <div class="col-12 col-md-6">
                             <div class="card mensa-card h-100"
-                                data-id="{{ mensa.id }}"
+                                data-id="{{ mensa.name|urlencode }}"
                                 data-rating="{{ mensa.stars|default:0 }}"
                                 data-distance="{{ mensa.distance|default:0 }}"
                                 data-capacity="{{ mensa.capacity|default:0 }}">
@@ -108,15 +110,21 @@
                                     <p class="card-text text-muted small mb-3">
                                         <i class="fas fa-map-marker-alt me-2"></i>{{ mensa.position }}
                                     </p>
-                                    <p class="mensa-description mb-2">
-                                        {% if mensa.description %}{{ mensa.description}}{% endif %}
-                                    </p>
-                                    <div class="small text-muted">
-                                        <i class="fas fa-utensils me-2"></i>
-                                        {% if mensa.phone_number %}Telefono: {{ mensa.phone_number }}{% endif %}
-                                        {% if mensa.email %}{% if mensa.phone_number %} | {% endif %}Email: {{ mensa.email }}{% endif %}
-                                    </div>
-                                </div>
+                                     <p class="mensa-description mb-2">
+										{% if mensa.description %}{{ mensa.description }}{% endif %}
+									</p>
+									<div class="mt-2 small text-muted">
+										<i class="fas fa-clock me-1"></i>
+										Attesa: <span class="wait-time">--</span><br>
+										<i class="fas fa-chair me-1"></i>
+										Tavoli liberi: <span class="free-tables">--</span>
+									</div>
+									<div class="small text-muted">
+										<i class="fas fa-utensils me-2"></i>
+										{% if mensa.phone_number %}Telefono: {{ mensa.phone_number }}{% endif %}
+										{% if mensa.email %}{% if mensa.phone_number %} | {% endif %}Email: {{ mensa.email }}{% endif %}
+									</div>
+									</div>
                                 </a>
                             </div>
                         </div>
@@ -157,7 +165,6 @@
 			map.scrollWheelZoom.disable();
 		}
 	});
-
 	
 	L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
 			attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
@@ -204,4 +211,180 @@
 	})();
 	{% endfor %}
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // -------------------------------------------------------------------
+  // 1) CONFIGURAZIONE
+  // -------------------------------------------------------------------
+  const UPDATE_INTERVAL_MS = 3000;  // Ogni 5 secondi
+
+  // Contenitore di tutte le card (le singole col-12 col-md-6 dentro .mense-list)
+  const menseListContainer = document.querySelector(".mense-list");
+
+  // Bottoni filtro
+  const filterButtons = Array.from(document.querySelectorAll(".tag-btn"));
+
+  // Stato corrente dell’ordinamento
+  let currentSortKey = "rating";
+  let currentSortDir = "desc";
+
+  // -------------------------------------------------------------------
+  // 2) GESTIONE CLICK BOTTONE FILTRO
+  // -------------------------------------------------------------------
+  filterButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // Rimuovo classe active da tutti
+      filterButtons.forEach(b => b.classList.remove("active"));
+      // Aggiungo active a questo bottone
+      btn.classList.add("active");
+
+      // Leggo nuova chiave e direzione
+      currentSortKey = btn.getAttribute("data-sort");
+      currentSortDir = btn.getAttribute("data-dir");
+
+      // Riordino subito con i valori attuali
+      reorderMensaList();
+    });
+  });
+
+  // -------------------------------------------------------------------
+  // 3) FUNZIONI DI ORDINAMENTO
+  // -------------------------------------------------------------------
+  function sortCols(cols, key, dir) {
+    return cols.sort((colA, colB) => {
+      // Ogni col contiene una .mensa-card al suo interno
+      const cardA = colA.querySelector(".mensa-card");
+      const cardB = colB.querySelector(".mensa-card");
+
+      // Leggo valore dal data-attribute corrispondente (fallback 0)
+      let valA = parseFloat(cardA.getAttribute(`data-${key}`)) || 0;
+      let valB = parseFloat(cardB.getAttribute(`data-${key}`)) || 0;
+
+      if (valA < valB) return dir === "asc" ? -1 : 1;
+      if (valA > valB) return dir === "asc" ? 1 : -1;
+      return 0;
+    });
+  }
+
+	function reorderMensaList() {
+	/* 1. snapshot iniziale */
+	const cols    = [...menseListContainer.querySelectorAll(".col-12.col-md-6")];
+	const sorted  = sortCols(cols, currentSortKey, currentSortDir);
+	const first   = new Map(cols.map(c => [c, c.getBoundingClientRect()]));
+
+	/* 2. riordino DOM */
+	menseListContainer.append(...sorted);
+
+	/* 3. snapshot finale */
+	const last = new Map(sorted.map(c => [c, c.getBoundingClientRect()]));
+
+	/* 4. FLIP (invert → play) */
+	sorted.forEach(col => {
+		const f = first.get(col), l = last.get(col);
+		const dx = f.left - l.left;
+		const dy = f.top  - l.top;
+
+		col.style.transform  = `translate(${dx}px, ${dy}px)`;
+		col.style.transition = 'transform 0s';
+
+		requestAnimationFrame(() => {
+		col.style.transform  = '';
+		col.style.transition = 'transform 400ms cubic-bezier(.4,.2,.2,1)';
+		});
+
+		col.addEventListener(
+		'transitionend',
+		() => (col.style.transition = ''),
+		{ once: true }
+		);
+	});
+}
+
+
+  // -------------------------------------------------------------------
+  // 4) FETCH E AGGIORNAMENTO “LIVE” DEI DATI
+  // -------------------------------------------------------------------
+  function secondsToMinutes(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  return minutes > 0 ? `${minutes} min` : '< 1 min';
+}
+
+  async function updateMensaCards() {
+    const colItems = Array.from(menseListContainer.querySelectorAll(".col-12.col-md-6"));
+
+    // Per ogni col, prendo il card e faccio fetch
+    const promises = colItems.map(col => {
+      const card = col.querySelector(".mensa-card");
+      const mensaName = card.getAttribute("data-id");
+      const url = `/api/${mensaName}/`;
+
+      return fetch(url)
+        .then(resp => {
+          if (!resp.ok) throw new Error("Status " + resp.status);
+          return resp.json();
+        })
+        .then(data => {
+          // Aggiorno i data-attributes con i valori live
+          card.setAttribute("data-free_seats", data.free_seats);
+          card.setAttribute("data-wait_time", data.wait_time);
+
+          // Aggiorno la visuale interna degli span
+          const waitElem = card.querySelector(".wait-time");
+          const freeElem = card.querySelector(".free-tables");
+          if (waitElem)  waitElem.textContent  = secondsToMinutes(data.wait_time);
+          if (freeElem) freeElem.textContent = data.free_tables;
+		  // remove error indicator
+		  const statusIndicator1 = document.getElementById("connection-status1");
+		  const statusIndicator2 = document.getElementById("connection-status2");
+		  if (!statusIndicator1 || !statusIndicator2) {
+			  console.error("Status indicators not found");
+			  return;
+		  }
+		  statusIndicator1.classList.remove("error");
+		  statusIndicator2.classList.remove("error");
+        })
+        .catch(err => {
+          console.warn(`Errore fetch per ${mensaName}:`, err);
+          // In caso di errore, fallback
+          card.setAttribute("data-free_seats", 0);
+          card.setAttribute("data-wait_time", 999999);
+          const waitElem = card.querySelector(".wait-time");
+          const freeElem = card.querySelector(".free-tables");
+          if (waitElem)  waitElem.textContent  = "--";
+          if (freeElem) freeElem.textContent = "--";
+		  // add error indicator
+		  const statusIndicator1 = document.getElementById("connection-status1");
+		  const statusIndicator2 = document.getElementById("connection-status2");
+		  if (!statusIndicator1 || !statusIndicator2) {
+			  console.error("Status indicators not found");
+			  return;
+		  }
+		  statusIndicator1.classList.add("error");
+		  statusIndicator2.classList.add("error");
+        });
+    });
+
+    // Aspetto che finiscano tutte le chiamate
+    await Promise.all(promises);
+
+	if (currentSortKey === "free_seats" || currentSortKey === "wait_time") {
+		reorderMensaList();
+	}
+	else {
+		console.log("Reordering by non-live attribute, skipping sort");
+	}
+  }
+
+  // -------------------------------------------------------------------
+  // 5) INIZIALIZZAZIONE
+  // -------------------------------------------------------------------
+  // 5.1: Carico subito i valori live al caricamento pagina
+  updateMensaCards();
+
+  // 5.2: Imposto il polling a intervalli regolari
+  setInterval(updateMensaCards, UPDATE_INTERVAL_MS);
+});
+</script>
+
 {% endblock %}

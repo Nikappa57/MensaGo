@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('mense/', include('apps.mensa.urls')),
     path('world/', include('apps.world.urls')),
+    path('api/', include('apps.api.urls')),
     path('', include('apps.core.urls')),
 ]
 

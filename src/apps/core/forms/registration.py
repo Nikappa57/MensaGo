@@ -7,6 +7,26 @@ from .models import CustomUser, University
 from .models.CustomUser import EconomicalLevel  
 
 
+class CustomPasswordChangeForm(PasswordChangeForm):
+    """
+    Form personalizzato per il cambio password che aggiunge stile alle classi
+    """
+    old_password = forms.CharField(
+        label="Password attuale",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=True
+    )
+    new_password1 = forms.CharField(
+        label="Nuova password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=True
+    )
+    new_password2 = forms.CharField(
+        label="Conferma nuova password",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=True
+    )
+
 class RegistrationForm(UserCreationForm):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -129,7 +149,7 @@ class RegistrationForm(UserCreationForm):
 			raise forms.ValidationError('Il cognome è obbligatorio')
 		return last_name
 
-
+# TODO: perchè non CustomLoginForm?
 class ProfileAuthenticationForm(forms.ModelForm):
 
 	password = forms.CharField(label="Password",

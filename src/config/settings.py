@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.core',
     'apps.mensa',
     'apps.world',
+    'apps.api',
 ]
 
 MIDDLEWARE = [
