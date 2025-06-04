@@ -196,8 +196,8 @@
         const mensa = {
             name: "{{ mensa.name|escapejs }}",
             position: "{{ mensa.position|escapejs }}",
-            latitude: {{ mensa.latitude|default:"null" }},
-            longitude: {{ mensa.longitude|default:"null" }}
+            latitude: {{ mensa.latitude|floatformat:"6"|default:"null" }},
+			longitude: {{ mensa.longitude|floatformat:"6"|default:"null" }}
         };
         
         if (!mensa.latitude || !mensa.longitude) {
@@ -234,7 +234,7 @@
 /* -------------------------------------------------
    1) CONFIG
 ------------------------------------------------- */
-const UPDATE_INTERVAL_MS = 3000;
+const UPDATE_INTERVAL_MS = 1000;
 const container      = document.querySelector(".mense-list");
 const filterButtons  = [...document.querySelectorAll(".tag-btn")];
 let   sortKey        = "rating";
