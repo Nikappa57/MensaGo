@@ -1101,3 +1101,43 @@ small {
 	padding-top: 5vh;
 	padding-bottom: 15vh;
 }
+
+.send-btn {
+	background-color: #0078D9;
+	border: 3px solid #0078D9; /* 062E5F */
+	color: #fff;
+	border-radius: 3rem;
+	width: 100%;
+	transition: background-color 0.3s, transform 0.4s cubic-bezier(.4,2,.6,1);
+	/* margin-top: 20px; */
+}
+
+.send-btn strong {
+	font-size: 1.4rem !important;
+	font-weight: 400;
+}
+
+.send-btn:hover {
+	background-color: #fff;
+	color: #0078D9;
+	border: 3px solid #0078D9;
+	transform: scale(1.01);
+	
+}
+
+label {
+	font-weight: 600;
+	margin-bottom: 10px;
+	display: block;
+}
+
+input[type="text"], 
+input[type="email"],
+textarea {
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+	margin-bottom: 15px;
+}
