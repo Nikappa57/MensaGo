@@ -488,12 +488,12 @@ def populate_mense():
 		'Roma': [
 			{
 				'name':
-				'Mensa La Sapienza',
+				'Mensa De Lollis',
 				'description':
 				'Mensa principale dell\'Università La Sapienza. Punto di riferimento per migliaia di studenti nel più grande ateneo d\'Europa, '
 				'con una vastissima offerta gastronomica che rappresenta la diversità della popolazione studentesca.',
 				'position':
-				'Piazzale Aldo Moro 5, Roma',
+				'Via Cesare de Lollis 24, Roma',
 				'capacity':
 				500,
 				'phone_number':
@@ -501,9 +501,9 @@ def populate_mense():
 				'email':
 				'mensa.sapienza@uniroma1.it',
 				'latitude':
-				41.9021,
+				41.901057,
 				'longitude':
-				12.5145
+				12.516902
 			},
 			{
 				'name':
