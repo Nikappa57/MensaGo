@@ -345,7 +345,6 @@ body {
 
 .form-control-custom select {
 	appearance: none;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230077D8' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: right 1rem center;
 	background-size: 1rem;
@@ -363,10 +362,6 @@ body {
 	border: 1px solid rgba(13, 110, 253, 0.15);
 }
 
-.form-control-custom select:focus {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230077D8' class='bi bi-chevron-up' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z'/%3E%3C/svg%3E");
-}
-
 .form-control-custom select option {
 	padding: 1rem;
 	margin: 0.35rem 0;
@@ -374,7 +369,7 @@ body {
 	font-weight: 400;
 	position: relative;
 	transition: all 0.2s ease;
-	border-bottom: 1px solid rgba(106, 17, 203, 0.05);
+	border-bottom: 1px solid rgba(6, 46, 95, 0.05);
 }
 
 .form-control-custom input:focus,
@@ -754,6 +749,30 @@ body {
 	transform: translateX(2px);
 }
 
+
+/* -------------------------------------------------
+   Override mobile: mostra tutte le opzioni, niente scrollbar
+--------------------------------------------------*/
+@media (max-width: 576px) {        /* breakpoint Bootstrap 'sm' */
+  
+  /* Se usi <select multiple> */
+  .form-control-custom select[multiple] {
+    max-height: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow-y: visible !important;      /* disattiva scroll */
+  }
+
+  /* Se invece l'helper Django rende una lista di checkbox          *
+   * dentro .allergens-checkboxes, rimuoviamo eventuali limiti      */
+  .allergens-checkboxes {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
+
 /* QR Code Styling */
 .qrcode-wrapper {
 	position: relative;
@@ -839,7 +858,7 @@ body {
 
 /* Form collapse animation */
 .profile-edit-form {
-	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	transform: translateY(-20px) scale(0.98);
 	margin-top: 40px;
 }
@@ -854,7 +873,7 @@ body {
 .form-group {
 	opacity: 0;
 	transform: translateY(10px);
-	animation: fadeInUp 0.5s ease forwards;
+	animation: fadeInUp 0.4s ease forwards;
 }
 
 .form-group:nth-child(2) {
@@ -998,7 +1017,7 @@ body {
 .allergens-checkboxes label:hover {
   transform: translateY(-1px);
   border-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(106, 17, 203, 0.1);
+  box-shadow: 0 4px 8px rgba(6, 46, 95, 0.1);
 }
 
 .allergens-checkboxes label:hover:before {
@@ -1011,13 +1030,13 @@ body {
   color: white;
   border-color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(106, 17, 203, 0.2);
+  box-shadow: 0 4px 12px rgba(6, 46, 95, 0.2);
 }
 
 .allergens-checkboxes input[type="checkbox"]:checked + label:before {
   border-color: white;
   background-color: white;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236a11cb' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230077D8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 12px;
@@ -1025,7 +1044,7 @@ body {
 
 /* Focus effect */
 .allergens-checkboxes input[type="checkbox"]:focus + label {
-  box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.3);
+  box-shadow: 0 0 0 2px rgba(6, 46, 95, 0.3);
   border-color: #0077D8;
 }
 
@@ -1301,4 +1320,38 @@ body {
 			margin-bottom: 10px;
 		}
 	}
+}
+
+.btn-save {
+	border: 2px solid #0077D8;
+	color: #0077D8;
+	border-radius: 0.75rem;
+	transition: background-color 0.3s;
+	margin: 10px;
+}
+
+.btn-save:hover {
+	background-color: #0077D8;
+	color: #fff;
+}
+
+.btn-save:active {
+	color: #0077D8;
+}
+
+.btn-dismiss {
+	border: 2px solid #212529;
+	color: #212529;
+	border-radius: 0.75rem;
+	transition: background-color 0.3s;
+	margin: 10px;
+}
+
+.btn-dismiss:hover {
+	background-color: #212529;
+	color: #fff;
+}
+
+.btn-dismiss:active {
+	color: #212529;
 }
