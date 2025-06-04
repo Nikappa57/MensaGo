@@ -91,7 +91,7 @@ def profile_home(request):
 
 def profile_qrcode(request):
 	user = request.user
-	current_minute = int(time.time() // 60)
+	current_minute = int(time.time() // 600) # 10-minute interval
 	msg = f"{user.email}:{current_minute}"
 	qr_img = qrcode.make(msg)
 	response = HttpResponse(content_type="image/png")
