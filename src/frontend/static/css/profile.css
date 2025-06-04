@@ -9,7 +9,7 @@ body {
 	position: relative;
 	padding: 3rem 1rem;
 	margin-bottom: 2rem;
-	background: #0d6efd;
+	background: #0077D8;
 	border-radius: 1rem;
 	color: white;
 	overflow: hidden;
@@ -47,7 +47,7 @@ body {
 	left: -2px;
 	right: -2px;
 	bottom: -2px;
-	background: #0d6efd;
+	background: #0077D8;
 	border-radius: 0.85rem;
 	z-index: -1;
 	opacity: 0;
@@ -110,7 +110,7 @@ body {
 	height: 60px;
 	min-width: 60px; /* Imposta una larghezza minima per l'icona */
 	border-radius: 10px;
-	background: #0d6efd;
+	background: #0077D8;
 	color: white;
 	font-size: 1.2rem;
 	margin-right: 15px; /* Assicura una spaziatura uniforme */
@@ -234,13 +234,13 @@ body {
 	left: 0;
 	width: 0;
 	height: 1px;
-	background: #0d6efd;
+	background: #0077D8;
 	transition: width 0.3s ease;
 	opacity: 0.5;
 }
 
 .profile-item-hover:hover .profile-data {
-	color: #0d6efd;
+	color: #0077D8;
 }
 
 .profile-item-hover:hover .profile-data::after {
@@ -272,7 +272,7 @@ body {
 	left: 0;
 	width: 0;
 	height: 2px;
-	background: #0d6efd;
+	background: #0077D8;
 	transition: all 0.4s ease;
 	z-index: 2;
 }
@@ -283,7 +283,7 @@ body {
 
 .form-section-title {
 	font-weight: 600;
-	color: #0d6efd;
+	color: #0077D8;
 	font-size: 1.1rem;
 	padding-bottom: 0.75rem;
 	margin-bottom: 1.5rem;
@@ -298,7 +298,7 @@ body {
 	left: 0;
 	width: 80px;
 	height: 2px;
-	background: #0d6efd;
+	background: #0077D8;
 }
 
 .form-group label {
@@ -328,7 +328,7 @@ body {
 	left: 1rem;
 	top: 50%;
 	transform: translateY(-50%);
-	color: #0d6efd;
+	color: #0077D8;
 	opacity: 0.7;
 	z-index: 1;
 	pointer-events: none;
@@ -345,7 +345,6 @@ body {
 
 .form-control-custom select {
 	appearance: none;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230d6efd' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: right 1rem center;
 	background-size: 1rem;
@@ -363,10 +362,6 @@ body {
 	border: 1px solid rgba(13, 110, 253, 0.15);
 }
 
-.form-control-custom select:focus {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230d6efd' class='bi bi-chevron-up' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z'/%3E%3C/svg%3E");
-}
-
 .form-control-custom select option {
 	padding: 1rem;
 	margin: 0.35rem 0;
@@ -374,12 +369,12 @@ body {
 	font-weight: 400;
 	position: relative;
 	transition: all 0.2s ease;
-	border-bottom: 1px solid rgba(106, 17, 203, 0.05);
+	border-bottom: 1px solid rgba(6, 46, 95, 0.05);
 }
 
 .form-control-custom input:focus,
 .form-control-custom select:focus {
-	border-color: #0d6efd;
+	border-color: #0077D8;
 	border-width: 2px;
 	box-shadow: 0 3px 10px rgba(13, 110, 253, 0.1);
 	outline: none;
@@ -398,23 +393,11 @@ body {
 }
 
 .form-control-custom input[type="file"]:hover {
-	border-color: #0d6efd;
+	border-color: #0077D8;
 	background: rgba(13, 110, 253, 0.05);
 }
 
-.form-control-custom input[type="file"]::before {
-	content: "Scegli un file";
-	display: inline-block;
-	margin-right: 0.75rem;
-	padding: 0.35rem 0.85rem;
-	background: #0d6efd;
-	color: white;
-	border-radius: 0.5rem;
-	font-size: 0.9rem;
-	font-weight: 500;
-	box-shadow: 0 2px 4px rgba(13, 110, 253, 0.2);
-	transition: all 0.2s ease;
-}
+
 
 .form-control-custom input[type="file"]:hover::before {
 	transform: translateY(-1px);
@@ -423,8 +406,8 @@ body {
 
 /* Button styling */
 .btn-outline-primary {
-	border-color: #0d6efd;
-	color: #0d6efd;
+	border-color: #0077D8;
+	color: #0077D8;
 	transition: all 0.3s;
 	border-radius: 50px;
 	position: relative;
@@ -439,7 +422,7 @@ body {
 	left: 0;
 	width: 0%;
 	height: 100%;
-	background: #0d6efd;
+	background: #0077D8;
 	transition: all 0.3s ease;
 	z-index: -1;
 	opacity: 0;
@@ -515,7 +498,7 @@ body {
 
 .profile-item-hover:hover .text-muted {
 	opacity: 1;
-	color: #0d6efd !important;
+	color: #0077D8 !important;
 }
 
 /* Allergen tags style */
@@ -593,7 +576,7 @@ body {
 .form-section-title {
 	font-size: 1.1rem;
 	font-weight: 600;
-	color: #0d6efd;
+	color: #0077D8;
 	margin-bottom: 1rem;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	padding-bottom: 0.5rem;
@@ -667,7 +650,7 @@ body {
 }
 
 .btn-primary {
-	background: #0d6efd;
+	background: #0077D8;
 	border: none;
 	transition: all 0.3s;
 	border-radius: 50px;
@@ -743,16 +726,40 @@ body {
 
 .form-control-custom select[multiple] option:checked {
 	background: rgba(13, 110, 253, 0.08);
-	color: #0d6efd;
+	color: #0077D8;
 	font-weight: 600;
 	box-shadow: 0 2px 5px rgba(13, 110, 253, 0.1);
-	border-left: 3px solid #0d6efd;
+	border-left: 3px solid #0077D8;
 }
 
 .form-control-custom select[multiple] option:hover {
 	background-color: #f8f9fa;
 	transform: translateX(2px);
 }
+
+
+/* -------------------------------------------------
+   Override mobile: mostra tutte le opzioni, niente scrollbar
+--------------------------------------------------*/
+@media (max-width: 576px) {        /* breakpoint Bootstrap 'sm' */
+  
+  /* Se usi <select multiple> */
+  .form-control-custom select[multiple] {
+    max-height: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow-y: visible !important;      /* disattiva scroll */
+  }
+
+  /* Se invece l'helper Django rende una lista di checkbox          *
+   * dentro .allergens-checkboxes, rimuoviamo eventuali limiti      */
+  .allergens-checkboxes {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
 
 /* QR Code Styling */
 .qrcode-wrapper {
@@ -839,10 +846,9 @@ body {
 
 /* Form collapse animation */
 .profile-edit-form {
-	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	opacity: 0;
+	transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	transform: translateY(-20px) scale(0.98);
-	margin-top: 0;
+	margin-top: 40px;
 }
 
 .profile-edit-form.show {
@@ -855,7 +861,7 @@ body {
 .form-group {
 	opacity: 0;
 	transform: translateY(10px);
-	animation: fadeInUp 0.5s ease forwards;
+	animation: fadeInUp 0.4s ease forwards;
 }
 
 .form-group:nth-child(2) {
@@ -927,6 +933,258 @@ body {
 		transform: scale(4);
 		opacity: 0;
 	}
+}
+
+/* Styles for allergen checkboxes */
+.allergens-checkboxes {
+  max-height: 250px;
+  overflow-y: auto;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.allergens-checkboxes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem;
+}
+
+.allergens-checkboxes li {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* Hide native checkboxes */
+.allergens-checkboxes input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.allergens-checkboxes label {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: white;
+  border: 1px solid #e2e8f0;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.allergens-checkboxes label:before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 0.6rem;
+  border: 2px solid #cbd5e0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background-color: white;
+  flex-shrink: 0;
+}
+
+/* Hover effect */
+.allergens-checkboxes label:hover {
+  transform: translateY(-1px);
+  border-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(6, 46, 95, 0.1);
+}
+
+.allergens-checkboxes label:hover:before {
+  border-color: #ffffff;
+}
+
+/* Style for selected checkbox */
+.allergens-checkboxes input[type="checkbox"]:checked + label {
+  background: #0077D8;
+  color: white;
+  border-color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(6, 46, 95, 0.2);
+}
+
+.allergens-checkboxes input[type="checkbox"]:checked + label:before {
+  border-color: white;
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230077D8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+/* Focus effect */
+.allergens-checkboxes input[type="checkbox"]:focus + label {
+  box-shadow: 0 0 0 2px rgba(6, 46, 95, 0.3);
+  border-color: #0077D8;
+}
+
+/* Effect when state changes */
+.checkbox-changed {
+  animation: checkboxScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes checkboxScale {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Ripple effect on click */
+.allergens-checkboxes label:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.allergens-checkboxes label:active:after {
+  animation: ripple 0.6s ease;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0) translate(-50%, -50%);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(20) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* Text style */
+.allergens-checkboxes label > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Custom scrollbar */
+.allergens-checkboxes::-webkit-scrollbar {
+  width: 6px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.02);
+  border-radius: 8px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-thumb {
+  background: #0077D8;
+  border-radius: 8px;
+}
+
+.allergens-checkboxes::-webkit-scrollbar-thumb:hover {
+  background: #0077D8;
+}
+
+/* Styles for password edit form */
+.password-edit-form {
+  padding: 0.5rem;
+}
+
+.password-edit-form .form-label {
+  font-weight: 500;
+  color: #343a40;
+  margin-bottom: 0.5rem;
+}
+
+.password-edit-form .form-text ul {
+  font-size: 0.85rem;
+}
+
+/* Password strength indicator */
+.password-strength {
+  height: 5px;
+  border-radius: 2px;
+  margin-top: 0.5rem;
+  background-color: #e9ecef;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.password-strength-meter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+
+.password-strength.weak .password-strength-meter {
+  width: 25%;
+  background-color: #dc3545;
+}
+
+.password-strength.medium .password-strength-meter {
+  width: 50%;
+  background-color: #ffc107;
+}
+
+.password-strength.strong .password-strength-meter {
+  width: 75%;
+  background-color: #17a2b8;
+}
+
+.password-strength.very-strong .password-strength-meter {
+  width: 100%;
+  background-color: #28a745;
+}
+
+.password-feedback {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  transition: all 0.3s ease;
+  color: #6c757d;
+}
+
+/* Ripple effect for buttons */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
 }
 
 /* Responsive adjustments */
@@ -1050,4 +1308,38 @@ body {
 			margin-bottom: 10px;
 		}
 	}
+}
+
+.btn-save {
+	border: 2px solid #0077D8;
+	color: #0077D8;
+	border-radius: 0.75rem;
+	transition: background-color 0.3s;
+	margin: 10px;
+}
+
+.btn-save:hover {
+	background-color: #0077D8;
+	color: #fff;
+}
+
+.btn-save:active {
+	color: #0077D8;
+}
+
+.btn-dismiss {
+	border: 2px solid #212529;
+	color: #212529;
+	border-radius: 0.75rem;
+	transition: background-color 0.3s;
+	margin: 10px;
+}
+
+.btn-dismiss:hover {
+	background-color: #212529;
+	color: #fff;
+}
+
+.btn-dismiss:active {
+	color: #212529;
 }

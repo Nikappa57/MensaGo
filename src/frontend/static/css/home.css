@@ -30,11 +30,24 @@ body {
 	margin-bottom: 20px;
 }
 
+.home-btn {
+	border: 4px solid #0077D8;
+	color: #0077D8;
+	border-radius: 0.75rem;
+	background-color: whitesmoke;
+	transition: background-color 0.3s;
+}
+
+.home-btn:hover {
+	border: 4px solid #fff;
+}
+
 /*** About  ***/
 
-.about-flex { /* flex box per dividere la section tra i figli */
+.about-flex {
 	display: flex;
 	flex-direction: column;
+	margin-top: 5vh !important;
 }
 
 .about-elem { /* figlio flex con altezza 50% */
@@ -42,7 +55,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: 10vh 0;
+	margin-bottom: 20vh;
 	height: 50vh;
 }
 
@@ -55,7 +68,7 @@ body {
 }
 
 .about-elem-img { /* wrapper per le img */
-	margin: 10px;
+	/* margin: 10px; */
 	position: relative;
 	height: 50vh;
 }
@@ -334,7 +347,8 @@ body {
 }
 
 .step-box:hover .step-number {
-  transform: scale(1.1);
+	transform: scale(1.25);
+	transition-duration: 0.3s;
   background-color: #222;
 }
 
@@ -366,10 +380,12 @@ body {
 
 .phone-mockup {
   position: relative;
-  margin: 20px auto;
+  margin: 30px auto;
   max-width: 260px;
-  width: 100%;
-  height: 580px;
+  width: 65%;
+  height: 55vh;
+  min-height: 450px !important;
+  min-width: 250px !important;
   display: flex;
   justify-content: center;
   margin-top: auto;
@@ -382,7 +398,7 @@ body {
 }
 
 /* Regole responsive per i mockup dei telefoni */
-@media (max-width: 1199px) {
+/* @media (max-width: 1199px) {
   .phone-mockup {
     height: 550px;
   }
@@ -404,7 +420,7 @@ body {
   .phone-mockup {
     height: 500px;
   }
-}
+} */
 
 .phone-frame {
   position: relative;
@@ -455,7 +471,7 @@ body {
   }
 }
 
-.phone-frame:before {
+/* .phone-frame:before {
   content: '';
   position: absolute;
   top: 0;
@@ -468,7 +484,7 @@ body {
   border-bottom-right-radius: 12px;
   z-index: 2;
   transition: background 0.3s ease;
-}
+} */
 
 .step-box:hover .phone-frame:before {
   background: #333;
@@ -502,32 +518,16 @@ img.mockup {
   font-weight: bold;
 }
 
-
-/* Stili generali TODO: rivedere */
-h1, h2, h3 {
-	font-weight: 400;
-	margin-bottom: 15px;
-}
-
-h1 {
-	font-size: 2.5rem;
-	font-style: italic;
-}
-
-h2 {
-	font-size: 2rem;
-	font-style: italic;
-}
-
-h3 {
-	font-size: 1rem;
-	font-style: italic;
-	margin-bottom: 5px;
-}
-
 p {
-	margin-bottom: 15px;
-	color: #666;
+  color: #666;
+}
+
+.about-elem-side h3 {
+  margin-bottom: 30px;
+}
+
+.about-elem-side p {
+	font-style: italic;
 }
 
 .blue-line {
@@ -558,7 +558,6 @@ p {
 
 /* Events Section Styles */
 #eventi {
-    margin-top: 2rem;
     margin-bottom: 4rem;
     opacity: 0;
     transform: translateY(50px);
@@ -1024,6 +1023,84 @@ p {
 }
 
 #contact {
-	padding-top: 8%;
+	margin-top: 8%;
+	padding-top: 3%;
 	padding-bottom: 8%;
+	position: relative;
+}
+
+
+#about {
+	padding-top: 10vh;
+}
+
+/* Reduce spacing between 'About Us' and its elements */
+#about h2 {
+  margin-bottom: 1rem; /* Reduce the bottom margin */
+}
+
+.about-flex {
+  margin-top: 1rem; /* Reduce the top margin */
+}
+
+.btn-profile {
+	background-color: #0078D9;
+	border: 3px solid #0078D9; /* 062E5F */
+	color: #fff;
+	border-radius: 3rem;
+	transition: background-color 0.3s, transform 0.4s cubic-bezier(.4,2,.6,1);
+}
+
+.btn-profile:hover {
+	background-color: #fff;
+	color: #0078D9;
+	border: 3px solid #0078D9;
+	transform: scale(1.03);
+}
+
+
+.call-to-action {
+	padding-top: 5vh;
+	padding-bottom: 15vh;
+}
+
+.send-btn {
+	background-color: #0078D9;
+	border: 3px solid #0078D9; /* 062E5F */
+	color: #fff;
+	border-radius: 3rem;
+	width: 100%;
+	transition: background-color 0.3s, transform 0.4s cubic-bezier(.4,2,.6,1);
+	/* margin-top: 20px; */
+}
+
+.send-btn strong {
+	font-size: 1.4rem !important;
+	font-weight: 400;
+}
+
+.send-btn:hover {
+	background-color: #fff;
+	color: #0078D9;
+	border: 3px solid #0078D9;
+	transform: scale(1.01);
+	
+}
+
+
+label {
+	font-weight: 600;
+	margin-bottom: 10px;
+	display: block;
+}
+
+input[type="text"], 
+input[type="email"],
+textarea {
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+	margin-bottom: 15px;
 }

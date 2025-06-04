@@ -5,6 +5,7 @@
 - [ ] Rivedere il diagramma ER e il diagramma di flusso (I)
 - [ ] Refactoring
 - [ ] Controlla tutti i todo
+- [ ] Fare mail
 
 ## Home
 
@@ -30,7 +31,7 @@
 - [x] Contatti e faq container mobile
 - [x] Fix img eventi 3:4
 - [x] Fix orientamento cell in home da mobile
-- [ ] Cambiare colore tasto sopra hero, magari come il login?!
+- [x] Cambiare colore tasto sopra hero, magari come il login?!
 - [ ] Vedere font e dim generale dei titoli ecc (I)
 
 ## Login
@@ -39,10 +40,10 @@
 - [x] Mettere o italiano o inglese. ora è un misto (V)
 - [x] Rendere più moderno magari cambiando bordi e colori (V)
 - [x] fix footer che si alza (basta mettere min-h a 100vh)
-- [ ] Se si va in una pagina e si è già log, da rimandare al profilo
-- [ ] TOS.
-- [ ] propic
-- [ ] fix next da register a login
+- [x] Se si va in una pagina e si è già log, da rimandare al profilo
+- [x] TOS.
+- [x] propic
+- [x] fix next da register a login
 
 ## Citta
 - [x] Cambiare tipo di mappa
@@ -52,7 +53,7 @@
 - [x] Implementare posti liberi live
 - [x] Implementare tempo di attesa live
 - [x] Fix tempo di attesa che scende subito
-- [ ] Colore in base all'attesa
+- [x] Colore in base all'attesa
 
 ## Mensa
 - [x] Servizi dinamici
@@ -61,7 +62,7 @@
 - [x] Allergeni rosso se le hai nel profilo, sennò neutro
 - [x] FIX menu su ipad pro (V)
 - [x] Aggiungi nella nav altri elementi come reviews ecc
-- [ ] Posti mensa (L e V)
+- [x] Posti mensa (L e V)
 
 ## Profilo
 - [x] Fix animazione (V)

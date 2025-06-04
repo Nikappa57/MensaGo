@@ -1,7 +1,7 @@
-from django.http import JsonResponse
-from django.shortcuts import render
 from django.conf import settings
 from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.shortcuts import render
 
 from apps.core.forms import ContactForm
 from apps.mensa.models import City, Event
@@ -34,14 +34,12 @@ def homepage(request):
             message = form.cleaned_data['message']
 
             # Send mail to settings.CONTACT_MAIL
-            send_mail(
-                subject=f"Messaggio da {name} ({email})",
-                message=message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.CONTACT_EMAIL],
-                fail_silently=False
-            )
-            
+            send_mail(subject=f"Messaggio da {name} ({email})",
+                      message=message,
+                      from_email=settings.DEFAULT_FROM_EMAIL,
+                      recipient_list=[settings.CONTACT_EMAIL],
+                      fail_silently=False)
+
             return JsonResponse({
                 'status': 'success',
                 'message': 'Messaggio inviato con successo!'

@@ -125,6 +125,13 @@ def mensa_details(request, city_name, mensa_name):
             reviews.remove(user_review)
             reviews.insert(0, user_review)
 
+    user_lat = request.position.get('lat')
+    user_lon = request.position.get('lon')
+
+    if user_lat is not None and user_lon is not None:
+        mensa.distance = round(
+            haversine(user_lat, user_lon, mensa.latitude, mensa.longitude), 2)
+
     context = {
         "mensa": mensa,
         "current_user": request.user,

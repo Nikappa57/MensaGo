@@ -8,10 +8,10 @@ from apps.core.forms import ProfileAuthenticationForm, RegistrationForm
 def register(request, *args, **kwargs):
     user = request.user
     if user.is_authenticated:
-        return HttpResponse(f"You are already registered as {user.email}")
+        return redirect('profile')
 
     if request.POST:
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             email = form.cleaned_data.get('email')
@@ -23,7 +23,7 @@ def register(request, *args, **kwargs):
             if destination:
                 return redirect(destination)
             else:
-                return redirect('home')
+                return redirect('profile')
     else:
         form = RegistrationForm()
 
@@ -33,11 +33,12 @@ def register(request, *args, **kwargs):
 
 
 def logout_view(request):
-	if request.user.is_authenticated:
-		logout(request)
-		return redirect('home')
-	else:
-		return HttpResponse("You are not logged in")
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect('home')
+    else:
+        #go to login page
+        return redirect('login')
 
 
 def login_view(request, *args, **kwargs):
@@ -45,7 +46,7 @@ def login_view(request, *args, **kwargs):
 
     user = request.user
     if user.is_authenticated:
-        return redirect('home')
+        return redirect('profile')
 
     destination = get_redirect_if_exists(request)
 
@@ -63,7 +64,7 @@ def login_view(request, *args, **kwargs):
                 if destination:
                     return redirect(destination)
                 else:
-                    return redirect('home')
+                    return redirect('profile')
         else:
             context['form'] = form
 
@@ -78,3 +79,11 @@ def get_redirect_if_exists(request):
     return redirect
 
 
+def terms_of_service(request):
+    """View per visualizzare i termini di servizio"""
+    return render(request, 'profile/terms_of_service.html')
+
+
+def privacy_policy(request):
+    """View per visualizzare la privacy policy"""
+    return render(request, 'profile/privacy_policy.html')

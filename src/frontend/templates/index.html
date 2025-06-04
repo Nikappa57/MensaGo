@@ -36,19 +36,31 @@
 	</li>
 	{% if user.is_authenticated %}
 	<li class="nav-item dropdown ms-3">
-		<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+		<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
 			data-bs-toggle="dropdown" aria-expanded="false">
-			{{ user.first_name }} {{ user.last_name }}
+			<i class="fas fa-user-circle me-1"></i>
+			<strong>{{ user.first_name }} {{ user.last_name }}</strong>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-			<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+			<li>
+				<a class="dropdown-item" href="{% url 'profile' %}">
+					<i class="fas fa-user me-2"></i> Profile
+				</a>
+			</li>
 			<li><hr class="dropdown-divider"> </li>
-			<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+			<li>
+				<a class="dropdown-item" href="{% url 'logout' %}">
+					<i class="fas fa-sign-out-alt me-2"></i> Logout
+				</a>
+			</li>
 		</ul>
 	</li>
 	{% else %}
 	<li class="nav-item ms-3">
-		<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+		<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">
+			<i class="fas fa-sign-in-alt me-1"></i>
+			<strong>Log In</strong>
+		</a>
 	</li>
 	{% endif %}
 {% endblock %}
@@ -56,25 +68,25 @@
 
 {% block content %}
 <!-- Hero -->
-<section class="position-relative" style="height: 100%;">
-<img src="{% static 'imgs/hero.png' %}" style="object-fit: cover; width: 100%; height: 100vh;" alt="Mensa">
+<section class="position-relative" style="height: 100vh; margin-top: -80px; padding-top: 80px; ">
+<img src="{% static 'imgs/hero.png' %}" style="object-fit: cover; width: 100%; height: 100%;" alt="Mensa">
 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center text-white" style="background: rgba(0,0,0,0.35)">
 	<h1 class="fw-bold home-title">MensaGO</h1>
 	<p class="home-subtitle">Il tuo nuovo modo di mangiare</p>
 	{% if cities %}
-		<a href="#citta" class="btn btn-dark btn-lg">Scopri le mense</a>
+		<a href="#citta" class="btn home-btn btn-lg"><strong>Scopri le mense</strong></a>
 	{% endif %}
 </div>
 </section>
 
 <!-- About -->
-<section id="about", class="container py-5">
-	<small class="text-primary text-uppercase">
+<section id="about", class="container">
+	<small class="text-uppercase">
 		Chi siamo
 	</small>
-	<h2 class="fw-bold mt-2">About Us</h2>
+	<h2>About Us</h2>
 	<!-- About FLEX 1 -->
-		<div class=" about-flex container">
+		<div class="about-flex">
 			<!-- ELEM 1 -->
 			<div class="about-elem">
 				<div class="about-elem-side">
@@ -84,19 +96,15 @@
 					</div>
 				</div>
 				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-						superiores. Possimus facilis velin, voluptatibus!</p>
+					<h3>Cosa facciamo</h3>
+					<p>MensaGO è il tuo compagno di fiducia per un'esperienza culinaria unica e sostenibile. La nostra missione è quella di rendere l'accesso alle mense universitarie semplice, veloce e piacevole, garantendo al contempo la qualità e la freschezza dei nostri ingredienti.</p>
 				</div>
 			</div>
 			<!-- ELEM 2 -->
 			<div class="about-elem">
 				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-						superiores. Possimus facilis velin, voluptatibus!</p>
+					<h3>La nostra visione</h3>
+					<p>Crediamo che il cibo sia più di un semplice nutrimento: è un'esperienza che unisce le persone, promuove la cultura e sostiene la comunità. Con MensaGO, vogliamo creare un futuro in cui ogni studente possa godere di pasti sani e accessibili, ovunque si trovi.</p>
 				</div>
 				<div class="about-elem-side">
 					<div class="about-elem-img">
@@ -107,7 +115,7 @@
 			</div>
 	</div>
 	<!-- About FLEX 2 -->
-	<div class=" about-flex container">
+	{% comment %} <div class=" about-flex container">
 			<!-- ELEM 1 -->
 			<div class="about-elem">
 				<div class="about-elem-side">
@@ -117,19 +125,15 @@
 					</div>
 				</div>
 				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-						superiores. Possimus facilis velin, voluptatibus!</p>
+					<h3>Cosa facciamo</h3>
+					<p>MensaGO è il tuo compagno di fiducia per un'esperienza culinaria unica e sostenibile. La nostra missione è quella di rendere l'accesso alle mense universitarie semplice, veloce e piacevole, garantendo al contempo la qualità e la freschezza dei nostri ingredienti.</p>
 				</div>
 			</div>
 			<!-- ELEM 2 -->
 			<div class="about-elem">
 				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
-						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
-						superiores. Possimus facilis velin, voluptatibus!</p>
+					<h3>La nostra visione</h3>
+					<p>Crediamo che il cibo sia più di un semplice nutrimento: è un'esperienza che unisce le persone, promuove la cultura e sostiene la comunità. Con MensaGO, vogliamo creare un futuro in cui ogni studente possa godere di pasti sani e accessibili, ovunque si trovi.</p>
 				</div>
 				<div class="about-elem-side">
 					<div class="about-elem-img">
@@ -138,7 +142,7 @@
 					</div>
 				</div>
 			</div>
-	</div>
+	</div> {% endcomment %}
 </section>
 
 <!-- Banner -->
@@ -156,10 +160,10 @@
 
 <!-- Citta -->
 <section id="citta" class="container py-5">
-	<small class="text-primary text-uppercase">
+	<small class="text-uppercase">
 		Siamo presenti in tutta Italia
 	</small>
-	<h2 class="fw-bold mt-2">Scopri le mense</h2>
+	<h2>Scopri le mense</h2>
 	<div class="row gy-5 gx-5 mt-4">
 		{% if cities %}
 			{% for city in cities %}
@@ -206,9 +210,12 @@
 
 <!-- Tutorial Section -->
 <section id="tutorial" class="container py-5 mb-5">
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-2">
     <div>
-      <h2 class="fw-bold mb-0">Come Utilizzare MensaGo</h2>
+	  <small class="text-uppercase">
+	  Tutorial
+	  </small>
+      <h2>Come Utilizzare MensaGo</h2>
     </div>
   </div>
   
@@ -220,12 +227,14 @@
     <!-- Step 1 -->
     <div class="col-lg-4 col-md-6">
       <div class="step-box">
-        <div class="step-number">01</div>
-        <h4 class="mb-3">Registrati</h4>
-        <p>Crea un account MensaGo con la tua email universitaria per accedere a tutte le funzionalità.</p>
+        <div class="d-flex align-items-center mb-2">
+          <div class="step-number me-3">01</div>
+          <h4 class="d-flex align-items-center">Scegli la tua mensa</h4>
+        </div>
+        <p class="mb-3">Esplora le mense disponibili nella tua città e scegli quella più adatta alle tue esigenze per iniziare la tua esperienza con MensaGO.</p>
         <div class="phone-mockup">
           <div class="phone-frame phone-left">
-            <img class="mockup" src="{% static 'imgs/tutorial/signup.png' %}" alt="Registrazione" onerror="this.src='https://via.placeholder.com/280x550?text=Registrazione'">
+            <img class="mockup" src="{% static 'imgs/tutorial/signup.png' %}" alt="Scegli città" onerror="this.src='https://via.placeholder.com/280x550?text=Scegli+Città'">
           </div>
         </div>
       </div>
@@ -234,12 +243,14 @@
     <!-- Step 2 -->
     <div class="col-lg-4 col-md-6">
       <div class="step-box">
-        <div class="step-number">02</div>
-        <h4 class="mb-3">Scegli la Mensa</h4>
-        <p>Seleziona la tua città e scopri la mensa piú vicina a te!.</p>
+        <div class="d-flex align-items-center mb-2">
+          <div class="step-number me-3">02</div>
+          <h4 class="d-flex align-items-center">Informazioni Smart</h4>
+        </div>
+        <p>Accedi a informazioni dettagliate sulle mense, inclusi orari, menu e disponibilità in tempo reale.</p>
         <div class="phone-mockup">
           <div class="phone-frame phone-center">
-            <img class="mockup" src="{% static 'imgs/tutorial/choose.png' %}" alt="Scegli mensa" onerror="this.src='https://via.placeholder.com/280x550?text=Scegli+Mensa'">
+            <img class="mockup" src="{% static 'imgs/tutorial/choose.png' %}" alt="Info smart" onerror="this.src='https://via.placeholder.com/280x550?text=Info+Smart'">
           </div>
         </div>
       </div>
@@ -248,44 +259,46 @@
     <!-- Step 3 -->
     <div class="col-lg-4 col-md-12 mx-md-auto">
       <div class="step-box">
-        <div class="step-number">03</div>
-        <h4 class="mb-3">Inizia a Mangiare</h4>
-        <p>Ricarica il tuo credito, scannerizza il qr code in cassa e inizia subito a gustare i piatti delle nostre mense.</p>
-        <div class="phone-mockup">
+        <div class="d-flex align-items-center mb-2">
+          <div class="step-number me-3">03</div>
+          <h4 class="d-flex align-items-center">Profilo e Scannerizzazione</h4>
+        </div>
+        <p>Gestisci il tuo profilo e utilizza il QR code per accedere rapidamente alle mense.</p>
+        <div class="phone-mockup mt-5">
           <div class="phone-frame phone-right">
-            <img class="mockup" src="{% static 'imgs/tutorial/eat.png' %}" alt="Inizia a mangiare" onerror="this.src='https://via.placeholder.com/280x550?text=Buon+Appetito'">
+            <img class="mockup" src="{% static 'imgs/tutorial/eat.png' %}" alt="Profilo e QR" onerror="this.src='https://via.placeholder.com/280x550?text=Profilo+e+QR'">
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+  </section>
   <!-- Call to Action -->
-  <div class="text-center mt-5 mb-4">
+  <div class="text-center call-to-action">
 	{% if user.is_authenticated %}
 		<h3 class="mb-3">Sei pronto per iniziare?</h3>
 		<p class="lead mb-4">Accedi al tuo account e scopri tutte le funzionalità di MensaGo</p>
-		<a href="{% url 'profile' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
-			<i class="fas fa-sign-in-alt me-2"></i> Vai al profilo
+		<a href="{% url 'profile' %}" class="btn btn-dark btn-lg px-5 py-3 btn-profile">
+			<i class="fas fa-sign-in-alt me-2"></i> <strong> Vai al profilo </strong>
 		</a>
 	{% else %}
 		<h3 class="mb-3">Cosa aspetti? Inizia oggi!</h3>
 		<p class="lead mb-4">Registrati subito e scopri tutte le funzionalità che MensaGo ha da offrirti</p>
-		<a href="{% url 'register' %}?next={{ request.path }}#tutorial" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
-			<i class="fas fa-user-plus me-2"></i> Registrati ora
+		<a href="{% url 'register' %}?next={{ request.path }}#tutorial" class="btn btn-dark btn-lg px-5 py-3 rounded-pill btn-profile">
+			<i class="fas fa-user-plus me-2"></i> <strong> Registrati ora </strong>
 		</a>
 	{% endif %}
   </div>
-</section>
+
 
 <!-- Upcoming Events -->
 <section class="pb-5" id="eventi">
 	<div class="container">
 		<div class="row mb-4">
-			<small class="text-primary text-uppercase">
+			<small class="text-uppercase">
 			Calendario
 			</small>
-			<h2 class="fw-bold mt-2">Eventi</h2>
+			<h2>Eventi</h2>
 		</div>
 
 	{% if events %}
@@ -328,7 +341,7 @@
 								<!-- Normal view (date and name below image) -->
 								<div class="event-details mt-3 text-start">
 									<p class="text-muted mb-1"><i class="far fa-calendar-alt me-2"></i>{{ event.date|date:"d F Y" }}</p>
-									<h3 class="card-title fw-bold mt-2">{{ event.name }}</h3>
+									<h4 class="card-title fw-bold mt-2">{{ event.name }}</h4>
 								</div>
 							</div>
 						</div>
@@ -352,10 +365,10 @@
 		<div class="faq-bg-shape faq-bg-shape-2"></div>
 		
 		<div class="faq-title-section">
-			<small class="text-primary text-uppercase">
+			<small class="text-uppercase">
 				Ti aiutiamo con piacere
 			</small>
-			<h2 class="fw-bold mt-2">Domande Frequenti</h2>
+			<h2>Domande Frequenti</h2>
 			<p class="text-muted">Risposte alle domande più frequenti sulla nostra piattaforma</p>
 		</div>
 		
@@ -377,14 +390,14 @@
 			<div class="accordion-item faq-item">
 				<h2 class="accordion-header faq-header" id="heading2">
 					<button class="accordion-button collapsed faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
-						<i class="fas fa-credit-card faq-icon"></i>
-						Come posso ricaricare il mio credito?
+						<i class="fas fa-qrcode faq-icon"></i>
+						Come funziona il QR code?
 						<i class="fas fa-chevron-down ms-auto faq-chevron"></i>
 					</button>
 				</h2>
 				<div id="collapse2" class="accordion-collapse collapse faq-collapse" data-bs-parent="#faqAccordion">
 					<div class="accordion-body faq-body">
-						Accedi alla sezione "Accreditation" dal tuo profilo per ricaricare il tuo credito utilizzando vari metodi di pagamento.
+						Il QR code ti permette di accedere rapidamente alle mense. Mostralo all'ingresso per registrare la tua presenza e accedere ai servizi.
 					</div>
 				</div>
 			</div>
@@ -421,43 +434,49 @@
 </section> 
 	
 	<!-- Contact -->
-<section id="contact" class="container">
-	<h2 class="fw-bold">Contattaci</h2>
-	<p class="text-muted">Hai domande? Scrivici!</p>
-	<form id="contactForm" class="row g-3 mt-3" method="POST" action="">
-		{% csrf_token %}
-		<div class="col-md-6">
-		<label for="id_name" class="form-label">Nome</label>
-		<input type="text" name="name" id="id_name" class="form-control" required>
-		{% if form.name.errors %}
-			<div class="text-danger">
-			{{ form.name.errors }}
+<section id="contact">
+	<div class="container">
+		<small class="text-uppercase">
+			Hai domande? Scrivici!
+		</small>
+		<h2>Contattaci</h2>
+		<form id="contactForm" class="row g-3 mt-3" method="POST" action="">
+			{% csrf_token %}
+			<div class="col-12">
+			<label for="id_name" class="form-label">Nome</label>
+			<input type="text" name="name" id="id_name" class="form-control" required>
+			{% if form.name.errors %}
+				<div class="text-danger">
+				{{ form.name.errors }}
+				</div>
+			{% endif %}
+			</form>
+			<div class="col-12">
+			<label for="id_email" class="form-label">Email</label>
+			<input type="email" name="email" id="id_email" class="form-control" required>
+			{% if form.email.errors %}
+				<div class="text-danger">
+				{{ form.email.errors }}
+				</div>
+			{% endif %}
 			</div>
-		{% endif %}
-		</div>
-		<div class="col-md-6">
-		<label for="id_email" class="form-label">Email</label>
-		<input type="email" name="email" id="id_email" class="form-control" required>
-		{% if form.email.errors %}
-			<div class="text-danger">
-			{{ form.email.errors }}
+			<div class="col-12">
+			<label for="id_message" class="form-label">Messaggio</label>
+			<textarea name="message" id="id_message" class="form-control" rows="4" required></textarea>
+			{% if form.message.errors %}
+				<div class="text-danger">
+				{{ form.message.errors }}
+				</div>
+			{% endif %}
 			</div>
-		{% endif %}
-		</div>
-		<div class="col-12">
-		<label for="id_message" class="form-label">Messaggio</label>
-		<textarea name="message" id="id_message" class="form-control" rows="4" required></textarea>
-		{% if form.message.errors %}
-			<div class="text-danger">
-			{{ form.message.errors }}
+			<div class="col-12">
+				<button type="submit" class="btn send-btn">
+					<i class="fas fa-paper-plane me-2"></i> <strong>Invia</strong>
+				</button>
 			</div>
-		{% endif %}
-		</div>
-		<div class="col-12">
-		<button type="submit" class="btn btn-dark">Invia messaggio</button>
-		</div>
-		<div id="formStatus" class="col-12 mt-2" style="display: none;"></div>
-	</form>
+			<div id="formStatus" class="col-12 mt-2" style="display: none;"></div>
+		</form>
+	</div>
 </section>
 {% endblock %}
 

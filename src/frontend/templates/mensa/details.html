@@ -29,7 +29,7 @@
 </li>
 {% if user.is_authenticated %}
 <li class="nav-item dropdown ms-3">
-	<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+	<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
 		data-bs-toggle="dropdown" aria-expanded="false">
 		{{ user.first_name }} {{ user.last_name }}
 	</a>
@@ -49,7 +49,7 @@
 {% block nav_mobile %}
 <div class="dropdown d-lg-none">
 {% if user.is_authenticated %}
-	<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+	<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
 		data-bs-toggle="dropdown" aria-expanded="false">
 		{{ user.first_name }} {{ user.last_name }}
 	</a>
@@ -75,12 +75,12 @@
 	<img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
 	<div class="restaurant-banner-overlay">
 		<div class="container">
-			<h1 class="fs-2 fw-bold">{{ mensa.name }}</h1>
+			<h2 class="fs-2">{{ mensa.name }}</h2>
 			<p class="mb-0">
 				<i class="fa-solid fa-location-dot me-2"></i>
-				{{ mensa.position }}, {{ mensa.city.name }}
+				{{ mensa.position }}
 			</p>
-			<span class="badge bg-light text-dark me-2 mt-3">
+			<span class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
 				{% for _ in "01234" %}
 					{% if forloop.counter <= mensa.stars|default:0 %}
 						<i class="fas fa-star text-warning"></i>
@@ -90,6 +90,15 @@
 				{% endfor %}
 				{{ mensa.review_set.all|length }} Reviews
 			</span>
+			
+			{% if pos and pos.lat and pos.lon %}
+			<div class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
+				<i class="fas fa-route me-1"></i>{{ mensa.distance|default:0 }} km
+			</div>
+			{% endif %}
+			<div class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
+				<i class="fas fa-chair me-1"></i>{{ mensa.capacity|default:0 }} posti
+			</div>
 		</div>
 	</div>
 </section>
@@ -100,15 +109,15 @@
 		<div class="col-lg-8">
 			<!-- About Section -->
 			<div class="info-card mb-4" id="about">
-				<small class="text-primary text-uppercase">La nostra storia</small>
-				<h2 class="section-title">About</h2>
+				<small class="text-uppercase">La nostra storia</small>
+				<h3 >About</h3>
 				<p>{{ mensa.description }}</p>
 			</div>
 			
 			<!-- Location Section -->
 			<div class="info-card mb-4" id="location">
-				<small class="text-primary text-uppercase">Dove ci troviamo</small>
-				<h2 class="section-title">Location</h2>
+				<small class="text-uppercase">Dove ci troviamo</small>
+				<h3 >Location</h3>
 				<div id="map" class="map-container">
 					<!-- Map will be rendered here by Leaflet -->
 				</div>
@@ -116,8 +125,8 @@
 	
 			<!-- Weekly Menu Section -->
 			<div class="info-card mb-4" id="menu">
-				<small class="text-primary text-uppercase">La nostra settimana culinaria</small>
-				<h2 class="section-title">Menu Settimanale</h2>
+				<small class="text-uppercase">La nostra settimana culinaria</small>
+				<h3 >Menu Settimanale</h3>
 				
 				{% if weekly_menus %}
 					<div class="text-start mb-4">
@@ -257,8 +266,8 @@
 		<div class="col-lg-4">
 			<!-- Opening Hours -->
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">Quando siamo aperti</small>
-				<h3 class="section-title mb-3">Opening Hours</h3>
+				<small class="text-uppercase">Quando siamo aperti</small>
+				<h3 >Opening Hours</h3>
 				<table class="hours-table">
 					{% for weekday, day_data in weekly_menus.items %}
 					<tr>
@@ -290,8 +299,8 @@
 			<!-- Amenities Section -->
 			 {% if mensa.amenities.all %}
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">I nostri servizi</small>
-				<h3 class="section-title mb-3">Amenities</h3>
+				<small class="text-uppercase">I nostri servizi</small>
+				<h3 >Amenities</h3>
 				<div class="amenities-list">
 					{% for amenity in mensa.amenities.all %}
 					<div class="amenity-item">
@@ -304,8 +313,8 @@
 			
 			<!-- Contact Info -->
 			<div class="info-card">
-				<small class="text-primary text-uppercase">Come contattarci</small>
-				<h3 class="section-title mb-3">Contact</h3>
+				<small class="text-uppercase">Come contattarci</small>
+				<h3>Contact</h3>
 				{% if mensa.phone_number %}
 				<a href="tel:{{ mensa.phone_number }}" class="contact-link" target="_blank">
 					<i class="fa-solid fa-phone"></i>
@@ -335,73 +344,102 @@
 
 	<!-- Info Smart Section -->
 	<div id="api" class="row">
-		<div class="col-12">
-			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">in tempo reale</small>
-				<!-- Layout desktop con titolo e legenda affiancati -->
-				<div class="d-none d-md-flex justify-content-between align-items-flex-start">
-					<div>
-						<h2 class="section-title">
-							Info Smart
-							<span id="connection-status" class="status-indicator"></span>
-						</h2>
-						<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
-					</div>
-					<div class="legend" style="margin-left: 20px; border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
-						<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
-						<div class="legend-items">
-							<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
-								<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
-								<span class="legend-label">Posto libero</span>
-							</div>
-							<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
-								<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0d6efd; border: 1px solid #ddd; margin-right: 8px;"></div>
-								<span class="legend-label">Posto occupato</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<!-- Layout mobile con titolo e legenda in colonna -->
-				<div class="d-md-none">
-					<h2 class="section-title">
+	<div class="col-12">
+		<div class="info-card mb-4">
+			<small class="text-uppercase">in tempo reale</small>
+			<!-- Layout desktop con titolo e legenda affiancati -->
+			<div class="d-none d-md-flex align-items-center justify-content-between mb-3">
+				<div>
+					<h3 class="mb-1">
 						Info Smart
 						<span id="connection-status" class="status-indicator"></span>
-					</h2>
-					<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
-					
-					<div class="legend mb-3" style="border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
-						<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
-						<div class="legend-items">
-							<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
-								<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
-								<span class="legend-label">Posto libero</span>
-							</div>
-							<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
-								<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0d6efd; border: 1px solid #ddd; margin-right: 8px;"></div>
-								<span class="legend-label">Posto occupato</span>
-							</div>
+					</h3>
+					<p class="text-muted mb-0">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
+				</div>
+				<div class="legend ms-4">
+					<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
+					<div class="legend-items">
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
+							<span class="legend-label">Posto libero</span>
+						</div>
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0077D8; border: 1px solid #ddd; margin-right: 8px;"></div>
+							<span class="legend-label">Posto occupato</span>
 						</div>
 					</div>
 				</div>
+			</div>
+			<!-- Layout mobile con titolo e legenda in colonna -->
+			<div class="d-md-none">
+				<h3 >
+					Info Smart
+					<span id="connection-status" class="status-indicator"></span>
+				</h3>
+				<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
 				
-				<div id="mensa-info" class="mb-4">
-				<!-- Qui verranno inserite le info (coda, attesa, tavoli liberi ecc.) -->
-				</div>
-
-				<div id="seat-visualization">
-					<!-- Qui verrà inserita la griglia dei tavoli via JavaScript -->
+				<div class="legend mb-3" style="border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
+					<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
+					<div class="legend-items">
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
+							<span class="legend-label">Posto libero</span>
+						</div>
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0077D8; border: 1px solid #ddd; margin-right: 8px;"></div>
+							<span class="legend-label">Posto occupato</span>
+						</div>
+					</div>
 				</div>
 			</div>
+
+		
+		
+
+	
+			<div id="mensa-info" class="mb-4" style="display:flex;flex-wrap:wrap;gap:16px;">
+				{% comment %} una card = un dato {% endcomment %}
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">In coda</div>
+				<div id="queue-len" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Attesa</div>
+				<div id="wait-time" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">--</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Tavoli liberi</div>
+				<div id="free-tables" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Posti liberi</div>
+				<div id="free-seats" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">% posti liberi</div>
+				<div id="pct-free" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0%</div>
+				</div>
+			</div>
+
+		
+		
+
+
+
+			<div id="seat-visualization"></div>
+		
+		
 		</div>
 	</div>
+	</div>
+
 	
 	<!-- Gallery Section - Full Width -->
 	<div class="row" id="gallery">
 		<div class="col-12">
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">Le nostre foto</small>
-				<h2 class="section-title">Gallery</h2>
+				<small class="text-uppercase">Le nostre foto</small>
+				<h3 >Gallery</h3>
 				<div class="gallery-container">
 					{% for photo in mensa.gallery.all %}
 					<div class="gallery-item" onclick="openLightbox({{ forloop.counter0 }})">
@@ -431,42 +469,40 @@
 	<div class="row" id="reviews">
 		<div class="col-12">
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">Feedback dei clienti</small>
-				<h2 class="section-title">
-					<span>Listing Reviews</span>
-				</h2>
+				<small class="text-uppercase">Feedback dei clienti</small>
+				<h3 >Recensioni</h3>
 				
-				<!-- Add Review Form - Only if logged in and hasn't reviewed yet -->
+				<div class="reviews-container">
+					<!-- Add Review Form - Only if logged in and hasn't reviewed yet -->
 				{% if user.is_authenticated %}
 					{% if not user_has_reviewed %}
 						<div class="review-form-card mb-4">
-							<h4 class="mb-3">Scrivi una recensione</h4>
+							<h5>Scrivi una recensione</h4>
 							<form id="review-form" method="post">
 								{% csrf_token %}
-								<div class="mb-3">
-									<label class="form-label fw-bold">Valutazione</label>
-									<div class="star-rating">
+								<div class="mb-3 d-flex align-items-center" style="gap: 1em;">
+									{% comment %} <label class="form-label mb-0" style="white-space: nowrap;">Valutazione</label> {% endcomment %}
+									<div class="star-rating d-flex align-items-center" style="font-size:1.7rem; gap: 0.3em;">
 										<input type="radio" name="stars" value="5" id="star5">
-										<label for="star5"><i class="fa-solid fa-star"></i></label>
+										<label for="star5" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 										<input type="radio" name="stars" value="4" id="star4">
-										<label for="star4"><i class="fa-solid fa-star"></i></label>
+										<label for="star4" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 										<input type="radio" name="stars" value="3" id="star3">
-										<label for="star3"><i class="fa-solid fa-star"></i></label>
+										<label for="star3" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 										<input type="radio" name="stars" value="2" id="star2">
-										<label for="star2"><i class="fa-solid fa-star"></i></label>
+										<label for="star2" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 										<input type="radio" name="stars" value="1" id="star1">
-										<label for="star1"><i class="fa-solid fa-star"></i></label>
+										<label for="star1" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 									</div>
-									<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
 								</div>
-								
+								<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
 								<div class="mb-3">
-									<label for="comment" class="form-label fw-bold">Commento (opzionale)</label>
+									{% comment %} <label for="comment" class="form-label">Commento *</label> {% endcomment %}
 									<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
 								</div>
 								
-								<button type="submit" class="btn btn-primary">
-									<i class="fa-solid fa-paper-plane me-2"></i>Invia Recensione
+								<button type="submit" class="btn send-btn">
+									<i class="fa-solid fa-comment-dots me-2"></i>Invia Recensione
 								</button>
 							</form>
 						</div>
@@ -479,6 +515,8 @@
 						</p>
 					</div>
 				{% endif %}
+
+				</div>
 				
 				<!-- Loop through reviews -->
 				{% for review in reviews %}
@@ -500,8 +538,8 @@
 						</div>
 						{% if current_user.is_authenticated and review.user == current_user %}
 						<div class="review-actions">
-							<button class="btn btn-outline-danger btn-sm delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione">
-								<i class="fa-solid fa-trash"></i>
+							<button class="btn delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione" style="background: #f8f9fa; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);" onmouseover="this.style.background='#fee2e2'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(220, 53, 69, 0.15)';" onmouseout="this.style.background='#f8f9fa'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.05)';">
+								<i class="fa-solid fa-trash" style="color: #dc3545;"></i>
 							</button>
 						</div>
 						{% endif %}
@@ -520,266 +558,156 @@
 {% block extra_js %}
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-	/* INFO SMART */
-  // Intervallo di aggiornamento in millisecondi
-  const UPDATE_INTERVAL_MS = 1000;  // ogni 0.5 secondi
+/* ---------- CONFIG ---------- */
+const UPDATE_INTERVAL_MS = 1000;
+const mensaName          = "{{ mensa.name }}";
+const apiUrl             = `/api/${encodeURIComponent(mensaName)}/`;
 
-  // Nome mensa dal context Django
-  const mensaName = "{{ mensa.name }}";
-  const apiUrl = `/api/${encodeURIComponent(mensaName)}/`;
+/* ---------- UTILITY ---------- */
+function secondsToMinutes(sec){
+  const m = Math.floor(sec/60);
+  return m>0 ? `${m} min` : '< 1 min';
+}
 
-  function secondsToMinutes(seconds) {
-	const minutes = Math.floor(seconds / 60);
-	return minutes > 0 ? `${minutes} min` : '< 1 min';
-	}
+/* ---------- BUILD GRIGLIA (una volta) ---------- */
+function buildSeatGrid(blockList){
+  const cont = document.getElementById('seat-visualization');
+  cont.innerHTML = '';
+  blockList.forEach((block, bi)=>{
+    const letter = String.fromCharCode(65+bi);
+    /* container fila */
+    const blockDiv  = document.createElement('div');
+    blockDiv.className = 'block-container';
 
-  /**
-   * Mostra le info generali della mensa:
-   *  - queue_len
-   *  - wait_time (in secondi)
-   *  - free_tables
-   *  - free_seats
-   *  - pct_free_seats
-   */
-  function renderMensaInfo(data) {
-    const infoDiv = document.getElementById("mensa-info");
-    infoDiv.innerHTML = "";
-
-    // Creiamo un contenitore a riga
-    const row = document.createElement("div");
-    row.style.display = "flex";
-    row.style.flexWrap = "wrap";
-    row.style.gap = "16px";
-
-    // Funzione di utilità per creare una card info
-    function makeCard(label, value) {
-      const card = document.createElement("div");
-      card.style.padding = "8px 12px";
-      card.style.border = "1px solid #ccc";
-      card.style.borderRadius = "4px";
-      card.style.backgroundColor = "#f8f9fa";
-      card.style.minWidth = "120px";
-      card.style.textAlign = "center";
-
-      const lbl = document.createElement("div");
-      lbl.style.fontSize = "0.8rem";
-      lbl.style.color = "#555";
-      lbl.textContent = label;
-
-      const val = document.createElement("div");
-      val.style.fontSize = "1.2rem";
-      val.style.fontWeight = "bold";
-      val.style.marginTop = "4px";
-      val.textContent = value;
-
-      card.appendChild(lbl);
-      card.appendChild(val);
-      return card;
-    }
-
-    // Aggiungiamo le card con i dati
-    row.appendChild(makeCard("In coda", data.queue_len));
-    row.appendChild(makeCard("Attesa", secondsToMinutes(data.wait_time)));
-    row.appendChild(makeCard("Tavoli liberi", data.free_tables));
-    row.appendChild(makeCard("Posti liberi", data.free_seats));
-    row.appendChild(makeCard("% posti liberi", data.pct_free_seats + "%"));
-
-    infoDiv.appendChild(row);
-  }
-
-  /**
-   * Disegna la griglia dei tavoli per ogni blocco in 5 colonne × 2 righe.
-   * Visualizza ogni tavolo come visto dall'alto con 4 posti.
-   * I posti occupati sono mostrati in grigio.
-   * Se tutti e 4 i posti sono occupati, l'intero tavolo diventa grigio.
-   * I blocchi sono nascosti per default e si espandono al click.
-   * Mantiene lo stato aperto/chiuso durante gli aggiornamenti.
-   */
-  function renderSeats(blockList) {
-    const container = document.getElementById("seat-visualization");
-    
-    // Salva lo stato corrente dei blocchi aperti prima di ricreare
-    const openBlocks = new Set();
-    const existingBlocks = container.querySelectorAll('.block-container');
-    existingBlocks.forEach((blockDiv, index) => {
+    /* titolo + toggle */
+    const titleWrap = document.createElement('div');
+    titleWrap.className='block-title-container';
+    const title = document.createElement('h5');
+    title.className='block-title';
+    title.innerHTML = `Fila ${letter} <i class="fa-solid fa-chevron-down block-toggle-icon"></i>`;
+    title.addEventListener('click',()=>{
+      const icon = title.querySelector('.block-toggle-icon');
       const grid = blockDiv.querySelector('.table-grid');
-      if (grid && grid.style.display === "grid") {
-        const blockLetter = String.fromCharCode(65 + index);
-        openBlocks.add(blockLetter);
-      }
+      const open = grid.style.display!=='none';
+      grid.style.display = open ? 'none':'grid';
+      blockDiv.classList.toggle('expanded',!open);
     });
-    
-    container.innerHTML = "";
+    titleWrap.appendChild(title);
+    blockDiv.appendChild(titleWrap);
 
-    blockList.forEach((block, blockIndex) => {
-      const blockLetter = String.fromCharCode(65 + blockIndex);
-      const wasOpen = openBlocks.has(blockLetter);
+    /* griglia tavoli */
+    const grid = document.createElement('div');
+    grid.className='table-grid';
+    grid.style.display='none';         // chiusa di default
 
-      const blockDiv = document.createElement("div");
-      blockDiv.classList.add("block-container");
-      if (wasOpen) {
-        blockDiv.classList.add("expanded");
-      }
+    block.forEach((table,ti)=>{
+      const tableCont = document.createElement('div');
+      tableCont.className='table-container';
 
-      // Titolo del blocco con icona
-      const titleContainer = document.createElement("div");
-      titleContainer.classList.add("block-title-container");
-      
-      const title = document.createElement("h5");
-      title.classList.add("block-title");
-      title.innerHTML = `Fila ${blockLetter} <i class="fa-solid fa-chevron-${wasOpen ? 'up' : 'down'} block-toggle-icon"></i>`;
-      title.style.cursor = "pointer";
-      titleContainer.appendChild(title);
-      blockDiv.appendChild(titleContainer);
+      /* tavolo */
+      const t = document.createElement('div');
+      t.className='table';
+      t.id = `${letter}${ti+1}-table`;
+      tableCont.appendChild(t);
 
-      // Griglia 5 colonne × 2 righe (10 tavoli) - stato iniziale basato su wasOpen
-      const grid = document.createElement("div");
-      grid.classList.add("table-grid");
-      grid.style.display = wasOpen ? "grid" : "none";
-      grid.style.transition = "all 0.3s ease";
-      grid.style.overflow = "hidden";
+      /* id tavolo */
+      const id = document.createElement('div');
+      id.className='table-id';
+      id.textContent = `${letter}${ti+1}`;
+      tableCont.appendChild(id);
 
-      // Aggiungi event listener per espandere/comprimere il blocco
-      title.addEventListener("click", function() {
-        const isExpanded = grid.style.display !== "none";
-        const icon = title.querySelector('.block-toggle-icon');
-        
-        if (isExpanded) {
-          // Nascondi il grid
-          grid.style.display = "none";
-          blockDiv.classList.remove("expanded");
-          icon.classList.remove("fa-chevron-up");
-          icon.classList.add("fa-chevron-down");
-        } else {
-          // Mostra il grid
-          grid.style.display = "grid";
-          blockDiv.classList.add("expanded");
-          icon.classList.remove("fa-chevron-down");
-          icon.classList.add("fa-chevron-up");
-        }
+      /* 4 posti */
+      const pos=['seat-left-top','seat-right-top','seat-left-bottom','seat-right-bottom'];
+      table.forEach((_,si)=>{
+        const seat=document.createElement('div');
+        seat.className=`seat ${pos[si]}`;
+        seat.id=`${letter}${ti+1}-s${si}`;
+        tableCont.appendChild(seat);
       });
 
-      block.forEach((table, tableIndex) => {
-        const occupiedCount = table.reduce((sum, seat) => sum + seat, 0);
-        const allOccupied = occupiedCount === 4; // Tavolo completamente occupato se tutti e 4 i posti sono occupati
-        
-        // Container per il tavolo
-        const tableContainer = document.createElement("div");
-        tableContainer.classList.add("table-container");
-        
-        // Tavolo (rettangolare)
-        const tableDiv = document.createElement("div");
-        tableDiv.classList.add("table");
-        if (allOccupied) {
-          tableDiv.classList.add("occupied");
-        }
-        tableContainer.appendChild(tableDiv);
-        
-        // ID del tavolo al centro
-        const tableId = document.createElement("div");
-        tableId.classList.add("table-id");
-        tableId.textContent = `${blockLetter}${tableIndex + 1}`;
-        tableContainer.appendChild(tableId);
-        
-        // Mappiamo i 4 posti ai lati lunghi del tavolo (2 a sinistra, 2 a destra)
-        // Per ogni posto dell'array originale, assegniamo una posizione ai lati
-        const seatPositions = [
-          "seat-left-top",    // Primo posto a sinistra in alto
-          "seat-right-top",   // Secondo posto a destra in alto
-          "seat-left-bottom", // Terzo posto a sinistra in basso
-          "seat-right-bottom" // Quarto posto a destra in basso
-        ];
-        
-        // Creazione dei 4 posti ai lati lunghi
-        table.forEach((isOccupied, seatIndex) => {
-          const seat = document.createElement("div");
-          seat.classList.add("seat", seatPositions[seatIndex]);
-          if (isOccupied) {
-            seat.classList.add("occupied");
-          }
-          
-          tableContainer.appendChild(seat);
-        });
-        
-        grid.appendChild(tableContainer);
+      grid.appendChild(tableCont);
+    });
+
+    blockDiv.appendChild(grid);
+    cont.appendChild(blockDiv);
+  });
+}
+
+/* ---------- UPDATE ---------- */
+function updateInfoCards(d){
+  document.getElementById('queue-len').textContent   = d.queue_len;
+  document.getElementById('wait-time').textContent   = secondsToMinutes(d.wait_time);
+  document.getElementById('free-tables').textContent = d.free_tables;
+  document.getElementById('free-seats').textContent  = d.free_seats;
+  document.getElementById('pct-free').textContent    = d.pct_free_seats + '%';
+}
+
+function updateSeatClasses(blockList){
+  blockList.forEach((block, bi) => {
+    const letter = String.fromCharCode(65 + bi);
+    block.forEach((table, ti) => {
+      const tableEl  = document.getElementById(`${letter}${ti + 1}-table`);
+      if (!tableEl) return;
+
+      const allOcc = table.every(Boolean);
+      tableEl.classList.toggle("occupied", allOcc);
+
+      /* ▼▼ nuovo: cambia colore del testo al centro ▼▼ */
+      const labelEl = tableEl.parentElement.querySelector(".table-id");
+      if (labelEl) labelEl.classList.toggle("occupied", allOcc);
+
+      table.forEach((occ, si) => {
+        const seatEl = document.getElementById(`${letter}${ti + 1}-s${si}`);
+        if (seatEl) seatEl.classList.toggle("occupied", occ);
       });
-
-      blockDiv.appendChild(grid);
-      container.appendChild(blockDiv);
     });
-    
-    // La leggenda è stata spostata in HTML
-  }
-
-  /**
-   * Fetch ai dati API e render sia delle info generali che della griglia tavoli.
-*/
-  async function fetchAndRender() {
-	console.log("FETCH");
-const statusIndicator = document.getElementById('connection-status');
- try {
-	const response = await fetch(apiUrl);
-	if (!response.ok) throw new Error("Status " + response.status);
-	const data = await response.json();
-
-	renderMensaInfo(data);  // mostro le card delle info
-	renderSeats(data.block_list);            // mostro la griglia dei tavoli
-
-  statusIndicator.classList.remove('error');
-  statusIndicator.style.backgroundColor = 'green';
-  statusIndicator.style.animation = 'pulse 1.5s infinite';
-
-	// Rimuovi eventuale alert precedente
-	let oldAlert = document.getElementById('mensa-info-alert');
-	if (oldAlert) oldAlert.remove();
- } catch (err) {
-  statusIndicator.classList.add('error');
-  statusIndicator.style.backgroundColor = 'red';
-  statusIndicator.style.animation = 'none';
-  // Mostra alert sotto le info
-  let infoDiv = document.getElementById("mensa-info");
-  let oldAlert = document.getElementById('mensa-info-alert');
-  if (oldAlert) oldAlert.remove();
-  const alert = document.createElement('div');
-  alert.className = 'alert alert-danger mt-2';
-  alert.id = 'mensa-info-alert';
-  alert.role = 'alert';
-  alert.innerHTML = 'Impossibile recuperare le informazioni in tempo reale. Riprova più tardi.';
-  infoDiv.parentNode.insertBefore(alert, infoDiv.nextSibling);
-  console.error("Error fetching API data:", err);
-}
-  }
-
-  {% comment %} document.addEventListener("DOMContentLoaded", () => {
-    fetchAndRender();
-    setInterval(fetchAndRender, UPDATE_INTERVAL_MS);
-  }); {% endcomment %}
-
-// Funzione per verificare la visibilità della sezione "Info Smart"
-let fetchInterval;
-
-function observeInfoSmartSection() {
-    const infoSmartSection = document.getElementById('api');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // La sezione è visibile, avvia l'intervallo di aggiornamento
-                fetchAndRender();
-                fetchInterval = setInterval(fetchAndRender, UPDATE_INTERVAL_MS);
-            } else {
-                // La sezione non è più visibile, ferma l'intervallo
-                clearInterval(fetchInterval);
-            }
-        });
-    });
-
-    observer.observe(infoSmartSection);
+  });
 }
 
-// Avvia l'osservazione quando la pagina è caricata
-document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
+function setConnection(ok){
+  const ind = document.getElementById('connection-status');
+  ind.classList.toggle('error',!ok);
+  ind.style.animation = ok ? 'pulse 1.5s infinite':'none';
+}
+
+/* ---------- POLLING ---------- */
+let firstRender=true;
+
+async function fetchAndRender(){
+  try{
+    const res = await fetch(apiUrl);
+    if(!res.ok) throw new Error(res.status);
+    const data = await res.json();
+
+    updateInfoCards(data);
+    if(firstRender){ buildSeatGrid(data.block_list); firstRender=false; }
+    updateSeatClasses(data.block_list);
+    setConnection(true);
+  }catch(e){
+    console.error(e);
+    setConnection(false);
+  }
+}
+
+/* ---------- VISIBILITÀ SEZIONE ---------- */
+function observeInfoSmart(){
+  const section=document.getElementById('api');
+  let interval;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        fetchAndRender();
+        interval=setInterval(fetchAndRender,UPDATE_INTERVAL_MS);
+      }else{
+        clearInterval(interval);
+      }
+    });
+  });
+  obs.observe(section);
+}
+
+document.addEventListener('DOMContentLoaded',observeInfoSmart);
 </script>
 
 
@@ -1015,18 +943,16 @@ document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 		
 		// Set up the confirm button click handler
 		document.getElementById('confirmDeleteBtn').onclick = function() {
-			// close popup
 			deleteModal.hide();
 
 			// Confirm deletion
-			// Disable button and show loading
 			deleteBtn.disabled = true;
 			deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-			
+
 			// Prepare form data
 			const formData = new FormData();
 			formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
-			
+
 			// Send AJAX request
 			fetch('{% url "remove_review" mensa.name %}', {
 				method: 'POST',
@@ -1038,75 +964,57 @@ document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 			.then(response => response.json())
 			.then(data => {
 				if (data.success) {
-					// Remove the review card with animation
 					reviewCard.style.transition = 'opacity 0.3s ease';
 					reviewCard.style.opacity = '0';
 					setTimeout(() => {
 						reviewCard.remove();
-						
-						// Show review form again if user just deleted their review and no form exists
+
+						// Ensure the review form reappears dynamically at the top
 						const reviewFormCard = document.querySelector('.review-form-card');
 						if (!reviewFormCard) {
-							// Create a new form container
 							const reviewsContainer = document.querySelector('#reviews .info-card');
-							const formHTML = `
-								<div class="review-form-card mb-4">
-									<h4 class="mb-3">Scrivi una recensione</h4>
-									<form id="review-form" method="post">
-										{% csrf_token %}
-										
-										<div class="mb-3">
-											<label class="form-label fw-bold">Valutazione</label>
-											<div class="star-rating">
-												<input type="radio" name="stars" value="5" id="star5">
-												<label for="star5"><i class="fa-solid fa-star"></i></label>
-												<input type="radio" name="stars" value="4" id="star4">
-												<label for="star4"><i class="fa-solid fa-star"></i></label>
-												<input type="radio" name="stars" value="3" id="star3">
-												<label for="star3"><i class="fa-solid fa-star"></i></label>
-												<input type="radio" name="stars" value="2" id="star2">
-												<label for="star2"><i class="fa-solid fa-star"></i></label>
-												<input type="radio" name="stars" value="1" id="star1">
-												<label for="star1"><i class="fa-solid fa-star"></i></label>
+							if (reviewsContainer) {
+								const formHTML = `
+									<div class="review-form-card mb-4">
+										<h5>Scrivi una recensione</h5>
+										<form id="review-form" method="post">
+											{% csrf_token %}
+											<div class="mb-3 d-flex align-items-center" style="gap: 1em;">
+												<div class="star-rating d-flex align-items-center" style="font-size:1.7rem; gap: 0.3em;">
+													<input type="radio" name="stars" value="5" id="star5">
+													<label for="star5" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+													<input type="radio" name="stars" value="4" id="star4">
+													<label for="star4" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+													<input type="radio" name="stars" value="3" id="star3">
+													<label for="star3" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+													<input type="radio" name="stars" value="2" id="star2">
+													<label for="star2" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+													<input type="radio" name="stars" value="1" id="star1">
+													<label for="star1" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+												</div>
 											</div>
 											<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
-										</div>
-										
-										<div class="mb-3">
-											<label for="comment" class="form-label fw-bold">Commento (opzionale)</label>
-											<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
-										</div>
-										
-										<button type="submit" class="btn btn-primary">
-											<i class="fa-solid fa-paper-plane me-2"></i>Invia Recensione
-										</button>
-									</form>
-								</div>
-							`;
-							
-							// Insert the form after the title
-							const titleElement = reviewsContainer.querySelector('.section-title');
-							if (titleElement) {
-								titleElement.insertAdjacentHTML('afterend', formHTML);
+											<div class="mb-3">
+												<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
+											</div>
+											<button type="submit" class="btn send-btn">
+												<i class="fa-solid fa-comment-dots me-2"></i>Invia Recensione
+											</button>
+										</form>
+									</div>`;
+								reviewsContainer.insertAdjacentHTML('afterbegin', formHTML);
+
+								// Reinitialize the review form functionality
+								initializeReviewForm();
 							}
-							
-							// Reinitialize the review form functionality
-							initializeReviewForm();
 						}
 					}, 300);
-					
 				} else {
-					console.error('Error deleting review:', data.message);
-					
-					// Re-enable button
 					deleteBtn.disabled = false;
 					deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
 				}
 			})
 			.catch(error => {
-				console.error('Error:', error);
-				
-				// Re-enable button
 				deleteBtn.disabled = false;
 				deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
 			});
@@ -1227,8 +1135,8 @@ document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 									<span class="review-date">${currentDate}</span>
 								</div>
 								<div class="review-actions">
-									<button class="btn btn-outline-danger btn-sm delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione">
-										<i class="fa-solid fa-trash"></i>
+									<button class="btn delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione" style="background: #f8f9fa; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);" onmouseover="this.style.background='#fee2e2'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(220, 53, 69, 0.15)';" onmouseout="this.style.background='#f8f9fa'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.05)';">
+										<i class="fa-solid fa-trash" style="color: #dc3545;"></i>
 									</button>
 								</div>
 							</div>
@@ -1305,22 +1213,22 @@ document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 <!-- Delete Review Confirmation Modal -->
 <div class="modal fade" id="deleteReviewModal" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteReviewModalLabel">
-                    <i class="fa-solid fa-exclamation-triangle text-warning me-2"></i>
+        <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+            <div class="modal-header" style="background-color: #f8f9fa; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 15px 20px;">
+                <h5 class="modal-title" id="deleteReviewModalLabel" style="font-weight: 600; color: #333;">
+                    <i class="fa-solid fa-exclamation-triangle me-2" style="color: #dc3545;"></i>
                     Conferma eliminazione
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p class="mb-0">Sei sicuro di voler eliminare questa recensione? Questa azione non può essere annullata.</p>
+            <div class="modal-body" style="padding: 20px;">
+                <p class="mb-0" style="font-size: 1rem; color: #495057;">Sei sicuro di voler eliminare questa recensione? Questa azione non può essere annullata.</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <div class="modal-footer" style="border-top: 1px solid rgba(0,0,0,0.05); padding: 15px 20px;">
+                <button type="button" class="btn btn-delete-rv" data-bs-dismiss="modal" style="background-color: #f8f9fa; color: #495057; border-radius: 8px; padding: 8px 16px; font-weight: 500; border: 1px solid #dee2e6; transition: all 0.2s ease;">
                     <i class="fa-solid fa-times me-1"></i>Annulla
                 </button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                <button type="button" class="btn btn-delete-rv" id="confirmDeleteBtn" style="background-color: #dc3545; color: white; border-radius: 8px; padding: 8px 16px; font-weight: 500; border: none; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);">
                     <i class="fa-solid fa-trash me-1"></i>Elimina recensione
                 </button>
             </div>
