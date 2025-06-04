@@ -841,7 +841,7 @@ body {
 .profile-edit-form {
 	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 	transform: translateY(-20px) scale(0.98);
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 .profile-edit-form.show {
@@ -1007,7 +1007,7 @@ body {
 
 /* Style for selected checkbox */
 .allergens-checkboxes input[type="checkbox"]:checked + label {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  background: #0077D8;
   color: white;
   border-color: #6a11cb;
   font-weight: 600;

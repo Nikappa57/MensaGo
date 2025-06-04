@@ -346,59 +346,89 @@
 	<div id="api" class="row">
 	<div class="col-12">
 		<div class="info-card mb-4">
-		<small class="text-uppercase">in tempo reale</small>
+			<small class="text-uppercase">in tempo reale</small>
+			<!-- Layout desktop con titolo e legenda affiancati -->
+			<div class="d-none d-md-flex align-items-center justify-content-between mb-3">
+				<div>
+					<h3 class="mb-1">
+						Info Smart
+						<span id="connection-status" class="status-indicator"></span>
+					</h3>
+					<p class="text-muted mb-0">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
+				</div>
+				<div class="legend ms-4">
+					<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
+					<div class="legend-items">
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
+							<span class="legend-label">Posto libero</span>
+						</div>
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0077D8; border: 1px solid #ddd; margin-right: 8px;"></div>
+							<span class="legend-label">Posto occupato</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Layout mobile con titolo e legenda in colonna -->
+			<div class="d-md-none">
+				<h3 >
+					Info Smart
+					<span id="connection-status" class="status-indicator"></span>
+				</h3>
+				<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
+				
+				<div class="legend mb-3" style="border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
+					<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
+					<div class="legend-items">
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
+							<span class="legend-label">Posto libero</span>
+						</div>
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0077D8; border: 1px solid #ddd; margin-right: 8px;"></div>
+							<span class="legend-label">Posto occupato</span>
+						</div>
+					</div>
+				</div>
+			</div>
 
-		<h3>
-			Info Smart
-			<span id="connection-status" class="status-indicator"></span>
-		</h3>
-		<p class="text-muted">
-			Qui trovi informazioni smart in tempo reale sulla mensa: coda,
-			attesa, tavoli e posti liberi.
-		</p>
+		
+		
 
-		{# --- CARD STATISTICHE (stile identico a prima, inizializzate a 0) --- #}
-		<div id="mensa-info" class="mb-4" style="display:flex;flex-wrap:wrap;gap:16px;">
-			{% comment %} una card = un dato {% endcomment %}
-			<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
-			<div style="font-size:0.8rem;color:#555;">In coda</div>
-			<div id="queue-len" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+	
+			<div id="mensa-info" class="mb-4" style="display:flex;flex-wrap:wrap;gap:16px;">
+				{% comment %} una card = un dato {% endcomment %}
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">In coda</div>
+				<div id="queue-len" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Attesa</div>
+				<div id="wait-time" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">--</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Tavoli liberi</div>
+				<div id="free-tables" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Posti liberi</div>
+				<div id="free-seats" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">% posti liberi</div>
+				<div id="pct-free" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0%</div>
+				</div>
 			</div>
-			<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
-			<div style="font-size:0.8rem;color:#555;">Attesa</div>
-			<div id="wait-time" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">--</div>
-			</div>
-			<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
-			<div style="font-size:0.8rem;color:#555;">Tavoli liberi</div>
-			<div id="free-tables" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
-			</div>
-			<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
-			<div style="font-size:0.8rem;color:#555;">Posti liberi</div>
-			<div id="free-seats" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
-			</div>
-			<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
-			<div style="font-size:0.8rem;color:#555;">% posti liberi</div>
-			<div id="pct-free" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0%</div>
-			</div>
-		</div>
 
-		{# --- GRIGLIA TAVOLI (stesso markup di prima) --- #}
-		<div id="seat-visualization"></div>
+		
+		
 
-		{# --- LEGENDA (immutata) --- #}
-		<div class="legend mt-4">
-			<div class="legend-title">Legenda:</div>
-			<div class="legend-items">
-			<div class="legend-item">
-				<div class="legend-color square" style="background:#ffffff;"></div>
-				<span class="legend-label">Posto libero</span>
-			</div>
-			<div class="legend-item">
-				<div class="legend-color square" style="background:#0077D8;border:1px solid #ddd;"></div>
-				<span class="legend-label">Posto occupato</span>
-			</div>
-			</div>
-		</div>
+
+
+			<div id="seat-visualization"></div>
+		
+		
 		</div>
 	</div>
 	</div>
@@ -614,16 +644,22 @@ function updateInfoCards(d){
 }
 
 function updateSeatClasses(blockList){
-  blockList.forEach((block,bi)=>{
-    const letter = String.fromCharCode(65+bi);
-    block.forEach((table,ti)=>{
-      const tableEl = document.getElementById(`${letter}${ti+1}-table`);
-      if(!tableEl) return;
+  blockList.forEach((block, bi) => {
+    const letter = String.fromCharCode(65 + bi);
+    block.forEach((table, ti) => {
+      const tableEl  = document.getElementById(`${letter}${ti + 1}-table`);
+      if (!tableEl) return;
+
       const allOcc = table.every(Boolean);
-      tableEl.classList.toggle('occupied',allOcc);
-      table.forEach((occ,si)=>{
-        const seatEl=document.getElementById(`${letter}${ti+1}-s${si}`);
-        if(seatEl) seatEl.classList.toggle('occupied',occ);
+      tableEl.classList.toggle("occupied", allOcc);
+
+      /* ▼▼ nuovo: cambia colore del testo al centro ▼▼ */
+      const labelEl = tableEl.parentElement.querySelector(".table-id");
+      if (labelEl) labelEl.classList.toggle("occupied", allOcc);
+
+      table.forEach((occ, si) => {
+        const seatEl = document.getElementById(`${letter}${ti + 1}-s${si}`);
+        if (seatEl) seatEl.classList.toggle("occupied", occ);
       });
     });
   });
