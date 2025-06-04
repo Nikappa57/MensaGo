@@ -107,7 +107,7 @@
 			</div>
 	</div>
 	<!-- About FLEX 2 -->
-	<div class=" about-flex container">
+	{% comment %} <div class=" about-flex container">
 			<!-- ELEM 1 -->
 			<div class="about-elem">
 				<div class="about-elem-side">
@@ -138,7 +138,7 @@
 					</div>
 				</div>
 			</div>
-	</div>
+	</div> {% endcomment %}
 </section>
 
 <!-- Banner -->
@@ -206,8 +206,11 @@
 
 <!-- Tutorial Section -->
 <section id="tutorial" class="container py-5 mb-5">
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-2">
     <div>
+	  <small class="text-uppercase">
+	  Tutorial
+	  </small>
       <h2>Come Utilizzare MensaGo</h2>
     </div>
   </div>
@@ -220,9 +223,11 @@
     <!-- Step 1 -->
     <div class="col-lg-4 col-md-6">
       <div class="step-box">
-        <div class="step-number">01</div>
-        <h4 class="mb-3">Registrati</h4>
-        <p>Crea un account MensaGo con la tua email universitaria per accedere a tutte le funzionalità.</p>
+        <div class="d-flex align-items-center mb-2">
+          <div class="step-number me-3">01</div>
+          <h4 class="d-flex align-items-center">Registrati</h4>
+        </div>
+        <p class="mb-3">Crea un account MensaGo con la tua email universitaria per accedere a tutte le funzionalità.</p>
         <div class="phone-mockup">
           <div class="phone-frame phone-left">
             <img class="mockup" src="{% static 'imgs/tutorial/signup.png' %}" alt="Registrazione" onerror="this.src='https://via.placeholder.com/280x550?text=Registrazione'">
@@ -234,8 +239,10 @@
     <!-- Step 2 -->
     <div class="col-lg-4 col-md-6">
       <div class="step-box">
-        <div class="step-number">02</div>
-        <h4 class="mb-3">Scegli la Mensa</h4>
+        <div class="d-flex align-items-center mb-2">
+          <div class="step-number me-3">02</div>
+          <h4 class="d-flex align-items-center">Scegli la Mensa</h4>
+        </div>
         <p>Seleziona la tua città e scopri la mensa piú vicina a te!.</p>
         <div class="phone-mockup">
           <div class="phone-frame phone-center">
@@ -248,10 +255,12 @@
     <!-- Step 3 -->
     <div class="col-lg-4 col-md-12 mx-md-auto">
       <div class="step-box">
-        <div class="step-number">03</div>
-        <h4 class="mb-3">Inizia a Mangiare</h4>
+        <div class="d-flex align-items-center mb-2">
+          <div class="step-number me-3">03</div>
+          <h4 class="d-flex align-items-center">Inizia a Mangiare</h4>
+        </div>
         <p>Ricarica il tuo credito, scannerizza il qr code in cassa e inizia subito a gustare i piatti delle nostre mense.</p>
-        <div class="phone-mockup">
+        <div class="phone-mockup mt-5">
           <div class="phone-frame phone-right">
             <img class="mockup" src="{% static 'imgs/tutorial/eat.png' %}" alt="Inizia a mangiare" onerror="this.src='https://via.placeholder.com/280x550?text=Buon+Appetito'">
           </div>
@@ -265,13 +274,13 @@
 	{% if user.is_authenticated %}
 		<h3 class="mb-3">Sei pronto per iniziare?</h3>
 		<p class="lead mb-4">Accedi al tuo account e scopri tutte le funzionalità di MensaGo</p>
-		<a href="{% url 'profile' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
+		<a href="{% url 'profile' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill btn-profile">
 			<i class="fas fa-sign-in-alt me-2"></i> Vai al profilo
 		</a>
 	{% else %}
 		<h3 class="mb-3">Cosa aspetti? Inizia oggi!</h3>
 		<p class="lead mb-4">Registrati subito e scopri tutte le funzionalità che MensaGo ha da offrirti</p>
-		<a href="{% url 'register' %}?next={{ request.path }}#tutorial" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
+		<a href="{% url 'register' %}?next={{ request.path }}#tutorial" class="btn btn-dark btn-lg px-5 py-3 rounded-pill btn-profile">
 			<i class="fas fa-user-plus me-2"></i> Registrati ora
 		</a>
 	{% endif %}
