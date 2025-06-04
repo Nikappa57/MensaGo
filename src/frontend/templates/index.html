@@ -38,17 +38,29 @@
 	<li class="nav-item dropdown ms-3">
 		<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
 			data-bs-toggle="dropdown" aria-expanded="false">
-			{{ user.first_name }} {{ user.last_name }}
+			<i class="fas fa-user-circle me-1"></i>
+			<strong>{{ user.first_name }} {{ user.last_name }}</strong>
 		</a>
 		<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-			<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+			<li>
+				<a class="dropdown-item" href="{% url 'profile' %}">
+					<i class="fas fa-user me-2"></i> Profile
+				</a>
+			</li>
 			<li><hr class="dropdown-divider"> </li>
-			<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+			<li>
+				<a class="dropdown-item" href="{% url 'logout' %}">
+					<i class="fas fa-sign-out-alt me-2"></i> Logout
+				</a>
+			</li>
 		</ul>
 	</li>
 	{% else %}
 	<li class="nav-item ms-3">
-		<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+		<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">
+			<i class="fas fa-sign-in-alt me-1"></i>
+			<strong>Log In</strong>
+		</a>
 	</li>
 	{% endif %}
 {% endblock %}
@@ -268,24 +280,24 @@
       </div>
     </div>
   </div>
-  
+  </section>
   <!-- Call to Action -->
-  <div class="text-center mt-5 mb-4">
+  <div class="text-center call-to-action">
 	{% if user.is_authenticated %}
 		<h3 class="mb-3">Sei pronto per iniziare?</h3>
 		<p class="lead mb-4">Accedi al tuo account e scopri tutte le funzionalità di MensaGo</p>
-		<a href="{% url 'profile' %}" class="btn btn-dark btn-lg px-5 py-3 rounded-pill btn-profile">
-			<i class="fas fa-sign-in-alt me-2"></i> Vai al profilo
+		<a href="{% url 'profile' %}" class="btn btn-dark btn-lg px-5 py-3 btn-profile">
+			<i class="fas fa-sign-in-alt me-2"></i> <strong> Vai al profilo </strong>
 		</a>
 	{% else %}
 		<h3 class="mb-3">Cosa aspetti? Inizia oggi!</h3>
 		<p class="lead mb-4">Registrati subito e scopri tutte le funzionalità che MensaGo ha da offrirti</p>
 		<a href="{% url 'register' %}?next={{ request.path }}#tutorial" class="btn btn-dark btn-lg px-5 py-3 rounded-pill btn-profile">
-			<i class="fas fa-user-plus me-2"></i> Registrati ora
+			<i class="fas fa-user-plus me-2"></i> <strong> Registrati ora </strong>
 		</a>
 	{% endif %}
   </div>
-</section>
+
 
 <!-- Upcoming Events -->
 <section class="pb-5" id="eventi">
