@@ -397,19 +397,7 @@ body {
 	background: rgba(13, 110, 253, 0.05);
 }
 
-.form-control-custom input[type="file"]::before {
-	content: "Scegli un file";
-	display: inline-block;
-	margin-right: 0.75rem;
-	padding: 0.35rem 0.85rem;
-	background: #0077D8;
-	color: white;
-	border-radius: 0.5rem;
-	font-size: 0.9rem;
-	font-weight: 500;
-	box-shadow: 0 2px 4px rgba(13, 110, 253, 0.2);
-	transition: all 0.2s ease;
-}
+
 
 .form-control-custom input[type="file"]:hover::before {
 	transform: translateY(-1px);

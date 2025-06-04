@@ -68,7 +68,7 @@
                                 <p class="mb-2 text-muted small">Ordina per</p>
                                 <div class="d-flex flex-wrap gap-2 justify-content-end">
                                     <button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
-                                    {% if pos and pos.lat and pos.lng %}
+                                    {% if pos and pos.lat and pos.lon %}
                                     <button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
                                     {% endif %}
                                     <button class="tag-btn" data-sort="capacity" data-dir="desc">Capienza</button>
@@ -96,7 +96,7 @@
                                 <div class="mensa-banner">
                                     <img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
                                     
-                                    {% if pos and pos.lat and pos.lng %}
+                                    {% if pos and pos.lat and pos.lon %}
                                         <div class="mensa-distance">
                                             <i class="fas fa-route me-1"></i>{{ mensa.distance }} km
                                         </div>
