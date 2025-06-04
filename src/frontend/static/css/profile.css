@@ -997,19 +997,19 @@ body {
 /* Hover effect */
 .allergens-checkboxes label:hover {
   transform: translateY(-1px);
-  border-color: #6a11cb;
+  border-color: #ffffff;
   box-shadow: 0 4px 8px rgba(106, 17, 203, 0.1);
 }
 
 .allergens-checkboxes label:hover:before {
-  border-color: #6a11cb;
+  border-color: #ffffff;
 }
 
 /* Style for selected checkbox */
 .allergens-checkboxes input[type="checkbox"]:checked + label {
   background: #0077D8;
   color: white;
-  border-color: #6a11cb;
+  border-color: #ffffff;
   font-weight: 600;
   box-shadow: 0 4px 12px rgba(106, 17, 203, 0.2);
 }
@@ -1026,7 +1026,7 @@ body {
 /* Focus effect */
 .allergens-checkboxes input[type="checkbox"]:focus + label {
   box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.3);
-  border-color: #6a11cb;
+  border-color: #0077D8;
 }
 
 /* Effect when state changes */
@@ -1088,12 +1088,12 @@ body {
 }
 
 .allergens-checkboxes::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #6a11cb, #2575fc);
+  background: #0077D8;
   border-radius: 8px;
 }
 
 .allergens-checkboxes::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #5a0fb0, #1b67e3);
+  background: #0077D8;
 }
 
 /* Styles for password edit form */
