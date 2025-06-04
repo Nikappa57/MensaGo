@@ -779,25 +779,6 @@ def populate_mense():
         'Torino': [
             {
                 'name':
-                'Mensa Politecnico',
-                'description':
-                'Mensa del Politecnico di Torino. Un ampio spazio di ristorazione per gli studenti di ingegneria e architettura, '
-                'con servizi efficienti e menu studiati per supportare le lunghe giornate di studio in questo prestigioso ateneo tecnico.',
-                'position':
-                'Corso Duca degli Abruzzi 24, Torino',
-                'capacity':
-                400,
-                'phone_number':
-                '011123456',
-                'email':
-                'mensa.polito@polito.it',
-                'latitude':
-                45.0626,
-                'longitude':
-                7.6620
-            },
-            {
-                'name':
                 'Mensa Palazzo Nuovo',
                 'description':
                 'Mensa universitaria di Palazzo Nuovo. Punto di riferimento per gli studenti di facoltà umanistiche, '
@@ -973,25 +954,6 @@ def populate_mense():
             },
             {
                 'name':
-                'Mensa Santa Marta',
-                'description':
-                'Mensa nel complesso di Santa Marta. Un ambiente moderno in un contesto storico, '
-                'questa mensa è frequentata soprattutto dagli studenti di scienze, offrendo un menu variato e un\'atmosfera rilassata lontana dal turismo.',
-                'position':
-                'Dorsoduro 2137, Venezia',
-                'capacity':
-                150,
-                'phone_number':
-                '041456789',
-                'email':
-                'mensa.santamarta@unive.it',
-                'latitude':
-                45.4326,
-                'longitude':
-                12.3174
-            },
-            {
-                'name':
                 'Mensa IUAV',
                 'description':
                 'Mensa dell\'Università IUAV. Progettata con un\'attenzione particolare al design e all\'architettura, come si addice a questa università, '
@@ -1034,17 +996,17 @@ def populate_mense():
             # Banner image
             banner_fname = m_data['name'].lower().replace(' ', '_') + '.jpg'
             banner_rel = f"banners/{banner_fname}"
-            banner_path = f"uploads/banners/{banner_fname}"
+            banner_path = f"./uploads/banners/{banner_fname}"
 
             create_sample_image(banner_path)
             mensa.banner = banner_rel
             mensa.save()
 
             # Galleria
-            for i in range(4):
+            for i in range(3):
                 img_name = f"{m_data['name'].lower().replace(' ', '-')}{i+1}.jpg"
                 rel = f"photos/{img_name}"
-                path = f"uploads/photos/{img_name}"
+                path = f"./uploads/photos/{img_name}"
                 create_sample_image(path)
 
                 photo, p_created = PhotoMensa.objects.get_or_create(img=rel)
@@ -1057,12 +1019,12 @@ def populate_mense():
             )
 
 
-def create_mensa_gallery(mensa_name, num_images=4):
+def create_mensa_gallery(mensa_name, num_images=3):
     photos = []
     for i in range(num_images):
         img_name = f"{mensa_name.lower().replace(' ', '-')}{i+1}.jpg"
         rel = f"photos/{img_name}"
-        path = f"uploads/photos/{img_name}"
+        path = f"./uploads/photos/{img_name}"
         create_sample_image(path)
         photo, _ = PhotoMensa.objects.get_or_create(img=rel)
         photos.append(photo)
@@ -1156,7 +1118,7 @@ def populate_dishes():
     print("\nCreando piatti...")
 
     # Ottengo la lista delle immagini di piatti esistenti
-    dish_photos_dir = "uploads/dish-photos/"
+    dish_photos_dir = "./uploads/dish-photos/"
     existing_photos = []
 
     if os.path.exists(dish_photos_dir):
