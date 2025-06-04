@@ -5,6 +5,7 @@
 - [ ] Rivedere il diagramma ER e il diagramma di flusso (I)
 - [ ] Refactoring
 - [ ] Controlla tutti i todo
+- [ ] Fare mail
 
 ## Home
 
