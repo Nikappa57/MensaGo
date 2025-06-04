@@ -442,7 +442,7 @@
 		<h2>Contattaci</h2>
 		<form id="contactForm" class="row g-3 mt-3" method="POST" action="">
 			{% csrf_token %}
-			<div class="col-md-6">
+			<div class="col-12">
 			<label for="id_name" class="form-label">Nome</label>
 			<input type="text" name="name" id="id_name" class="form-control" required>
 			{% if form.name.errors %}
@@ -451,7 +451,7 @@
 				</div>
 			{% endif %}
 			</form>
-			<div class="col-md-6">
+			<div class="col-12">
 			<label for="id_email" class="form-label">Email</label>
 			<input type="email" name="email" id="id_email" class="form-control" required>
 			{% if form.email.errors %}
