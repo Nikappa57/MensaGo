@@ -31,12 +31,17 @@ body {
 }
 
 .home-btn {
-	border: 4px solid #0d6efd; 
+	border: 4px solid #0d6efd;
 	color: #0d6efd;
 	border-radius: 0.75rem;
 	background-color: whitesmoke;
 	transition: background-color 0.3s;
 }
+
+.home-btn:hover {
+	border: 4px solid #fff;
+}
+
 /*** About  ***/
 
 .about-flex { /* flex box per dividere la section tra i figli */
@@ -522,19 +527,36 @@ h1 {
 }
 
 h2 {
-	font-size: 2rem;
-	font-style: italic;
+	font-size: 3.2rem;
+	font-weight: 350;
+	/* font-style: italic; */
 }
 
 h3 {
-	font-size: 1rem;
-	font-style: italic;
+	font-size: 2.8rem;
+	font-weight: 300;
+	/* font-style: italic; */
 	margin-bottom: 5px;
 }
 
 p {
 	margin-bottom: 15px;
+	font-size: 1.3rem;
 	color: #666;
+}
+
+small {
+  color: #0078D9 !important;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.about-elem-side h3 {
+  margin-bottom: 30px;
+}
+
+.about-elem-side p {
+	font-style: italic;
 }
 
 .blue-line {
@@ -1033,4 +1055,8 @@ p {
 #contact {
 	padding-top: 8%;
 	padding-bottom: 8%;
+}
+
+#about {
+	padding-top: 10vh;
 }

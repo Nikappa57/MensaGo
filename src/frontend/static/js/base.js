@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Navbar active section functionality
     function updateActiveNavLink() {
         // Select only section navigation links, exclude profile/login buttons
-        const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]:not(.profile-btn):not(.login-btn)');
+        const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]:not(.login-btn)');
         
         if (navLinks.length === 0) return; // Skip if no nav links found
         

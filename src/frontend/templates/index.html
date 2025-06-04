@@ -36,7 +36,7 @@
 	</li>
 	{% if user.is_authenticated %}
 	<li class="nav-item dropdown ms-3">
-		<a class="nav-link dropdown-toggle profile-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+		<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
 			data-bs-toggle="dropdown" aria-expanded="false">
 			{{ user.first_name }} {{ user.last_name }}
 		</a>
@@ -68,13 +68,13 @@
 </section>
 
 <!-- About -->
-<section id="about", class="container py-5">
-	<small class="text-primary text-uppercase">
+<section id="about", class="container">
+	<small class="text-uppercase">
 		Chi siamo
 	</small>
-	<h2 class="fw-bold mt-2">About Us</h2>
+	<h2>About Us</h2>
 	<!-- About FLEX 1 -->
-		<div class=" about-flex container">
+		<div class="about-flex container">
 			<!-- ELEM 1 -->
 			<div class="about-elem">
 				<div class="about-elem-side">
@@ -84,7 +84,7 @@
 					</div>
 				</div>
 				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
+					<h3>Always amazing experience</h3>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
 						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
 						superiores. Possimus facilis velin, voluptatibus!</p>
@@ -93,7 +93,7 @@
 			<!-- ELEM 2 -->
 			<div class="about-elem">
 				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
+					<h3>Always amazing experience</h3>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
 						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
 						superiores. Possimus facilis velin, voluptatibus!</p>
@@ -117,7 +117,7 @@
 					</div>
 				</div>
 				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
+					<h3>Always amazing experience</h3>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
 						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
 						superiores. Possimus facilis velin, voluptatibus!</p>
@@ -126,7 +126,7 @@
 			<!-- ELEM 2 -->
 			<div class="about-elem">
 				<div class="about-elem-side">
-					<h2>Always amazing experience</h2>
+					<h3>Always amazing experience</h3>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestias veritatis iste,
 						consectetur, laborum libero a neque maximus. Porro rem illum quo nostrum quispiam
 						superiores. Possimus facilis velin, voluptatibus!</p>
@@ -156,10 +156,10 @@
 
 <!-- Citta -->
 <section id="citta" class="container py-5">
-	<small class="text-primary text-uppercase">
+	<small class="text-uppercase">
 		Siamo presenti in tutta Italia
 	</small>
-	<h2 class="fw-bold mt-2">Scopri le mense</h2>
+	<h2>Scopri le mense</h2>
 	<div class="row gy-5 gx-5 mt-4">
 		{% if cities %}
 			{% for city in cities %}
@@ -208,7 +208,7 @@
 <section id="tutorial" class="container py-5 mb-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-      <h2 class="fw-bold mb-0">Come Utilizzare MensaGo</h2>
+      <h2>Come Utilizzare MensaGo</h2>
     </div>
   </div>
   
@@ -282,10 +282,10 @@
 <section class="pb-5" id="eventi">
 	<div class="container">
 		<div class="row mb-4">
-			<small class="text-primary text-uppercase">
+			<small class="text-uppercase">
 			Calendario
 			</small>
-			<h2 class="fw-bold mt-2">Eventi</h2>
+			<h2>Eventi</h2>
 		</div>
 
 	{% if events %}
@@ -328,7 +328,7 @@
 								<!-- Normal view (date and name below image) -->
 								<div class="event-details mt-3 text-start">
 									<p class="text-muted mb-1"><i class="far fa-calendar-alt me-2"></i>{{ event.date|date:"d F Y" }}</p>
-									<h3 class="card-title fw-bold mt-2">{{ event.name }}</h3>
+									<h4 class="card-title fw-bold mt-2">{{ event.name }}</h4>
 								</div>
 							</div>
 						</div>
@@ -352,10 +352,10 @@
 		<div class="faq-bg-shape faq-bg-shape-2"></div>
 		
 		<div class="faq-title-section">
-			<small class="text-primary text-uppercase">
+			<small class="text-uppercase">
 				Ti aiutiamo con piacere
 			</small>
-			<h2 class="fw-bold mt-2">Domande Frequenti</h2>
+			<h2>Domande Frequenti</h2>
 			<p class="text-muted">Risposte alle domande più frequenti sulla nostra piattaforma</p>
 		</div>
 		
@@ -422,8 +422,10 @@
 	
 	<!-- Contact -->
 <section id="contact" class="container">
-	<h2 class="fw-bold">Contattaci</h2>
-	<p class="text-muted">Hai domande? Scrivici!</p>
+	<small class="text-uppercase">
+		Hai domande? Scrivici!
+	</small>
+	<h2>Contattaci</h2>
 	<form id="contactForm" class="row g-3 mt-3" method="POST" action="">
 		{% csrf_token %}
 		<div class="col-md-6">
