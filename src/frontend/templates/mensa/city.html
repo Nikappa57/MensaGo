@@ -12,19 +12,19 @@
 {% block nav_elements %}
 {% if user.is_authenticated %}
 <li class="nav-item dropdown ms-3">
-	<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
-		data-bs-toggle="dropdown" aria-expanded="false">
-		{{ user.first_name }} {{ user.last_name }}
-	</a>
-	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-		<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-		<li><hr class="dropdown-divider"> </li>
-		<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-	</ul>
+    <a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        {{ user.first_name }} {{ user.last_name }}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+        <li><hr class="dropdown-divider"> </li>
+        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+    </ul>
 </li>
 {% else %}
 <div class="nav-item ms-3">
-	<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+    <a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
 </div>
 {% endif %}
 {% endblock %}
@@ -32,20 +32,20 @@
 {% block nav_mobile %}
 <div class="dropdown d-lg-none">
 {% if user.is_authenticated %}
-	<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
-		data-bs-toggle="dropdown" aria-expanded="false">
-		{{ user.first_name }} {{ user.last_name }}
-	</a>
-	
-	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="margin: 0">
-		<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-		<li><hr class="dropdown-divider"> </li>
-		<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-	</ul>
+    <a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        {{ user.first_name }} {{ user.last_name }}
+    </a>
+    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="margin: 0">
+        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+        <li><hr class="dropdown-divider"> </li>
+        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+    </ul>
 
 {% else %}
 <div class="nav-item ms-3">
-	<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+    <a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
 </div>
 {% endif %}
 </div>
@@ -60,7 +60,7 @@
                 <div class="p-4">
                     <div class="row align-items-end mb-4">
                         <div class="col">
-                            <h2 class="mb-0 fw-bold">Mense in {{ city.name }}</h2>
+                            <h2 class="mb-0 fw-bold">{{ city.name }}</h2>
                             <p class="text-muted mb-0">{{ mense|length }} risultati</p>
                         </div>
                         <div class="col-auto">
@@ -70,66 +70,79 @@
                                     <button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
                                     <button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
                                     <button class="tag-btn" data-sort="capacity" data-dir="desc">Capienza</button>
-									<button class="tag-btn" data-sort="free_seats" data-dir="desc">Tavoli liberi <span id="connection-status1" class="status-indicator"></span></button>
-    								<button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda <span id="connection-status2" class="status-indicator"></span></button>
+                                    <button class="tag-btn" data-sort="free_seats" data-dir="desc">Tavoli liberi <span id="connection-status1" class="status-indicator"></span></button>
+                                    <button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda <span id="connection-status2" class="status-indicator"></span></button>
                                 </div>
                             </div>
                         </div>
                     </div>
-					<hr class="my-4">
+                    <hr class="my-4">
                     <!-- Cafeteria List -->
                     <div class="mense-list row g-4">
                         {% for mensa in mense %}
                         <div class="col-12 col-md-6">
-                            <div class="card mensa-card h-100"
+                            <div
+                                class="card mensa-card h-100"
                                 data-id="{{ mensa.name|urlencode }}"
                                 data-rating="{{ mensa.stars|default:0 }}"
                                 data-distance="{{ mensa.distance|default:0 }}"
-                                data-capacity="{{ mensa.capacity|default:0 }}">
+                                data-capacity="{{ mensa.capacity|default:0 }}"
+                                data-free_seats="0"
+                                data-wait_time="999999"
+                            >
                                 <a href="{% url 'mensa_details' city_name=city.name mensa_name=mensa.name %}" class="text-decoration-none">
                                 <div class="mensa-banner">
                                     <img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
-									<div class="mensa-distance">
-										<i class="fas fa-route me-1"></i>{{ mensa.distance }} km
-									</div>
-                                    <div class="banner-capacity">
-                                        <i class="fas fa-chair me-1"></i>{{ mensa.capacity }} posti
+
+                                    <div class="mensa-distance">
+                                    <i class="fas fa-route me-1"></i>{{ mensa.distance }} km
                                     </div>
+                                    <div class="banner-capacity">
+                                    <i class="fas fa-chair me-1"></i>{{ mensa.capacity }} posti
+                                    </div>
+
                                     <div class="mensa-banner-content">
-                                        <h5 class="mensa-title mb-2">{{ mensa.name }}</h5>
-                                        <div class="rating-stars">
-                                            {% for _ in "01234" %}
-                                                {% if forloop.counter <= mensa.stars|default:0 %}
-                                                    <i class="fas fa-star"></i>
-                                                {% else %}
-                                                    <i class="far fa-star"></i>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </div>
+                                    <h5 class="mensa-title mb-2">{{ mensa.name }}</h5>
+                                    <div class="rating-stars">
+                                        {% for _ in "01234" %}
+                                        {% if forloop.counter <= mensa.stars|default:0 %}
+                                            <i class="fas fa-star"></i>
+                                        {% else %}
+                                            <i class="far fa-star"></i>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
                                     </div>
                                 </div>
+
                                 <div class="card-body">
                                     <p class="card-text text-muted small mb-3">
-                                        <i class="fas fa-map-marker-alt me-2"></i>{{ mensa.position }}
+                                    <i class="fas fa-map-marker-alt me-2"></i>{{ mensa.position }}
                                     </p>
-                                     <p class="mensa-description mb-2">
-										{% if mensa.description %}{{ mensa.description }}{% endif %}
-									</p>
-									<div class="mt-2 small text-muted">
-										<i class="fas fa-clock me-1"></i>
-										Attesa: <span class="wait-time wait-time-indicator">--</span>  <span class=""></span><br>
-										<i class="fas fa-chair me-1"></i>
-										Tavoli liberi: <span class="free-tables">--</span>
-									</div>
-									<div class="small text-muted">
-										<i class="fas fa-utensils me-2"></i>
-										{% if mensa.phone_number %}Telefono: {{ mensa.phone_number }}{% endif %}
-										{% if mensa.email %}{% if mensa.phone_number %} | {% endif %}Email: {{ mensa.email }}{% endif %}
-									</div>
-									</div>
+
+                                    <p class="mensa-description mb-2">
+                                    {% if mensa.description %}{{ mensa.description }}{% endif %}
+                                    </p>
+
+                                    <div class="mt-2 small text-muted">
+                                    <i class="fas fa-clock me-1"></i>
+                                    Attesa:
+                                    <span class="wait-time wait-time-indicator">--</span><br>
+
+                                    <i class="fas fa-chair me-1"></i>
+                                    Tavoli liberi:
+                                    <span class="free-tables">--</span>
+                                    </div>
+
+                                    <div class="small text-muted">
+                                    <i class="fas fa-utensils me-2"></i>
+                                    {% if mensa.phone_number %}Telefono: {{ mensa.phone_number }}{% endif %}
+                                    {% if mensa.email %}{% if mensa.phone_number %} | {% endif %}Email: {{ mensa.email }}{% endif %}
+                                    </div>
+                                </div>
                                 </a>
                             </div>
-                        </div>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -148,267 +161,193 @@
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-	const map = L.map('map', {
-		scrollWheelZoom: false,
-		dragging: false
-	}).setView([{{ city.latitude }}, {{ city.longitude }}], 13);
+    const map = L.map('map', {
+        scrollWheelZoom: false,
+        dragging: false
+    }).setView([{{ city.latitude }}, {{ city.longitude }}], 13);
 
-	map.addEventListener('click', function(event) { // Added 'event' parameter
-		map.scrollWheelZoom.enable();
-		map.dragging.enable();
-		if (event.originalEvent) {
-			event.originalEvent.stopPropagation(); // Stop event from bubbling to document
-		}
-	});
-
-	document.addEventListener('click', function(e) {
-		if (!map.getContainer().contains(e.target)) {
-			map.dragging.disable();
-			map.scrollWheelZoom.disable();
-		}
-	});
-	
-	L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-			attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-			maxZoom: 19,
-			minZoom: 10,
-		}).addTo(map);
-	// Add markers for each mensa
-	{% for mensa in mense %}
-	(function() {
-		const mensa = {
-			name: "{{ mensa.name|escapejs }}",
-			position: "{{ mensa.position|escapejs }}",
-			latitude: {{ mensa.latitude|default:"null" }},
-			longitude: {{ mensa.longitude|default:"null" }}
-		};
-		
-		if (!mensa.latitude || !mensa.longitude) {
-			console.warn(`Mensa "${mensa.name}" does not have valid coordinates.`);
-			const fallbackMarker = L.marker([{{ city.latitude }}, {{ city.longitude }}]).addTo(map);
-			fallbackMarker.bindPopup(`
-				<div>
-					<img src="{{ mensa.banner.url }}" class="popup-image" alt="${mensa.name}">
-					<h5 class="mb-2">${mensa.name}</h5>
-					<p class="text-muted mb-0"><i class="fas fa-map-marker-alt me-1"></i> ${mensa.position}</p>
-				</div>
-			`, {
-				closeButton: true,
-				className: 'custom-popup'
-			});
-			return;
-		}
-		
-		const marker = L.marker([mensa.latitude, mensa.longitude]).addTo(map);
-		marker.bindPopup(`
-			<div>
-				<img src="{{ mensa.banner.url }}" class="popup-image" alt="${mensa.name}">
-				<h5 class="mb-2">${mensa.name}</h5>
-				<p class="text-muted mb-0"><i class="fas fa-map-marker-alt me-1"></i> ${mensa.position}</p>
-			</div>
-		`, {
-			closeButton: true,
-			className: 'custom-popup'
-		});
-	})();
-	{% endfor %}
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // -------------------------------------------------------------------
-  // 1) CONFIGURAZIONE
-  // -------------------------------------------------------------------
-  const UPDATE_INTERVAL_MS = 3000;  // Ogni 5 secondi
-
-  // Contenitore di tutte le card (le singole col-12 col-md-6 dentro .mense-list)
-  const menseListContainer = document.querySelector(".mense-list");
-
-  // Bottoni filtro
-  const filterButtons = Array.from(document.querySelectorAll(".tag-btn"));
-
-  // Stato corrente dell’ordinamento
-  let currentSortKey = "rating";
-  let currentSortDir = "desc";
-
-  // -------------------------------------------------------------------
-  // 2) GESTIONE CLICK BOTTONE FILTRO
-  // -------------------------------------------------------------------
-  filterButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      // Rimuovo classe active da tutti
-      filterButtons.forEach(b => b.classList.remove("active"));
-      // Aggiungo active a questo bottone
-      btn.classList.add("active");
-
-      // Leggo nuova chiave e direzione
-      currentSortKey = btn.getAttribute("data-sort");
-      currentSortDir = btn.getAttribute("data-dir");
-
-      // Riordino subito con i valori attuali
-      reorderMensaList();
+    map.addEventListener('click', function(event) { // Added 'event' parameter
+        map.scrollWheelZoom.enable();
+        map.dragging.enable();
+        if (event.originalEvent) {
+            event.originalEvent.stopPropagation(); // Stop event from bubbling to document
+        }
     });
+
+    document.addEventListener('click', function(e) {
+        if (!map.getContainer().contains(e.target)) {
+            map.dragging.disable();
+            map.scrollWheelZoom.disable();
+        }
+    });
+    
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+            maxZoom: 19,
+            minZoom: 10,
+        }).addTo(map);
+    // Add markers for each mensa
+    {% for mensa in mense %}
+    (function() {
+        const mensa = {
+            name: "{{ mensa.name|escapejs }}",
+            position: "{{ mensa.position|escapejs }}",
+            latitude: {{ mensa.latitude|default:"null" }},
+            longitude: {{ mensa.longitude|default:"null" }}
+        };
+        
+        if (!mensa.latitude || !mensa.longitude) {
+            console.warn(`Mensa "${mensa.name}" does not have valid coordinates.`);
+            const fallbackMarker = L.marker([{{ city.latitude }}, {{ city.longitude }}]).addTo(map);
+            fallbackMarker.bindPopup(`
+                <div>
+                    <img src="{{ mensa.banner.url }}" class="popup-image" alt="${mensa.name}">
+                    <h5 class="mb-2">${mensa.name}</h5>
+                    <p class="text-muted mb-0"><i class="fas fa-map-marker-alt me-1"></i> ${mensa.position}</p>
+                </div>
+            `, {
+                closeButton: true,
+                className: 'custom-popup'
+            });
+            return;
+        }
+        
+        const marker = L.marker([mensa.latitude, mensa.longitude]).addTo(map);
+        marker.bindPopup(`
+            <div>
+                <img src="{{ mensa.banner.url }}" class="popup-image" alt="${mensa.name}">
+                <h5 class="mb-2">${mensa.name}</h5>
+                <p class="text-muted mb-0"><i class="fas fa-map-marker-alt me-1"></i> ${mensa.position}</p>
+            </div>
+        `, {
+            closeButton: true,
+            className: 'custom-popup'
+        });
+    })();
+    {% endfor %}
+</script>
+<script>
+/* -------------------------------------------------
+   1) CONFIG
+------------------------------------------------- */
+const UPDATE_INTERVAL_MS = 3000;
+const container      = document.querySelector(".mense-list");
+const filterButtons  = [...document.querySelectorAll(".tag-btn")];
+let   sortKey        = "rating";
+let   sortDir        = "desc";
+
+/* -------------------------------------------------
+   2) UTILITY
+------------------------------------------------- */
+const minutes = s => Math.floor(s/60);
+const s2m     = s => minutes(s) > 0 ? `${minutes(s)} min` : "< 1 min";
+
+/* -------------------------------------------------
+   3) SORT + FLIP
+------------------------------------------------- */
+function sortCols(cols, key, dir){
+  return cols.sort((a,b)=>{
+    const va = +a.querySelector(".mensa-card").dataset[key] || 0;
+    const vb = +b.querySelector(".mensa-card").dataset[key] || 0;
+    return dir === "asc" ? va - vb : vb - va;
+  });
+}
+
+/* → NUOVO ← controllo se serva davvero riordinare */
+function shouldReorder(key, dir){
+  const cols   = [...container.children];
+  const sorted = sortCols([...cols], key, dir);   // copia!
+  return cols.some((col, i) => col !== sorted[i]);
+}
+
+function reorder(){
+  const cols   = [...container.children];
+  const sorted = sortCols(cols, sortKey, sortDir);
+  const first  = new Map(cols .map(c=>[c,c.getBoundingClientRect()]));
+
+  container.append(...sorted);                    // cambia DOM
+
+  const last   = new Map(sorted.map(c=>[c,c.getBoundingClientRect()]));
+  sorted.forEach(col=>{
+    const f = first.get(col), l = last.get(col);
+    const dx = f.left - l.left, dy = f.top - l.top;
+    col.style.transform  = `translate(${dx}px,${dy}px)`;
+    col.style.transition = "transform 0s";
+    requestAnimationFrame(()=>{
+      col.style.transform  = "";
+      col.style.transition = "transform 400ms cubic-bezier(.4,.2,.2,1)";
+    });
+    col.addEventListener("transitionend",()=>col.style.transition="",{once:true});
+  });
+}
+
+/* -------------------------------------------------
+   4) FILTRI
+------------------------------------------------- */
+filterButtons.forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    filterButtons.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    sortKey = btn.dataset.sort;
+    sortDir = btn.dataset.dir;
+    reorder();
+  });
+});
+
+/* -------------------------------------------------
+   5) LIVE UPDATE
+------------------------------------------------- */
+async function updateCards(){
+  const cols = [...container.children];
+  const fetches = cols.map(async col=>{
+    const card  = col.querySelector(".mensa-card");
+    const name  = card.dataset.id;
+    try{
+      const res  = await fetch(`/api/${name}/`);
+      if(!res.ok) throw new Error(res.status);
+      const d    = await res.json();
+
+      card.dataset.free_seats = d.free_seats;
+      card.dataset.wait_time  = d.wait_time;
+
+      col.querySelector(".wait-time").textContent   = s2m(d.wait_time);
+      col.querySelector(".free-tables").textContent = d.free_tables;
+
+      const ind = col.querySelector(".wait-time-indicator");
+      ind.classList.remove("green","yellow","red");
+      const m = minutes(d.wait_time);
+      ind.classList.add(m<8 ? "green" : m<=15 ? "yellow" : "red");
+
+      document.querySelectorAll("#connection-status1,#connection-status2")
+              .forEach(i=>i.classList.remove("error"));
+    }catch(e){
+      console.warn(name, e);
+      card.dataset.free_seats = 0;
+      card.dataset.wait_time  = 999999;
+      col.querySelector(".wait-time").textContent   = "--";
+      col.querySelector(".free-tables").textContent = "--";
+      col.querySelector(".wait-time-indicator")
+         .classList.remove("green","yellow","red");
+      document.querySelectorAll("#connection-status1,#connection-status2")
+              .forEach(i=>i.classList.add("error"));
+    }
   });
 
-  // -------------------------------------------------------------------
-  // 3) FUNZIONI DI ORDINAMENTO
-  // -------------------------------------------------------------------
-  function sortCols(cols, key, dir) {
-    return cols.sort((colA, colB) => {
-      // Ogni col contiene una .mensa-card al suo interno
-      const cardA = colA.querySelector(".mensa-card");
-      const cardB = colB.querySelector(".mensa-card");
+  await Promise.all(fetches);
 
-      // Leggo valore dal data-attribute corrispondente (fallback 0)
-      let valA = parseFloat(cardA.getAttribute(`data-${key}`)) || 0;
-      let valB = parseFloat(cardB.getAttribute(`data-${key}`)) || 0;
-
-      if (valA < valB) return dir === "asc" ? -1 : 1;
-      if (valA > valB) return dir === "asc" ? 1 : -1;
-      return 0;
-    });
+  /* → QUI la logica “se non cambia, non riordinare” */
+  if (["free_seats","wait_time"].includes(sortKey) &&
+      shouldReorder(sortKey, sortDir)){
+    reorder();
   }
-
-	function reorderMensaList() {
-	/* 1. snapshot iniziale */
-	const cols    = [...menseListContainer.querySelectorAll(".col-12.col-md-6")];
-	const sorted  = sortCols(cols, currentSortKey, currentSortDir);
-	const first   = new Map(cols.map(c => [c, c.getBoundingClientRect()]));
-
-	/* 2. riordino DOM */
-	menseListContainer.append(...sorted);
-
-	/* 3. snapshot finale */
-	const last = new Map(sorted.map(c => [c, c.getBoundingClientRect()]));
-
-	/* 4. FLIP (invert → play) */
-	sorted.forEach(col => {
-		const f = first.get(col), l = last.get(col);
-		const dx = f.left - l.left;
-		const dy = f.top  - l.top;
-
-		col.style.transform  = `translate(${dx}px, ${dy}px)`;
-		col.style.transition = 'transform 0s';
-
-		requestAnimationFrame(() => {
-		col.style.transform  = '';
-		col.style.transition = 'transform 400ms cubic-bezier(.4,.2,.2,1)';
-		});
-
-		col.addEventListener(
-		'transitionend',
-		() => (col.style.transition = ''),
-		{ once: true }
-		);
-	});
 }
 
-
-  // -------------------------------------------------------------------
-  // 4) FETCH E AGGIORNAMENTO “LIVE” DEI DATI
-  // -------------------------------------------------------------------
-  function secondsToMinutes(seconds) {
-  const minutes = Math.floor(seconds / 60);
-  return minutes > 0 ? `${minutes} min` : '< 1 min';
-}
-
-  async function updateMensaCards() {
-    const colItems = Array.from(menseListContainer.querySelectorAll(".col-12.col-md-6"));
-
-    // Per ogni col, prendo il card e faccio fetch
-    const promises = colItems.map(col => {
-      const card = col.querySelector(".mensa-card");
-      const mensaName = card.getAttribute("data-id");
-      const url = `/api/${mensaName}/`;
-
-      return fetch(url)
-        .then(resp => {
-          if (!resp.ok) throw new Error("Status " + resp.status);
-          return resp.json();
-        })
-        .then(data => {
-          // Aggiorno i data-attributes con i valori live
-          card.setAttribute("data-free_seats", data.free_seats);
-          card.setAttribute("data-wait_time", data.wait_time);
-
-          // Aggiorno la visuale interna degli span
-          const waitElem = card.querySelector(".wait-time");
-          const freeElem = card.querySelector(".free-tables");
-          const waitIndicator = card.querySelector(".wait-time-indicator");
-          
-          if (waitElem) waitElem.textContent = secondsToMinutes(data.wait_time);
-          if (freeElem) freeElem.textContent = data.free_tables;
-          
-          // Update traffic light indicator based on wait time
-          if (waitIndicator) {
-            const waitMinutes = Math.floor(data.wait_time / 60);
-            waitIndicator.classList.remove("green", "yellow", "red");
-            
-            if (waitMinutes < 8) {
-              waitIndicator.classList.add("green");
-            } else if (waitMinutes <= 15) {
-              waitIndicator.classList.add("yellow");
-            } else {
-              waitIndicator.classList.add("red");
-            }
-          }
-		  // remove error indicator
-		  const statusIndicator1 = document.getElementById("connection-status1");
-		  const statusIndicator2 = document.getElementById("connection-status2");
-		  if (!statusIndicator1 || !statusIndicator2) {
-			  console.error("Status indicators not found");
-			  return;
-		  }
-		  statusIndicator1.classList.remove("error");
-		  statusIndicator2.classList.remove("error");
-        })
-        .catch(err => {
-          console.warn(`Errore fetch per ${mensaName}:`, err);
-          // In caso di errore, fallback
-          card.setAttribute("data-free_seats", 0);
-          card.setAttribute("data-wait_time", 999999);
-          const waitElem = card.querySelector(".wait-time");
-          const freeElem = card.querySelector(".free-tables");
-          const waitIndicator = card.querySelector(".wait-time-indicator");
-          
-          if (waitElem) waitElem.textContent = "--";
-          if (freeElem) freeElem.textContent = "--";
-          
-          // Reset traffic light indicator on error
-          if (waitIndicator) {
-            waitIndicator.classList.remove("green", "yellow", "red");
-          }
-		  // add error indicator
-		  const statusIndicator1 = document.getElementById("connection-status1");
-		  const statusIndicator2 = document.getElementById("connection-status2");
-		  if (!statusIndicator1 || !statusIndicator2) {
-			  console.error("Status indicators not found");
-			  return;
-		  }
-		  statusIndicator1.classList.add("error");
-		  statusIndicator2.classList.add("error");
-        });
-    });
-
-    // Aspetto che finiscano tutte le chiamate
-    await Promise.all(promises);
-
-	if (currentSortKey === "free_seats" || currentSortKey === "wait_time") {
-		reorderMensaList();
-	}
-	else {
-		console.log("Reordering by non-live attribute, skipping sort");
-	}
-  }
-
-  // -------------------------------------------------------------------
-  // 5) INIZIALIZZAZIONE
-  // -------------------------------------------------------------------
-  // 5.1: Carico subito i valori live al caricamento pagina
-  updateMensaCards();
-
-  // 5.2: Imposto il polling a intervalli regolari
-  setInterval(updateMensaCards, UPDATE_INTERVAL_MS);
+/* -------------------------------------------------
+   6) AVVIO
+------------------------------------------------- */
+document.addEventListener("DOMContentLoaded",()=>{
+  updateCards();
+  setInterval(updateCards, UPDATE_INTERVAL_MS);
 });
 </script>
 

@@ -44,7 +44,7 @@ body {
 
 /*** About  ***/
 
-.about-flex { /* flex box per dividere la section tra i figli */
+.about-flex {
 	display: flex;
 	flex-direction: column;
 	margin-top: 5vh !important;
@@ -68,7 +68,7 @@ body {
 }
 
 .about-elem-img { /* wrapper per le img */
-	margin: 10px;
+	/* margin: 10px; */
 	position: relative;
 	height: 50vh;
 }
