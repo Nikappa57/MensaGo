@@ -518,46 +518,8 @@ img.mockup {
   font-weight: bold;
 }
 
-
-/* Stili generali TODO: rivedere */
-h1, h2, h3 {
-	font-weight: 400;
-	margin-bottom: 15px;
-}
-
-h1 {
-	font-size: 2.5rem;
-	font-style: italic;
-}
-
-h2 {
-	font-size: 3.2rem;
-	font-weight: 350;
-	/* font-style: italic; */
-}
-
-h3 {
-	font-size: 2.8rem;
-	font-weight: 300;
-	/* font-style: italic; */
-	margin-bottom: 5px;
-}
-
-h4 {
-	font-weight: 500;
-	font-size: 1.55rem;
-}
-
 p {
-	margin-bottom: 15px;
-	font-size: 1.3rem;
-	color: #666;
-}
-
-small {
-  color: #0078D9 !important;
-  font-weight: 400;
-  font-style: italic;
+  color: #666;
 }
 
 .about-elem-side h3 {

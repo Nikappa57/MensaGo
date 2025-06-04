@@ -75,12 +75,12 @@
 	<img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
 	<div class="restaurant-banner-overlay">
 		<div class="container">
-			<h1 class="fs-2 fw-bold">{{ mensa.name }}</h1>
+			<h2 class="fs-2">{{ mensa.name }}</h2>
 			<p class="mb-0">
 				<i class="fa-solid fa-location-dot me-2"></i>
-				{{ mensa.position }}, {{ mensa.city.name }}
+				{{ mensa.position }}
 			</p>
-			<span class="badge bg-light text-dark me-2 mt-3">
+			<span class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
 				{% for _ in "01234" %}
 					{% if forloop.counter <= mensa.stars|default:0 %}
 						<i class="fas fa-star text-warning"></i>
@@ -90,6 +90,13 @@
 				{% endfor %}
 				{{ mensa.review_set.all|length }} Reviews
 			</span>
+
+			<div class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
+				<i class="fas fa-route me-1"></i>{{ mensa.distance|default:0 }} km
+			</div>
+			<div class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
+				<i class="fas fa-chair me-1"></i>{{ mensa.capacity|default:0 }} posti
+			</div>
 		</div>
 	</div>
 </section>
@@ -100,15 +107,15 @@
 		<div class="col-lg-8">
 			<!-- About Section -->
 			<div class="info-card mb-4" id="about">
-				<small class="text-primary text-uppercase">La nostra storia</small>
-				<h2 class="section-title">About</h2>
+				<small class="text-uppercase">La nostra storia</small>
+				<h3 >About</h3>
 				<p>{{ mensa.description }}</p>
 			</div>
 			
 			<!-- Location Section -->
 			<div class="info-card mb-4" id="location">
-				<small class="text-primary text-uppercase">Dove ci troviamo</small>
-				<h2 class="section-title">Location</h2>
+				<small class="text-uppercase">Dove ci troviamo</small>
+				<h3 >Location</h3>
 				<div id="map" class="map-container">
 					<!-- Map will be rendered here by Leaflet -->
 				</div>
@@ -116,8 +123,8 @@
 	
 			<!-- Weekly Menu Section -->
 			<div class="info-card mb-4" id="menu">
-				<small class="text-primary text-uppercase">La nostra settimana culinaria</small>
-				<h2 class="section-title">Menu Settimanale</h2>
+				<small class="text-uppercase">La nostra settimana culinaria</small>
+				<h3 >Menu Settimanale</h3>
 				
 				{% if weekly_menus %}
 					<div class="text-start mb-4">
@@ -257,8 +264,8 @@
 		<div class="col-lg-4">
 			<!-- Opening Hours -->
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">Quando siamo aperti</small>
-				<h3 class="section-title mb-3">Opening Hours</h3>
+				<small class="text-uppercase">Quando siamo aperti</small>
+				<h3 >Opening Hours</h3>
 				<table class="hours-table">
 					{% for weekday, day_data in weekly_menus.items %}
 					<tr>
@@ -290,8 +297,8 @@
 			<!-- Amenities Section -->
 			 {% if mensa.amenities.all %}
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">I nostri servizi</small>
-				<h3 class="section-title mb-3">Amenities</h3>
+				<small class="text-uppercase">I nostri servizi</small>
+				<h3 >Amenities</h3>
 				<div class="amenities-list">
 					{% for amenity in mensa.amenities.all %}
 					<div class="amenity-item">
@@ -304,8 +311,8 @@
 			
 			<!-- Contact Info -->
 			<div class="info-card">
-				<small class="text-primary text-uppercase">Come contattarci</small>
-				<h3 class="section-title mb-3">Contact</h3>
+				<small class="text-uppercase">Come contattarci</small>
+				<h3>Contact</h3>
 				{% if mensa.phone_number %}
 				<a href="tel:{{ mensa.phone_number }}" class="contact-link" target="_blank">
 					<i class="fa-solid fa-phone"></i>
@@ -337,14 +344,14 @@
 	<div id="api" class="row">
 		<div class="col-12">
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">in tempo reale</small>
+				<small class="text-uppercase">in tempo reale</small>
 				<!-- Layout desktop con titolo e legenda affiancati -->
 				<div class="d-none d-md-flex justify-content-between align-items-flex-start">
 					<div>
-						<h2 class="section-title">
+						<h3>
 							Info Smart
 							<span id="connection-status" class="status-indicator"></span>
-						</h2>
+						</h3>
 						<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
 					</div>
 					<div class="legend" style="margin-left: 20px; border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
@@ -364,10 +371,10 @@
 				
 				<!-- Layout mobile con titolo e legenda in colonna -->
 				<div class="d-md-none">
-					<h2 class="section-title">
+					<h3 >
 						Info Smart
 						<span id="connection-status" class="status-indicator"></span>
-					</h2>
+					</h3>
 					<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
 					
 					<div class="legend mb-3" style="border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
@@ -400,8 +407,8 @@
 	<div class="row" id="gallery">
 		<div class="col-12">
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">Le nostre foto</small>
-				<h2 class="section-title">Gallery</h2>
+				<small class="text-uppercase">Le nostre foto</small>
+				<h3 >Gallery</h3>
 				<div class="gallery-container">
 					{% for photo in mensa.gallery.all %}
 					<div class="gallery-item" onclick="openLightbox({{ forloop.counter0 }})">
@@ -431,42 +438,39 @@
 	<div class="row" id="reviews">
 		<div class="col-12">
 			<div class="info-card mb-4">
-				<small class="text-primary text-uppercase">Feedback dei clienti</small>
-				<h2 class="section-title">
-					<span>Listing Reviews</span>
-				</h2>
+				<small class="text-uppercase">Feedback dei clienti</small>
+				<h3 >Recensioni</h3>
 				
 				<!-- Add Review Form - Only if logged in and hasn't reviewed yet -->
 				{% if user.is_authenticated %}
 					{% if not user_has_reviewed %}
 						<div class="review-form-card mb-4">
-							<h4 class="mb-3">Scrivi una recensione</h4>
+							<h5>Scrivi una recensione</h4>
 							<form id="review-form" method="post">
 								{% csrf_token %}
-								<div class="mb-3">
-									<label class="form-label fw-bold">Valutazione</label>
-									<div class="star-rating">
+								<div class="mb-3 d-flex align-items-center" style="gap: 1em;">
+									{% comment %} <label class="form-label mb-0" style="white-space: nowrap;">Valutazione</label> {% endcomment %}
+									<div class="star-rating d-flex align-items-center" style="font-size:1.7rem; gap: 0.3em;">
 										<input type="radio" name="stars" value="5" id="star5">
-										<label for="star5"><i class="fa-solid fa-star"></i></label>
+										<label for="star5" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 										<input type="radio" name="stars" value="4" id="star4">
-										<label for="star4"><i class="fa-solid fa-star"></i></label>
+										<label for="star4" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 										<input type="radio" name="stars" value="3" id="star3">
-										<label for="star3"><i class="fa-solid fa-star"></i></label>
+										<label for="star3" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 										<input type="radio" name="stars" value="2" id="star2">
-										<label for="star2"><i class="fa-solid fa-star"></i></label>
+										<label for="star2" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 										<input type="radio" name="stars" value="1" id="star1">
-										<label for="star1"><i class="fa-solid fa-star"></i></label>
+										<label for="star1" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 									</div>
-									<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
 								</div>
-								
+								<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
 								<div class="mb-3">
-									<label for="comment" class="form-label fw-bold">Commento (opzionale)</label>
+									{% comment %} <label for="comment" class="form-label">Commento *</label> {% endcomment %}
 									<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
 								</div>
 								
-								<button type="submit" class="btn btn-primary">
-									<i class="fa-solid fa-paper-plane me-2"></i>Invia Recensione
+								<button type="submit" class="btn send-btn">
+									<i class="fa-solid fa-comment-dots me-2"></i>Invia Recensione
 								</button>
 							</form>
 						</div>
@@ -500,8 +504,8 @@
 						</div>
 						{% if current_user.is_authenticated and review.user == current_user %}
 						<div class="review-actions">
-							<button class="btn btn-outline-danger btn-sm delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione">
-								<i class="fa-solid fa-trash"></i>
+							<button class="btn delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione" style="background: #f8f9fa; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);" onmouseover="this.style.background='#fee2e2'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(220, 53, 69, 0.15)';" onmouseout="this.style.background='#f8f9fa'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.05)';">
+								<i class="fa-solid fa-trash" style="color: #dc3545;"></i>
 							</button>
 						</div>
 						{% endif %}
@@ -674,6 +678,7 @@
         tableDiv.classList.add("table");
         if (allOccupied) {
           tableDiv.classList.add("occupied");
+
         }
         tableContainer.appendChild(tableDiv);
         
@@ -682,6 +687,10 @@
         tableId.classList.add("table-id");
         tableId.textContent = `${blockLetter}${tableIndex + 1}`;
         tableContainer.appendChild(tableId);
+
+		if (allOccupied) {
+		  tableId.classList.add("occupied");
+		}
         
         // Mappiamo i 4 posti ai lati lunghi del tavolo (2 a sinistra, 2 a destra)
         // Per ogni posto dell'array originale, assegniamo una posizione ai lati
@@ -1015,18 +1024,16 @@ document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 		
 		// Set up the confirm button click handler
 		document.getElementById('confirmDeleteBtn').onclick = function() {
-			// close popup
 			deleteModal.hide();
 
 			// Confirm deletion
-			// Disable button and show loading
 			deleteBtn.disabled = true;
 			deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-			
+
 			// Prepare form data
 			const formData = new FormData();
 			formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
-			
+
 			// Send AJAX request
 			fetch('{% url "remove_review" mensa.name %}', {
 				method: 'POST',
@@ -1038,75 +1045,59 @@ document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 			.then(response => response.json())
 			.then(data => {
 				if (data.success) {
-					// Remove the review card with animation
 					reviewCard.style.transition = 'opacity 0.3s ease';
 					reviewCard.style.opacity = '0';
 					setTimeout(() => {
 						reviewCard.remove();
-						
+
 						// Show review form again if user just deleted their review and no form exists
 						const reviewFormCard = document.querySelector('.review-form-card');
 						if (!reviewFormCard) {
-							// Create a new form container
 							const reviewsContainer = document.querySelector('#reviews .info-card');
 							const formHTML = `
 								<div class="review-form-card mb-4">
-									<h4 class="mb-3">Scrivi una recensione</h4>
+									<h5>Scrivi una recensione</h5>
 									<form id="review-form" method="post">
 										{% csrf_token %}
-										
-										<div class="mb-3">
-											<label class="form-label fw-bold">Valutazione</label>
-											<div class="star-rating">
+										<div class="mb-3 d-flex align-items-center" style="gap: 1em;">
+											<div class="star-rating d-flex align-items-center" style="font-size:1.7rem; gap: 0.3em;">
 												<input type="radio" name="stars" value="5" id="star5">
-												<label for="star5"><i class="fa-solid fa-star"></i></label>
+												<label for="star5" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 												<input type="radio" name="stars" value="4" id="star4">
-												<label for="star4"><i class="fa-solid fa-star"></i></label>
+												<label for="star4" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 												<input type="radio" name="stars" value="3" id="star3">
-												<label for="star3"><i class="fa-solid fa-star"></i></label>
+												<label for="star3" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 												<input type="radio" name="stars" value="2" id="star2">
-												<label for="star2"><i class="fa-solid fa-star"></i></label>
+												<label for="star2" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 												<input type="radio" name="stars" value="1" id="star1">
-												<label for="star1"><i class="fa-solid fa-star"></i></label>
+												<label for="star1" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
 											</div>
-											<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
 										</div>
-										
+										<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
 										<div class="mb-3">
-											<label for="comment" class="form-label fw-bold">Commento (opzionale)</label>
 											<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
 										</div>
-										
-										<button type="submit" class="btn btn-primary">
-											<i class="fa-solid fa-paper-plane me-2"></i>Invia Recensione
+										<button type="submit" class="btn send-btn">
+											<i class="fa-solid fa-comment-dots me-2"></i>Invia Recensione
 										</button>
 									</form>
 								</div>
 							`;
-							
-							// Insert the form after the title
+
 							const titleElement = reviewsContainer.querySelector('.section-title');
 							if (titleElement) {
 								titleElement.insertAdjacentHTML('afterend', formHTML);
 							}
-							
-							// Reinitialize the review form functionality
+
 							initializeReviewForm();
 						}
 					}, 300);
-					
 				} else {
-					console.error('Error deleting review:', data.message);
-					
-					// Re-enable button
 					deleteBtn.disabled = false;
 					deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
 				}
 			})
 			.catch(error => {
-				console.error('Error:', error);
-				
-				// Re-enable button
 				deleteBtn.disabled = false;
 				deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
 			});
@@ -1227,8 +1218,8 @@ document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 									<span class="review-date">${currentDate}</span>
 								</div>
 								<div class="review-actions">
-									<button class="btn btn-outline-danger btn-sm delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione">
-										<i class="fa-solid fa-trash"></i>
+									<button class="btn delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione" style="background: #f8f9fa; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);" onmouseover="this.style.background='#fee2e2'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(220, 53, 69, 0.15)';" onmouseout="this.style.background='#f8f9fa'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.05)';">
+										<i class="fa-solid fa-trash" style="color: #dc3545;"></i>
 									</button>
 								</div>
 							</div>
@@ -1305,22 +1296,22 @@ document.addEventListener('DOMContentLoaded', observeInfoSmartSection);
 <!-- Delete Review Confirmation Modal -->
 <div class="modal fade" id="deleteReviewModal" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteReviewModalLabel">
-                    <i class="fa-solid fa-exclamation-triangle text-warning me-2"></i>
+        <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+            <div class="modal-header" style="background-color: #f8f9fa; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 15px 20px;">
+                <h5 class="modal-title" id="deleteReviewModalLabel" style="font-weight: 600; color: #333;">
+                    <i class="fa-solid fa-exclamation-triangle me-2" style="color: #dc3545;"></i>
                     Conferma eliminazione
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p class="mb-0">Sei sicuro di voler eliminare questa recensione? Questa azione non può essere annullata.</p>
+            <div class="modal-body" style="padding: 20px;">
+                <p class="mb-0" style="font-size: 1rem; color: #495057;">Sei sicuro di voler eliminare questa recensione? Questa azione non può essere annullata.</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <div class="modal-footer" style="border-top: 1px solid rgba(0,0,0,0.05); padding: 15px 20px;">
+                <button type="button" class="btn" data-bs-dismiss="modal" style="background-color: #f8f9fa; color: #495057; border-radius: 8px; padding: 8px 16px; font-weight: 500; border: 1px solid #dee2e6; transition: all 0.2s ease;">
                     <i class="fa-solid fa-times me-1"></i>Annulla
                 </button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                <button type="button" class="btn" id="confirmDeleteBtn" style="background-color: #dc3545; color: white; border-radius: 8px; padding: 8px 16px; font-weight: 500; border: none; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);">
                     <i class="fa-solid fa-trash me-1"></i>Elimina recensione
                 </button>
             </div>

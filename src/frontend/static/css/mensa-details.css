@@ -1,6 +1,29 @@
 body {
     padding-top: 80px !important;
 }
+
+h3 {
+	font-size: 2rem;
+	padding: 10px 0;
+}
+
+.restaurant-banner h2 {
+	text-shadow: 3px 3px 12px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.5);
+	font-weight: 600 !important;
+}
+
+.restaurant-banner p {
+	color : white;
+	text-shadow: 3px 3px 12px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.5) !important;
+}
+
+p {
+	font-size: 1.1rem;
+	line-height: 1.6;
+	color: #555;
+	margin-bottom: 20px;
+}
+
 /* Banner section */
 .restaurant-banner {
 	position: relative;
@@ -1013,12 +1036,17 @@ body {
 	cursor: pointer;
 	font-size: 1.5rem;
 	color: #ddd;
-	transition: color 0.2s ease;
+	transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.star-rating label:hover,
+.star-rating label:hover {
+	transform: scale(1.15);
+	color: #ffc107; /* Highlight color */
+}
+
 .star-rating label:hover ~ label {
-	color: #ffc107;
+	transform: scale(1);
+	color: #dee2e6; /* Reset color for unselected stars */
 }
 
 .star-rating input:checked ~ label {
@@ -1125,6 +1153,10 @@ body {
   z-index: 10;
 }
 
+.table-id.occupied {
+  color: #ffffff;
+}
+
 .table {
   position: absolute;
   top: 50%;
@@ -1133,7 +1165,7 @@ body {
   max-width: 60%;
   max-height: 60%;
   background-color: #ffffff;
-  border: 1px solid #dddddd;
+  border: 2px solid #000000;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -1144,7 +1176,7 @@ body {
 
 .table.occupied {
   background-color: #0077D8;
-  border: 1px solid #0a58ca;
+  border: 2px solid #000000;
 }
 
 /* Block Tables Collapsible Styling - Rectangular Grid Layout */
@@ -1352,7 +1384,7 @@ body {
   width: 16%;
   height: 16%;
   background-color: #ffffff;
-  border: 1px solid #dddddd;
+  border: 1px solid #000000;
   /* Chair shape from top view - more chair-like */
   border-radius: 8px 8px 0 0;
   box-shadow: 0 2px 3px rgba(0,0,0,0.2);
@@ -1360,7 +1392,7 @@ body {
 
 .seat.occupied {
   background-color: #0077D8;
-  border: 1px solid #0a58ca;
+  border: 1px solid #000000;
 }
 
 /* Quattro sedie sui lati lunghi del tavolo */
@@ -1498,3 +1530,165 @@ body {
 	}
 	
 }
+
+.mensa-distance {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    z-index: 2;
+}
+.banner-capacity {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.send-btn {
+	background-color: #0078D9;
+	border: 3px solid #0078D9; /* 062E5F */
+	color: #fff;
+	border-radius: 3rem;
+	width: 100%;
+	transition: background-color 0.3s, transform 0.4s cubic-bezier(.4,2,.6,1);
+	/* margin-top: 20px; */
+}
+
+.send-btn strong {
+	font-size: 1.4rem !important;
+	font-weight: 400;
+}
+
+.send-btn:hover {
+	background-color: #fff;
+	color: #0078D9;
+	border: 3px solid #0078D9;
+	transform: scale(1.01);
+	
+}
+
+label {
+	font-weight: 500;
+	margin-bottom: 10px;
+	display: block;
+}
+
+input[type="text"], 
+input[type="email"],
+textarea {
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+	margin-bottom: 15px;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 15px; 
+    border: none; 
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+    background-color: #f8f9fa; 
+    border-bottom: 1px solid rgba(0,0,0,0.05); 
+    padding: 15px 20px;
+}
+
+.modal-title {
+    font-weight: 600; 
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body p {
+    font-size: 1rem; 
+    color: #495057;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0,0,0,0.05); 
+    padding: 15px 20px;
+}
+
+.btn-modal-cancel {
+    background-color: #f8f9fa; 
+    color: #495057; 
+    border-radius: 8px; 
+    padding: 8px 16px; 
+    font-weight: 500; 
+    border: 1px solid #dee2e6; 
+    transition: all 0.2s ease;
+}
+
+.btn-modal-cancel:hover {
+    background-color: #e9ecef;
+}
+
+.btn-modal-danger {
+    background-color: #dc3545; 
+    color: white; 
+    border-radius: 8px; 
+    padding: 8px 16px; 
+    font-weight: 500; 
+    border: none; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);
+}
+
+.btn-modal-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+}
+
+.btn-delete-review {
+    background: #f8f9fa; 
+    border: none; 
+    border-radius: 50%; 
+    width: 36px; 
+    height: 36px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: all 0.2s ease; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.btn-delete-review:hover {
+    background: #fee2e2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.15);
+}
+
+.btn-delete-review i {
+    color: #dc3545;
+}
+
+/* Animation for review deletion */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.review-deleting {
+    animation: fadeOut 0.4s ease forwards;
+}
+
+

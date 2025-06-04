@@ -89,7 +89,9 @@
                                 <a href="{% url 'mensa_details' city_name=city.name mensa_name=mensa.name %}" class="text-decoration-none">
                                 <div class="mensa-banner">
                                     <img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
-                                    <div class="mensa-type">{{ mensa.distance }} km</div>
+									<div class="mensa-distance">
+										<i class="fas fa-route me-1"></i>{{ mensa.distance }} km
+									</div>
                                     <div class="banner-capacity">
                                         <i class="fas fa-chair me-1"></i>{{ mensa.capacity }} posti
                                     </div>
