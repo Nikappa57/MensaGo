@@ -1297,6 +1297,11 @@ p {
   color: #007bff;
 }
 
+/* Add transform for expanded state */
+.block-container.expanded .block-toggle-icon {
+  transform: rotate(180deg);
+}
+
 /* Table grid overlay when expanded */
 .table-grid {
   display: none !important;
