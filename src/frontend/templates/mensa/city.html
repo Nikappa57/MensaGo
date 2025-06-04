@@ -68,10 +68,12 @@
                                 <p class="mb-2 text-muted small">Ordina per</p>
                                 <div class="d-flex flex-wrap gap-2 justify-content-end">
                                     <button class="tag-btn active" data-sort="rating" data-dir="desc">Valutazioni</button>
+                                    {% if pos and pos.lat and pos.lng %}
                                     <button class="tag-btn" data-sort="distance" data-dir="asc">Distanza</button>
+                                    {% endif %}
                                     <button class="tag-btn" data-sort="capacity" data-dir="desc">Capienza</button>
+                                     <button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda <span id="connection-status2" class="status-indicator"></span></button>
                                     <button class="tag-btn" data-sort="free_seats" data-dir="desc">Tavoli liberi <span id="connection-status1" class="status-indicator"></span></button>
-                                    <button class="tag-btn" data-sort="wait_time" data-dir="asc">Attesa coda <span id="connection-status2" class="status-indicator"></span></button>
                                 </div>
                             </div>
                         </div>
@@ -93,10 +95,12 @@
                                 <a href="{% url 'mensa_details' city_name=city.name mensa_name=mensa.name %}" class="text-decoration-none">
                                 <div class="mensa-banner">
                                     <img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
-
-                                    <div class="mensa-distance">
-                                    <i class="fas fa-route me-1"></i>{{ mensa.distance }} km
-                                    </div>
+                                    
+                                    {% if pos and pos.lat and pos.lng %}
+                                        <div class="mensa-distance">
+                                            <i class="fas fa-route me-1"></i>{{ mensa.distance }} km
+                                        </div>
+                                    {% endif %}
                                     <div class="banner-capacity">
                                     <i class="fas fa-chair me-1"></i>{{ mensa.capacity }} posti
                                     </div>
@@ -105,11 +109,11 @@
                                     <h5 class="mensa-title mb-2">{{ mensa.name }}</h5>
                                     <div class="rating-stars">
                                         {% for _ in "01234" %}
-                                        {% if forloop.counter <= mensa.stars|default:0 %}
-                                            <i class="fas fa-star"></i>
-                                        {% else %}
-                                            <i class="far fa-star"></i>
-                                        {% endif %}
+                                            {% if forloop.counter <= mensa.stars|default:0 %}
+                                                <i class="fas fa-star"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
                                         {% endfor %}
                                     </div>
                                     </div>

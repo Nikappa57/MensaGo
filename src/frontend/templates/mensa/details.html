@@ -90,10 +90,12 @@
 				{% endfor %}
 				{{ mensa.review_set.all|length }} Reviews
 			</span>
-
+			
+			{% if pos and pos.lat and pos.lng %}
 			<div class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
 				<i class="fas fa-route me-1"></i>{{ mensa.distance|default:0 }} km
 			</div>
+			{% endif %}
 			<div class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
 				<i class="fas fa-chair me-1"></i>{{ mensa.capacity|default:0 }} posti
 			</div>
