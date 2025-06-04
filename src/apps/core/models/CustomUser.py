@@ -53,8 +53,8 @@ class CustomUser(AbstractUser):
                                    on_delete=models.PROTECT,
                                    null=True,
                                    blank=True)
-    suffers_from = models.ManyToManyField('mensa.Allergen')
-    likes = models.ManyToManyField('mensa.Dish')
+    suffers_from = models.ManyToManyField('mensa.Allergen', blank=True)
+    likes = models.ManyToManyField('mensa.Dish', blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]

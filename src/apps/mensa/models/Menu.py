@@ -10,7 +10,7 @@ class Dish(models.Model):
     name = models.CharField(max_length=100, unique=True, primary_key=True)
     description = models.TextField()
     img = models.ImageField(upload_to='dish-photos/')
-    allergens = models.ManyToManyField('mensa.Allergen')
+    allergens = models.ManyToManyField('mensa.Allergen', blank=True)
 
     def __str__(self):
         return self.name
@@ -44,7 +44,7 @@ class Menu(models.Model):
     mensa = models.ForeignKey('mensa.Mensa', on_delete=models.CASCADE)
     weekday = models.IntegerField(choices=WEEKDAY)
     day_part = models.IntegerField(choices=DAY_PART)
-    dishes = models.ManyToManyField('mensa.Dish', through='Includes')
+    dishes = models.ManyToManyField('mensa.Dish', through='Includes', blank=True)
 
     class Meta:
         constraints = [

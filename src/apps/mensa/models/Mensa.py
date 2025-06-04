@@ -20,7 +20,7 @@ class Mensa(models.Model):
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     city = models.ForeignKey('City', on_delete=models.PROTECT)
     email = models.EmailField(blank=True, null=True)
-    gallery = models.ManyToManyField('PhotoMensa')
+    gallery = models.ManyToManyField('PhotoMensa', blank=True)
     amenities = models.ManyToManyField('AmenitiesMensa', blank=True)
 
     # for api simulation
