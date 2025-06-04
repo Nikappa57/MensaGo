@@ -115,6 +115,7 @@ body {
 #map {
     height: calc(100vh - 80px); /* Full height minus fixed navbar */
     position: sticky;
+    top: 80px; /* Account for fixed navbar */
     
 }    
 .mense-container {
