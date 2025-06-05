@@ -36,9 +36,9 @@
 	</li>
 	{% if user.is_superuser %}
 	<li class="nav-item">
-		<a class="nav-link text-dark" href="/admin/">
+		<a class="nav-link text-dark" href="{% url 'admin:index' %}">
 			<i class="fas fa-tools me-1"></i>
-			Admin
+			<strong>Admin</strong>
 		</a>
 	</li>
 	{% endif %}
