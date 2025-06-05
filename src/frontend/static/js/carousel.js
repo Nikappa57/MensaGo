@@ -80,7 +80,7 @@ function initEventsSlider() {
     // Calculate slide width based on container width, number of slides to show, and gap
     const containerWidth = slider.parentElement.offsetWidth;
     const gapSize = 20; // Must match CSS gap value
-    const totalGapWidth = gapSize * (slidesToShow - 1);
+    const totalGapWidth = gapSize * (slidesToShow);
     const slideWidth = (containerWidth - totalGapWidth) / slidesToShow;
     
     // Apply calculated width to each slide
