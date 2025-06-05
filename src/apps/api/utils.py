@@ -6,7 +6,7 @@ from datetime import datetime
 import numpy as np
 
 MAX_WAIT_SEC = 20 * 60  # 20 minutes in seconds
-UPDATE_TIME = 1
+UPDATE_TIME = 3
 
 
 def _queue_speed(capacity):
@@ -66,8 +66,8 @@ def update_mensa_data(mensa, mensa_data: dict) -> dict:
     block_nbr = mensa.block_nbr
     capacity = block_nbr * 10 * 4
     # update queue length by ±5%
-    change_pct = random.uniform(-0.05, 0.05)
-    new_queue = int(mensa_data["queue_len"] * (1 + change_pct))
+    change = random.randint(-3, 3)
+    new_queue = mensa_data["queue_len"] + change
     max_queue = _queue_speed(capacity) * MAX_WAIT_SEC
 
     if new_queue < max_queue / 2 and random.random() < 0.5:
