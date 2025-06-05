@@ -35,8 +35,8 @@
 		<a class="nav-link text-dark" href="#contact">Contattaci</a>
 	</li>
 	{% if user.is_superuser %}
-	<li class="nav-item ms-3">
-		<a class="btn btn-outline-dark px-3 py-1" href="{% url 'admin:index' %}">
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="{% url 'admin:index' %}">
 			<i class="fas fa-tools me-1"></i>
 			<strong>Admin</strong>
 		</a>
