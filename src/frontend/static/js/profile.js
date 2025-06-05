@@ -1,25 +1,14 @@
 // JavaScript for profile page functionality
-// Profile-specific JavaScript separated from HTML template
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Add bootstrap icons if not already present
-  if (!document.querySelector('link[href*="bootstrap-icons"]')) {
-    const iconLink = document.createElement('link');
-    iconLink.rel = 'stylesheet';
-    iconLink.href = 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css';
-    document.head.appendChild(iconLink);
-  }
-  
   // Function to close all open edit panels
   function closeAllEditPanels(exceptId = null) {
-    // List of all edit panels
     const editPanels = [
       'collapse-avatar-edit',
       'collapse-allergens-edit', 
       'collapse-password-edit'
     ];
     
-    // Close all panels except the specified one
     editPanels.forEach(panelId => {
       if (panelId !== exceptId) {
         const element = document.getElementById(panelId);
@@ -31,43 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Check if there's a success message in URL and show notification
+  // Handle URL parameters for notifications
   const urlParams = new URLSearchParams(window.location.search);
   const passwordChanged = urlParams.get('password_changed');
   if (passwordChanged === 'true') {
     showNotification('Password modificata con successo', 'success');
-    // Remove parameter from URL without reloading page
     window.history.replaceState({}, document.title, window.location.pathname);
-  }
-  
-  // Add animate.css if not already present
-  if (!document.querySelector('link[href*="animate.css"]')) {
-    const animateLink = document.createElement('link');
-    animateLink.rel = 'stylesheet';
-    animateLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
-    document.head.appendChild(animateLink);
-  }
-
-  // Preview avatar for both main display and edit form
-  const propicInput = document.querySelector('input[name="propic"]');
-  if (propicInput) {
-    propicInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(ev) {
-          const avatarEditPreview = document.getElementById('avatar-edit-preview');
-          const avatarDisplay = document.getElementById('avatar-display');
-          if (avatarEditPreview) {
-            avatarEditPreview.src = ev.target.result;
-          }
-          if (avatarDisplay) {
-            avatarDisplay.src = ev.target.result;
-          }
-        };
-        reader.readAsDataURL(file);
-      }
-    });
   }
   
   // Refresh QR code every minute with animation
@@ -80,8 +38,9 @@ document.addEventListener('DOMContentLoaded', function() {
       qrcodeWrapper.classList.add('loading');
     }
     
-    // Create new src with timestamp
-    const newSrc = qrcode.getAttribute('data-url') + `?t=${Math.floor(Date.now()/60000)}`;
+    // Create new src with timestamp to avoid cache
+    const newSrc = qrcode.getAttribute('data-url') || qrcode.src;
+    const updatedSrc = newSrc.split('?')[0] + `?t=${Math.floor(Date.now()/60000)}`;
     
     // When new image is loaded, remove loading class and add pulse animation
     qrcode.onload = () => {
@@ -94,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 1000);
     };
     
-    qrcode.src = newSrc;
+    qrcode.src = updatedSrc;
   }, 60000);
   
   // Add hover and focus effects on form elements
@@ -268,28 +227,32 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial setup
   setupAllergenCheckboxes();
   
-  // Avatar edit button handler
-  const editAvatarBtn = document.querySelector('.edit-avatar-btn');
-  if (editAvatarBtn) {
-    editAvatarBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const collapseElement = document.getElementById('collapse-avatar-edit');
-      if (collapseElement) {
-        // Check if panel is already open
-        const isExpanded = collapseElement.classList.contains('show');
-        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
-        
-        // Toggle: if open, close; otherwise, open
-        if (isExpanded) {
-          collapse.hide();
-        } else {
-          collapse.show();
-          // Close other open edit panels
-          closeAllEditPanels('collapse-avatar-edit');
+  // Function to handle edit button clicks
+  function setupEditButtonHandler(btnSelector, targetId, callback = null) {
+    const editBtn = document.querySelector(btnSelector);
+    if (editBtn) {
+      editBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const collapseElement = document.getElementById(targetId);
+        if (collapseElement) {
+          const isExpanded = collapseElement.classList.contains('show');
+          const collapse = bootstrap.Collapse.getInstance(collapseElement) 
+            || new bootstrap.Collapse(collapseElement, { toggle: false });
+          
+          if (isExpanded) {
+            collapse.hide();
+          } else {
+            collapse.show();
+            closeAllEditPanels(targetId);
+            if (callback) setTimeout(callback, 100);
+          }
         }
-      }
-    });
+      });
+    }
   }
+
+  // Avatar edit button handler
+  setupEditButtonHandler('.edit-avatar-btn', 'collapse-avatar-edit');
 
   // Avatar cancel button handler
   const cancelAvatarBtn = document.querySelector('.cancel-avatar-btn');
@@ -367,53 +330,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Allergens edit button handler
-  const editAllergensBtn = document.querySelector('.edit-allergens-btn');
-  if (editAllergensBtn) {
-    editAllergensBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const collapseElement = document.getElementById('collapse-allergens-edit');
-      if (collapseElement) {
-        // Check if panel is already open
-        const isExpanded = collapseElement.classList.contains('show');
-        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
-        
-        // Toggle: if open, close; otherwise, open
-        if (isExpanded) {
-          collapse.hide();
-        } else {
-          collapse.show();
-          // Execute setupAllergenCheckboxes only when opening the panel
-          setTimeout(setupAllergenCheckboxes, 100);
-          // Close other open edit panels
-          closeAllEditPanels('collapse-allergens-edit');
-        }
-      }
-    });
-  }
+  // Allergens edit button handler with setup callback
+  setupEditButtonHandler('.edit-allergens-btn', 'collapse-allergens-edit', setupAllergenCheckboxes);
   
   // Password edit button handler
-  const editPasswordBtn = document.querySelector('.edit-password-btn');
-  if (editPasswordBtn) {
-    editPasswordBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const collapseElement = document.getElementById('collapse-password-edit');
-      if (collapseElement) {
-        // Check if panel is already open
-        const isExpanded = collapseElement.classList.contains('show');
-        const collapse = bootstrap.Collapse.getInstance(collapseElement) || new bootstrap.Collapse(collapseElement, { toggle: false });
-        
-        // Toggle: if open, close; otherwise, open
-        if (isExpanded) {
-          collapse.hide();
-        } else {
-          collapse.show();
-          // Close other open edit panels
-          closeAllEditPanels('collapse-password-edit');
-        }
-      }
-    });
-  }
+  setupEditButtonHandler('.edit-password-btn', 'collapse-password-edit');
 
   // Password cancel button handler
   const cancelPasswordBtn = document.querySelector('.cancel-password-btn');
