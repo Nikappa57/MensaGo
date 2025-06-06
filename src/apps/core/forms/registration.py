@@ -187,48 +187,6 @@ class ProfileAuthenticationForm(forms.ModelForm):
 					raise forms.ValidationError('Email o password non validi')
 
 
-class ContactForm(forms.Form):
-	name = forms.CharField(max_length=100, required=True)
-	email = forms.EmailField(max_length=255, required=True)
-	message = forms.CharField(widget=forms.Textarea, required=True)
-
-	def clean_name(self):
-		name = self.cleaned_data['name'].strip()
-		if not name:
-			raise forms.ValidationError("Il nome è obbligatorio")
-		return name
-
-	def clean_message(self):
-		message = self.cleaned_data['message'].strip()
-		if not message:
-			raise forms.ValidationError("Il messaggio è obbligatorio")
-		return message
-
-
-class AllergensForm(forms.Form):
-	suffers_from = forms.ModelMultipleChoiceField(
-		queryset=CustomUser._meta.get_field('suffers_from').related_model.objects.all(),
-		required=False,
-		widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
-		help_text='Select allergens'
-	)
-
-
-class ProfileForm(forms.ModelForm):
-	suffers_from = forms.ModelMultipleChoiceField(
-		queryset=CustomUser._meta.get_field('suffers_from').related_model.objects.all(), # TODO: ma mettere direttamente il modello no?
-		required=False,
-		widget=forms.SelectMultiple(attrs={'class': 'form-control', 'size': '8'}),
-		help_text='Select allergens'
-	)
-
-	class Meta:
-		model = CustomUser
-		fields = ['first_name', 'last_name', 'email', 'university', 'economical_level', 'propic', 'suffers_from']
-		widgets = {
-			'propic': forms.ClearableFileInput(attrs={'class': 'form-control'}),
-		}
-
 
 class CustomPasswordChangeForm(PasswordChangeForm):
 	"""
