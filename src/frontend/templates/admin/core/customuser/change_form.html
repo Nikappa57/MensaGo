@@ -5,7 +5,7 @@
 {{ block.super }}
 {% if opts.model_name == "customuser" %}
 <li>
-    <a href="{% url 'admin:qr_scanner' %}" class="viewsitelink">{% trans "QR Scanner" %}</a>
+	<a href="{% url 'admin:qr_scanner' %}" class="viewsitelink">{% trans "QR Scanner" %}</a>
 </li>
 {% endif %}
 {% endblock %}

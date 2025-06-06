@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sandwiches = document.querySelectorAll('.sandwich-bubble');
     
     sandwiches.forEach(sandwich => {
-        // Random size between 64px and 128px (bigger sandwiches)
+        // Random size between 64px and 128px
         const size = Math.floor(Math.random() * 64) + 64;
         sandwich.style.width = `${size}px`;
         sandwich.style.height = `${size}px`;

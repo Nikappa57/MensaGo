@@ -1,5 +1,3 @@
-// JavaScript for authentication pages (login, register, etc.)
-
 document.addEventListener('DOMContentLoaded', function() {
     // Profile picture preview functionality
     const propicInput = document.getElementById('id_propic');
@@ -30,7 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 reader.readAsDataURL(file);
             } else {
                 // Reset preview if no file is selected
-                // Get default image path from the img element's data attribute or fallback
                 const defaultSrc = profilePreview.getAttribute('data-default-src') || '/static/imgs/profile_pics/default.jpg';
                 profilePreview.src = defaultSrc;
             }

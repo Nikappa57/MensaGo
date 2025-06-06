@@ -16,7 +16,7 @@ class AllergensForm(forms.Form):
 class ProfileForm(forms.ModelForm):
     suffers_from = forms.ModelMultipleChoiceField(
         queryset=CustomUser._meta.get_field('suffers_from').related_model.
-        objects.all(),  # TODO: ma mettere direttamente il modello no?
+        objects.all(),
         required=False,
         widget=forms.SelectMultiple(attrs={
             'class': 'form-control',

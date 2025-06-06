@@ -9,7 +9,6 @@ from apps.world.utils import haversine
 
 
 def homepage(request):
-    # Recupera tutte le città e gli eventi dal database
     cities = City.objects.all()
     user_lat = request.position['lat']
     user_lon = request.position['lon']

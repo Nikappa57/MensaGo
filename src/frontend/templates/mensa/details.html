@@ -392,10 +392,6 @@
 					</div>
 				</div>
 			</div>
-
-		
-		
-
 	
 			<div id="mensa-info" class="mb-4" style="display:flex;flex-wrap:wrap;gap:16px;">
 				{% comment %} una card = un dato {% endcomment %}
@@ -420,15 +416,7 @@
 				<div id="pct-free" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0%</div>
 				</div>
 			</div>
-
-		
-		
-
-
-
 			<div id="seat-visualization"></div>
-		
-		
 		</div>
 	</div>
 	</div>
@@ -653,7 +641,6 @@ function updateSeatClasses(blockList){
       const allOcc = table.every(Boolean);
       tableEl.classList.toggle("occupied", allOcc);
 
-      /* ▼▼ nuovo: cambia colore del testo al centro ▼▼ */
       const labelEl = tableEl.parentElement.querySelector(".table-id");
       if (labelEl) labelEl.classList.toggle("occupied", allOcc);
 
@@ -715,15 +702,12 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 <script>
 	// Tab switch functions for day and meal type
 	function switchDay(dayId, el) {
-		// Deactivate all day tabs
 		document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
 		el.classList.add('active');
-		// Hide all menu contents
 		document.querySelectorAll('.menu-content').forEach(c => c.classList.remove('active'));
 		var content = document.getElementById('menu-day-' + dayId);
 		if (content) {
 			content.classList.add('active');
-			// Trigger first available (non-disabled) meal type tab in this day
 			var typeTabs = content.querySelectorAll('.meal-tab:not(.disabled)');
 			if (typeTabs.length > 0) {
 				typeTabs[0].click();
@@ -734,10 +718,8 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 	function switchMeal(dayId, daypart, el) {
 		var container = document.getElementById('menu-day-' + dayId);
 		if (!container) return;
-		// Activate meal tab
 		container.querySelectorAll('.meal-tab').forEach(tab => tab.classList.remove('active'));
 		el.classList.add('active');
-		// Show corresponding meal content
 		container.querySelectorAll('.meal-content').forEach(c => c.classList.remove('active'));
 		var sel = document.getElementById('meal-' + dayId + '-' + daypart);
 		if (sel) sel.classList.add('active');
@@ -820,22 +802,17 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 	}
 
 	document.addEventListener('DOMContentLoaded', function() {
-		// Force all menu content to be properly initialized on page load
 		setTimeout(() => {
-			// First try to find the active day tab (today if open)
 			let activeTab = document.querySelector('.menu-tab.active:not(.disabled)');
 			
-			// If today is not available (closed) or no active tab, select the first available open day
 			if (!activeTab) {
 				activeTab = document.querySelector('.menu-tab:not(.disabled)');
 			}
 			
 			if (activeTab) {
-				// Remove any existing active classes
 				document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
 				document.querySelectorAll('.menu-content').forEach(content => content.classList.remove('active'));
 				
-				// Activate the selected tab
 				activeTab.classList.add('active');
 				activeTab.click();
 			}
@@ -891,7 +868,7 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 			const dishId = heart.getAttribute('data-dish-id');
 			const isLiked = heart.getAttribute('data-liked') === 'true';
 			
-			// Disable the heart temporarily to prevent double clicks
+			// prevent double clicks
 			heart.style.pointerEvents = 'none';
 			
 			// Send AJAX request
@@ -905,26 +882,24 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 			.then(response => response.json())
 			.then(data => {
 				if (data.liked) {
-					// Switch to filled heart
+					// filled heart
 					heart.className = 'fa-solid fa-heart text-danger ms-1 like-heart';
 					heart.setAttribute('data-liked', 'true');
 					heart.setAttribute('title', 'Rimuovi dai preferiti');
 				} else {
-					// Switch to empty heart
+					// empty heart
 					heart.className = 'fa-regular fa-heart text-muted ms-1 like-heart';
 					heart.setAttribute('data-liked', 'false');
 					heart.setAttribute('title', 'Aggiungi ai preferiti');
 				}
 				
-				// Show feedback message (optional)
+				// Show feedback message
 				console.log(data.message);
 			})
 			.catch(error => {
 				console.error('Error:', error);
-				// You could show an error message here
 			})
 			.finally(() => {
-				// Re-enable the heart
 				heart.style.pointerEvents = 'auto';
 			});
 		}
@@ -936,20 +911,18 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 		const deleteBtn = e.target.closest('.delete-review-btn');
 		const mensaName = deleteBtn.getAttribute('data-mensa-name');
 		const reviewCard = deleteBtn.closest('.review-card');
-		
-		// Show the delete confirmation modal
+	
+		// delete confirmation modal
 		const deleteModal = new bootstrap.Modal(document.getElementById('deleteReviewModal'));
 		deleteModal.show();
 		
-		// Set up the confirm button click handler
+		// confirm button click handler
 		document.getElementById('confirmDeleteBtn').onclick = function() {
 			deleteModal.hide();
 
-			// Confirm deletion
 			deleteBtn.disabled = true;
 			deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
 
-			// Prepare form data
 			const formData = new FormData();
 			formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
 
@@ -969,7 +942,6 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 					setTimeout(() => {
 						reviewCard.remove();
 
-						// Ensure the review form reappears dynamically at the top
 						const reviewFormCard = document.querySelector('.review-form-card');
 						if (!reviewFormCard) {
 							const reviewsContainer = document.querySelector('#reviews .info-card');
@@ -1004,7 +976,6 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 									</div>`;
 								reviewsContainer.insertAdjacentHTML('afterbegin', formHTML);
 
-								// Reinitialize the review form functionality
 								initializeReviewForm();
 							}
 						}
@@ -1028,7 +999,7 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 		const starLabels = document.querySelectorAll('.star-rating label');
 		const starsError = document.getElementById('stars-error');
 		
-		if (!reviewForm) return; // Exit if form doesn't exist
+		if (!reviewForm) return;
 		
 		// Star rating interaction
 		starLabels.forEach((label, index) => {
@@ -1087,14 +1058,11 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 			if (starsError) {
 				starsError.style.display = 'none';
 			}
-			
-			// Disable submit button to prevent double submission
+
 			const submitBtn = reviewForm.querySelector('button[type="submit"]');
 			const originalText = submitBtn.innerHTML;
 			submitBtn.disabled = true;
 			submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Invio in corso...';
-			
-			// Prepare form data
 			const formData = new FormData(reviewForm);
 			
 			// Send AJAX request
@@ -1144,19 +1112,16 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 						</div>
 					`;
 					
-					// Add the new review at the top of the reviews list
 					const reviewsContainer = document.querySelector('#reviews .info-card');
 					if (!reviewsContainer) {
 						console.error('Reviews container not found');
 						return;
 					}
 					
-					// Insert new review at the beginning of reviews
 					const existingReviews = reviewsContainer.querySelector('.review-card');
 					if (existingReviews) {
 						existingReviews.insertAdjacentHTML('beforebegin', newReviewHTML);
 					} else {
-						// If no reviews exist, replace the "No reviews yet" message
 						const noReviewsMsg = reviewsContainer.querySelector('p');
 						if (noReviewsMsg && noReviewsMsg.textContent.includes('No reviews yet')) {
 							noReviewsMsg.remove();
@@ -1164,7 +1129,6 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 						reviewsContainer.insertAdjacentHTML('beforeend', newReviewHTML);
 					}
 					
-					// Hide the review form since user has now reviewed
 					const reviewFormCard = document.querySelector('.review-form-card');
 					if (reviewFormCard) {
 						reviewFormCard.remove();
@@ -1195,13 +1159,10 @@ document.addEventListener('DOMContentLoaded',observeInfoSmart);
 		}
 	}
 
-	// Review form functionality
 	document.addEventListener('DOMContentLoaded', function() {
-		// Initialize the review form on page load
 		initializeReviewForm();
 	});
 
-	// Delete review functionality - Use event delegation for dynamic content
 	document.addEventListener('click', function(e) {
 		if (e.target.closest('.delete-review-btn')) {
 			handleDeleteReview(e);

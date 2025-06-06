@@ -5,116 +5,116 @@
 
 {% block extrastyle %}
 <style>
-    #qr-reader {
-        width: 100%;
-        max-width: 500px;
-        margin: 30px auto;
-        border: 2px solid #417690; /* Colore Django admin */
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .button {
-        background-color: #417690;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        margin: 15px auto;
-        display: block;
-        border-radius: 4px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    .button:hover {
-        background-color: #2b5e82;
-    }
-    #scan-button {
-        margin-bottom: 20px;
-    }
-    #next-scan-button {
-        margin-top: 20px;
-    }
-    .user-profile {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #ddd;
-    }
-    .profile-picture {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        margin-right: 20px;
-        object-fit: cover;
-        border: 3px solid #417690;
-    }
-    .user-name {
-        font-size: 1.2em;
-        font-weight: bold;
-        color: #417690;
-    }
-    #result-container {
-        margin-top: 30px;
-        padding: 20px;
-        border: 1px solid #417690;
-        border-radius: 8px;
-        background-color: #f8f9fa;
-        display: none;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        color: #333;
-    }
-    #result-container h2 {
-        color: #417690;
-        margin-top: 0;
-        margin-bottom: 15px;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
-    }
-    .result-item {
-        margin-bottom: 15px;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-    }
-    .result-item strong {
-        margin-right: 10px;
-        min-width: 150px;
-        color: #666;
-        font-weight: 600;
-    }
-    .result-item span {
-        font-weight: 500;
-        color: #333;
-        background-color: #f0f0f5;
-        padding: 5px 10px;
-        border-radius: 4px;
-    }
-    .scanner-title {
-        color: #417690;
-        margin-top: 20px;
-        margin-bottom: 15px;
-    }
-    .scanner-instructions {
-        color: #555;
-        margin-bottom: 25px;
-        font-size: 15px;
-    }
-    /* Highlight per risultati specifici */
-    #economical-level, #cost, #credit {
-        font-weight: bold;
-    }
-    #cost, #credit {
-        color: #2b5e82;
-    }
+	#qr-reader {
+		width: 100%;
+		max-width: 500px;
+		margin: 30px auto;
+		border: 2px solid #417690; /* Colore Django admin */
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	}
+	.button {
+		background-color: #417690;
+		color: white;
+		border: none;
+		padding: 10px 20px;
+		margin: 15px auto;
+		display: block;
+		border-radius: 4px;
+		font-size: 16px;
+		cursor: pointer;
+		transition: background-color 0.3s;
+	}
+	.button:hover {
+		background-color: #2b5e82;
+	}
+	#scan-button {
+		margin-bottom: 20px;
+	}
+	#next-scan-button {
+		margin-top: 20px;
+	}
+	.user-profile {
+		display: flex;
+		align-items: center;
+		margin-bottom: 20px;
+		padding-bottom: 15px;
+		border-bottom: 1px solid #ddd;
+	}
+	.profile-picture {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		margin-right: 20px;
+		object-fit: cover;
+		border: 3px solid #417690;
+	}
+	.user-name {
+		font-size: 1.2em;
+		font-weight: bold;
+		color: #417690;
+	}
+	#result-container {
+		margin-top: 30px;
+		padding: 20px;
+		border: 1px solid #417690;
+		border-radius: 8px;
+		background-color: #f8f9fa;
+		display: none;
+		box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+		color: #333;
+	}
+	#result-container h2 {
+		color: #417690;
+		margin-top: 0;
+		margin-bottom: 15px;
+		border-bottom: 1px solid #ddd;
+		padding-bottom: 10px;
+	}
+	.result-item {
+		margin-bottom: 15px;
+		font-size: 16px;
+		display: flex;
+		align-items: center;
+	}
+	.result-item strong {
+		margin-right: 10px;
+		min-width: 150px;
+		color: #666;
+		font-weight: 600;
+	}
+	.result-item span {
+		font-weight: 500;
+		color: #333;
+		background-color: #f0f0f5;
+		padding: 5px 10px;
+		border-radius: 4px;
+	}
+	.scanner-title {
+		color: #417690;
+		margin-top: 20px;
+		margin-bottom: 15px;
+	}
+	.scanner-instructions {
+		color: #555;
+		margin-bottom: 25px;
+		font-size: 15px;
+	}
+	/* Highlight per risultati specifici */
+	#economical-level, #cost, #credit {
+		font-weight: bold;
+	}
+	#cost, #credit {
+		color: #2b5e82;
+	}
 </style>
 {% endblock %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
-    <a href="{% url 'admin:index' %}">Home</a>
-    &rsaquo; QR Code Scanner
+	<a href="{% url 'admin:index' %}">Home</a>
+	&rsaquo; QR Code Scanner
 </div>
 {% endblock %}
 
@@ -126,163 +126,153 @@
 <div id="qr-reader" style="display: none;"></div>
 
 <div id="result-container">
-    <h2>Informazioni Utente</h2>
-    <div class="user-profile">
-        <img id="profile-pic" class="profile-picture" src="{% static 'imgs/default-profile.jpg' %}" alt="Immagine Profilo">
-        <div>
-            <div class="user-name">
-                <span id="first-name"></span> <span id="last-name"></span>
-            </div>
-            <div id="email" style="color: #666; font-size: 0.9em;"></div>
-        </div>
-    </div>
-    <div class="result-item">
-        <strong>Livello Economico:</strong> 
-        <span id="economical-level"></span>
-    </div>
-    <div class="result-item">
-        <strong>Costo Mensa:</strong> 
-        <span id="cost"></span>
-    </div>
-    <button id="next-scan-button" class="button">Nuova Scansione</button>
+	<h2>Informazioni Utente</h2>
+	<div class="user-profile">
+		<img id="profile-pic" class="profile-picture" src="{% static 'imgs/default-profile.jpg' %}" alt="Immagine Profilo">
+		<div>
+			<div class="user-name">
+				<span id="first-name"></span> <span id="last-name"></span>
+			</div>
+			<div id="email" style="color: #666; font-size: 0.9em;"></div>
+		</div>
+	</div>
+	<div class="result-item">
+		<strong>Livello Economico:</strong> 
+		<span id="economical-level"></span>
+	</div>
+	<div class="result-item">
+		<strong>Costo Mensa:</strong> 
+		<span id="cost"></span>
+	</div>
+	<button id="next-scan-button" class="button">Nuova Scansione</button>
 </div>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const scanButton = document.getElementById('scan-button');
-        const qrReaderElement = document.getElementById('qr-reader');
-        const nextScanButton = document.getElementById('next-scan-button');
-        const resultContainer = document.getElementById('result-container');
-        
-        let html5QrCode;
-        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-        
-        // Inizializza lo scanner quando si preme il pulsante
-        scanButton.addEventListener('click', function() {
-            scanButton.style.display = 'none';
-            qrReaderElement.style.display = 'block';
-            
-            html5QrCode = new Html5Qrcode("qr-reader");
-            html5QrCode.start(
-                { facingMode: "environment" },
-                config,
-                onScanSuccess,
-                onScanFailure
-            );
-        });
-        
-        // Gestisce l'evento di nuova scansione
-        nextScanButton.addEventListener('click', function() {
-            resultContainer.style.display = 'none';
-            if (html5QrCode) {
-                html5QrCode.resume();
-                qrReaderElement.style.display = 'block';
-            }
-        });
-        
-        function onScanSuccess(decodedText, decodedResult) {
-            html5QrCode.pause();
-            
-            // Assume the QR code contains an email address
-            let email = decodedText;
+	document.addEventListener('DOMContentLoaded', function() {
+		const scanButton = document.getElementById('scan-button');
+		const qrReaderElement = document.getElementById('qr-reader');
+		const nextScanButton = document.getElementById('next-scan-button');
+		const resultContainer = document.getElementById('result-container');
+		
+		let html5QrCode;
+		const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+		
+		// Inizializza lo scanner quando si preme il pulsante
+		scanButton.addEventListener('click', function() {
+			scanButton.style.display = 'none';
+			qrReaderElement.style.display = 'block';
+			
+			html5QrCode = new Html5Qrcode("qr-reader");
+			html5QrCode.start(
+				{ facingMode: "environment" },
+				config,
+				onScanSuccess,
+				onScanFailure
+			);
+		});
+		
+		// Gestisce l'evento di nuova scansione
+		nextScanButton.addEventListener('click', function() {
+			resultContainer.style.display = 'none';
+			if (html5QrCode) {
+				html5QrCode.resume();
+				qrReaderElement.style.display = 'block';
+			}
+		});
+		
+		function onScanSuccess(decodedText, decodedResult) {
+			html5QrCode.pause();
+			let email = decodedText;
 
-            // Clean up the email string (using trim() which is JavaScript's equivalent of Python's strip())
-            if (email.includes(':')) {
-                email = email.trim().split(':')[0];
-            }
+			// Clean up the email string
+			if (email.includes(':')) {
+				email = email.trim().split(':')[0];
+			}
 			if (!email.includes('@')) {
 				alert('QR code non contiene un indirizzo email valido.');
 				html5QrCode.resume();
 				return;
 			}
-                        
-            // Call the API to get user information
-            fetch(`/admin-qr-scan-api/?email=${encodeURIComponent(email)}`, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        // Imposta le informazioni di base
-                        document.getElementById('email').textContent = data.email;
-                        document.getElementById('first-name').textContent = data.first_name || '';
-                        document.getElementById('last-name').textContent = data.last_name || '';
-                        document.getElementById('economical-level').textContent = data.economical_level || 'Non specificato';
-                        document.getElementById('cost').textContent = data.cost ? `€${data.cost}` : 'Non specificato';
-                        
-                        // Imposta l'immagine del profilo
-                        if (data.profile_pic) {
-                            document.getElementById('profile-pic').src = data.profile_pic;
-                        } else {
-                            document.getElementById('profile-pic').src = "{% static 'imgs/default-profile.jpg' %}";
-                        }
-                        
-                        // Mostra il contenitore dei risultati con una piccola animazione
-                        qrReaderElement.style.display = 'none';
-                        resultContainer.style.opacity = '0';
-                        resultContainer.style.display = 'block';
-                        setTimeout(() => {
-                            resultContainer.style.transition = 'opacity 0.5s ease';
-                            resultContainer.style.opacity = '1';
-                        }, 10);
-                    } else {
-                        alert('Utente non trovato: ' + data.message);
-                        html5QrCode.resume();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Stampa informazioni più dettagliate per il debug
-                    console.log('URL chiamato:', `/admin-qr-scan-api/?email=${encodeURIComponent(email)}`);
-                    console.log('Email processata:', email);
-                    
-                    // Creiamo un elemento per mostrare l'errore in modo più elegante
-                    const errorDiv = document.createElement('div');
-                    errorDiv.style.padding = '15px';
-                    errorDiv.style.marginTop = '20px';
-                    errorDiv.style.backgroundColor = '#fff0f0';
-                    errorDiv.style.border = '1px solid #ffcccc';
-                    errorDiv.style.borderRadius = '5px';
-                    errorDiv.style.color = '#d8000c';
-                    errorDiv.innerHTML = `
-                        <h3 style="margin-top: 0;">Si è verificato un errore</h3>
-                        <p>Non è stato possibile recuperare le informazioni dell'utente:</p>
-                        <ul>
-                            <li><strong>Email:</strong> ${email}</li>
-                            <li><strong>Errore:</strong> ${error.message}</li>
-                        </ul>
-                        <p style="margin-bottom: 0;">La scansione riprenderà automaticamente tra 3 secondi.</p>
-                    `;
-                    
-                    // Aggiungiamo l'elemento alla pagina
-                    const qrReader = document.getElementById('qr-reader');
-                    qrReader.parentNode.insertBefore(errorDiv, qrReader.nextSibling);
-                    
-                    // Rimuoviamo l'elemento e riprendiamo la scansione dopo 3 secondi
-                    setTimeout(() => {
-                        errorDiv.style.transition = 'opacity 0.5s ease';
-                        errorDiv.style.opacity = '0';
-                        setTimeout(() => {
-                            errorDiv.remove();
-                            html5QrCode.resume();
-                        }, 500);
-                    }, 3000);
-                });
-        }
-        
-        function onScanFailure(error) {
-            // Handle scan failure (silent)
-        }
-    });
+			// Call the API to get user information
+			fetch(`/admin-qr-scan-api/?email=${encodeURIComponent(email)}`, {
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+					'X-Requested-With': 'XMLHttpRequest'
+				}
+			})
+				.then(response => {
+					if (!response.ok) {
+						throw new Error(`HTTP error! Status: ${response.status}`);
+					}
+					return response.json();
+				})
+				.then(data => {
+					if (data.success) {
+						document.getElementById('email').textContent = data.email;
+						document.getElementById('first-name').textContent = data.first_name || '';
+						document.getElementById('last-name').textContent = data.last_name || '';
+						document.getElementById('economical-level').textContent = data.economical_level || 'Non specificato';
+						document.getElementById('cost').textContent = data.cost ? `€${data.cost}` : 'Non specificato';
+						
+						if (data.profile_pic) {
+							document.getElementById('profile-pic').src = data.profile_pic;
+						} else {
+							document.getElementById('profile-pic').src = "{% static 'imgs/default-profile.jpg' %}";
+						}
+						
+						qrReaderElement.style.display = 'none';
+						resultContainer.style.opacity = '0';
+						resultContainer.style.display = 'block';
+						setTimeout(() => {
+							resultContainer.style.transition = 'opacity 0.5s ease';
+							resultContainer.style.opacity = '1';
+						}, 10);
+					} else {
+						alert('Utente non trovato: ' + data.message);
+						html5QrCode.resume();
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+					console.log('URL chiamato:', `/admin-qr-scan-api/?email=${encodeURIComponent(email)}`);
+					console.log('Email processata:', email);
+					
+					// Creiamo un elemento per mostrare l'errore in modo più elegante
+					const errorDiv = document.createElement('div');
+					errorDiv.style.padding = '15px';
+					errorDiv.style.marginTop = '20px';
+					errorDiv.style.backgroundColor = '#fff0f0';
+					errorDiv.style.border = '1px solid #ffcccc';
+					errorDiv.style.borderRadius = '5px';
+					errorDiv.style.color = '#d8000c';
+					errorDiv.innerHTML = `
+						<h3 style="margin-top: 0;">Si è verificato un errore</h3>
+						<p>Non è stato possibile recuperare le informazioni dell'utente:</p>
+						<ul>
+							<li><strong>Email:</strong> ${email}</li>
+							<li><strong>Errore:</strong> ${error.message}</li>
+						</ul>
+						<p style="margin-bottom: 0;">La scansione riprenderà automaticamente tra 3 secondi.</p>
+					`;
+					
+					const qrReader = document.getElementById('qr-reader');
+					qrReader.parentNode.insertBefore(errorDiv, qrReader.nextSibling);
+					
+					setTimeout(() => {
+						errorDiv.style.transition = 'opacity 0.5s ease';
+						errorDiv.style.opacity = '0';
+						setTimeout(() => {
+							errorDiv.remove();
+							html5QrCode.resume();
+						}, 500);
+					}, 3000);
+				});
+		}
+		
+		function onScanFailure(error) {
+		}
+	});
 </script>
 {% endblock %}

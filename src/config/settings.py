@@ -21,12 +21,12 @@ print("base:", BASE_DIR)
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pfo60c*job(sn8ix$d)lfm3+o*e$hu^=j5-uudkg=!!x&#6zh0'
+SECRET_KEY = 'SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # TODO: change
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.82.201','172.18.141.56','192.168.0.127',]  
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [

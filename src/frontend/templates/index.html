@@ -219,66 +219,66 @@
 <!-- Tutorial Section -->
 <section id="tutorial" class="container py-5 mb-5">
   <div class="d-flex justify-content-between align-items-center mb-2">
-    <div>
+	<div>
 	  <small class="text-uppercase">
 	  Tutorial
 	  </small>
-      <h2>Come Utilizzare MensaGo</h2>
-    </div>
+	  <h2>Come Utilizzare MensaGo</h2>
+	</div>
   </div>
   
   <p class="text-start mb-4 mb-md-5">
-    Scopri come utilizzare MensaGo in pochi semplici passi per accedere alle mense universitarie in modo facile e veloce.
+	Scopri come utilizzare MensaGo in pochi semplici passi per accedere alle mense universitarie in modo facile e veloce.
   </p>
 
   <div class="row g-4">
-    <!-- Step 1 -->
-    <div class="col-lg-4 col-md-6">
-      <div class="step-box">
-        <div class="d-flex align-items-center mb-2">
-          <div class="step-number me-3">01</div>
-          <h4 class="d-flex align-items-center">Scegli la tua mensa</h4>
-        </div>
-        <p class="mb-3">Esplora le mense disponibili nella tua città e scegli quella più adatta alle tue esigenze per iniziare la tua esperienza con MensaGO.</p>
-        <div class="phone-mockup">
-          <div class="phone-frame phone-left">
-            <img class="mockup" src="{% static 'imgs/tutorial/signup.png' %}" alt="Scegli città" onerror="this.src='https://via.placeholder.com/280x550?text=Scegli+Città'">
-          </div>
-        </div>
-      </div>
-    </div>
+	<!-- Step 1 -->
+	<div class="col-lg-4 col-md-6">
+	  <div class="step-box">
+		<div class="d-flex align-items-center mb-2">
+		  <div class="step-number me-3">01</div>
+		  <h4 class="d-flex align-items-center">Scegli la tua mensa</h4>
+		</div>
+		<p class="mb-3">Esplora le mense disponibili nella tua città e scegli quella più adatta alle tue esigenze per iniziare la tua esperienza con MensaGO.</p>
+		<div class="phone-mockup">
+		  <div class="phone-frame phone-left">
+			<img class="mockup" src="{% static 'imgs/tutorial/signup.png' %}" alt="Scegli città" onerror="this.src='https://via.placeholder.com/280x550?text=Scegli+Città'">
+		  </div>
+		</div>
+	  </div>
+	</div>
 
-    <!-- Step 2 -->
-    <div class="col-lg-4 col-md-6">
-      <div class="step-box">
-        <div class="d-flex align-items-center mb-2">
-          <div class="step-number me-3">02</div>
-          <h4 class="d-flex align-items-center">Informazioni Smart</h4>
-        </div>
-        <p>Accedi a informazioni dettagliate sulle mense, inclusi orari, menu e disponibilità in tempo reale.</p>
-        <div class="phone-mockup">
-          <div class="phone-frame phone-center">
-            <img class="mockup" src="{% static 'imgs/tutorial/choose.png' %}" alt="Info smart" onerror="this.src='https://via.placeholder.com/280x550?text=Info+Smart'">
-          </div>
-        </div>
-      </div>
-    </div>
+	<!-- Step 2 -->
+	<div class="col-lg-4 col-md-6">
+	  <div class="step-box">
+		<div class="d-flex align-items-center mb-2">
+		  <div class="step-number me-3">02</div>
+		  <h4 class="d-flex align-items-center">Informazioni Smart</h4>
+		</div>
+		<p>Accedi a informazioni dettagliate sulle mense, inclusi orari, menu e disponibilità in tempo reale.</p>
+		<div class="phone-mockup">
+		  <div class="phone-frame phone-center">
+			<img class="mockup" src="{% static 'imgs/tutorial/choose.png' %}" alt="Info smart" onerror="this.src='https://via.placeholder.com/280x550?text=Info+Smart'">
+		  </div>
+		</div>
+	  </div>
+	</div>
 
-    <!-- Step 3 -->
-    <div class="col-lg-4 col-md-12 mx-md-auto">
-      <div class="step-box">
-        <div class="d-flex align-items-center mb-2">
-          <div class="step-number me-3">03</div>
-          <h4 class="d-flex align-items-center">Profilo e Scannerizzazione</h4>
-        </div>
-        <p>Gestisci il tuo profilo e utilizza il QR code per accedere rapidamente alle mense.</p>
-        <div class="phone-mockup mt-5">
-          <div class="phone-frame phone-right">
-            <img class="mockup" src="{% static 'imgs/tutorial/eat.png' %}" alt="Profilo e QR" onerror="this.src='https://via.placeholder.com/280x550?text=Profilo+e+QR'">
-          </div>
-        </div>
-      </div>
-    </div>
+	<!-- Step 3 -->
+	<div class="col-lg-4 col-md-12 mx-md-auto">
+	  <div class="step-box">
+		<div class="d-flex align-items-center mb-2">
+		  <div class="step-number me-3">03</div>
+		  <h4 class="d-flex align-items-center">Profilo e Scannerizzazione</h4>
+		</div>
+		<p>Gestisci il tuo profilo e utilizza il QR code per accedere rapidamente alle mense.</p>
+		<div class="phone-mockup mt-5">
+		  <div class="phone-frame phone-right">
+			<img class="mockup" src="{% static 'imgs/tutorial/eat.png' %}" alt="Profilo e QR" onerror="this.src='https://via.placeholder.com/280x550?text=Profilo+e+QR'">
+		  </div>
+		</div>
+	  </div>
+	</div>
   </div>
   </section>
   <!-- Call to Action -->
@@ -347,7 +347,7 @@
 								</div>
 
 								<!-- Normal view (date and name below image) -->
-								<div class="event-details mt-3 text-start">
+								<div class="event-details mt-3 text-start ml-1">
 									<p class="text-muted mb-1"><i class="far fa-calendar-alt me-2"></i>{{ event.date|date:"d F Y" }}</p>
 									<h4 class="card-title fw-bold mt-2">{{ event.name }}</h4>
 								</div>

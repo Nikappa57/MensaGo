@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Navbar active section functionality
     function updateActiveNavLink() {
-        // Select only section navigation links, exclude profile/login buttons
+        // exclude profile/login buttons
         const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]:not(.login-btn)');
         
         if (navLinks.length === 0) return; // Skip if no nav links found
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     // Smooth scrolling for navbar links
     function setupSmoothScrolling() {
         const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]');
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const targetSection = document.querySelector(targetId);
                 
                 if (targetSection) {
-                    const navbarHeight = 80; // Fixed navbar height
+                    const navbarHeight = 80;
                     const targetPosition = targetSection.offsetTop - navbarHeight;
                     
                     window.scrollTo({

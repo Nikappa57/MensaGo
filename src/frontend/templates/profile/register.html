@@ -12,171 +12,171 @@
 {% block content %}
 <!-- Sandwich Animation -->
 <div class="sandwich-animation-wrapper">
-    {% for i in "123456789X" %}
-        <img src="{% static 'imgs/sandwich.svg' %}" alt="Sandwich" class="sandwich-bubble" width="256" height="256">
-    {% endfor %}
+	{% for i in "123456789X" %}
+		<img src="{% static 'imgs/sandwich.svg' %}" alt="Sandwich" class="sandwich-bubble" width="256" height="256">
+	{% endfor %}
 </div>
 
 <div class="container mt-5 auth-page-container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Registrati</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card shadow">
+				<div class="card-header bg-primary text-white">
+					<h4 class="mb-0">Registrati</h4>
+				</div>
+				<div class="card-body">
+					<form method="POST" enctype="multipart/form-data">
+						{% csrf_token %}
 
-                        {% if form.errors %}
-                        <div class="alert alert-danger">
-                            <strong>Errore:</strong> Correggi gli errori qui sotto.
-                        </div>
-                        {% endif %}
+						{% if form.errors %}
+						<div class="alert alert-danger">
+							<strong>Errore:</strong> Correggi gli errori qui sotto.
+						</div>
+						{% endif %}
 
 						 <!-- Campo Foto Profilo (opzionale) -->
-                        <div class="form-floating mb-3">
-                            <div class="d-flex align-items-center">
-                                <div class="profile-preview me-3">
-                                    <img id="profile-preview" src="{% static 'imgs/profile_pics/default.jpg' %}" 
-                                         data-default-src="{% static 'imgs/profile_pics/default.jpg' %}"
-                                         alt="Anteprima profilo" class="rounded-circle" 
-                                         style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #e9ecef;">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <input type="file" name="propic" id="id_propic" 
-                                           class="form-control form-control-lg rounded {% if form.propic.errors %}is-invalid{% endif %}" 
-                                           accept="image/*">
-                                    <label for="id_propic" class="form-label mt-2">Foto profilo (opzionale)</label>
-                                    {% if form.propic.errors %}
-                                    <div class="invalid-feedback">
-                                        {{ form.propic.errors.0 }}
-                                    </div>
-                                    {% endif %}
-                                    <small class="form-text text-muted">{{ form.propic.help_text }}</small>
-                                </div>
-                            </div>
-                        </div>
+						<div class="form-floating mb-3">
+							<div class="d-flex align-items-center">
+								<div class="profile-preview me-3">
+									<img id="profile-preview" src="{% static 'imgs/profile_pics/default.jpg' %}" 
+										 data-default-src="{% static 'imgs/profile_pics/default.jpg' %}"
+										 alt="Anteprima profilo" class="rounded-circle" 
+										 style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #e9ecef;">
+								</div>
+								<div class="flex-grow-1">
+									<input type="file" name="propic" id="id_propic" 
+										   class="form-control form-control-lg rounded {% if form.propic.errors %}is-invalid{% endif %}" 
+										   accept="image/*">
+									<label for="id_propic" class="form-label mt-2">Foto profilo (opzionale)</label>
+									{% if form.propic.errors %}
+									<div class="invalid-feedback">
+										{{ form.propic.errors.0 }}
+									</div>
+									{% endif %}
+									<small class="form-text text-muted">{{ form.propic.help_text }}</small>
+								</div>
+							</div>
+						</div>
 
-                        <div class="form-floating mb-3">
-                            <input type="email" name="email" id="id_email" class="form-control form-control-lg rounded {% if form.email.errors %}is-invalid{% endif %}" placeholder="Indirizzo email" required value="{{ form.email.value|default:'' }}">
-                            <label for="id_email">Indirizzo email</label>
-                            {% if form.email.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.email.errors.0 }}
-                            </div>
-                            {% endif %}
-                            <small class="form-text text-muted">{{ form.email.help_text }}</small>
-                        </div>
+						<div class="form-floating mb-3">
+							<input type="email" name="email" id="id_email" class="form-control form-control-lg rounded {% if form.email.errors %}is-invalid{% endif %}" placeholder="Indirizzo email" required value="{{ form.email.value|default:'' }}">
+							<label for="id_email">Indirizzo email</label>
+							{% if form.email.errors %}
+							<div class="invalid-feedback">
+								{{ form.email.errors.0 }}
+							</div>
+							{% endif %}
+							<small class="form-text text-muted">{{ form.email.help_text }}</small>
+						</div>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="first_name" id="id_first_name" class="form-control form-control-lg rounded {% if form.first_name.errors %}is-invalid{% endif %}" placeholder="Nome" required value="{{ form.first_name.value|default:'' }}">
-                                    <label for="id_first_name">Nome</label>
-                                    {% if form.first_name.errors %}
-                                    <div class="invalid-feedback">
-                                        {{ form.first_name.errors.0 }}
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="last_name" id="id_last_name" class="form-control form-control-lg rounded {% if form.last_name.errors %}is-invalid{% endif %}" placeholder="Cognome" required value="{{ form.last_name.value|default:'' }}">
-                                    <label for="id_last_name">Cognome</label>
-                                    {% if form.last_name.errors %}
-                                    <div class="invalid-feedback">
-                                        {{ form.last_name.errors.0 }}
-                                    </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-floating mb-3">
+									<input type="text" name="first_name" id="id_first_name" class="form-control form-control-lg rounded {% if form.first_name.errors %}is-invalid{% endif %}" placeholder="Nome" required value="{{ form.first_name.value|default:'' }}">
+									<label for="id_first_name">Nome</label>
+									{% if form.first_name.errors %}
+									<div class="invalid-feedback">
+										{{ form.first_name.errors.0 }}
+									</div>
+									{% endif %}
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-floating mb-3">
+									<input type="text" name="last_name" id="id_last_name" class="form-control form-control-lg rounded {% if form.last_name.errors %}is-invalid{% endif %}" placeholder="Cognome" required value="{{ form.last_name.value|default:'' }}">
+									<label for="id_last_name">Cognome</label>
+									{% if form.last_name.errors %}
+									<div class="invalid-feedback">
+										{{ form.last_name.errors.0 }}
+									</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
 
-                        <div class="form-floating mb-3">
-                            <select name="university" id="id_university" class="form-select form-control-lg rounded {% if form.university.errors %}is-invalid{% endif %}">
-                                <option value="" disabled selected>Seleziona la tua università</option>
-                                {% for uni in form.fields.university.queryset %}
-                                <option value="{{ uni.name }}" {% if form.university.value == uni.name %}selected{% endif %}>{{ uni.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label for="id_university">Università</label>
-                            {% if form.university.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.university.errors.0 }}
-                            </div>
-                            {% endif %}
-                            <small class="form-text text-muted">{{ form.university.help_text }}</small>
-                        </div>
+						<div class="form-floating mb-3">
+							<select name="university" id="id_university" class="form-select form-control-lg rounded {% if form.university.errors %}is-invalid{% endif %}">
+								<option value="" disabled selected>Seleziona la tua università</option>
+								{% for uni in form.fields.university.queryset %}
+								<option value="{{ uni.name }}" {% if form.university.value == uni.name %}selected{% endif %}>{{ uni.name }}</option>
+								{% endfor %}
+							</select>
+							<label for="id_university">Università</label>
+							{% if form.university.errors %}
+							<div class="invalid-feedback">
+								{{ form.university.errors.0 }}
+							</div>
+							{% endif %}
+							<small class="form-text text-muted">{{ form.university.help_text }}</small>
+						</div>
 
-                        <!-- Campo Livello Economico (opzionale) -->
-                        <div class="form-floating mb-3">
-                            <select name="economical_level" id="id_economical_level" class="form-select form-control-lg rounded {% if form.economical_level.errors %}is-invalid{% endif %}" placeholder="Livello economico (opzionale)">
-                                <option value="" disabled selected>Seleziona il tuo livello economico (opzionale)</option>
-                                {% for level in form.fields.economical_level.queryset %}
-                                <option value="{{ level.name }}" {% if form.economical_level.value == level.name %}selected{% endif %}>{{ level.name }}</option>
-                                {% endfor %}
-                            </select>
-                            <label for="id_economical_level">Livello economico (opzionale)</label>
-                            {% if form.economical_level.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.economical_level.errors.0 }}
-                            </div>
-                            {% endif %}
-                            <small class="form-text text-muted">{{ form.economical_level.help_text }}</small>
-                        </div>
+						<!-- Campo Livello Economico (opzionale) -->
+						<div class="form-floating mb-3">
+							<select name="economical_level" id="id_economical_level" class="form-select form-control-lg rounded {% if form.economical_level.errors %}is-invalid{% endif %}" placeholder="Livello economico (opzionale)">
+								<option value="" disabled selected>Seleziona il tuo livello economico (opzionale)</option>
+								{% for level in form.fields.economical_level.queryset %}
+								<option value="{{ level.name }}" {% if form.economical_level.value == level.name %}selected{% endif %}>{{ level.name }}</option>
+								{% endfor %}
+							</select>
+							<label for="id_economical_level">Livello economico (opzionale)</label>
+							{% if form.economical_level.errors %}
+							<div class="invalid-feedback">
+								{{ form.economical_level.errors.0 }}
+							</div>
+							{% endif %}
+							<small class="form-text text-muted">{{ form.economical_level.help_text }}</small>
+						</div>
 
-                       
+					   
 
-                        <div class="form-floating mb-3">
-                            <input type="password" name="password1" id="id_password1" class="form-control form-control-lg rounded {% if form.password1.errors %}is-invalid{% endif %}" placeholder="Password" required>
-                            <label for="id_password1">Password</label>
-                            {% if form.password1.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.password1.errors.0 }}
-                            </div>
-                            {% endif %}
-                            <small class="form-text text-muted">{{ form.password1.help_text }}</small>
-                        </div>
+						<div class="form-floating mb-3">
+							<input type="password" name="password1" id="id_password1" class="form-control form-control-lg rounded {% if form.password1.errors %}is-invalid{% endif %}" placeholder="Password" required>
+							<label for="id_password1">Password</label>
+							{% if form.password1.errors %}
+							<div class="invalid-feedback">
+								{{ form.password1.errors.0 }}
+							</div>
+							{% endif %}
+							<small class="form-text text-muted">{{ form.password1.help_text }}</small>
+						</div>
 
-                        <div class="form-floating mb-4">
-                            <input type="password" name="password2" id="id_password2" class="form-control form-control-lg rounded {% if form.password2.errors %}is-invalid{% endif %}" placeholder="Conferma password" required>
-                            <label for="id_password2">Conferma password</label>
-                            {% if form.password2.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.password2.errors.0 }}
-                            </div>
-                            {% endif %}
-                            <small class="form-text text-muted">{{ form.password2.help_text }}</small>
-                        </div>
+						<div class="form-floating mb-4">
+							<input type="password" name="password2" id="id_password2" class="form-control form-control-lg rounded {% if form.password2.errors %}is-invalid{% endif %}" placeholder="Conferma password" required>
+							<label for="id_password2">Conferma password</label>
+							{% if form.password2.errors %}
+							<div class="invalid-feedback">
+								{{ form.password2.errors.0 }}
+							</div>
+							{% endif %}
+							<small class="form-text text-muted">{{ form.password2.help_text }}</small>
+						</div>
 
-                        <!-- Termini di Servizio -->
-                        <div class="form-check mb-4">
-                            <input type="checkbox" name="terms_accepted" id="id_terms_accepted" 
-                                   class="form-check-input {% if form.terms_accepted.errors %}is-invalid{% endif %}" required>
-                            <label for="id_terms_accepted" class="form-check-label">
-                                Accetto i <a href="{% url 'terms_of_service' %}" target="_blank" class="text-primary">Termini di Servizio</a> 
-                                e la <a href="{% url 'privacy_policy' %}" target="_blank" class="text-primary">Privacy Policy</a>
-                            </label>
-                            {% if form.terms_accepted.errors %}
-                            <div class="invalid-feedback d-block">
-                                {{ form.terms_accepted.errors.0 }}
-                            </div>
-                            {% endif %}
-                        </div>
+						<!-- Termini di Servizio -->
+						<div class="form-check mb-4">
+							<input type="checkbox" name="terms_accepted" id="id_terms_accepted" 
+								   class="form-check-input {% if form.terms_accepted.errors %}is-invalid{% endif %}" required>
+							<label for="id_terms_accepted" class="form-check-label">
+								Accetto i <a href="{% url 'terms_of_service' %}" target="_blank" class="text-primary">Termini di Servizio</a> 
+								e la <a href="{% url 'privacy_policy' %}" target="_blank" class="text-primary">Privacy Policy</a>
+							</label>
+							{% if form.terms_accepted.errors %}
+							<div class="invalid-feedback d-block">
+								{{ form.terms_accepted.errors.0 }}
+							</div>
+							{% endif %}
+						</div>
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg rounded-pill w-100">Registrati</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer text-center">
-                    Hai già un account? <a href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Accedi</a>
-                </div>
-            </div>
-        </div>
-    </div>
+						<div class="d-grid gap-2">
+							<button type="submit" class="btn btn-primary btn-lg rounded-pill w-100">Registrati</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-footer text-center">
+					Hai già un account? <a href="{% url 'login' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">Accedi</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}
 

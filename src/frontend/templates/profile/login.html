@@ -12,60 +12,60 @@
 {% block content %}
 <!-- Sandwich Animation -->
 <div class="sandwich-animation-wrapper">
-    {% for i in "123456789X" %}
-        <img src="{% static 'imgs/sandwich.svg' %}" alt="Sandwich" class="sandwich-bubble" width="256" height="256">
-    {% endfor %}
+	{% for i in "123456789X" %}
+		<img src="{% static 'imgs/sandwich.svg' %}" alt="Sandwich" class="sandwich-bubble" width="256" height="256">
+	{% endfor %}
 </div>
 
 <div class="container mt-5 auth-page-container">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Accedi</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST">
-                        {% csrf_token %}
+	<div class="row justify-content-center">
+		<div class="col-md-5">
+			<div class="card shadow">
+				<div class="card-header bg-primary text-white">
+					<h4 class="mb-0">Accedi</h4>
+				</div>
+				<div class="card-body">
+					<form method="POST">
+						{% csrf_token %}
 
-                        {% if form.non_field_errors %}
-                        <div class="alert alert-danger">
-                            <strong>Errore:</strong> {{ form.non_field_errors.0 }}
-                        </div>
-                        {% endif %}
+						{% if form.non_field_errors %}
+						<div class="alert alert-danger">
+							<strong>Errore:</strong> {{ form.non_field_errors.0 }}
+						</div>
+						{% endif %}
 
-                        <div class="form-floating mb-3">
-                            <input type="email" name="email" id="id_email" class="form-control form-control-lg rounded {% if form.email.errors %}is-invalid{% endif %}" placeholder="Indirizzo Email" required value="{{ form.email.value|default:'' }}">
-                            <label for="id_email">Indirizzo Email</label>
-                            {% if form.email.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.email.errors.0 }}
-                            </div>
-                            {% endif %}
-                        </div>
+						<div class="form-floating mb-3">
+							<input type="email" name="email" id="id_email" class="form-control form-control-lg rounded {% if form.email.errors %}is-invalid{% endif %}" placeholder="Indirizzo Email" required value="{{ form.email.value|default:'' }}">
+							<label for="id_email">Indirizzo Email</label>
+							{% if form.email.errors %}
+							<div class="invalid-feedback">
+								{{ form.email.errors.0 }}
+							</div>
+							{% endif %}
+						</div>
 
-                        <div class="form-floating mb-4">
-                            <input type="password" name="password" id="id_password" class="form-control form-control-lg rounded {% if form.password.errors %}is-invalid{% endif %}" placeholder="Password" required>
-                            <label for="id_password">Password</label>
-                            {% if form.password.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.password.errors.0 }}
-                            </div>
-                            {% endif %}
-                        </div>
+						<div class="form-floating mb-4">
+							<input type="password" name="password" id="id_password" class="form-control form-control-lg rounded {% if form.password.errors %}is-invalid{% endif %}" placeholder="Password" required>
+							<label for="id_password">Password</label>
+							{% if form.password.errors %}
+							<div class="invalid-feedback">
+								{{ form.password.errors.0 }}
+							</div>
+							{% endif %}
+						</div>
 
-                        <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg rounded-pill w-100">Accedi</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer text-center">
-                    <div class="mb-2">Non hai un account? <a href="{% url 'register' %}">Registrati</a></div>
-                    <div>Password dimenticata? <a href="{% url 'password_reset' %}">Ripristinala qui</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
+						<div class="d-grid gap-2">
+							<button type="submit" class="btn btn-primary btn-lg rounded-pill w-100">Accedi</button>
+						</div>
+					</form>
+				</div>
+				<div class="card-footer text-center">
+					<div class="mb-2">Non hai un account? <a href="{% url 'register' %}">Registrati</a></div>
+					<div>Password dimenticata? <a href="{% url 'password_reset' %}">Ripristinala qui</a></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}
 

@@ -1195,7 +1195,6 @@ p {
   contain: layout;
 }
 
-/* Make block buttons look like physical mensa areas */
 .block-container {
   aspect-ratio: 3/1;
   display: flex;
@@ -1214,14 +1213,12 @@ p {
   contain: layout;
 }
 
-/* When expanded, remove aspect ratio constraint */
 .block-container.expanded {
   aspect-ratio: auto !important;
   min-height: auto;
   max-height: none !important;
   overflow: visible;
 }
-
 
 .block-container::before {
   content: '';
@@ -1333,7 +1330,7 @@ p {
   transform: rotate(0deg);
 }
 
-/* Mobile responsiveness */
+/* Mobile */
 @media (max-width: 768px) {
   #seat-visualization {
     grid-template-columns: 1fr !important;
@@ -1390,7 +1387,6 @@ p {
   height: 16%;
   background-color: #ffffff;
   border: 1px solid #000000;
-  /* Chair shape from top view - more chair-like */
   border-radius: 8px 8px 0 0;
   box-shadow: 0 2px 3px rgba(0,0,0,0.2);
 }
@@ -1501,11 +1497,10 @@ p {
 		width: 100%;
 	}
 
-	
 	.seat {
 		border-radius: 4px 4px 0 0;
 	}
-	
+
 	.table-grid {
 		grid-template-columns: repeat(3, 1fr);
 	}
@@ -1521,7 +1516,6 @@ p {
 		grid-gap: 10px;
 		
 	}
-	
 
 	.table-id {
 		font-size: 0.7rem;
@@ -1555,7 +1549,7 @@ p {
 
 .send-btn {
 	background-color: #0078D9;
-	border: 3px solid #0078D9; /* 062E5F */
+	border: 3px solid #0078D9;
 	color: #fff;
 	border-radius: 3rem;
 	width: 100%;
@@ -1701,5 +1695,3 @@ textarea {
 .review-deleting {
     animation: fadeOut 0.4s ease forwards;
 }
-
-
