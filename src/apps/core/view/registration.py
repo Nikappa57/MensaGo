@@ -1,5 +1,4 @@
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from apps.core.forms import ProfileAuthenticationForm, RegistrationForm
@@ -37,7 +36,6 @@ def logout_view(request):
         logout(request)
         return redirect('home')
     else:
-        #go to login page
         return redirect('login')
 
 
