@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profilo{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+{% endblock %}
+
+{% block nav_mobile %}
+<div class="nav-item navbar-toggler" style="border: none; background: transparent;">
+	<a class="btn logout-btn" href="{% url 'logout' %}">
+		<i class="bi bi-box-arrow-right me-1"></i>Logout
+	</a>
+</div>
+{% endblock %}
+
+{% block nav_elements %}
+<li class="nav-item">
+	<a class="btn logout-btn" href="{% url 'logout' %}">
+		<i class="bi bi-box-arrow-right me-1"></i>Logout
+	</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="profile-header mb-5 text-center">
+	<div class="profile-banner"></div>
+	<div class="profile-overlay animate__animated animate__fadeIn">
+	  <h1 class="display-4 fw-bold">Il tuo Profilo</h1>
+	  <p class="lead">Gestisci i tuoi dati e visualizza il tuo QR code</p>
+	</div>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="row g-4">
+	  <!-- Colonna sinistra - Informazioni personali -->
+	  <div class="col-lg-8">
+		<div class="card profile-card shadow-sm mb-4 animate__animated animate__fadeInUp">
+		  <div class="card-header bg-transparent">
+			<div class="d-flex align-items-center">
+			  <div class="profile-icon me-3">
+				<i class="bi bi-person-circle"></i>
+			  </div>
+			  <div class="profile-header-text">
+				<h4 class="mb-0">Informazioni Personali</h4>
+				<p class="text-muted small mb-0 ">Gestisci i tuoi dati personali</p>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <div class="card-body">
+			<ul class="list-group list-group-flush profile-list">
+			  <!-- Avatar -->
+			  <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+				<div class="d-flex align-items-center">
+				  <div class="avatar-container me-3">
+					<img id="avatar-display" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar" alt="Avatar">
+				  </div>
+				  <div>
+					<strong class="d-block">Avatar</strong>
+					<small class="text-muted">La tua immagine del profilo</small>
+				  </div>
+				</div>
+				<button class="btn btn-outline-primary btn-sm rounded-pill edit-avatar-btn" type="button">
+				  <i class="bi bi-pencil me-1"></i>Modifica
+				</button>
+			  </li>
+			  
+			  <!-- First Name and Last Name -->
+			  <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+				<div class="d-flex w-100">
+				  <div class="me-5">
+					<strong class="d-block">Nome</strong>
+					<span id="display-first_name" class="profile-data">{{ current_user.first_name }}</span>
+				  </div>
+				  <div>
+					<strong class="d-block">Cognome</strong>
+					<span id="display-last_name" class="profile-data">{{ current_user.last_name }}</span>
+				  </div>
+				</div>
+			  </li>
+			  
+			  <!-- Email -->
+			  <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+				<div>
+				  <strong class="d-block">Email</strong>
+				  <span id="display-email" class="profile-data">{{ current_user.email }}</span>
+				</div>
+			  </li>
+			  
+			  <!-- Password -->
+			  <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+				<div>
+				  <strong class="d-block">Password</strong>
+				  <span class="profile-data">*********</span>
+				</div>
+				<button class="btn btn-outline-primary btn-sm rounded-pill edit-password-btn" type="button">
+				  <i class="bi bi-pencil me-1"></i>Modifica
+				</button>
+			  </li>
+			  
+			  <!-- Avatar Edit Form (hidden) -->
+			  <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-avatar-edit">
+				<hr class="my-4">
+				<div class="form-section-title mb-3">Modifica immagine profilo</div>
+				<div class="form-group mb-3">
+				  <label class="form-label fw-bold mb-2">Immagine profilo</label>
+				  <div class="d-flex align-items-center mb-2">
+					<img id="avatar-edit-preview" src="{{ current_user.propic.url }}" class="rounded-circle profile-avatar me-3" alt="Avatar">
+					<div class="form-control-custom flex-grow-1">{{ form.propic }}</div>
+				  </div>
+				</div>
+				<div class="d-flex justify-content-end mt-4">
+				  <button type="button" class="btn cancel-avatar-btn btn-dismiss">
+					<i class="bi bi-x-circle me-2"></i>Annulla
+				  </button>
+				  <button type="button" class="btn save-avatar-btn btn-save">
+					<i class="bi bi-check-circle me-2"></i>Salva
+				  </button>
+				</div>
+			  </div>
+
+			  <!-- Password Edit Form (hidden) -->
+			  <div class="collapse px-3 pt-3 mb-3 profile-edit-form {% if password_form.errors %}show{% endif %}" id="collapse-password-edit">
+				<hr class="my-4">
+				<div class="form-section-title mb-3">Modifica password</div>
+				<div class="form-group mb-3">
+				  <label class="form-label fw-bold mb-2">
+					<i class="bi bi-shield-lock me-2" style="color: #0077D8;"></i>Modifica la tua password
+				  </label>
+				  <div class="form-control-custom">
+					<div class="password-edit-form">
+					  <div class="mb-3">
+						<label for="id_old_password" class="form-label">Password attuale</label>
+						{{ password_form.old_password }}
+						{% if password_form.old_password.errors %}
+						  <div class="invalid-feedback d-block">
+							{% for error in password_form.old_password.errors %}
+							  {{ error }}
+							{% endfor %}
+						  </div>
+						{% endif %}
+					  </div>
+					  
+					  <div class="mb-3">
+						<label for="id_new_password1" class="form-label">Nuova password</label>
+						{{ password_form.new_password1 }}
+						{% if password_form.new_password1.errors %}
+						  <div class="invalid-feedback d-block">
+							{% for error in password_form.new_password1.errors %}
+							  {{ error }}
+							{% endfor %}
+						  </div>
+						{% endif %}
+						<small class="form-text text-muted mt-1">
+						  <ul class="ps-3 mb-0">
+							<li>La password non può essere troppo simile ai tuoi dati personali.</li>
+							<li>La password deve contenere almeno 8 caratteri.</li>
+							<li>La password non può essere una di quelle comunemente utilizzate.</li>
+							<li>La password non può contenere solo numeri.</li>
+						  </ul>
+						</small>
+					  </div>
+					  
+					  <div class="mb-2">
+						<label for="id_new_password2" class="form-label">Conferma nuova password</label>
+						{{ password_form.new_password2 }}
+						{% if password_form.new_password2.errors %}
+						  <div class="invalid-feedback d-block">
+							{% for error in password_form.new_password2.errors %}
+							  {{ error }}
+							{% endfor %}
+						  </div>
+						{% endif %}
+					  </div>
+					</div>
+				  </div>
+				</div>
+				
+				<div class="d-flex justify-content-end mt-4">
+				  <button type="button" class="btn cancel-password-btn btn-dismiss">
+					<i class="bi bi-x-circle me-2"></i>Annulla
+				  </button>
+				  <button type="button" class="btn save-password-btn btn-save">
+					<i class="bi bi-check-circle me-2"></i>Salva
+				  </button>
+				</div>
+			  </div>
+			</ul>
+		  </div>
+		</div>
+		
+		<div class="card profile-card shadow-sm animate__animated animate__fadeInUp">
+		  <div class="card-header bg-transparent">
+			<div class="d-flex align-items-center">
+			  <div class="profile-icon me-3">
+				<i class="bi bi-mortarboard-fill"></i>
+			  </div>
+			  <div>
+				<h4 class="mb-0">Informazioni Accademiche</h4>
+				<p class="text-muted small mb-0">Gestisci le tue informazioni universitarie</p>
+			  </div>
+			</div>
+		  </div>
+		  
+		  <div class="card-body">
+			<ul class="list-group list-group-flush profile-list">
+			  <!-- University and Economical Level -->
+			  <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+				<div class="d-flex w-100">
+				  <div class="me-5">
+					<strong class="d-block">Università</strong>
+					{% if current_user.university.name %}
+					  <span id="display-university" class="profile-data">{{ current_user.university.name }}</span>
+					{% else %}
+					  <span id="display-university" class="profile-data text-muted">Non specificata</span>
+					{% endif %}
+				  </div>
+				  <div>
+					<strong class="d-block">Livello Economico</strong>
+					{% if current_user.economical_level %}
+					  <span id="display-economical_level" class="profile-data">{{ current_user.economical_level.name }}</span>
+					{% else %}
+					  <span id="display-economical_level" class="profile-data text-muted">Non specificato</span>
+					{% endif %}
+				  </div>
+				</div>
+			  </li>                  <!-- Allergens -->
+			  <li class="list-group-item d-flex justify-content-between align-items-center border-0 pb-3 profile-item-hover">
+				<div style="width: 100%;">
+				  <div class="d-flex justify-content-between align-items-start">
+					<div>
+					  <strong class="d-block">Allergie</strong>
+					  {% if current_user.suffers_from.all %}
+						<div id="allergeni" class="allergen-tags" >
+						  {% for allergen in current_user.suffers_from.all %}
+							<span class="allergen-tag">
+							  {{ allergen.name }}
+							</span>
+						  {% endfor %}
+						</div>
+					  {% else %}
+						<span class="profile-data text-muted">Nessuna allergia registrata</span>
+					  {% endif %}
+					</div>
+					<button class="btn btn-outline-primary btn-sm rounded-pill edit-allergens-btn" type="button">
+					  <i class="bi bi-pencil me-1"></i>Modifica
+					</button>
+				  </div>
+				</div>
+			  </li>
+			  
+			  <!-- Allergens Edit Form (hidden) -->
+			  <div class="collapse px-3 pt-3 mb-3 profile-edit-form" id="collapse-allergens-edit">
+				<hr class="my-4">
+				<div class="form-section-title mb-3">Modifica allergie</div>
+				<div class="form-group mb-3">
+				  <label class="form-label fw-bold mb-2">
+					<i class="bi bi-exclamation-triangle me-2" style="color: #0077D8;"></i>Allergie
+				  </label>
+				  <div class="form-control-custom">
+					<div class="allergens-checkboxes">
+					  {{ allergens_form.suffers_from }}
+					  <small class="allergen-helper text-muted mt-2 d-block">
+						<i class="bi bi-info-circle me-1"></i>Seleziona una o più allergie dalla lista
+					  </small>
+					</div>
+				  </div>
+				</div>
+				<div class="d-flex justify-content-end mt-4">
+				  <button type="button" class="btn me-2 cancel-allergens-btn btn-dismiss">
+					<i class="bi bi-x-circle me-2"></i>Annulla
+				  </button>
+				  <button type="button" class="btn save-allergens-btn btn-save">
+					<i class="bi bi-check-circle me-2"></i>Salva
+				  </button>
+				</div>
+			  </div>
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	  
+	  <!-- Colonna destra - QR Code -->
+	  <div class="col-lg-4">
+		<div class="card profile-card shadow-sm h-100 animate__animated animate__fadeInRight">
+		  <div class="card-header bg-transparent">
+			<div class="d-flex align-items-center">
+			  <div class="profile-icon me-3">
+				<i class="bi bi-qr-code"></i>
+			  </div>
+			  <div>
+				<h4 class="mb-0">QR Code Personale</h4>
+				<p class="text-muted small mb-0">Per l'accreditamento alle mense</p>
+			  </div>
+			</div>
+		  </div>
+		  <div class="card-body d-flex flex-column align-items-center justify-content-center">
+			<div id="qrcode-container" class="text-center mb-4">
+			  <div class="qrcode-wrapper">
+				<img id="qrcode-img" src="{% url 'profile_qrcode' %}" alt="QR Code" class="img-fluid qrcode-image">
+			  </div>
+			  <p class="qrcode-text mt-3">
+				<small class="text-muted">
+				  <i class="bi bi-info-circle me-2"></i>Il QR code si aggiorna automaticamente ogni dieci minuti.
+				</small>
+			  </p>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	
+  </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}

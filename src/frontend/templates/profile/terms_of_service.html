@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Termini di Servizio - MensaGO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<style>
+.terms-container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 2rem;
+}
+
+.terms-section {
+	margin-bottom: 2rem;
+}
+
+.terms-section h3 {
+	color: #0077D8;
+	margin-bottom: 1rem;
+}
+
+.terms-section p, .terms-section li {
+	line-height: 1.6;
+	margin-bottom: 0.5rem;
+}
+
+.effective-date {
+	font-style: italic;
+	color: #6c757d;
+	margin-bottom: 2rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+	<div class="terms-container">
+		<div class="text-center mb-5">
+			<h1 class="display-4 fw-bold text-primary">Termini di Servizio</h1>
+			<p class="effective-date">Ultimo aggiornamento: 3 Giugno 2025</p>
+		</div>
+
+		<div class="terms-section">
+			<h3>1. Accettazione dei Termini</h3>
+			<p>
+				Accedendo e utilizzando MensaGO ("il Servizio"), accetti di essere vincolato da questi Termini di Servizio ("Termini"). 
+				Se non accetti questi termini, non utilizzare il nostro servizio.
+			</p>
+		</div>
+
+		<div class="terms-section">
+			<h3>2. Descrizione del Servizio</h3>
+			<p>
+				MensaGO è una piattaforma digitale che permette agli studenti universitari di:
+			</p>
+			<ul>
+				<li>Visualizzare menù e informazioni delle mense universitarie</li>
+				<li>Controllare disponibilità di posti e tempi di attesa in tempo reale</li>
+				<li>Gestire pagamenti tramite QR code</li>
+				<li>Lasciare recensioni e valutazioni delle mense</li>
+				<li>Specificare preferenze alimentari e allergie</li>
+			</ul>
+		</div>
+
+		<div class="terms-section">
+			<h3>3. Registrazione e Account</h3>
+			<p>
+				Per utilizzare MensaGO devi:
+			</p>
+			<ul>
+				<li>Essere uno studente universitario regolarmente iscritto</li>
+				<li>Fornire informazioni accurate e complete durante la registrazione</li>
+				<li>Mantenere la sicurezza del tuo account e password</li>
+				<li>Notificarci immediatamente di eventuali accessi non autorizzati</li>
+			</ul>
+		</div>
+
+		<div class="terms-section">
+			<h3>4. Uso del Servizio</h3>
+			<p>Ti impegni a:</p>
+			<ul>
+				<li>Utilizzare il servizio solo per scopi legittimi</li>
+				<li>Non interferire con il normale funzionamento del servizio</li>
+				<li>Non tentare di accedere ad account di altri utenti</li>
+				<li>Rispettare le regole delle mense universitarie</li>
+				<li>Fornire recensioni oneste e costruttive</li>
+			</ul>
+		</div>
+
+		<div class="terms-section">
+			<h3>5. Privacy e Dati Personali</h3>
+			<p>
+				La raccolta e l'uso dei tuoi dati personali sono regolamentati dalla nostra Privacy Policy. 
+				Utilizzando MensaGO, acconsenti alla raccolta e all'uso delle tue informazioni come descritto nella Privacy Policy.
+			</p>
+		</div>
+
+		<div class="terms-section">
+			<h3>6. Pagamenti e Credito</h3>
+			<p>
+				MensaGO utilizza un sistema di credito prepagato per i pagamenti nelle mense:
+			</p>
+			<ul>
+				<li>Puoi ricaricare il tuo credito attraverso la piattaforma</li>
+				<li>I pagamenti vengono elaborati tramite QR code</li>
+				<li>Il credito non utilizzato rimane disponibile sul tuo account</li>
+				<li>Non sono previsti rimborsi del credito, salvo casi eccezionali</li>
+			</ul>
+		</div>
+
+		<div class="terms-section">
+			<h3>7. Contenuti degli Utenti</h3>
+			<p>
+				Pubblicando recensioni o altri contenuti su MensaGO:
+			</p>
+			<ul>
+				<li>Mantieni la proprietà dei tuoi contenuti</li>
+				<li>Ci concedi una licenza per utilizzare, modificare e distribuire i contenuti</li>
+				<li>Ti assumi la responsabilità per l'accuratezza e la legalità dei contenuti</li>
+				<li>Ci riserviamo il diritto di rimuovere contenuti inappropriati</li>
+			</ul>
+		</div>
+
+		<div class="terms-section">
+			<h3>8. Disponibilità del Servizio</h3>
+			<p>
+				MensaGO è fornito "così com'è" e non garantiamo che il servizio sia sempre disponibile o privo di errori. 
+				Ci riserviamo il diritto di sospendere o interrompere il servizio per manutenzione o aggiornamenti.
+			</p>
+		</div>
+
+		<div class="terms-section">
+			<h3>9. Limitazione di Responsabilità</h3>
+			<p>
+				MensaGO non è responsabile per:
+			</p>
+			<ul>
+				<li>Danni indiretti o consequenziali derivanti dall'uso del servizio</li>
+				<li>Perdite di dati o interruzioni del servizio</li>
+				<li>Azioni di terze parti, incluse le mense universitarie</li>
+				<li>Problemi tecnici o errori nel sistema di pagamento</li>
+			</ul>
+		</div>
+
+		<div class="terms-section">
+			<h3>10. Modifiche ai Termini</h3>
+			<p>
+				Ci riserviamo il diritto di modificare questi termini in qualsiasi momento. 
+				Le modifiche entreranno in vigore alla pubblicazione sul nostro sito. 
+				L'uso continuato del servizio costituisce accettazione dei termini modificati.
+			</p>
+		</div>
+
+		<div class="terms-section">
+			<h3>11. Risoluzione delle Controversie</h3>
+			<p>
+				Eventuali controversie saranno risolte secondo la legge italiana. 
+				Il foro competente è quello di Roma.
+			</p>
+		</div>
+
+		<div class="terms-section">
+			<h3>12. Contatti</h3>
+			<p>
+				Per domande sui termini di servizio, contattaci all'indirizzo: 
+				<a href="mailto:legal@mensago.it">legal@mensago.it</a>
+			</p>
+		</div>
+
+		<div class="text-center mt-5">
+			<a href="{% url 'register' %}" class="btn btn-primary">
+				<i class="fas fa-arrow-left me-2"></i>Torna alla Registrazione
+			</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

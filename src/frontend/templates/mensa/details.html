@@ -1,0 +1,1199 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ mensa.name }}{% endblock %}
+
+{% block extra_css %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="{% static 'css/mensa-details.css' %}">
+{% endblock %}
+{% block nav_elements %}
+<li class="nav-item">
+	<a class="nav-link" href="#about">About</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#location">Location</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#menu">Menu</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#api">Info Smart</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#gallery">Gallery</a>
+</li>
+<li class="nav-item">
+	<a class="nav-link" href="#reviews">Reviews</a>
+</li>
+{% if user.is_authenticated %}
+<li class="nav-item dropdown ms-3">
+	<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+		data-bs-toggle="dropdown" aria-expanded="false">
+		{{ user.first_name }} {{ user.last_name }}
+	</a>
+	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+		<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+		<li><hr class="dropdown-divider"> </li>
+		<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+	</ul>
+</li>
+{% else %}
+<div class="nav-item ms-3">
+	<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block nav_mobile %}
+<div class="dropdown d-lg-none">
+{% if user.is_authenticated %}
+	<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+		data-bs-toggle="dropdown" aria-expanded="false">
+		{{ user.first_name }} {{ user.last_name }}
+	</a>
+	
+	<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="margin: 0">
+		<li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+		<li><hr class="dropdown-divider"> </li>
+		<li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+	</ul>
+
+{% else %}
+<div class="nav-item ms-3">
+	<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">Log In</a>
+</div>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<!-- Restaurant Banner -->
+<section class="restaurant-banner">
+	<img src="{{ mensa.banner.url }}" alt="{{ mensa.name }}">
+	<div class="restaurant-banner-overlay">
+		<div class="container">
+			<h2 class="fs-2">{{ mensa.name }}</h2>
+			<p class="mb-0">
+				<i class="fa-solid fa-location-dot me-2"></i>
+				{{ mensa.position }}
+			</p>
+			<span class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
+				{% for _ in "01234" %}
+					{% if forloop.counter <= mensa.stars|default:0 %}
+						<i class="fas fa-star text-warning"></i>
+					{% else %}
+						<i class="far fa-star text-muted"></i>
+					{% endif %}
+				{% endfor %}
+				{{ mensa.review_set.all|length }} Reviews
+			</span>
+			
+			{% if pos and pos.lat and pos.lon %}
+			<div class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
+				<i class="fas fa-route me-1"></i>{{ mensa.distance|default:0 }} km
+			</div>
+			{% endif %}
+			<div class="badge bg-light text-dark me-2 mt-3" style="padding: 0.5em 1em;">
+				<i class="fas fa-chair me-1"></i>{{ mensa.capacity|default:0 }} posti
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="container py-4">
+	<div class="row flex-column-reverse flex-lg-row">
+		<!-- Left column - About, Location, Gallery -->
+		<div class="col-lg-8">
+			<!-- About Section -->
+			<div class="info-card mb-4" id="about">
+				<small class="text-uppercase">La nostra storia</small>
+				<h3 >About</h3>
+				<p>{{ mensa.description }}</p>
+			</div>
+			
+			<!-- Location Section -->
+			<div class="info-card mb-4" id="location">
+				<small class="text-uppercase">Dove ci troviamo</small>
+				<h3 >Location</h3>
+				<div id="map" class="map-container">
+					<!-- Map will be rendered here by Leaflet -->
+				</div>
+			</div>
+	
+			<!-- Weekly Menu Section -->
+			<div class="info-card mb-4" id="menu">
+				<small class="text-uppercase">La nostra settimana culinaria</small>
+				<h3 >Menu Settimanale</h3>
+				
+				{% if weekly_menus %}
+					<div class="text-start mb-4">
+						<p class="text-muted mb-0">Scopri cosa offriamo giorno per giorno nella nostra mensa.<br>Menu freschi preparati con ingredienti di qualità.</p>
+					</div>
+					
+					<!-- Menu Tabs for Days -->
+					<div class="menu-tab-container">
+						{% for weekday, day_data in weekly_menus.items %}
+						<button class="menu-tab {% if day_data.is_today %}active{% endif %} {% if not day_data.is_open %}disabled{% endif %}" 
+								id="day-tab-{{ weekday }}"
+								{% if day_data.is_open %}onclick="switchDay('{{ weekday }}', this)"{% endif %}
+								type="button"
+								{% if not day_data.is_open %}disabled{% endif %}>
+							{{ day_data.name }}
+							{% if day_data.is_today %}
+								<span class="ms-1 badge bg-primary rounded-pill">Oggi</span>
+							{% endif %}
+							{% if not day_data.is_open %}
+								<span class="ms-1 badge bg-secondary rounded-pill">Chiuso</span>
+							{% endif %}
+						</button>
+						{% endfor %}
+					</div>
+					
+					<!-- Menu Content per Day -->
+					<div class="menu-container">
+						{% for weekday, day_data in weekly_menus.items %}
+						<div id="menu-day-{{ weekday }}" class="menu-content {% if day_data.is_today %}active{% endif %}">
+							{% if day_data.is_open and day_data.menus %}
+								<!-- Meal tabs: Always show both Pranzo and Cena -->
+								<div class="meal-tab-container">
+									<!-- Pranzo button -->
+									<button class="meal-tab {% if 0 in day_data.available_dayparts %}{% if forloop.first %}active{% endif %}{% else %}disabled{% endif %}" 
+											{% if 0 in day_data.available_dayparts %}onclick="switchMeal('{{ weekday }}', '0', this)"{% else %}disabled{% endif %}>
+										<i class="fa-solid fa-sun me-1"></i>Pranzo
+										{% if 0 not in day_data.available_dayparts %}
+											<span class="ms-1 badge bg-secondary rounded-pill">Chiuso</span>
+										{% endif %}
+									</button>
+									<!-- Cena button -->
+									<button class="meal-tab {% if 1 in day_data.available_dayparts %}{% if 0 not in day_data.available_dayparts %}active{% endif %}{% else %}disabled{% endif %}" 
+											{% if 1 in day_data.available_dayparts %}onclick="switchMeal('{{ weekday }}', '1', this)"{% else %}disabled{% endif %}>
+										<i class="fa-solid fa-moon me-1"></i>Cena
+										{% if 1 not in day_data.available_dayparts %}
+											<span class="ms-1 badge bg-secondary rounded-pill">Chiuso</span>
+										{% endif %}
+									</button>
+								</div>
+
+								<div class="meal-content-wrapper">
+									{% for menu in day_data.menus %}
+									<div id="meal-{{ weekday }}-{{ menu.day_part_value }}" class="meal-content {% if forloop.first %}active{% endif %}">
+										{% for dish_type, dishes in menu.dishes_by_type.items %}
+										<div class="course-section">
+											{% if dish_type == "Primo" %}
+											<h3 class="menu-category">Primi Piatti</h3>
+											{% elif dish_type == "Secondo" %}
+											<h3 class="menu-category">Secondi Piatti</h3>
+											{% elif dish_type == "Contorno" %}
+											<h3 class="menu-category">Contorni</h3>
+											{% elif dish_type == "Dessert/Frutta" %}
+											<h3 class="menu-category">Dessert e Frutta</h3>
+											{% endif %}
+											<div class="dish-grid">
+												{% for dish in dishes %}
+												<div class="dish-card">
+													{% if dish.img %}
+													<div class="dish-photo">
+														<img src="{{ dish.img.url }}" alt="{{ dish.name }}">
+													</div>
+													{% endif %}
+													<div class="dish-desc">
+														<div class="dish-title">
+															{{ dish.name }}
+															{% if user.is_authenticated %}
+																{% if dish in current_user.likes.all %}
+																	<i class="fa-solid fa-heart text-danger ms-1 like-heart" 
+																	   data-dish-id="{{ dish.name }}" 
+																	   data-liked="true" 
+																	   style="cursor: pointer;" 
+																	   title="Rimuovi dai preferiti"></i>
+																{% else %}
+																	<i class="fa-regular fa-heart text-muted ms-1 like-heart" 
+																	   data-dish-id="{{ dish.name }}" 
+																	   data-liked="false" 
+																	   style="cursor: pointer;" 
+																	   title="Aggiungi ai preferiti"></i>
+																{% endif %}
+															{% endif %}
+														</div>
+														<div class="dish-ingredients">{{ dish.description }}</div>
+														{% if dish.allergens.exists %}
+														<div class="dish-allergens">
+															{% for allergen in dish.allergens.all %}
+															<span {% if allergen in current_user.suffers_from.all %}class="badge text-danger"{% else %}class="badge"{% endif %}>
+																<i class="{{ allergen.icon }}"></i>
+																{{ allergen.name }}
+															</span>
+															{% endfor %}
+														</div>
+														{% endif %}
+													</div>
+												</div>
+												{% endfor %}
+											</div>
+										</div>
+										{% endfor %}
+									</div>
+									{% endfor %}
+								</div>
+							{% elif not day_data.is_open %}
+								<div class="text-center py-4">
+									<i class="fa-solid fa-lock text-muted mb-2" style="font-size: 2rem;"></i>
+									<h4 class="text-muted">Mensa chiusa</h4>
+									<p class="text-muted">La mensa è chiusa il {{ day_data.name }}.</p>
+								</div>
+							{% else %}
+								<div class="text-center py-4">
+									<i class="fa-solid fa-utensils text-muted mb-2" style="font-size: 2rem;"></i>
+									<p class="text-muted">Menu non ancora disponibile per {{ day_data.name }}.</p>
+								</div>
+							{% endif %}
+						</div>
+						{% endfor %}
+					</div>
+				{% else %}
+				<div class="no-menu-message">
+					<i class="fa-solid fa-calendar-xmark"></i>
+					<p>Menu settimanale non ancora disponibile. Torna più tardi per vedere cosa abbiamo preparato!</p>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+
+		<!-- Right Column - Opening Hours, Contact, Amenities -->
+		<div class="col-lg-4">
+			<!-- Opening Hours -->
+			<div class="info-card mb-4">
+				<small class="text-uppercase">Quando siamo aperti</small>
+				<h3 >Opening Hours</h3>
+				<table class="hours-table">
+					{% for weekday, day_data in weekly_menus.items %}
+					<tr>
+						{% if day_data.is_today %}
+						<td class="text-primary"><strong>{{ day_data.name }}</strong></td>
+						{% else %}
+						<td><strong>{{ day_data.name }}</strong></td>
+						{% endif %}
+						<td>
+							{% for hour in mensa.hours_set.all %}
+								{% if hour.weekday == weekday %}
+									{{ hour.open_time|time:"H:i" }} - {{ hour.close_time|time:"H:i" }}
+									{% if not forloop.last %}<br>{% endif %}
+								{% endif %}
+							{% endfor %}
+							{% if not day_data.is_open %}
+								<span class="text-muted	">Chiuso</span>
+							{% endif %}
+						</td>
+					</tr>
+					{% empty %}
+					<tr>
+						<td colspan="2">Orari non disponibili</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+
+			<!-- Amenities Section -->
+			 {% if mensa.amenities.all %}
+			<div class="info-card mb-4">
+				<small class="text-uppercase">I nostri servizi</small>
+				<h3 >Amenities</h3>
+				<div class="amenities-list">
+					{% for amenity in mensa.amenities.all %}
+					<div class="amenity-item">
+						<i class="{{ amenity.icon }}"></i> {{ amenity.text }}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			{% endif %}
+			
+			<!-- Contact Info -->
+			<div class="info-card">
+				<small class="text-uppercase">Come contattarci</small>
+				<h3>Contact</h3>
+				{% if mensa.phone_number %}
+				<a href="tel:{{ mensa.phone_number }}" class="contact-link" target="_blank">
+					<i class="fa-solid fa-phone"></i>
+					{{ mensa.phone_number }}
+				</a>
+				{% endif %}
+				
+				{% if mensa.email %}
+				<a href="mailto:{{ mensa.email }}" class="contact-link" target="_blank">
+					<i class="fa-solid fa-envelope"></i>
+					{{ mensa.email }}
+				</a>
+				{% endif %}
+				
+				<a href="https://www.instagram.com/" class="contact-link" target="_blank">
+					<i class="fa-brands fa-instagram"></i>
+					Instagram
+				</a>
+				
+				<a href="https://www.facebook.com/" class="contact-link" target="_blank">
+					<i class="fa-brands fa-facebook"></i>
+					Facebook
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Info Smart Section -->
+	<div id="api" class="row">
+	<div class="col-12">
+		<div class="info-card mb-4">
+			<small class="text-uppercase">in tempo reale</small>
+			<!-- Layout desktop con titolo e legenda affiancati -->
+			<div class="d-none d-md-flex align-items-center justify-content-between mb-3">
+				<div>
+					<h3 class="mb-1">
+						Info Smart
+						<span id="connection-status" class="status-indicator"></span>
+					</h3>
+					<p class="text-muted mb-0">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
+				</div>
+				<div class="legend ms-4">
+					<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
+					<div class="legend-items">
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
+							<span class="legend-label">Posto libero</span>
+						</div>
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0077D8; border: 1px solid #ddd; margin-right: 8px;"></div>
+							<span class="legend-label">Posto occupato</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Layout mobile con titolo e legenda in colonna -->
+			<div class="d-md-none">
+				<h3 >
+					Info Smart
+					<span id="connection-status" class="status-indicator"></span>
+				</h3>
+				<p class="text-muted">Qui trovi informazioni smart in tempo reale sulla mensa: coda, attesa, tavoli e posti liberi.</p>
+				
+				<div class="legend mb-3" style="border: 1px solid #eee; padding: 10px; border-radius: 5px; background-color: #f8f9fa;">
+					<div class="legend-title" style="font-weight: bold; margin-bottom: 5px;">Legenda:</div>
+					<div class="legend-items">
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #ffffff; margin-right: 8px;"></div>
+							<span class="legend-label">Posto libero</span>
+						</div>
+						<div class="legend-item" style="display: flex; align-items: center; margin-bottom: 5px;">
+							<div class="legend-color square" style="width: 16px; height: 16px; background-color: #0077D8; border: 1px solid #ddd; margin-right: 8px;"></div>
+							<span class="legend-label">Posto occupato</span>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div id="mensa-info" class="mb-4" style="display:flex;flex-wrap:wrap;gap:16px;">
+				{% comment %} una card = un dato {% endcomment %}
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">In coda</div>
+				<div id="queue-len" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Attesa</div>
+				<div id="wait-time" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">--</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Tavoli liberi</div>
+				<div id="free-tables" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">Posti liberi</div>
+				<div id="free-seats" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0</div>
+				</div>
+				<div style="padding:8px 12px;border:1px solid #ccc;border-radius:4px;background:#f8f9fa;min-width:120px;text-align:center;">
+				<div style="font-size:0.8rem;color:#555;">% posti liberi</div>
+				<div id="pct-free" style="font-size:1.2rem;font-weight:bold;margin-top:4px;">0%</div>
+				</div>
+			</div>
+			<div id="seat-visualization"></div>
+		</div>
+	</div>
+	</div>
+
+	
+	<!-- Gallery Section - Full Width -->
+	<div class="row" id="gallery">
+		<div class="col-12">
+			<div class="info-card mb-4">
+				<small class="text-uppercase">Le nostre foto</small>
+				<h3 >Gallery</h3>
+				<div class="gallery-container">
+					{% for photo in mensa.gallery.all %}
+					<div class="gallery-item" onclick="openLightbox({{ forloop.counter0 }})">
+						<img src="{{ photo.img.url }}" alt="Gallery image {{ forloop.counter }}">
+						<div class="gallery-overlay">
+							<i class="fa-solid fa-magnifying-glass"></i>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Lightbox Modal -->
+	<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+		<div class="lightbox-content" onclick="event.stopPropagation()">
+			<span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+			<button class="lightbox-prev" onclick="event.stopPropagation(); changeSlide(-1)">&#10094;</button>
+			<button class="lightbox-next" onclick="event.stopPropagation(); changeSlide(1)">&#10095;</button>
+			<img id="lightbox-image" src="" alt="Gallery image">
+			<div class="lightbox-counter">
+				<span id="current-image">1</span> / <span id="total-images">{{ mensa.gallery.all|length }}</span>
+			</div>
+		</div>
+	</div>		<!-- Reviews Section - Full Width -->
+	<div class="row" id="reviews">
+		<div class="col-12">
+			<div class="info-card mb-4">
+				<small class="text-uppercase">Feedback dei clienti</small>
+				<h3 >Recensioni</h3>
+				
+				<div class="reviews-container">
+					<!-- Add Review Form - Only if logged in and hasn't reviewed yet -->
+				{% if user.is_authenticated %}
+					{% if not user_has_reviewed %}
+						<div class="review-form-card mb-4">
+							<h5>Scrivi una recensione</h4>
+							<form id="review-form" method="post">
+								{% csrf_token %}
+								<div class="mb-3 d-flex align-items-center" style="gap: 1em;">
+									{% comment %} <label class="form-label mb-0" style="white-space: nowrap;">Valutazione</label> {% endcomment %}
+									<div class="star-rating d-flex align-items-center" style="font-size:1.7rem; gap: 0.3em;">
+										<input type="radio" name="stars" value="5" id="star5">
+										<label for="star5" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+										<input type="radio" name="stars" value="4" id="star4">
+										<label for="star4" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+										<input type="radio" name="stars" value="3" id="star3">
+										<label for="star3" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+										<input type="radio" name="stars" value="2" id="star2">
+										<label for="star2" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+										<input type="radio" name="stars" value="1" id="star1">
+										<label for="star1" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+									</div>
+								</div>
+								<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
+								<div class="mb-3">
+									{% comment %} <label for="comment" class="form-label">Commento *</label> {% endcomment %}
+									<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
+								</div>
+								
+								<button type="submit" class="btn send-btn">
+									<i class="fa-solid fa-comment-dots me-2"></i>Invia Recensione
+								</button>
+							</form>
+						</div>
+					{% endif %}
+				{% else %}
+					<div class="review-form-card mb-4">
+						<p class="text-muted">
+							<i class="fa-solid fa-user me-2"></i>
+							<a href="{% url 'login' %}?next={{ request.path|urlencode }}" class="text-primary">Accedi</a> per scrivere una recensione.
+						</p>
+					</div>
+				{% endif %}
+
+				</div>
+				
+				<!-- Loop through reviews -->
+				{% for review in reviews %}
+				<div class="review-card" data-review-id="{{ review.id }}">
+					<div class="review-header">
+						<img src="{{ review.user.propic.url }}" class="reviewer-avatar" alt="{{ review.user.get_full_name }}">
+						<div class="flex-grow-1">
+							<h5 class="mb-0">{{ review.user.get_full_name }}</h5>
+							<div class="stars-display">
+								{% for i in "12345" %}
+								{% if forloop.counter <= review.stars %}
+								<i class="fa-solid fa-star"></i>
+								{% else %}
+								<i class="fa-regular fa-star"></i>
+								{% endif %}
+								{% endfor %}
+							</div>
+							<span class="review-date">{{ review.date|date }}</span>
+						</div>
+						{% if current_user.is_authenticated and review.user == current_user %}
+						<div class="review-actions">
+							<button class="btn delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione" style="background: #f8f9fa; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);" onmouseover="this.style.background='#fee2e2'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(220, 53, 69, 0.15)';" onmouseout="this.style.background='#f8f9fa'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.05)';">
+								<i class="fa-solid fa-trash" style="color: #dc3545;"></i>
+							</button>
+						</div>
+						{% endif %}
+					</div>
+					<p>{{ review.text }}</p>
+				</div>
+				{% empty %}
+				<p>No reviews yet. Be the first to review this mensa!</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ---------- CONFIG ---------- */
+const UPDATE_INTERVAL_MS = 1000;
+const mensaName          = "{{ mensa.name }}";
+const apiUrl             = `/api/${encodeURIComponent(mensaName)}/`;
+
+/* ---------- UTILITY ---------- */
+function secondsToMinutes(sec){
+  const m = Math.floor(sec/60);
+  return m>0 ? `${m} min` : '< 1 min';
+}
+
+/* ---------- BUILD GRIGLIA (una volta) ---------- */
+function buildSeatGrid(blockList){
+  const cont = document.getElementById('seat-visualization');
+  cont.innerHTML = '';
+  blockList.forEach((block, bi)=>{
+    const letter = String.fromCharCode(65+bi);
+    /* container fila */
+    const blockDiv  = document.createElement('div');
+    blockDiv.className = 'block-container';
+
+    /* titolo + toggle */
+    const titleWrap = document.createElement('div');
+    titleWrap.className='block-title-container';
+    const title = document.createElement('h5');
+    title.className='block-title';
+    title.innerHTML = `Fila ${letter} <i class="fa-solid fa-chevron-down block-toggle-icon"></i>`;
+    title.addEventListener('click',()=>{
+      const icon = title.querySelector('.block-toggle-icon');
+      const grid = blockDiv.querySelector('.table-grid');
+      const open = grid.style.display!=='none';
+      grid.style.display = open ? 'none':'grid';
+      blockDiv.classList.toggle('expanded',!open);
+    });
+    titleWrap.appendChild(title);
+    blockDiv.appendChild(titleWrap);
+
+    /* griglia tavoli */
+    const grid = document.createElement('div');
+    grid.className='table-grid';
+    grid.style.display='none';         // chiusa di default
+
+    block.forEach((table,ti)=>{
+      const tableCont = document.createElement('div');
+      tableCont.className='table-container';
+
+      /* tavolo */
+      const t = document.createElement('div');
+      t.className='table';
+      t.id = `${letter}${ti+1}-table`;
+      tableCont.appendChild(t);
+
+      /* id tavolo */
+      const id = document.createElement('div');
+      id.className='table-id';
+      id.textContent = `${letter}${ti+1}`;
+      tableCont.appendChild(id);
+
+      /* 4 posti */
+      const pos=['seat-left-top','seat-right-top','seat-left-bottom','seat-right-bottom'];
+      table.forEach((_,si)=>{
+        const seat=document.createElement('div');
+        seat.className=`seat ${pos[si]}`;
+        seat.id=`${letter}${ti+1}-s${si}`;
+        tableCont.appendChild(seat);
+      });
+
+      grid.appendChild(tableCont);
+    });
+
+    blockDiv.appendChild(grid);
+    cont.appendChild(blockDiv);
+  });
+}
+
+/* ---------- UPDATE ---------- */
+function updateInfoCards(d){
+  document.getElementById('queue-len').textContent   = d.queue_len;
+  document.getElementById('wait-time').textContent   = secondsToMinutes(d.wait_time);
+  document.getElementById('free-tables').textContent = d.free_tables;
+  document.getElementById('free-seats').textContent  = d.free_seats;
+  document.getElementById('pct-free').textContent    = d.pct_free_seats + '%';
+}
+
+function updateSeatClasses(blockList){
+  blockList.forEach((block, bi) => {
+    const letter = String.fromCharCode(65 + bi);
+    block.forEach((table, ti) => {
+      const tableEl  = document.getElementById(`${letter}${ti + 1}-table`);
+      if (!tableEl) return;
+
+      const allOcc = table.every(Boolean);
+      tableEl.classList.toggle("occupied", allOcc);
+
+      const labelEl = tableEl.parentElement.querySelector(".table-id");
+      if (labelEl) labelEl.classList.toggle("occupied", allOcc);
+
+      table.forEach((occ, si) => {
+        const seatEl = document.getElementById(`${letter}${ti + 1}-s${si}`);
+        if (seatEl) seatEl.classList.toggle("occupied", occ);
+      });
+    });
+  });
+}
+
+function setConnection(ok){
+  const ind = document.getElementById('connection-status');
+  ind.classList.toggle('error',!ok);
+  ind.style.animation = ok ? 'pulse 1.5s infinite':'none';
+}
+
+/* ---------- POLLING ---------- */
+let firstRender=true;
+
+async function fetchAndRender(){
+  try{
+    const res = await fetch(apiUrl);
+    if(!res.ok) throw new Error(res.status);
+    const data = await res.json();
+
+    updateInfoCards(data);
+    if(firstRender){ buildSeatGrid(data.block_list); firstRender=false; }
+    updateSeatClasses(data.block_list);
+    setConnection(true);
+  }catch(e){
+    console.error(e);
+    setConnection(false);
+  }
+}
+
+/* ---------- VISIBILITÀ SEZIONE ---------- */
+function observeInfoSmart(){
+  const section=document.getElementById('api');
+  let interval;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        fetchAndRender();
+        interval=setInterval(fetchAndRender,UPDATE_INTERVAL_MS);
+      }else{
+        clearInterval(interval);
+      }
+    });
+  });
+  obs.observe(section);
+}
+
+document.addEventListener('DOMContentLoaded',observeInfoSmart);
+</script>
+
+
+
+<script>
+	// Tab switch functions for day and meal type
+	function switchDay(dayId, el) {
+		document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
+		el.classList.add('active');
+		document.querySelectorAll('.menu-content').forEach(c => c.classList.remove('active'));
+		var content = document.getElementById('menu-day-' + dayId);
+		if (content) {
+			content.classList.add('active');
+			var typeTabs = content.querySelectorAll('.meal-tab:not(.disabled)');
+			if (typeTabs.length > 0) {
+				typeTabs[0].click();
+			}
+		}
+	}
+
+	function switchMeal(dayId, daypart, el) {
+		var container = document.getElementById('menu-day-' + dayId);
+		if (!container) return;
+		container.querySelectorAll('.meal-tab').forEach(tab => tab.classList.remove('active'));
+		el.classList.add('active');
+		container.querySelectorAll('.meal-content').forEach(c => c.classList.remove('active'));
+		var sel = document.getElementById('meal-' + dayId + '-' + daypart);
+		if (sel) sel.classList.add('active');
+	}
+
+	// Gallery lightbox functions
+	let currentImageIndex = 0;
+	const galleryImages = [
+		{% for photo in mensa.gallery.all %}
+		"{{ photo.img.url }}"{% if not forloop.last %},{% endif %}
+		{% endfor %}
+	];
+
+	function openLightbox(index) {
+		currentImageIndex = index;
+		const lightbox = document.getElementById('lightbox');
+		const lightboxImage = document.getElementById('lightbox-image');
+		const currentCounter = document.getElementById('current-image');
+		
+		console.log('Opening lightbox with index:', index, 'Total images:', galleryImages.length);
+		
+		if (galleryImages[currentImageIndex]) {
+			lightboxImage.src = galleryImages[currentImageIndex];
+			currentCounter.textContent = currentImageIndex + 1;
+			lightbox.style.display = 'block';
+			document.body.style.overflow = 'hidden';
+		} else {
+			console.error('No image found at index:', currentImageIndex);
+		}
+	}
+
+	function closeLightbox() {
+		const lightbox = document.getElementById('lightbox');
+		lightbox.style.display = 'none';
+		document.body.style.overflow = 'auto';
+	}
+
+	function changeSlide(direction) {
+		console.log('Changing slide, direction:', direction, 'Current index:', currentImageIndex);
+		
+		currentImageIndex += direction;
+		
+		if (currentImageIndex >= galleryImages.length) {
+			currentImageIndex = 0;
+		} else if (currentImageIndex < 0) {
+			currentImageIndex = galleryImages.length - 1;
+		}
+		
+		console.log('New index:', currentImageIndex);
+		
+		const lightboxImage = document.getElementById('lightbox-image');
+		const currentCounter = document.getElementById('current-image');
+		
+		if (galleryImages[currentImageIndex]) {
+			lightboxImage.src = galleryImages[currentImageIndex];
+			currentCounter.textContent = currentImageIndex + 1;
+		} else {
+			console.error('No image found at index:', currentImageIndex);
+		}
+	}
+
+	// Keyboard navigation for lightbox
+	document.addEventListener('keydown', function(e) {
+		const lightbox = document.getElementById('lightbox');
+		if (lightbox.style.display === 'block') {
+			if (e.key === 'Escape') {
+				closeLightbox();
+			} else if (e.key === 'ArrowLeft') {
+				changeSlide(-1);
+			} else if (e.key === 'ArrowRight') {
+				changeSlide(1);
+			}
+		}
+	});
+
+	// Debug helper function to see active elements
+	function debugMenuState() {
+		console.log('Active day menu:', document.querySelector('.menu-content.active')?.id);
+		console.log('Active dish types:', Array.from(document.querySelectorAll('.menu-type-content.active')).map(el => el.id));
+	}
+
+	document.addEventListener('DOMContentLoaded', function() {
+		setTimeout(() => {
+			let activeTab = document.querySelector('.menu-tab.active:not(.disabled)');
+			
+			if (!activeTab) {
+				activeTab = document.querySelector('.menu-tab:not(.disabled)');
+			}
+			
+			if (activeTab) {
+				document.querySelectorAll('.menu-tab').forEach(tab => tab.classList.remove('active'));
+				document.querySelectorAll('.menu-content').forEach(content => content.classList.remove('active'));
+				
+				activeTab.classList.add('active');
+				activeTab.click();
+			}
+		}, 50);
+		
+		const map = L.map('map', {
+			scrollWheelZoom: false,
+			dragging: false
+		}).setView([{{ mensa.latitude|default:"0" }}, {{ mensa.longitude|default:"0" }}], 15);
+
+		map.addEventListener('click', function(event) {
+			map.scrollWheelZoom.enable();
+			map.dragging.enable();
+			if (event.originalEvent) {
+				event.originalEvent.stopPropagation();
+			}
+		});
+
+		document.addEventListener('click', function(e) {
+			if (!map.getContainer().contains(e.target)) {
+				map.dragging.disable();
+				map.scrollWheelZoom.disable();
+			}
+		});
+
+		L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+			attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+			maxZoom: 19,
+			minZoom: 13,
+		}).addTo(map);
+
+		// Add marker for the mensa
+		const marker = L.marker([{{ mensa.latitude|default:"0" }}, {{ mensa.longitude|default:"0" }}]).addTo(map);
+		marker.bindPopup(`
+			<div>
+				<img src="{{ mensa.banner.url }}" class="popup-image" alt="{{ mensa.name }}">
+				<h5 class="mb-2">{{ mensa.name }}</h5>
+				<p class="text-muted mb-0"><i class="fas fa-map-marker-alt me-1"></i> {{ mensa.position }}</p>
+			</div>
+		`, {
+			closeButton: true,
+			className: 'custom-popup'
+		});
+	});
+	
+	// Like/Unlike functionality for dishes
+	document.addEventListener('click', function(e) {
+		if (e.target.classList.contains('like-heart')) {
+			e.preventDefault();
+			e.stopPropagation();
+			
+			const heart = e.target;
+			const dishId = heart.getAttribute('data-dish-id');
+			const isLiked = heart.getAttribute('data-liked') === 'true';
+			
+			// prevent double clicks
+			heart.style.pointerEvents = 'none';
+			
+			// Send AJAX request
+			fetch(`/mense/dish/${dishId}/like/`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+				},
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.liked) {
+					// filled heart
+					heart.className = 'fa-solid fa-heart text-danger ms-1 like-heart';
+					heart.setAttribute('data-liked', 'true');
+					heart.setAttribute('title', 'Rimuovi dai preferiti');
+				} else {
+					// empty heart
+					heart.className = 'fa-regular fa-heart text-muted ms-1 like-heart';
+					heart.setAttribute('data-liked', 'false');
+					heart.setAttribute('title', 'Aggiungi ai preferiti');
+				}
+				
+				// Show feedback message
+				console.log(data.message);
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			})
+			.finally(() => {
+				heart.style.pointerEvents = 'auto';
+			});
+		}
+	});
+
+	// Function to handle review deletion
+	function handleDeleteReview(e) {
+		e.preventDefault();
+		const deleteBtn = e.target.closest('.delete-review-btn');
+		const mensaName = deleteBtn.getAttribute('data-mensa-name');
+		const reviewCard = deleteBtn.closest('.review-card');
+	
+		// delete confirmation modal
+		const deleteModal = new bootstrap.Modal(document.getElementById('deleteReviewModal'));
+		deleteModal.show();
+		
+		// confirm button click handler
+		document.getElementById('confirmDeleteBtn').onclick = function() {
+			deleteModal.hide();
+
+			deleteBtn.disabled = true;
+			deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+			const formData = new FormData();
+			formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+
+			// Send AJAX request
+			fetch('{% url "remove_review" mensa.name %}', {
+				method: 'POST',
+				headers: {
+					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+				},
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					reviewCard.style.transition = 'opacity 0.3s ease';
+					reviewCard.style.opacity = '0';
+					setTimeout(() => {
+						reviewCard.remove();
+
+						const reviewFormCard = document.querySelector('.review-form-card');
+						if (!reviewFormCard) {
+							const reviewsContainer = document.querySelector('#reviews .info-card');
+							if (reviewsContainer) {
+								const formHTML = `
+									<div class="review-form-card mb-4">
+										<h5>Scrivi una recensione</h5>
+										<form id="review-form" method="post">
+											{% csrf_token %}
+											<div class="mb-3 d-flex align-items-center" style="gap: 1em;">
+												<div class="star-rating d-flex align-items-center" style="font-size:1.7rem; gap: 0.3em;">
+													<input type="radio" name="stars" value="5" id="star5">
+													<label for="star5" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+													<input type="radio" name="stars" value="4" id="star4">
+													<label for="star4" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+													<input type="radio" name="stars" value="3" id="star3">
+													<label for="star3" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+													<input type="radio" name="stars" value="2" id="star2">
+													<label for="star2" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+													<input type="radio" name="stars" value="1" id="star1">
+													<label for="star1" style="font-size:1.7rem; margin-bottom:0;"><i class="fa-solid fa-star"></i></label>
+												</div>
+											</div>
+											<div id="stars-error" class="text-danger small mt-1" style="display: none;"></div>
+											<div class="mb-3">
+												<textarea name="comment" id="comment" class="form-control" rows="4" placeholder="Condividi la tua esperienza..."></textarea>
+											</div>
+											<button type="submit" class="btn send-btn">
+												<i class="fa-solid fa-comment-dots me-2"></i>Invia Recensione
+											</button>
+										</form>
+									</div>`;
+								reviewsContainer.insertAdjacentHTML('afterbegin', formHTML);
+
+								initializeReviewForm();
+							}
+						}
+					}, 300);
+				} else {
+					deleteBtn.disabled = false;
+					deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+				}
+			})
+			.catch(error => {
+				deleteBtn.disabled = false;
+				deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
+			});
+		}
+	}
+
+	// Initialize review form functionality
+	function initializeReviewForm() {
+		const reviewForm = document.getElementById('review-form');
+		const starInputs = document.querySelectorAll('input[name="stars"]');
+		const starLabels = document.querySelectorAll('.star-rating label');
+		const starsError = document.getElementById('stars-error');
+		
+		if (!reviewForm) return;
+		
+		// Star rating interaction
+		starLabels.forEach((label, index) => {
+			label.addEventListener('mouseover', function() {
+				highlightStars(starLabels.length - index);
+			});
+			
+			label.addEventListener('mouseout', function() {
+				const checkedStar = document.querySelector('input[name="stars"]:checked');
+				if (checkedStar) {
+					highlightStars(parseInt(checkedStar.value));
+				} else {
+					highlightStars(0);
+				}
+			});
+			
+			label.addEventListener('click', function() {
+				const value = starLabels.length - index;
+				document.getElementById(`star${value}`).checked = true;
+				highlightStars(value);
+				if (starsError) {
+					starsError.style.display = 'none';
+				}
+			});
+		});
+		
+		function highlightStars(rating) {
+			starLabels.forEach((label, index) => {
+				const star = label.querySelector('i');
+				if (starLabels.length - index <= rating) {
+					star.classList.remove('fa-regular');
+					star.classList.add('fa-solid');
+					star.style.color = '#ffc107';
+				} else {
+					star.classList.remove('fa-solid');
+					star.classList.add('fa-regular');
+					star.style.color = '#dee2e6';
+				}
+			});
+		}
+		
+		// Form submission
+		reviewForm.addEventListener('submit', function(e) {
+			e.preventDefault();
+			
+			// Client-side validation
+			const selectedStar = document.querySelector('input[name="stars"]:checked');
+			if (!selectedStar) {
+				if (starsError) {
+					starsError.textContent = 'Seleziona una valutazione dalle stelle';
+					starsError.style.display = 'block';
+				}
+				return;
+			}
+			
+			if (starsError) {
+				starsError.style.display = 'none';
+			}
+
+			const submitBtn = reviewForm.querySelector('button[type="submit"]');
+			const originalText = submitBtn.innerHTML;
+			submitBtn.disabled = true;
+			submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Invio in corso...';
+			const formData = new FormData(reviewForm);
+			
+			// Send AJAX request
+			fetch('{% url "add_review" mensa.name %}', {
+				method: 'POST',
+				headers: {
+					'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+				},
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
+					// Get form data to create the new review element
+					const selectedStar = document.querySelector('input[name="stars"]:checked');
+					const stars = selectedStar ? selectedStar.value : 0;
+					const comment = document.getElementById('comment').value;
+					const userFullName = '{{ current_user.get_full_name }}';
+					const userPropic = '{% if current_user.propic %}{{ current_user.propic.url }}{% else %}/static/imgs/default-avatar.png{% endif %}';
+					const currentDate = new Date().toLocaleDateString('en-US', { 
+						year: 'numeric', 
+						month: 'short', 
+						day: 'numeric' 
+					});
+					
+					// Create new review HTML
+					const newReviewHTML = `
+						<div class="review-card" data-review-id="new-review">
+							<div class="review-header">
+								<img src="${userPropic}" class="reviewer-avatar" alt="${userFullName}">
+								<div class="flex-grow-1">
+									<h5 class="mb-0">${userFullName}</h5>
+									<div class="stars-display">
+										${Array.from({length: 5}, (_, i) => 
+											i < stars ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>'
+										).join('')}
+									</div>
+									<span class="review-date">${currentDate}</span>
+								</div>
+								<div class="review-actions">
+									<button class="btn delete-review-btn" data-mensa-name="{{ mensa.name }}" title="Elimina recensione" style="background: #f8f9fa; border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);" onmouseover="this.style.background='#fee2e2'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 10px rgba(220, 53, 69, 0.15)';" onmouseout="this.style.background='#f8f9fa'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.05)';">
+										<i class="fa-solid fa-trash" style="color: #dc3545;"></i>
+									</button>
+								</div>
+							</div>
+							<p>${comment}</p>
+						</div>
+					`;
+					
+					const reviewsContainer = document.querySelector('#reviews .info-card');
+					if (!reviewsContainer) {
+						console.error('Reviews container not found');
+						return;
+					}
+					
+					const existingReviews = reviewsContainer.querySelector('.review-card');
+					if (existingReviews) {
+						existingReviews.insertAdjacentHTML('beforebegin', newReviewHTML);
+					} else {
+						const noReviewsMsg = reviewsContainer.querySelector('p');
+						if (noReviewsMsg && noReviewsMsg.textContent.includes('No reviews yet')) {
+							noReviewsMsg.remove();
+						}
+						reviewsContainer.insertAdjacentHTML('beforeend', newReviewHTML);
+					}
+					
+					const reviewFormCard = document.querySelector('.review-form-card');
+					if (reviewFormCard) {
+						reviewFormCard.remove();
+					}
+				} else {
+					// Show form errors if any
+					if (data.errors) {
+						console.error('Form errors:', data.errors);
+					}
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			})
+			.finally(() => {
+				// Re-enable submit button
+				submitBtn.disabled = false;
+				submitBtn.innerHTML = originalText;
+			});
+		});
+		
+		// Initialize star display
+		const checkedStar = document.querySelector('input[name="stars"]:checked');
+		if (checkedStar) {
+			highlightStars(parseInt(checkedStar.value));
+		} else {
+			highlightStars(0);
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', function() {
+		initializeReviewForm();
+	});
+
+	document.addEventListener('click', function(e) {
+		if (e.target.closest('.delete-review-btn')) {
+			handleDeleteReview(e);
+		}
+	});
+	
+</script>
+
+<!-- Delete Review Confirmation Modal -->
+<div class="modal fade" id="deleteReviewModal" tabindex="-1" aria-labelledby="deleteReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 15px; border: none; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+            <div class="modal-header" style="background-color: #f8f9fa; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 15px 20px;">
+                <h5 class="modal-title" id="deleteReviewModalLabel" style="font-weight: 600; color: #333;">
+                    <i class="fa-solid fa-exclamation-triangle me-2" style="color: #dc3545;"></i>
+                    Conferma eliminazione
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+                <p class="mb-0" style="font-size: 1rem; color: #495057;">Sei sicuro di voler eliminare questa recensione? Questa azione non può essere annullata.</p>
+            </div>
+            <div class="modal-footer" style="border-top: 1px solid rgba(0,0,0,0.05); padding: 15px 20px;">
+                <button type="button" class="btn btn-delete-rv" data-bs-dismiss="modal" style="background-color: #f8f9fa; color: #495057; border-radius: 8px; padding: 8px 16px; font-weight: 500; border: 1px solid #dee2e6; transition: all 0.2s ease;">
+                    <i class="fa-solid fa-times me-1"></i>Annulla
+                </button>
+                <button type="button" class="btn btn-delete-rv" id="confirmDeleteBtn" style="background-color: #dc3545; color: white; border-radius: 8px; padding: 8px 16px; font-weight: 500; border: none; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);">
+                    <i class="fa-solid fa-trash me-1"></i>Elimina recensione
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -21,13 +21,12 @@ print("base:", BASE_DIR)
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pfo60c*job(sn8ix$d)lfm3+o*e$hu^=j5-uudkg=!!x&#6zh0'
+SECRET_KEY = 'SECRET_KEY'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # TODO: change
 
-ALLOWED_HOSTS = ["*"]  # TODO: change
-
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +36,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',  # for geoapp
+    # my apps:
+    'apps.core',
+    'apps.mensa',
+    'apps.world',
+    'apps.api',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # my middleware
+    'apps.world.middleware.PositionMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -61,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # my context processors
+                'apps.world.context_processors.position_context'
             ],
         },
     },
@@ -131,3 +140,23 @@ MEDIA_ROOT = BASE_DIR / "uploads"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom user model
+AUTH_USER_MODEL = "core.CustomUser"
+
+# Email settings (solo ora per lo sviluppo)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Personalizzazione delle viste di reset password
+PASSWORD_RESET_TIMEOUT = 259200  # 3 giorni in secondi
+
+CONTACT_EMAIL = 'help@mensago.it'
+
+# per production:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.tuoserver.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'tuo-indirizzo-email@esempio.com'
+# EMAIL_HOST_PASSWORD = 'tua-password-email'
+# DEFAULT_FROM_EMAIL = 'MensaGO <noreply@mensago.it>'

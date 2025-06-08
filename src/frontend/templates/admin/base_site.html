@@ -1,0 +1,6 @@
+{% extends "admin/base.html" %}
+
+{% block userlinks %}
+{{ block.super }}
+/ <a href="{% url 'admin:qr_scanner' %}">QR Scanner</a>
+{% endblock %}

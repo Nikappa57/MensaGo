@@ -1,0 +1,565 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block nav_mobile %}
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+	aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
+{% endblock %}
+
+{% block nav_elements %}
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#about">About Us</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#citta">Città</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#tutorial">Tutorial</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#eventi">Eventi</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#FAQ">FAQ</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="#contact">Contattaci</a>
+	</li>
+	{% if user.is_superuser %}
+	<li class="nav-item">
+		<a class="nav-link text-dark" href="/admin/">
+			<i class="fas fa-tools me-1"></i>
+			Admin
+		</a>
+	</li>
+	{% endif %}
+	{% if user.is_authenticated %}
+	<li class="nav-item dropdown ms-3">
+		<a class="nav-link dropdown-toggle login-btn px-3 py-1" href="#" id="navbarDropdown" role="button"
+			data-bs-toggle="dropdown" aria-expanded="false">
+			<i class="fas fa-user-circle me-1"></i>
+			<strong>{{ user.first_name }} {{ user.last_name }}</strong>
+		</a>
+		<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+			<li>
+				<a class="dropdown-item" href="{% url 'profile' %}">
+					<i class="fas fa-user me-2"></i> Profile
+				</a>
+			</li>
+			<li><hr class="dropdown-divider"> </li>
+			<li>
+				<a class="dropdown-item" href="{% url 'logout' %}">
+					<i class="fas fa-sign-out-alt me-2"></i> Logout
+				</a>
+			</li>
+		</ul>
+	</li>
+	{% else %}
+	<li class="nav-item ms-3">
+		<a class="btn login-btn px-3 py-1" href="{% url 'login' %}">
+			<i class="fas fa-sign-in-alt me-1"></i>
+			<strong>Log In</strong>
+		</a>
+	</li>
+	{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<!-- Hero -->
+<section class="position-relative" style="height: 100vh; margin-top: -80px; padding-top: 80px; ">
+<img src="{% static 'imgs/hero.png' %}" style="object-fit: cover; width: 100%; height: 100%;" alt="Mensa">
+<div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center text-white" style="background: rgba(0,0,0,0.35)">
+	<h1 class="fw-bold home-title">MensaGO</h1>
+	<p class="home-subtitle">Il tuo nuovo modo di mangiare</p>
+	{% if cities %}
+		<a href="#citta" class="btn home-btn btn-lg"><strong>Scopri le mense</strong></a>
+	{% endif %}
+</div>
+</section>
+
+<!-- About -->
+<section id="about", class="container">
+	<small class="text-uppercase">
+		Chi siamo
+	</small>
+	<h2>About Us</h2>
+	<!-- About FLEX 1 -->
+		<div class="about-flex">
+			<!-- ELEM 1 -->
+			<div class="about-elem">
+				<div class="about-elem-side">
+					<div class="about-elem-img">
+						<div class="bg-square-about-left"></div>
+						<img src="{% static 'imgs/about/cucinando.png' %}" class="about-img-left" alt="caffe">
+					</div>
+				</div>
+				<div class="about-elem-side">
+					<h3>Cosa facciamo</h3>
+					<p>MensaGO è il tuo compagno di fiducia per un'esperienza culinaria unica e sostenibile. La nostra missione è quella di rendere l'accesso alle mense universitarie semplice, veloce e piacevole, garantendo al contempo la qualità e la freschezza dei nostri ingredienti.</p>
+				</div>
+			</div>
+			<!-- ELEM 2 -->
+			<div class="about-elem">
+				<div class="about-elem-side">
+					<h3>La nostra visione</h3>
+					<p>Crediamo che il cibo sia più di un semplice nutrimento: è un'esperienza che unisce le persone, promuove la cultura e sostiene la comunità. Con MensaGO, vogliamo creare un futuro in cui ogni studente possa godere di pasti sani e accessibili, ovunque si trovi.</p>
+				</div>
+				<div class="about-elem-side">
+					<div class="about-elem-img">
+					<div class="bg-square-about-right"></div>
+					<img src="{% static 'imgs/about/verdure2.png' %}"  class="about-img-right" alt="caffe">
+					</div>
+				</div>
+			</div>
+	</div>
+	<!-- About FLEX 2 -->
+	{% comment %} <div class=" about-flex container">
+			<!-- ELEM 1 -->
+			<div class="about-elem">
+				<div class="about-elem-side">
+					<div class="about-elem-img">
+						<div class="bg-square-about-left"></div>
+						<img src="{% static 'imgs/about/cucinando.png' %}" class="about-img-left" alt="caffe">
+					</div>
+				</div>
+				<div class="about-elem-side">
+					<h3>Cosa facciamo</h3>
+					<p>MensaGO è il tuo compagno di fiducia per un'esperienza culinaria unica e sostenibile. La nostra missione è quella di rendere l'accesso alle mense universitarie semplice, veloce e piacevole, garantendo al contempo la qualità e la freschezza dei nostri ingredienti.</p>
+				</div>
+			</div>
+			<!-- ELEM 2 -->
+			<div class="about-elem">
+				<div class="about-elem-side">
+					<h3>La nostra visione</h3>
+					<p>Crediamo che il cibo sia più di un semplice nutrimento: è un'esperienza che unisce le persone, promuove la cultura e sostiene la comunità. Con MensaGO, vogliamo creare un futuro in cui ogni studente possa godere di pasti sani e accessibili, ovunque si trovi.</p>
+				</div>
+				<div class="about-elem-side">
+					<div class="about-elem-img">
+					<div class="bg-square-about-right"></div>
+					<img src="{% static 'imgs/about/verdure2.png' %}"  class="about-img-right" alt="caffe">
+					</div>
+				</div>
+			</div>
+	</div> {% endcomment %}
+</section>
+
+<!-- Banner -->
+<section class="fixed-banner" style="background-image: url('{% static "imgs/about/campo2.png" %}');">
+	<div class="banner-content">
+		<h2 class="banner-title">Goditi i nostri prodotti naturali</h2>
+		<p class="banner-subtitle">
+			Selezioniamo i migliori ingredienti a km 0 che rispettono i più
+			alti standard di sostenibilità.
+		</p>
+	</div>
+</section>
+
+
+
+<!-- Citta -->
+<section id="citta" class="container py-5">
+	<small class="text-uppercase">
+		Siamo presenti in tutta Italia
+	</small>
+	<h2>Scopri le mense</h2>
+	<div class="row gy-5 gx-5 mt-4">
+		{% if cities %}
+			{% for city in cities %}
+				{% if city.mensa_set.exists %}
+					<!-- Prima città in primo piano -->
+					{% if forloop.first %} 
+						<div class="col-12 city-col">
+							<a href="{% url 'mensa_city' city_name=city.name %}" class="text-decoration-none">
+								<div class="card border-0 h-100">
+									<img src="{{ city.landscape.url }}" class="card-img first-city-mensa-img" alt="{{ city.name }}">
+									<div class="card-img-overlay d-flex flex-column justify-content-center align-items-center" style="background: rgba(0,0,0,0.3)">
+										<h5 class="card-title first-city-mensa-title">{{ city.name }}</h5>
+										<span class="badge bg-light text-dark ms-3 mt-2">
+											{{ city.mensa_set.count }} {% if city.mensa_set.count > 1 %} mense attive {% else %} mensa attiva {% endif %}
+										</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% else %}
+						<div class="col-md-6 city-col">
+							<a href="{% url 'mensa_city' city_name=city.name %}" class="text-decoration-none">
+								<div class="card border-0 h-100">
+									<img src="{{ city.landscape.url }}" class="card-img city-mensa-img" alt="{{ city.name }}">
+									<div class="card-img-overlay d-flex flex-column justify-content-center align-items-center" style="background: rgba(0,0,0,0.3)">
+										<h5 class="card-title city-mensa-title">{{ city.name }}</h5>
+										<span class="badge bg-light text-dark ms-3 mt-2">
+											{{ city.mensa_set.count }} {% if city.mensa_set.count > 1 %} mense attive {% else %} mensa attiva {% endif %}
+										</span>
+									</div>
+								</div>
+							</a>
+						</div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+		{% else %}
+		<div class="col-12 text-center">
+			<p>Nessuna città disponibile al momento.</p>
+		</div>
+		{% endif %}
+	</div>
+</section>
+
+<!-- Tutorial Section -->
+<section id="tutorial" class="container py-5 mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+	<div>
+	  <small class="text-uppercase">
+	  Tutorial
+	  </small>
+	  <h2>Come Utilizzare MensaGo</h2>
+	</div>
+  </div>
+  
+  <p class="text-start mb-4 mb-md-5">
+	Scopri come utilizzare MensaGo in pochi semplici passi per accedere alle mense universitarie in modo facile e veloce.
+  </p>
+
+  <div class="row g-4">
+	<!-- Step 1 -->
+	<div class="col-lg-4 col-md-6">
+	  <div class="step-box">
+		<div class="d-flex align-items-center mb-2">
+		  <div class="step-number me-3">01</div>
+		  <h4 class="d-flex align-items-center">Scegli la tua mensa</h4>
+		</div>
+		<p class="mb-3">Esplora le mense disponibili nella tua città e scegli quella più adatta alle tue esigenze per iniziare la tua esperienza con MensaGO.</p>
+		<div class="phone-mockup">
+		  <div class="phone-frame phone-left">
+			<img class="mockup" src="{% static 'imgs/tutorial/signup.png' %}" alt="Scegli città" onerror="this.src='https://via.placeholder.com/280x550?text=Scegli+Città'">
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Step 2 -->
+	<div class="col-lg-4 col-md-6">
+	  <div class="step-box">
+		<div class="d-flex align-items-center mb-2">
+		  <div class="step-number me-3">02</div>
+		  <h4 class="d-flex align-items-center">Informazioni Smart</h4>
+		</div>
+		<p>Accedi a informazioni dettagliate sulle mense, inclusi orari, menu e disponibilità in tempo reale.</p>
+		<div class="phone-mockup">
+		  <div class="phone-frame phone-center">
+			<img class="mockup" src="{% static 'imgs/tutorial/choose.png' %}" alt="Info smart" onerror="this.src='https://via.placeholder.com/280x550?text=Info+Smart'">
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Step 3 -->
+	<div class="col-lg-4 col-md-12 mx-md-auto">
+	  <div class="step-box">
+		<div class="d-flex align-items-center mb-2">
+		  <div class="step-number me-3">03</div>
+		  <h4 class="d-flex align-items-center">Profilo e Scannerizzazione</h4>
+		</div>
+		<p>Gestisci il tuo profilo e utilizza il QR code per accedere rapidamente alle mense.</p>
+		<div class="phone-mockup mt-5">
+		  <div class="phone-frame phone-right">
+			<img class="mockup" src="{% static 'imgs/tutorial/eat.png' %}" alt="Profilo e QR" onerror="this.src='https://via.placeholder.com/280x550?text=Profilo+e+QR'">
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  </section>
+  <!-- Call to Action -->
+  <div class="text-center call-to-action">
+	{% if user.is_authenticated %}
+		<h3 class="mb-3">Sei pronto per iniziare?</h3>
+		<p class="lead mb-4">Accedi al tuo account e scopri tutte le funzionalità di MensaGo</p>
+		<a href="{% url 'profile' %}" class="btn btn-dark btn-lg px-5 py-3 btn-profile">
+			<i class="fas fa-sign-in-alt me-2"></i> <strong> Vai al profilo </strong>
+		</a>
+	{% else %}
+		<h3 class="mb-3">Cosa aspetti? Inizia oggi!</h3>
+		<p class="lead mb-4">Registrati subito e scopri tutte le funzionalità che MensaGo ha da offrirti</p>
+		<a href="{% url 'register' %}?next={{ request.path }}#tutorial" class="btn btn-dark btn-lg px-5 py-3 rounded-pill btn-profile">
+			<i class="fas fa-user-plus me-2"></i> <strong> Registrati ora </strong>
+		</a>
+	{% endif %}
+  </div>
+
+
+<!-- Upcoming Events -->
+<section class="pb-5" id="eventi">
+	<div class="container">
+		<div class="row mb-4">
+			<small class="text-uppercase">
+			Calendario
+			</small>
+			<h2>Eventi</h2>
+		</div>
+
+	{% if events %}
+		<div class="position-relative">
+			<!-- Navigation Arrows -->
+			<div class="events-slider-container">
+				<button class="carousel-control-prev events-prev-btn" type="button">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next events-next-btn" type="button">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+				<div class="events-slider">
+					{% for event in events %}
+					<div class="event-slide">
+						<div class="card border-0 events-card h-100 rounded overflow-hidden" style="background: transparent; box-shadow: none;">
+							<div class="event-card-inner position-relative">
+								<div class="position-relative event-image-container">
+									<!-- Event image -->
+									<img src="{{ event.img.url }}" class="card-img events-img" alt="{{ event.name }}">
+									<!-- Mobile touch indicator -->
+									<div class="mobile-indicator d-lg-none position-absolute">
+										<i class="fas fa-expand-alt"></i>
+									</div>
+
+									<!-- Hover/click overlay (only on the image) -->
+									<div class="event-overlay d-flex align-items-center">
+										<div class="event-overlay-content text-start p-3">
+											<h4 class="text-white fw-bold mb-2">{{ event.name }}</h4>
+											<p class="text-white-50 mb-3"><i class="far fa-calendar-alt me-2"></i>{{ event.date|date:"d F Y" }}</p>
+											<div class="event-description">
+												<p class="text-white mb-0">{{ event.desc }}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Normal view (date and name below image) -->
+								<div class="event-details mt-3 text-start ml-1">
+									<p class="text-muted mb-1"><i class="far fa-calendar-alt me-2"></i>{{ event.date|date:"d F Y" }}</p>
+									<h4 class="card-title fw-bold mt-2">{{ event.name }}</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<div class="alert alert-info mt-3">
+			<p class="mb-0">Nessun evento in programma al momento.</p>
+		</div>
+	{% endif %}
+	</div>
+</section>
+
+<!-- FAQ -->
+<section id="FAQ" class="position-relative">
+	<div class="container ">
+		<div class="faq-bg-shape faq-bg-shape-1"></div>
+		<div class="faq-bg-shape faq-bg-shape-2"></div>
+		
+		<div class="faq-title-section">
+			<small class="text-uppercase">
+				Ti aiutiamo con piacere
+			</small>
+			<h2>Domande Frequenti</h2>
+			<p class="text-muted">Risposte alle domande più frequenti sulla nostra piattaforma</p>
+		</div>
+		
+		<div class="accordion" id="faqAccordion">
+			<div class="accordion-item faq-item">
+				<h2 class="accordion-header faq-header" id="heading1">
+					<button class="accordion-button faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+						<i class="fas fa-question-circle faq-icon"></i>
+						Come posso utilizzare MensaGO?
+						<i class="fas fa-chevron-down ms-auto faq-chevron"></i>
+					</button>
+				</h2>
+				<div id="collapse1" class="accordion-collapse collapse show faq-collapse" data-bs-parent="#faqAccordion">
+					<div class="accordion-body faq-body">
+						Registrati con la tua email universitaria, seleziona la tua università e inizia subito a esplorare le mense disponibili nella tua città.
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item faq-item">
+				<h2 class="accordion-header faq-header" id="heading2">
+					<button class="accordion-button collapsed faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+						<i class="fas fa-qrcode faq-icon"></i>
+						Come funziona il QR code?
+						<i class="fas fa-chevron-down ms-auto faq-chevron"></i>
+					</button>
+				</h2>
+				<div id="collapse2" class="accordion-collapse collapse faq-collapse" data-bs-parent="#faqAccordion">
+					<div class="accordion-body faq-body">
+						Il QR code ti permette di accedere rapidamente alle mense. Mostralo all'ingresso per registrare la tua presenza e accedere ai servizi.
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item faq-item">
+				<h2 class="accordion-header faq-header" id="heading3">
+					<button class="accordion-button collapsed faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+						<i class="fas fa-utensils faq-icon"></i>
+						Posso vedere quali ingredienti contengono i piatti?
+						<i class="fas fa-chevron-down ms-auto faq-chevron"></i>
+					</button>
+				</h2>
+				<div id="collapse3" class="accordion-collapse collapse faq-collapse" data-bs-parent="#faqAccordion">
+					<div class="accordion-body faq-body">
+						Sì, ogni piatto ha una descrizione dettagliata degli ingredienti. Inoltre, puoi specificare le tue allergie nel profilo per ricevere avvisi personalizzati.
+					</div>
+				</div>
+			</div>
+			<div class="accordion-item faq-item">
+				<h2 class="accordion-header faq-header" id="heading4">
+					<button class="accordion-button collapsed faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+						<i class="fas fa-university faq-icon"></i>
+						Quali università sono supportate da MensaGO?
+						<i class="fas fa-chevron-down ms-auto faq-chevron"></i>
+					</button>
+				</h2>
+				<div id="collapse4" class="accordion-collapse collapse faq-collapse" data-bs-parent="#faqAccordion">
+					<div class="accordion-body faq-body">
+						MensaGO supporta numerose università in tutta Italia. Controlla la sezione "Città" per vedere tutte le mense universitarie disponibili nella tua zona.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> 
+	
+	<!-- Contact -->
+<section id="contact">
+	<div class="container">
+		<small class="text-uppercase">
+			Hai domande? Scrivici!
+		</small>
+		<h2>Contattaci</h2>
+		<form id="contactForm" class="row g-3 mt-3" method="POST" action="">
+			{% csrf_token %}
+			<div class="col-12">
+			<label for="id_name" class="form-label">Nome</label>
+			<input type="text" name="name" id="id_name" class="form-control" required>
+			{% if form.name.errors %}
+				<div class="text-danger">
+				{{ form.name.errors }}
+				</div>
+			{% endif %}
+			</form>
+			<div class="col-12">
+			<label for="id_email" class="form-label">Email</label>
+			<input type="email" name="email" id="id_email" class="form-control" required>
+			{% if form.email.errors %}
+				<div class="text-danger">
+				{{ form.email.errors }}
+				</div>
+			{% endif %}
+			</div>
+			<div class="col-12">
+			<label for="id_message" class="form-label">Messaggio</label>
+			<textarea name="message" id="id_message" class="form-control" rows="4" required></textarea>
+			{% if form.message.errors %}
+				<div class="text-danger">
+				{{ form.message.errors }}
+				</div>
+			{% endif %}
+			</div>
+			<div class="col-12">
+				<button type="submit" class="btn send-btn">
+					<i class="fas fa-paper-plane me-2"></i> <strong>Invia</strong>
+				</button>
+			</div>
+			<div id="formStatus" class="col-12 mt-2" style="display: none;"></div>
+		</form>
+	</div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/carousel.js' %}"></script>
+<script src="{% static 'js/contact.js' %}"></script>
+<script src="{% static 'js/phone-animation.js' %}"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	const imgsLeft = document.querySelectorAll('.about-img-left');
+	const imgsRight = document.querySelectorAll('.about-img-right');
+	const bgLeft = document.querySelectorAll('.bg-square-about-left');
+	const bgRight = document.querySelectorAll('.bg-square-about-right');
+	const city = document.querySelectorAll('.city-col');
+	const eventSection = document.querySelectorAll('#eventi');
+	const faqItems = document.querySelectorAll('.faq-item');
+
+	// Add click handlers for event cards on mobile
+	const eventCards = document.querySelectorAll('.event-card-inner');
+	eventCards.forEach(card => {
+		card.addEventListener('click', function(e) {
+			// Only toggle on mobile/tablet
+			if (window.innerWidth < 992) {
+				e.preventDefault();
+				const overlay = this.querySelector('.event-overlay');
+				if (overlay) {
+					// Toggle the visibility
+					if (overlay.classList.contains('show')) {
+						overlay.classList.remove('show');
+					} else {
+						// Hide all other overlays first
+						document.querySelectorAll('.event-overlay.show').forEach(el => {
+							if (el !== overlay) el.classList.remove('show');
+						});
+						overlay.classList.add('show');
+						
+						// Scroll the image into view if needed
+						const img = this.querySelector('.events-img');
+						if (img) {
+							setTimeout(() => {
+								img.scrollIntoView({behavior: 'smooth', block: 'center'});
+							}, 100);
+						}
+					}
+				}
+			}
+		});
+	});
+
+	// Close overlays when clicking elsewhere on the page
+	document.addEventListener('click', function(e) {
+		if (window.innerWidth < 992 && !e.target.closest('.event-card-inner')) {
+			document.querySelectorAll('.event-overlay.show').forEach(el => {
+				el.classList.remove('show');
+			});
+		}
+	});
+
+	const observer = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+			if(entry.isIntersecting){
+				entry.target.classList.add('in-view');
+			}
+		});
+	}, { threshold: 0.2 });
+
+	imgsLeft.forEach(img => observer.observe(img));
+	imgsRight.forEach(img => observer.observe(img));
+	bgLeft.forEach(bg => observer.observe(bg));
+	bgRight.forEach(bg => observer.observe(bg));
+	city.forEach(bg => observer.observe(bg));
+	eventSection.forEach(section => observer.observe(section));
+	faqItems.forEach(item => observer.observe(item));
+});
+</script>
+
+{% endblock %}

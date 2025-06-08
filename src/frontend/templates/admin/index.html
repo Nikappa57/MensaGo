@@ -1,0 +1,12 @@
+{% extends "admin/index.html" %}
+{% load i18n %}
+
+{% block sidebar %}
+{{ block.super }}
+<div class="module">
+	<h2>{% trans "QR Code Scanner" %}</h2>
+	<ul>
+		<li><a href="{% url 'admin:qr_scanner' %}">{% trans "Scansiona QR Code" %}</a></li>
+	</ul>
+</div>
+{% endblock %}

@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy - MensaGO{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<style>
+.privacy-container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 2rem;
+}
+
+.privacy-section {
+	margin-bottom: 2rem;
+}
+
+.privacy-section h3 {
+	color: #0077D8;
+	margin-bottom: 1rem;
+}
+
+.privacy-section p, .privacy-section li {
+	line-height: 1.6;
+	margin-bottom: 0.5rem;
+}
+
+.effective-date {
+	font-style: italic;
+	color: #6c757d;
+	margin-bottom: 2rem;
+}
+
+.data-table {
+	width: 100%;
+	margin: 1rem 0;
+	border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+	border: 1px solid #dee2e6;
+	padding: 0.75rem;
+	text-align: left;
+}
+
+.data-table th {
+	background-color: #f8f9fa;
+	font-weight: 600;
+}
+
+.highlight-box {
+	background-color: #e3f2fd;
+	border-left: 4px solid #2196f3;
+	padding: 1rem;
+	margin: 1rem 0;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+	<div class="privacy-container">
+		<div class="text-center mb-5">
+			<h1 class="display-4 fw-bold text-primary">Privacy Policy</h1>
+			<p class="effective-date">Ultimo aggiornamento: 3 Giugno 2025</p>
+		</div>
+
+		<div class="highlight-box">
+			<h4><i class="fas fa-shield-alt text-primary me-2"></i>La tua privacy è importante per noi</h4>
+			<p class="mb-0">
+				MensaGO si impegna a proteggere e rispettare la tua privacy. Questa policy spiega come raccogliamo, 
+				utilizziamo e proteggiamo le tue informazioni personali.
+			</p>
+		</div>
+
+		<div class="privacy-section">
+			<h3>1. Titolare del Trattamento</h3>
+			<p>
+				Il titolare del trattamento dei dati personali è MensaGO, con sede legale in Roma, Italia.
+			</p>
+			<p>
+				<strong>Contatti:</strong><br>
+				Email: <a href="mailto:privacy@mensago.it">privacy@mensago.it</a><br>
+				Telefono: +39 02 1234 5678
+			</p>
+		</div>
+
+		<div class="privacy-section">
+			<h3>2. Dati Personali Raccolti</h3>
+			<p>Durante la registrazione e l'utilizzo di MensaGO, raccogliamo i seguenti dati:</p>
+			
+			<table class="data-table">
+				<thead>
+					<tr>
+						<th>Categoria di Dati</th>
+						<th>Dettagli</th>
+						<th>Finalità</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><strong>Dati di Registrazione</strong></td>
+						<td>Nome, cognome, email, università</td>
+						<td>Creazione e gestione account</td>
+					</tr>
+					<tr>
+						<td><strong>Foto Profilo</strong></td>
+						<td>Immagine profilo (opzionale)</td>
+						<td>Personalizzazione profilo</td>
+					</tr>
+					<tr>
+						<td><strong>Dati Economici</strong></td>
+						<td>Livello economico, credito mensa</td>
+						<td>Gestione pagamenti e prezzi personalizzati</td>
+					</tr>
+					<tr>
+						<td><strong>Preferenze Alimentari</strong></td>
+						<td>Allergie, piatti preferiti</td>
+						<td>Personalizzazione menù e avvisi sicurezza</td>
+					</tr>
+					<tr>
+						<td><strong>Dati di Utilizzo</strong></td>
+						<td>Recensioni, valutazioni, cronologia accessi</td>
+						<td>Miglioramento servizio e funzionalità</td>
+					</tr>
+					<tr>
+						<td><strong>Dati di Geolocalizzazione</strong></td>
+						<td>Posizione geografica (se autorizzata)</td>
+						<td>Ricerca mense vicine</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="privacy-section">
+			<h3>3. Base Giuridica del Trattamento</h3>
+			<p>I tuoi dati personali sono trattati sulla base di:</p>
+			<ul>
+				<li><strong>Consenso:</strong> Per dati opzionali come foto profilo e geolocalizzazione</li>
+				<li><strong>Esecuzione contrattuale:</strong> Per fornire i servizi di MensaGO</li>
+				<li><strong>Interesse legittimo:</strong> Per migliorare i nostri servizi e la sicurezza</li>
+				<li><strong>Obbligo legale:</strong> Per adempiere a obblighi fiscali e contabili</li>
+			</ul>
+		</div>
+
+		<div class="privacy-section">
+			<h3>4. Finalità del Trattamento</h3>
+			<p>Utilizziamo i tuoi dati personali per:</p>
+			<ul>
+				<li>Creare e gestire il tuo account utente</li>
+				<li>Elaborare pagamenti e gestire il credito mensa</li>
+				<li>Personalizzare l'esperienza utente in base alle tue preferenze</li>
+				<li>Fornire avvisi di sicurezza per allergie alimentari</li>
+				<li>Gestire recensioni e valutazioni delle mense</li>
+				<li>Analizzare l'utilizzo del servizio per miglioramenti</li>
+				<li>Comunicare aggiornamenti e informazioni sul servizio</li>
+				<li>Garantire la sicurezza e prevenire frodi</li>
+			</ul>
+		</div>
+
+		<div class="privacy-section">
+			<h3>5. Condivisione dei Dati</h3>
+			<p>I tuoi dati personali non vengono venduti a terze parti. Possono essere condivisi solo nei seguenti casi:</p>
+			<ul>
+				<li><strong>Università partner:</strong> Dati necessari per l'accesso alle mense universitarie</li>
+				<li><strong>Fornitori di servizi:</strong> Per elaborazione pagamenti e servizi tecnici</li>
+				<li><strong>Autorità competenti:</strong> Se richiesto dalla legge</li>
+				<li><strong>Consenso esplicito:</strong> Con il tuo consenso specifico</li>
+			</ul>
+		</div>
+
+		<div class="privacy-section">
+			<h3>6. Periodo di Conservazione</h3>
+			<p>Conserviamo i tuoi dati personali per i seguenti periodi:</p>
+			<ul>
+				<li><strong>Dati dell'account:</strong> Fino alla cancellazione dell'account + 1 anno</li>
+				<li><strong>Dati di pagamento:</strong> 10 anni per obblighi fiscali</li>
+				<li><strong>Recensioni anonimizzate:</strong> Indefinitamente per analisi statistiche</li>
+				<li><strong>Log di sicurezza:</strong> 2 anni</li>
+			</ul>
+		</div>
+
+		<div class="privacy-section">
+			<h3>7. I Tuoi Diritti</h3>
+			<p>Hai diritto a:</p>
+			<ul>
+				<li><strong>Accesso:</strong> Ottenere una copia dei tuoi dati personali</li>
+				<li><strong>Rettifica:</strong> Correggere dati inesatti o incompleti</li>
+				<li><strong>Cancellazione:</strong> Richiedere la cancellazione dei tuoi dati</li>
+				<li><strong>Limitazione:</strong> Limitare il trattamento in certe circostanze</li>
+				<li><strong>Portabilità:</strong> Ricevere i tuoi dati in formato leggibile</li>
+				<li><strong>Opposizione:</strong> Opporti al trattamento per finalità specifiche</li>
+				<li><strong>Revoca consenso:</strong> Revocare il consenso in qualsiasi momento</li>
+			</ul>
+			<p>
+				Per esercitare questi diritti, contattaci all'indirizzo: 
+				<a href="mailto:privacy@mensago.it">privacy@mensago.it</a>
+			</p>
+		</div>
+
+		<div class="privacy-section">
+			<h3>8. Sicurezza dei Dati</h3>
+			<p>Implementiamo misure di sicurezza appropriate per proteggere i tuoi dati:</p>
+			<ul>
+				<li>Crittografia dei dati in transito e a riposo</li>
+				<li>Controllo degli accessi basato su ruoli</li>
+				<li>Monitoraggio continuo della sicurezza</li>
+				<li>Backup regolari e piani di disaster recovery</li>
+				<li>Formazione del personale sulla privacy</li>
+				<li>Audit periodici di sicurezza</li>
+			</ul>
+		</div>
+
+		<div class="privacy-section">
+			<h3>9. Trasferimenti Internazionali</h3>
+			<p>
+				I tuoi dati personali sono conservati principalmente nell'Unione Europea. 
+				In caso di trasferimenti verso paesi terzi, garantiamo adeguate misure di protezione 
+				conformi al GDPR.
+			</p>
+		</div>
+
+		<div class="privacy-section">
+			<h3>10. Cookie e Tecnologie di Tracciamento</h3>
+			<p>MensaGO utilizza:</p>
+			<ul>
+				<li><strong>Cookie essenziali:</strong> Per il funzionamento del sito</li>
+				<li><strong>Cookie di sessione:</strong> Per mantenere l'accesso</li>
+				<li><strong>Cookie analitici:</strong> Per migliorare l'esperienza utente (con consenso)</li>
+			</ul>
+			<p>Puoi gestire le preferenze sui cookie nelle impostazioni del tuo browser.</p>
+		</div>
+
+		<div class="privacy-section">
+			<h3>11. Minori</h3>
+			<p>
+				MensaGO è destinato a studenti universitari maggiorenni. Non raccogliamo 
+				consapevolmente dati personali di minori di 18 anni. Se un minore ha fornito 
+				dati personali, il genitore o tutore può contattarci per la rimozione.
+			</p>
+		</div>
+
+		<div class="privacy-section">
+			<h3>12. Modifiche alla Privacy Policy</h3>
+			<p>
+				Ci riserviamo il diritto di aggiornare questa Privacy Policy. Le modifiche 
+				significative saranno comunicate tramite email o notifica sulla piattaforma.
+				L'uso continuato del servizio costituisce accettazione delle modifiche.
+			</p>
+		</div>
+
+		<div class="privacy-section">
+			<h3>13. Autorità di Controllo</h3>
+			<p>
+				Hai il diritto di presentare reclamo presso l'autorità di controllo competente:
+			</p>
+			<p>
+				<strong>Garante per la Protezione dei Dati Personali</strong><br>
+				Piazza di Monte Citorio, 121 - 00186 Roma<br>
+				Tel: +39 06 69677 1<br>
+				Email: garante@gpdp.it<br>
+				Web: <a href="https://www.garanteprivacy.it" target="_blank">www.garanteprivacy.it</a>
+			</p>
+		</div>
+
+		<div class="privacy-section">
+			<h3>14. Contatti</h3>
+			<p>
+				Per domande sulla privacy o per esercitare i tuoi diritti, contattaci:
+			</p>
+			<ul>
+				<li><strong>Email:</strong> <a href="mailto:privacy@mensago.it">privacy@mensago.it</a></li>
+				<li><strong>Telefono:</strong> +39 02 1234 5678</li>
+				<li><strong>Indirizzo:</strong> Via Roma 123, 00100 Roma, Italia</li>
+			</ul>
+		</div>
+
+		<div class="text-center mt-5">
+			<a href="{% url 'register' %}" class="btn btn-primary me-3">
+				<i class="fas fa-arrow-left me-2"></i>Torna alla Registrazione
+			</a>
+			<a href="{% url 'terms_of_service' %}" class="btn btn-outline-primary">
+				<i class="fas fa-file-contract me-2"></i>Termini di Servizio
+			</a>
+		</div>
+	</div>
+</div>
+{% endblock %}
