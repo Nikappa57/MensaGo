@@ -62,8 +62,7 @@ class Menu(models.Model):
 
 class Includes(models.Model):
     """
-    Include(Mensa,WeekDay,DayPart,Dish,type)
-
+    Include(Menu,Dish,type)
     """
 
     TYPE = [

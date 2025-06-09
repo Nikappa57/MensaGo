@@ -5,7 +5,7 @@ from django.db import models
 
 class Mensa(models.Model):
     """
-    Mensa(Name,Description,Position,Banner,Capacity,PhoneNumber*,City,Email*,Latitude*,Longitude*)
+    Mensa(Name,Description,Position,Banner,Capacity,PhoneNumber*,City,Email*,Latitude*,Longitude*,block_nbr)
     f.k. Mensa[City] ⊆ City[Name]
     p.k  Mensa[Name]
     """
@@ -13,7 +13,7 @@ class Mensa(models.Model):
     description = models.TextField()
     position = models.CharField(max_length=255)
     latitude = models.FloatField(null=True,
-                                 blank=True)  # TODO: da rendere required
+                                 blank=True)
     longitude = models.FloatField(null=True, blank=True)
     banner = models.ImageField(upload_to='banners/')
     capacity = models.IntegerField()

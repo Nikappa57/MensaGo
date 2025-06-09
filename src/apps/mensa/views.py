@@ -38,11 +38,11 @@ def mensa_details(request, city_name, mensa_name):
                                      name=mensa_name,
                                      city__name=city_name)
 
-    # Get the weekday choices
+    # weekday choices
     hours_weekdays = dict(Hours.WEEKDAY)
     hours_weekdays = sorted(hours_weekdays.items())
 
-    # Get weekly menus
+    # weekly menus
     weekly_menus = {}
     weekday_names = {
         0: 'Lunedì',
@@ -54,9 +54,9 @@ def mensa_details(request, city_name, mensa_name):
         6: 'Domenica'
     }
 
-    today = datetime.now().weekday()  # Monday = 0, Sunday = 6
+    today = datetime.now().weekday()
 
-    for weekday in range(7):  # 0-6 (Monday to Sunday)
+    for weekday in range(7):
         # Check which day parts have opening hours for this weekday
         available_dayparts = Hours.objects.filter(
             mensa=mensa, weekday=weekday).values_list('daypart', flat=True)
@@ -65,8 +65,6 @@ def mensa_details(request, city_name, mensa_name):
         day_menus = Menu.objects.filter(mensa=mensa,
                                         weekday=weekday).order_by('day_part')
         day_menu_data = []
-
-        # Always check both dayparts (0=Pranzo, 1=Cena)
         daypart_info = {}
         for daypart in [0, 1]:  # 0=Pranzo, 1=Cena
             daypart_info[daypart] = {
@@ -74,10 +72,10 @@ def mensa_details(request, city_name, mensa_name):
                 'name': 'Pranzo' if daypart == 0 else 'Cena'
             }
 
-        # Only process menus if the mensa is open that day
+        # Only if the mensa is open
         if has_opening_hours:
             for menu in day_menus:
-                # Only include menus for day parts that have opening hours
+                # Only for day parts that have opening hours
                 if menu.day_part in available_dayparts:
                     dishes_by_type = {}
                     includes = Includes.objects.filter(
@@ -115,9 +113,8 @@ def mensa_details(request, city_name, mensa_name):
                                                   user=request.user).exists()
 
     reviews = mensa.review_set.all()
-    # order reviews by date, most recent first
     reviews = reviews.order_by('-date')
-    # If the user has already reviewed, put their review at the top
+    # put user review at the top
     if user_has_reviewed:
         user_review = reviews.filter(user=request.user).first()
         if user_review:
@@ -190,7 +187,6 @@ def add_review(request, mensa_name):
     mensa = get_object_or_404(Mensa, name=mensa_name)
     user = request.user
 
-    # use form to validate input
     form = ReviewForm(request.POST)
     if form.is_valid():
         # Check if the user has already reviewed this mensa

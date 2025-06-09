@@ -3,7 +3,7 @@ from django.db import models
 
 class Event(models.Model):
     """"
-    Event(Name, Date, Img)
+    Event(Name, Date, Img, Desc)
     p.k. Event[name, date]
     """
 

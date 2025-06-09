@@ -3,7 +3,7 @@ from django.db import models
 
 class Allergen(models.Model):
     """"
-    Allergen(Name)
+    Allergen(Name, Icon)
     p.k. Allergen[Name]
     """
 

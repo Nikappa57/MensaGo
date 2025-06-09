@@ -28,11 +28,11 @@ class EconomicalLevel(models.Model):
 class CustomUser(AbstractUser):
     """"
     User(
-        Email, 
-        first_name, 
+        Email,
+        first_name,
         last_name,
-        propic, 
-        credit, 
+        propic,
+        credit,
         university,
         economical level)
     f.k User[University] ⊆ University[Name]

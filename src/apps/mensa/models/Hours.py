@@ -3,7 +3,7 @@ from django.db import models
 
 class Hours(models.Model):
     """"
-    Hours(WeekDay,DayPart,OpenTime,CloseTime,Mensa)
+    Hours(WeekDay, DayPart, OpenTime, CloseTime, Mensa)
         f.k. Hours[Mensa] ⊆ Mensa[Name]
     """
 
